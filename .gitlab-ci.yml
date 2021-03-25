@@ -1,0 +1,97 @@
+image: dukedesigncoach/testfx-runner
+
+stages:
+  - analyze
+  - validate
+  - test
+  - report
+  - notify
+
+checkstyle_analysis:
+  stage: validate
+  needs: [ ]
+  script:
+    - mvn -version
+    - mvn -U validate
+
+sonar_analysis:
+  stage: analyze
+  needs: [ ]
+  script:
+    - java -version
+    - mvn -version
+    - |
+      mvn -X sonar:sonar \
+      -Dsonar.host.url=http://coursework.cs.duke.edu:9000 \
+      -Dsonar.java.binaries=. \
+      -Dsonar.exclusions=**/*.xml,**/*.css,test/**
+  tags:
+    - sonarqube
+  only:
+    - master
+
+unit_testing:
+  stage: test
+  needs:
+    - checkstyle_analysis
+  before_script:
+    - yum install -y fontconfig dejavu-sans-fonts dejavu-serif-fonts
+    - curl -L -O https://github.com/source-foundry/Hack/releases/download/v3.003/Hack-v3.003-ttf.tar.gz
+    - tar -xzvf Hack-v3.003-ttf.tar.gz
+    - mkdir ~/.fonts
+    - mv ttf/Hack-Regular.ttf ~/.fonts/Hack-Regular.ttf
+    - mv ttf/Hack-Italic.ttf ~/.fonts/Hack-Italic.ttf
+    - mv ttf/Hack-Bold.ttf ~/.fonts/Hack-Bold.ttf
+    - mv ttf/Hack-BoldItalic.ttf ~/.fonts/Hack-BoldItalic.ttf
+    - fc-cache -f -v
+    - yum install -y pango
+  script:
+    - |
+      mvn -U clean install site \
+        -Djava.awt.headless=true \
+        -Dtestfx.headless=true \
+        -Dtestfx.robot=glass \
+        -Dembedded=monocle \
+        -Dglass.platform=Monocle \
+        -Dprism.order=sw \
+        -Dprism.fontdir=/usr/share/fonts \
+        -Dtestfx.setup.timeout=2500 \
+        -Dheadless.geometry=1600x1200
+    - cat target/site/jacoco/index.html
+  artifacts:
+    paths:
+      - target/site/*
+      - "**/target/surefire-reports/TEST-*.xml"
+
+coverage_report:
+  stage: report
+  image: haynes/jacoco2cobertura:1.0.4
+  needs:
+    - unit_testing
+  dependencies:
+    - unit_testing
+  script:
+    - 'python /opt/cover2cover.py target/site/jacoco/jacoco.xml src > cobertura.xml'
+    - 'python /opt/source2filename.py cobertura.xml'
+  artifacts:
+    reports:
+      cobertura: cobertura.xml
+      junit:
+        - "**/target/surefire-reports/TEST-*.xml"
+
+pages:
+  stage: report
+  needs:
+    - unit_testing
+  dependencies:
+    - unit_testing
+  script:
+    - mkdir .public
+    - cp -r target/site .public
+    - mv .public public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+    - main
