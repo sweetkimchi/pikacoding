@@ -57,7 +57,7 @@
 </dependencies>
 
 <build>
-    <!-- use simple names for folders instead of maven's prerferred ones -->
+    <!-- use simple names for folders instead of maven's preferred ones -->
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>test</testSourceDirectory>
     <resources>
@@ -78,9 +78,6 @@
             <version>3.8.1</version>
             <configuration>
                 <encoding>iso-8859-1</encoding>
-                <includes>
-                    <include>src/**/*.java</include>
-                </includes>
                 <source>15</source>
                 <target>15</target>
                 <compilerArgs>
