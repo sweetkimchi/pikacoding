@@ -14,8 +14,8 @@ public interface DataFileParser {
   public Grid ParseGrid();
 
 /**
-* 
-*
+* gets list of commands avaiable to the current user
+* @ return list of commands
 */
   public List<Command> commandsAvailable();
 
