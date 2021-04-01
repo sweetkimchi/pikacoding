@@ -3,7 +3,6 @@
 ### Team Three
 
 ### Names
-
 - David Li (dl303)
 - Harrison Huang (hlh38)
 - Kathleen Chen (kc387)
