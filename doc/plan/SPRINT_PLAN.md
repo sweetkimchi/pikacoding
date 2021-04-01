@@ -57,8 +57,8 @@
 
 
 ## Team Responsibilities
-- David Li 
-- Harrison Huang 
-- Kathleen Chen 
-- Ji Yun Hyo 
-- Billy Luqiu 
+- David Li - Frontend, drag-and-drop
+- Harrison Huang - backend, commands
+- Kathleen Chen - frontend, UI design 
+- Ji Yun Hyo - backend, animation, commands
+- Billy Luqiu - backend, data
