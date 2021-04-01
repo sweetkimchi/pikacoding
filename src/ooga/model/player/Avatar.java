@@ -1,4 +1,4 @@
-package Model.Player;
+package ooga.model.player;
 
 import java.util.*;
 

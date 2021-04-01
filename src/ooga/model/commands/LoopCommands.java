@@ -1,11 +1,11 @@
-package Model.Commands;
+package ooga.model.commands;
 
 import java.util.*;
 
 /**
  * 
  */
-public abstract class LoopCommands extends Commands {
+public abstract class LoopCommands implements Commands {
 
     /**
      * Default constructor

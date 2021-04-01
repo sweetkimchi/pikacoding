@@ -1,4 +1,4 @@
-package Model.Commands;
+package ooga.model.commands;
 
 import java.util.*;
 

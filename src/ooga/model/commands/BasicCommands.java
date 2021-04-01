@@ -1,11 +1,11 @@
-package Model.Commands;
+package ooga.model.commands;
 
 import java.util.*;
 
 /**
  * 
  */
-public abstract class BasicCommands extends Commands {
+public abstract class BasicCommands implements Commands {
 
     /**
      * Default constructor
