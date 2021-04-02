@@ -22,15 +22,8 @@ public class ViewController implements FrontEndExternalAPI {
     public ViewController(Stage stage) {
         screenCreator = new ScreenCreator(this, stage);
     }
-
     /**
-     * 
-     */
-    public void parseAndExecute() {
-        // TODO implement here
-    }
-
-    /**
+     *
      * sets the model controller to set up the line of communication from/to the backend
      *
      * @param modelController BackEndExternalAPI
@@ -82,6 +75,6 @@ public class ViewController implements FrontEndExternalAPI {
      */
     @Override
     public void parseAndExecuteCommands(List<CommandBlock> commandBlocks) {
-
+        modelController.parseAndExecuteCommands(commandBlocks);
     }
 }

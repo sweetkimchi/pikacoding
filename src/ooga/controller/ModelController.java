@@ -2,6 +2,7 @@ package ooga.controller;
 
 import java.util.*;
 import javax.lang.model.util.Elements;
+import ooga.model.CommandExecutor;
 import ooga.view.CommandBlock;
 
 /**
@@ -10,6 +11,7 @@ import ooga.view.CommandBlock;
 public class ModelController implements BackEndExternalAPI {
 
     FrontEndExternalAPI viewController;
+
     /**
      * Default constructor
      */
@@ -41,7 +43,7 @@ public class ModelController implements BackEndExternalAPI {
      */
     @Override
     public void parseAndExecuteCommands(List<CommandBlock> commandBlocks) {
-
+        CommandExecutor commandExecutor = new CommandExecutor(commandBlocks);
     }
 
     /**
