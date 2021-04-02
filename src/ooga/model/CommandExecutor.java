@@ -13,9 +13,4 @@ public class CommandExecutor {
     public CommandExecutor() {
     }
 
-    /**
-     * 
-     */
-    public void BackEndExternalAPI modelController;
-
 }
