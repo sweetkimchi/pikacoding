@@ -1,4 +1,4 @@
-package ooga.view;
+package ooga.view.level;
 
 public class CommandBlock {
 

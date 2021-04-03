@@ -1,12 +1,12 @@
 package ooga.controller;
 
 import java.util.*;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import ooga.model.grid.BoardState;
 import ooga.model.player.Elements;
-import ooga.view.CommandBlock;
+import ooga.view.level.CommandBlock;
 import ooga.view.ScreenCreator;
+import ooga.view.level.LevelView;
 
 /**
  * @author Ji Yun Hyo
@@ -15,12 +15,14 @@ public class ViewController implements FrontEndExternalAPI {
 
     BackEndExternalAPI modelController;
     ScreenCreator screenCreator;
+    LevelView levelView;
     /**
      * Default constructor
      * @param stage
      */
     public ViewController(Stage stage) {
         screenCreator = new ScreenCreator(this, stage);
+        levelView = screenCreator.getLevelView();
     }
     /**
      *
@@ -64,12 +66,12 @@ public class ViewController implements FrontEndExternalAPI {
      */
     @Override
     public void setPosition(double x, double y, int id) {
-        screenCreator.setPosition(x,y);
+        levelView.setPosition(x,y);
     }
 
     @Override
     public void setActiveAvatar(int avatarID) {
-        screenCreator.setActiveAvatar(avatarID);
+        levelView.setActiveAvatar(avatarID);
     }
 
     /**
