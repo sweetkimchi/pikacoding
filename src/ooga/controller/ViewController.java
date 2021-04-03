@@ -1,11 +1,10 @@
 package ooga.controller;
 
 import java.util.*;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import ooga.model.grid.BoardState;
 import ooga.model.player.Elements;
-import ooga.view.CommandBlock;
+import ooga.view.level.CommandBlock;
 import ooga.view.ScreenCreator;
 
 /**
