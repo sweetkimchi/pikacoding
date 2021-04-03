@@ -14,6 +14,9 @@ import ooga.view.animation.AnimationPane;
  */
 public class ScreenCreator {
 
+    public static final String RESOURCES = ScreenCreator.class.getPackageName() + ".resources.";
+    private static final String WINDOW_PROPERTIES = "Window";
+
     private Timeline timeline;
     FrontEndExternalAPI viewController;
     private Stage stage;
@@ -27,8 +30,20 @@ public class ScreenCreator {
 
         animationPane = new AnimationPane(viewController);
 
+        initializeStage();
+
         // debug statement
         System.out.println("Screen launched");
+    }
+
+    private void initializeStage() {
+        ResourceBundle windowResources = ResourceBundle.getBundle(RESOURCES + WINDOW_PROPERTIES);
+        stage.setTitle(windowResources.getString("Title"));
+        stage.setMinHeight(Integer.parseInt(windowResources.getString("Height")));
+        stage.setHeight(Integer.parseInt(windowResources.getString("Height")));
+        stage.setMinWidth(Integer.parseInt(windowResources.getString("Width")));
+        stage.setWidth(Integer.parseInt(windowResources.getString("Width")));
+        stage.show();
     }
 
     private void runSimulation() {
