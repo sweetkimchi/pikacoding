@@ -34,7 +34,7 @@ public class ScreenCreator {
     this.stage = stage;
 
     animationPane = new AnimationPane(viewController);
-    levelView = new LevelView();
+    levelView = new LevelView(this.viewController);
 
     initializeStage();
 
