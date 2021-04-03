@@ -1,4 +1,4 @@
-package ooga.view.level;
+package ooga.view.level.codearea;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;

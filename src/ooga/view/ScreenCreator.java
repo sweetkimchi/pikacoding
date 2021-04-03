@@ -7,7 +7,9 @@ import ooga.controller.FrontEndExternalAPI;
 import ooga.view.level.LevelView;
 
 /**
+ * Responsible for setting up the JavaFX stage and creating the primary views.
  *
+ * @author David Li
  */
 public class ScreenCreator {
 
