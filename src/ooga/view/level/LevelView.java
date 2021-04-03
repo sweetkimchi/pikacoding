@@ -1,9 +1,15 @@
 package ooga.view.level;
 
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.view.ScreenCreator;
+import ooga.view.animation.AnimationPane;
 
 public class LevelView extends BorderPane {
 
@@ -15,13 +21,30 @@ public class LevelView extends BorderPane {
   private CodeArea codeArea;
   private ControlPanel controlPanel;
 
+  private AnimationPane animationPane;
+  private Timeline timeline;
+
   public LevelView(FrontEndExternalAPI viewController) {
     this.viewController = viewController;
     menuBar = new MenuBar();
     board = new Board();
     codeArea = new CodeArea();
     controlPanel = new ControlPanel();
+    animationPane = new AnimationPane(this.viewController);
     initializeViewElements();
+  }
+
+  public void updateCommandQueue(String commandType, List<Double> commandValues) {
+    animationPane.updateCommandQueue(commandType, commandValues);
+  }
+
+
+  public void setPosition(double x, double y) {
+    animationPane.setPosition(x, y);
+  }
+
+  public void setActiveAvatar(int avatarID) {
+    animationPane.setActiveAvatar(avatarID);
   }
 
   private void initializeViewElements() {
@@ -34,6 +57,21 @@ public class LevelView extends BorderPane {
     this.setCenter(board);
     this.setRight(codeArea);
     this.setBottom(controlPanel);
+  }
+
+  private void runSimulation() {
+    timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+
+      //     updateTurtleStates();
+      setAnimationSpeed();
+    }));
+    timeline.setCycleCount(Animation.INDEFINITE);
+    timeline.play();
+    timeline.setRate(300);
+  }
+
+  private void setAnimationSpeed() {
+    //   timeline.setRate(userCommand.getAnimationSpeed());
   }
 
 }
