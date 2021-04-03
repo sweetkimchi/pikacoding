@@ -51,4 +51,11 @@ public class ScreenCreator {
     }
 
 
+    public void setPosition(double x, double y) {
+        animationPane.setPosition(x,y);
+    }
+
+    public void setActiveAvatar(int avatarID) {
+        animationPane.setActiveAvatar(avatarID);
+    }
 }
