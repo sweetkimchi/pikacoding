@@ -64,7 +64,12 @@ public class ViewController implements FrontEndExternalAPI {
      */
     @Override
     public void setPosition(double x, double y, int id) {
+        screenCreator.setPosition(x,y);
+    }
 
+    @Override
+    public void setActiveAvatar(int avatarID) {
+        screenCreator.setActiveAvatar(avatarID);
     }
 
     /**

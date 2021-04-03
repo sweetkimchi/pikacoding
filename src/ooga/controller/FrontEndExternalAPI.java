@@ -42,4 +42,6 @@ public interface FrontEndExternalAPI {
    */
   public void setPosition(double x, double y, int id);
 
+  void setActiveAvatar(int avatarID);
+
 }
