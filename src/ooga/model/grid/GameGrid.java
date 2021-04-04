@@ -91,7 +91,7 @@ public class GameGrid implements Grid {
 
   private List<Integer> getCoordinatesByAvatarId(int id) {
     for (Avatar avatar : avatarList.keySet()) {
-      if (avatar.getId() == id) return avatarList.get(avatar);
+
     }
     return null; // should never happen
   }
