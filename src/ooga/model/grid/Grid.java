@@ -30,12 +30,12 @@ public interface Grid {
    */
   public void addGameElement(Elements gameElement, int xPos, int yPos);
 
-  /**
-   * Executes a command on all of the avatars.
-   *
-   * @param command A command to be executed on avatars
-   */
-  public void executeOnAvatars(Commands command);
+//  /**
+//   * Executes a command on all of the avatars.
+//   *
+//   * @param command A command to be executed on avatars
+//   */
+//  public void executeOnAvatars(Commands command);
 
   /**
    * Returns a list of sprites that have been changed in the grid.
