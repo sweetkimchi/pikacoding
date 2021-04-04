@@ -3,27 +3,32 @@ package ooga.view.level;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import ooga.view.ScreenCreator;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 public class Board extends StackPane {
+  private static final String BOARD_PROPERTIES = "Board";
+
   private int rows; // TODO: passed from BoardState
   private int cols; // TODO: passed from BoardState
   private ArrayList<Integer> states; // TODO: passed from BoardState
-  private double gridXSize = 400.0; // TODO: put in resource file
-  private double gridYSize = 400.0; // TODO: put in resource file
+  private double gridXSize;
+  private double gridYSize;
   private ArrayList<Node> grid;
 
   public Board() {
-    this.getChildren().add(new Label("Board"));
+    ResourceBundle boardValues = ResourceBundle.getBundle(ScreenCreator.RESOURCES + BOARD_PROPERTIES);
     rows = 10;
     cols = 10;
+    gridXSize = Double.parseDouble(boardValues.getString("gridXSize"));
+    gridYSize = Double.parseDouble(boardValues.getString("gridYSize"));
     states = new ArrayList<>();
     grid = new ArrayList<>();
     Random random = new Random();
