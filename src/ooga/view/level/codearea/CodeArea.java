@@ -1,12 +1,16 @@
 package ooga.view.level.codearea;
 
-import javafx.scene.control.Label;
+import java.util.Arrays;
 import javafx.scene.layout.GridPane;
 
 public class CodeArea extends GridPane {
 
+  private CommandBank commandBank;
+
   public CodeArea() {
-    this.add(new Label("GridPane"), 0, 0);
+    commandBank = new CommandBank(Arrays.asList("step", "pickUp", "drop"));
+    this.add(commandBank, 0, 0);
+
   }
 
 }
