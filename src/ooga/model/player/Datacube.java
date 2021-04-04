@@ -13,4 +13,13 @@ public class Datacube extends Objects {
     public Datacube() {
     }
 
+    /**
+     * Getter for the ID of the element.
+     *
+     * @return The ID of the element
+     */
+    @Override
+    public int getId() {
+        return 0;
+    }
 }

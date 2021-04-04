@@ -1,0 +1,27 @@
+.root {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Futura";
+    -fx-base: #a6a6a6;
+    -fx-background: #d9d9d9;
+}
+
+.state-0 {
+    -fx-fill: #B8B8B8;
+}
+
+.state-1 {
+    -fx-fill: #000033;
+}
+
+.state-2 {
+    -fx-fill: #003366;
+}
+
+.control-panel {
+    -fx-padding: 15;
+    -fx-background-radius: 10;
+    -fx-background-insets: 5;
+    -fx-background-color: #696969;
+    -fx-alignment: CENTER_LEFT;
+    -fx-hgap: 5.0;
+}
