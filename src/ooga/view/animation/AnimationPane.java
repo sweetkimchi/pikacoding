@@ -113,7 +113,7 @@ public class AnimationPane {
    * @param y
    */
   public void setPosition(double x, double y) {
-
+    int increment = 10;
 
   }
 
