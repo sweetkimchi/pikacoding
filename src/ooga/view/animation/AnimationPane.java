@@ -89,6 +89,21 @@ public class AnimationPane {
     double nextX = commandsToBeExecuted.pop();
     double nextY = commandsToBeExecuted.pop();
 
+//    if (nextY < 0 || nextX < 0 || nextY > cols - TURTLE_HEIGHT || nextX > rows - TURTLE_WIDTH) {
+//      Alert error = new Alert(AlertType.ERROR);
+//      error.setContentText(errorLanguageResource.getString("TurtleOutOfBounds"));
+//      nextX = centerX;
+//      nextY = centerY;
+//      error.show();
+//      viewController.processUserCommandInput(cS);
+//    }
+//
+//    if (allTurtleInformation.get(currentID).getPenState() == 1) {
+//      createLine(nextX, nextY, penColor);
+//    }
+//    allTurtleInformation.get(currentID).getTurtle().setX(nextX);
+//    allTurtleInformation.get(currentID).getTurtle().setY(nextY);
+
     System.out.println("updatePosition called");
   }
 
