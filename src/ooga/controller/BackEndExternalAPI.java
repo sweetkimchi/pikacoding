@@ -3,7 +3,7 @@
 package ooga.controller;
 import java.util.List;
 import javax.lang.model.util.Elements;
-import ooga.model.grid.BoardState;
+import ooga.model.grid.gridData.BoardState;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
