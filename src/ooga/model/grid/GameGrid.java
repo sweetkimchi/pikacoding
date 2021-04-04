@@ -16,7 +16,7 @@ import ooga.model.player.Objects;
  */
 public class GameGrid implements Grid {
 
-  private Element[][] grid;
+  private Tile[][] grid;
   private final Map<Avatar, List<Integer>> avatarList;
 
   public GameGrid() {
@@ -25,12 +25,12 @@ public class GameGrid implements Grid {
 
   @Override
   public void setDimensions(int width, int height) {
-    grid = new Element[width][height];
+    grid = new Tile[width][height];
   }
 
   @Override
   public void addGameElement(Element gameElement, int xPos, int yPos) {
-    grid[xPos][yPos] = gameElement;
+    grid[xPos][yPos].add(gameElement);
     if (gameElement instanceof Avatar) {
       avatarList.put((Avatar) gameElement, new ArrayList<>());
       avatarList.get(gameElement).addAll(List.of(xPos, yPos));
@@ -62,9 +62,9 @@ public class GameGrid implements Grid {
     int currY = avatarCoords.get(1);
     int newX = currX + direction.getXDel();
     int newY = currY + direction.getYDel();
-    if (grid[newX][newY] == null) {
-      grid[newX][newY] = avatar;
-      grid[currX][currY] = null;
+    if (grid[newX][newY].canAddAvatar()) {
+      grid[newX][newY].add(avatar);
+      grid[currX][currY].removeAvatar();
     }
 
   }
@@ -75,7 +75,20 @@ public class GameGrid implements Grid {
    * @param direction The direction from which to pick up a block
    */
   public void pickUp(int avatarId, Direction direction) {
-
+    Avatar avatar = getAvatarById(avatarId);
+    assert avatar != null;
+    List<Integer> avatarCoords = avatarList.get(avatar);
+    assert avatarCoords != null;
+    int currX = avatarCoords.get(0);
+    int currY = avatarCoords.get(1);
+    int newX = currX + direction.getXDel();
+    int newY = currY + direction.getYDel();
+    if (grid[newX][newY].hasBlock()) {
+      avatar.pickUp(grid[newX][newY].getObject());
+      grid[currX][currY].removeBlock();
+    } else {
+      System.out.println("There is no block to be picked up!");
+    }
   }
 
   /**
@@ -85,8 +98,19 @@ public class GameGrid implements Grid {
    */
   public void drop(int avatarId) {
     Avatar avatar = getAvatarById(avatarId);
-    assert avatar != null;
-    Objects block = avatar.drop();
+    List<Integer> avatarCoords = avatarList.get(avatar);
+    int currX = avatarCoords.get(0);
+    int currY = avatarCoords.get(1);
+    if (grid[currX][currY].canAddBlock()) {
+      assert avatar != null;
+      Objects block = avatar.drop();
+      if (block == null) {
+        System.out.println("You are not holding a block!");
+      }
+      grid[currX][currY].add(block);
+    } else {
+      System.out.println("You cannot drop here!");
+    }
 
   }
 

@@ -1,6 +1,8 @@
 package ooga.model.grid;
 
+import java.rmi.StubNotFoundException;
 import ooga.model.player.Avatar;
+import ooga.model.player.Element;
 import ooga.model.player.Objects;
 import ooga.model.player.Structure;
 
@@ -11,15 +13,22 @@ import ooga.model.player.Structure;
  */
 public class Tile {
 
-  Structure structure;
-  Avatar avatar;
-  Objects block;
+  private Structure structure;
+  private Avatar avatar;
+  private Objects block;
 
   public Tile() {
 
   }
 
   //TODO: implement reflection here? needs better design
+
+  public void add(Element element) {
+    if (element instanceof Structure) add((Structure) element);
+    if (element instanceof Avatar) add((Avatar) element);
+    if (element instanceof Objects) add((Objects) element);
+  }
+
   public void add(Structure structure) {
     if (canAddStructure()) this.structure = structure;
   }
@@ -58,6 +67,10 @@ public class Tile {
 
   public void removeBlock() {
     block = null;
+  }
+
+  public boolean hasBlock() {
+    return block == null;
   }
 
 }
