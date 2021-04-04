@@ -16,3 +16,12 @@
 .state-2 {
     -fx-fill: #003366;
 }
+
+.control-panel {
+    -fx-padding: 15;
+    -fx-background-radius: 10;
+    -fx-background-insets: 5;
+    -fx-background-color: #696969;
+    -fx-alignment: CENTER_LEFT;
+    -fx-hgap: 5.0;
+}
