@@ -4,7 +4,7 @@ import java.util.*;
 import javafx.stage.Stage;
 import ooga.model.grid.BoardState;
 import ooga.model.player.Elements;
-import ooga.view.level.CommandBlock;
+import ooga.view.level.codearea.CommandBlock;
 import ooga.view.ScreenCreator;
 import ooga.view.level.LevelView;
 

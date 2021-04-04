@@ -3,7 +3,7 @@ package ooga.controller;
 import java.util.List;
 import ooga.model.grid.BoardState;
 import ooga.model.player.Elements;
-import ooga.view.level.CommandBlock;
+import ooga.view.level.codearea.CommandBlock;
 
 /**
  * Facilitates interaction between model and view.
