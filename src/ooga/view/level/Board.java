@@ -25,12 +25,13 @@ public class Board extends StackPane {
 
   public Board() {
     ResourceBundle boardValues = ResourceBundle.getBundle(ScreenCreator.RESOURCES + BOARD_PROPERTIES);
-    rows = 10;
-    cols = 10;
+    rows = 10; // TODO: remove after wired with model
+    cols = 10; // TODO: remove after wired with model
     gridXSize = Double.parseDouble(boardValues.getString("gridXSize"));
     gridYSize = Double.parseDouble(boardValues.getString("gridYSize"));
-    states = new ArrayList<>();
+    states = new ArrayList<>(); // TODO: remove after wired with model
     grid = new ArrayList<>();
+    // TODO: remove after wired with model
     Random random = new Random();
     for (int i = 0; i < rows*cols; i ++) {
       int state = random.nextInt(3);
