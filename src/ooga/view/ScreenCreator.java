@@ -46,7 +46,9 @@ public class ScreenCreator {
     int height = Integer.parseInt(windowResources.getString("Height"));
     stage.setMinWidth(width);
     stage.setMinHeight(height);
-    stage.setScene(new Scene(levelView, width, height));
+    Scene scene = new Scene(levelView, width, height);
+    scene.getStylesheets().add("ooga/view/stylesheet.css");
+    stage.setScene(scene);
     stage.show();
   }
 
