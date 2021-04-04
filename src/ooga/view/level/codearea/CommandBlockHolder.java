@@ -6,14 +6,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
+/**
+ * JavaFX element that displays a CommandBlock.
+ * Shows line number, command type, and parameter dropdown menus.
+ *
+ * @author David Li
+ */
 public class CommandBlockHolder extends HBox {
 
   private int index;
@@ -67,7 +70,7 @@ public class CommandBlockHolder extends HBox {
     // TODO: Parse options from json file
     Map<String, List<String>> options = new LinkedHashMap<>();
     if (type.equals("step")) {
-      options.put("direction", Arrays.asList( "up",
+      options.put("direction", Arrays.asList("up",
           "up-right",
           "right",
           "down-right",

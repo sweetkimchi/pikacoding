@@ -9,6 +9,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * A single command option in the command bank.
+ * Adds the command to the program stack when clicked.
+ *
+ * @author David Li
+ */
 public class CommandBlockOption extends StackPane {
 
   private Label label;

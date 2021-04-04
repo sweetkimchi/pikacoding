@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.VBox;
 
+/**
+ * Displays the player-created program comprised of command blocks.
+ *
+ * @author David Li
+ */
 public class ProgramStack extends VBox {
 
   private List<CommandBlockHolder> programBlocks;
