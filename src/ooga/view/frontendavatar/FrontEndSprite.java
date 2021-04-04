@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 /**
  * @author Ji Yun Hyo
  */
-abstract class FrontEndSprite {
+public abstract class FrontEndSprite {
 
   private double xCoord;
   private double yCoord;

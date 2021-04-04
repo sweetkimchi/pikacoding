@@ -3,7 +3,9 @@ package ooga.view.animation;
 import java.lang.reflect.Method;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.scene.Node;
@@ -14,12 +16,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import ooga.controller.FrontEndExternalAPI;
+import ooga.view.frontendavatar.FrontEndSprite;
 
 public class AnimationPane {
 
   private FrontEndExternalAPI viewController;
   private Deque<Double> commandsToBeExecuted;
   private Deque<String> typeToBeUpdated;
+  private Map<Integer, FrontEndSprite> allAvatarInformation;
+
+
   private static final String DEFAULT_RESOURCES =
       AnimationPane.class.getPackageName() + ".resources.";
   private static final String UPDATE_NEXT_RESOURCE =
@@ -36,6 +42,8 @@ public class AnimationPane {
     this.viewController = viewController;
     commandsToBeExecuted = new ArrayDeque<>();
     commandsToBeExecuted = new ArrayDeque<>();
+    allAvatarInformation = new HashMap<>();
+
     avatarPane = new AnchorPane();
 
     gridPane = new GridPane();

@@ -16,6 +16,7 @@ public class ViewController implements FrontEndExternalAPI {
     BackEndExternalAPI modelController;
     ScreenCreator screenCreator;
     LevelView levelView;
+
     /**
      * Default constructor
      * @param stage
