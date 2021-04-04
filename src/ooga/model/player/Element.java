@@ -5,7 +5,7 @@ package ooga.model.player;
  *
  * @author Harrison Huang
  */
-public interface Elements {
+public interface Element {
 
   /**
    * Getter for the ID of the element.

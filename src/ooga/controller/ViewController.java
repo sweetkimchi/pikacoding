@@ -3,7 +3,7 @@ package ooga.controller;
 import java.util.*;
 import javafx.stage.Stage;
 import ooga.model.grid.BoardState;
-import ooga.model.player.Elements;
+import ooga.model.player.Element;
 import ooga.view.level.CommandBlock;
 import ooga.view.ScreenCreator;
 import ooga.view.level.LevelView;
@@ -53,7 +53,7 @@ public class ViewController implements FrontEndExternalAPI {
      * @param spriteData Representation of element of the game
      */
     @Override
-    public void updateSprite(int id, Elements spriteData) {
+    public void updateSprite(int id, Element spriteData) {
 
     }
 
