@@ -6,8 +6,13 @@ import java.util.Deque;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import ooga.controller.FrontEndExternalAPI;
 
 public class AnimationPane {
@@ -21,6 +26,9 @@ public class AnimationPane {
       DEFAULT_RESOURCES + "UpdateNextReflectionActions";
   private int INCREMENT_FACTOR = 10;
   private int currentID = 1;
+  private AnchorPane avatarPane;
+  private GridPane gridPane;
+  private static final String PANE_BOX_ID = "AvatarView";
 
 
 
@@ -28,6 +36,17 @@ public class AnimationPane {
     this.viewController = viewController;
     commandsToBeExecuted = new ArrayDeque<>();
     commandsToBeExecuted = new ArrayDeque<>();
+    avatarPane = new AnchorPane();
+
+    gridPane = new GridPane();
+
+    gridPane.setMaxHeight(700);
+    gridPane.setMinWidth(600);
+
+    gridPane.add(avatarPane, 0, 1);
+    avatarPane.setId(PANE_BOX_ID);
+    avatarPane.getStyleClass().add(PANE_BOX_ID);
+
   }
 
   public void updateCommandQueue(String commandType, List<Double> commandValues) {
@@ -85,5 +104,9 @@ public class AnimationPane {
     currentID = avatarID;
     commandsToBeExecuted.add((double) avatarID);
     typeToBeUpdated.add("SetID");
+  }
+
+  public Node getBox() {
+    return gridPane;
   }
 }

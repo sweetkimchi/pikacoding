@@ -4,6 +4,8 @@ import java.util.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
@@ -18,6 +20,11 @@ public class ScreenCreator {
     FrontEndExternalAPI viewController;
     private Stage stage;
     private AnimationPane animationPane;
+    private BorderPane root;
+    private Scene scene;
+    private static final double DEFAULT_X = 1250.0;
+    private static final double DEFAULT_Y = 800.0;
+    private static final String TITLE = "Coding Game";
     /**
      * Default constructor
      */
@@ -25,7 +32,17 @@ public class ScreenCreator {
         this.viewController = viewController;
         this.stage = stage;
 
+        stage.setResizable(true);
+        root = new BorderPane();
+        scene = new Scene(root, DEFAULT_X, DEFAULT_Y);
+        stage.setScene(scene);
+        stage.setTitle(TITLE);
+        stage.show();
+
+
+
         animationPane = new AnimationPane(viewController);
+        root.setLeft(animationPane.getBox());
 
         // debug statement
         System.out.println("Screen launched");
