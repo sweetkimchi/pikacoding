@@ -14,6 +14,8 @@ import ooga.view.animation.AnimationPane;
 public class LevelView extends BorderPane {
 
   private static final String LEVEL_PROPERTIES = "Level";
+  private static final String DEFAULT_CSS = ScreenCreator.RESOURCES.replace(".", "/")
+          + "default.css";
 
   private FrontEndExternalAPI viewController;
   private MenuBar menuBar;
@@ -26,6 +28,7 @@ public class LevelView extends BorderPane {
 
   public LevelView(FrontEndExternalAPI viewController) {
     this.viewController = viewController;
+    this.getStylesheets().add(DEFAULT_CSS);
     menuBar = new MenuBar();
     board = new Board();
     codeArea = new CodeArea();
