@@ -55,6 +55,9 @@ public class CommandBlockHolder extends HBox {
     parameterOptions.forEach((parameter, options) -> {
       ComboBox<String> dropdown = new ComboBox<>();
       dropdown.getItems().addAll(options);
+      dropdown.setOnAction(e -> {
+        commandBlock.setParameter(parameter, dropdown.getValue());
+      });
       dropdown.getSelectionModel().selectFirst();
       this.getChildren().add(dropdown);
     });

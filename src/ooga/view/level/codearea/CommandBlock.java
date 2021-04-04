@@ -34,6 +34,11 @@ public class CommandBlock {
     return parameters;
   }
 
+  public void setParameter(String parameter, String value) {
+    assert parameters.containsKey(parameter);
+    parameters.put(parameter, value);
+  }
+
   void setIndex(int index) {
     this.index = index;
   }
