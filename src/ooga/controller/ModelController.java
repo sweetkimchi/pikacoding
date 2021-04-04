@@ -3,6 +3,7 @@ package ooga.controller;
 import java.util.*;
 import javax.lang.model.util.Elements;
 import ooga.model.CommandExecutor;
+import ooga.model.grid.BoardState;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -65,6 +66,11 @@ public class ModelController implements BackEndExternalAPI {
      */
     @Override
     public void setPosition(double x, double y, int id) {
+
+    }
+
+    @Override
+    public void setBoard(BoardState board) {
 
     }
 }
