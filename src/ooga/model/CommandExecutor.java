@@ -1,7 +1,7 @@
 package ooga.model;
 
 import java.util.*;
-import ooga.view.level.CommandBlock;
+import ooga.view.level.codearea.CommandBlock;
 
 /**
  * 
