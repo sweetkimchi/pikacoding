@@ -66,6 +66,10 @@ public class LevelView extends BorderPane {
     this.setBottom(controlPanel);
   }
 
+  private void runProgram() {
+    viewController.parseAndExecuteCommands(codeArea.getProgram());
+  }
+
   private void runSimulation() {
     timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 

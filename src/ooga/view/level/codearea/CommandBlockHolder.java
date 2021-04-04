@@ -19,6 +19,7 @@ public class CommandBlockHolder extends HBox {
   private int index;
   private String type;
   private Map<String, List<String>> parameterOptions;
+  private Label label;
   private CommandBlock commandBlock;
 
   public CommandBlockHolder(int index, String type, Consumer<Integer> removeAction) {
@@ -26,7 +27,8 @@ public class CommandBlockHolder extends HBox {
 
     this.index = index;
     this.type = type;
-    this.getChildren().add(new Label(type));
+    label = new Label(index + " " + type);
+    this.getChildren().add(label);
     parameterOptions = parseParameterOptions(type);
     Map<String, String> initialParameters = new HashMap<>();
     parameterOptions.forEach((parameter, options) -> {
@@ -37,6 +39,16 @@ public class CommandBlockHolder extends HBox {
     Button removeButton = new Button("x");
     removeButton.setOnAction(e -> removeAction.accept(this.index));
     this.getChildren().add(removeButton);
+  }
+
+  public CommandBlock getCommandBlock() {
+    return commandBlock;
+  }
+
+  public void setIndex(int index) {
+    this.index = index;
+    commandBlock.setIndex(index);
+    label.setText(index + " " + type);
   }
 
   private void initializeDropdowns() {
