@@ -2,6 +2,7 @@ package ooga.view.level;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -18,6 +19,7 @@ public class ControlPanel extends GridPane {
   private static final int ICON_SIZE = 30; //TODO: put in properties file
   private Object[] buttons;
   private ResourceBundle buttonImages;
+  private int col = 0;
 
   public ControlPanel() {
     this.getStyleClass().add("control-panel");
@@ -25,10 +27,15 @@ public class ControlPanel extends GridPane {
     buttons = buttonImages.keySet().toArray();
     Arrays.sort(buttons);
     makeButtons();
+    makeSlider();
+  }
+
+  private void makeSlider() {
+    Slider slider = new Slider();
+    this.add(slider, col, 0);
   }
 
   private void makeButtons() {
-    int col = 0;
     for(Object o: buttons) {
       Button button = new Button();
       button.setGraphic(setIcon(buttonImages.getString(o.toString())));
