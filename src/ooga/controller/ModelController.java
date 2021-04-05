@@ -3,7 +3,7 @@ package ooga.controller;
 import java.util.*;
 import javax.lang.model.util.Elements;
 import ooga.model.CommandExecutor;
-import ooga.view.level.CommandBlock;
+import ooga.view.level.codearea.CommandBlock;
 
 /**
  * 
