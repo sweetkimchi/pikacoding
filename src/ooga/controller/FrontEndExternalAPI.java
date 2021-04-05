@@ -1,7 +1,7 @@
 package ooga.controller;
 
 import java.util.List;
-import ooga.model.grid.BoardState;
+import ooga.model.grid.gridData.BoardState;
 import ooga.model.player.Element;
 import ooga.view.level.codearea.CommandBlock;
 
@@ -32,10 +32,15 @@ public interface FrontEndExternalAPI {
   public void updateSprite(int id, Element spriteData);
 
   /**
-   * Passes in the commands to be parsed and executed
+   * Passes in the commands to be parsed
    * @param commandBlocks List of individual command blocks derived from the blocks in the CodeBuilderArea
    */
-  public void parseAndExecuteCommands(List<CommandBlock> commandBlocks);
+  public void parseCommands(List<CommandBlock> commandBlocks);
+
+  /**
+   * Runs the next command in the command queue
+   */
+  public void runNextCommand();
 
   /**
    * Sets the position of the sprite

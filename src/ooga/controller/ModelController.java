@@ -3,6 +3,7 @@ package ooga.controller;
 import java.util.*;
 import javax.lang.model.util.Elements;
 import ooga.model.CommandExecutor;
+import ooga.model.grid.gridData.BoardState;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -36,14 +37,22 @@ public class ModelController implements BackEndExternalAPI {
     }
 
     /**
-     * Passes in the commands to be parsed and executed
+     * Passes in the commands to be parsed
      *
      * @param commandBlocks List of individual command blocks derived from the blocks in the
      *                      CodeBuilderArea
      */
     @Override
-    public void parseAndExecuteCommands(List<CommandBlock> commandBlocks) {
+    public void parseCommands(List<CommandBlock> commandBlocks) {
         CommandExecutor commandExecutor = new CommandExecutor(commandBlocks);
+    }
+
+    /**
+     * Runs the next command in the command queue
+     */
+    @Override
+    public void runNextCommand() {
+
     }
 
     /**
@@ -65,6 +74,11 @@ public class ModelController implements BackEndExternalAPI {
      */
     @Override
     public void setPosition(double x, double y, int id) {
+
+    }
+
+    @Override
+    public void setBoard(BoardState board) {
 
     }
 }

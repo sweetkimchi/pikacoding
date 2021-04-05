@@ -2,7 +2,7 @@ package ooga.controller;
 
 import java.util.*;
 import javafx.stage.Stage;
-import ooga.model.grid.BoardState;
+import ooga.model.grid.gridData.BoardState;
 import ooga.model.player.Element;
 import ooga.view.level.codearea.CommandBlock;
 import ooga.view.ScreenCreator;
@@ -16,6 +16,7 @@ public class ViewController implements FrontEndExternalAPI {
     BackEndExternalAPI modelController;
     ScreenCreator screenCreator;
     LevelView levelView;
+
     /**
      * Default constructor
      * @param stage
@@ -75,13 +76,22 @@ public class ViewController implements FrontEndExternalAPI {
     }
 
     /**
-     * Passes in the commands to be parsed and executed
+     * Passes in the commands to be parsed
      *
      * @param commandBlocks List of individual command blocks derived from the blocks in the
      *                      CodeBuilderArea
      */
     @Override
-    public void parseAndExecuteCommands(List<CommandBlock> commandBlocks) {
-        modelController.parseAndExecuteCommands(commandBlocks);
+    public void parseCommands(List<CommandBlock> commandBlocks) {
+        modelController.parseCommands(commandBlocks);
     }
+
+    /**
+     * Runs the next command in the command queue
+     */
+    @Override
+    public void runNextCommand() {
+        modelController.runNextCommand();
+    }
+
 }

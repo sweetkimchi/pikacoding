@@ -3,6 +3,7 @@
 package ooga.controller;
 import java.util.List;
 import javax.lang.model.util.Elements;
+import ooga.model.grid.gridData.BoardState;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -19,10 +20,15 @@ public interface BackEndExternalAPI {
   public void setViewController(FrontEndExternalAPI viewController);
 
   /**
-   * Passes in the commands to be parsed and executed
+   * Passes in the commands to be parsed
    * @param commandBlocks List of individual command blocks derived from the blocks in the CodeBuilderArea
    */
-  public void parseAndExecuteCommands(List<CommandBlock> commandBlocks);
+  public void parseCommands(List<CommandBlock> commandBlocks);
+
+  /**
+   * Runs the next command in the command queue
+   */
+  public void runNextCommand();
 
   /**
    * Gets the list of changed states in order to update the frontend.
@@ -35,5 +41,7 @@ public interface BackEndExternalAPI {
    * Sets the position of the sprite
    */
   public void setPosition(double x, double y, int id);
+
+  void setBoard(BoardState board);
 
 }
