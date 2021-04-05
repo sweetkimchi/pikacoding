@@ -9,14 +9,14 @@ import ooga.model.commands.Commands;
 public  class InitialState extends BoardState {
 
 
-  private List<Commands> commandsAvailable;
+  private List<String> commandsAvailable;
   private Map<String, String> imageLocations;
   private String description;
   private int numPeople;
   private int level;
 
   public InitialState(Map<String, List<Integer>> allAvatarLocations,
-      Map<String, BlockData> allBlockData, List<Commands> commandsAvailable,
+      Map<String, BlockData> allBlockData, List<String> commandsAvailable,
       Map<String, String> imageLocations, String description,
       int numPeople, int level) {
     super(allAvatarLocations, allBlockData);
@@ -29,7 +29,7 @@ public  class InitialState extends BoardState {
   }
 
 
-  public List<Commands> getCommandsAvailable() {
+  public List<String> getCommandsAvailable() {
     return Collections.unmodifiableList(commandsAvailable);
   }
 

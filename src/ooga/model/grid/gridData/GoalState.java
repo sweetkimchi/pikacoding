@@ -13,6 +13,8 @@ public class GoalState extends BoardState {
   }
 
 
+
+
   public boolean checkGameEnded() {
     //TODO Fill in logic later
     return false;

@@ -54,7 +54,8 @@ public class InitialConfigurationParser {
           new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
       this.initialState = new InitialState(
           parseAvatarLocations((Map<String, Object>) result.get("peopleLocations")),
-          parseBlockData((Map<String, Object>) result.get("blocks")), null,
+          parseBlockData((Map<String, Object>) result.get("blocks")),
+          (List<String>) initial.get("blocks"),
           parseImageLocations((String) initial.get("images")),
           (String) initial.get("description"),
           (int) initial.get("numPeople"),
@@ -115,6 +116,7 @@ public class InitialConfigurationParser {
       //HANDLE LATER
     }
   }
+
 
 
 
