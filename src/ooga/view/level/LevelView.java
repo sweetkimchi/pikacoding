@@ -33,6 +33,8 @@ public class LevelView extends BorderPane {
   private AnimationPane animationPane;
   private Timeline timeline;
 
+  private boolean codeIsRunning;
+
   public LevelView(FrontEndExternalAPI viewController) {
     this.viewController = viewController;
     this.getStylesheets().add(DEFAULT_CSS);
@@ -41,6 +43,7 @@ public class LevelView extends BorderPane {
     codeArea = new CodeArea();
     controlPanel = new ControlPanel();
     animationPane = new AnimationPane(this.viewController);
+    codeIsRunning = false;
     initializeViewElements();
   }
 
@@ -87,11 +90,11 @@ public class LevelView extends BorderPane {
 
   private void step() {
     System.out.println("step");
-
-  }
-
-  private void runProgram() {
-    viewController.parseCommands(codeArea.getProgram());
+    if (!codeIsRunning) {
+      viewController.parseCommands(codeArea.getProgram());
+      codeIsRunning = true;
+    }
+    viewController.runNextCommand();
   }
 
   private void runSimulation() {
