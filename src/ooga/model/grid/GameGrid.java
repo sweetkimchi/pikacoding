@@ -26,6 +26,11 @@ public class GameGrid implements Grid {
   @Override
   public void setDimensions(int width, int height) {
     grid = new Tile[width][height];
+    for (int i=0; i<width; i++) {
+      for (int j=0; j<height; j++) {
+        grid[i][j] = new Tile();
+      }
+    }
   }
 
   @Override
@@ -134,5 +139,10 @@ public class GameGrid implements Grid {
       ids.add(avatar.getId());
     }
     return ids;
+  }
+
+  //TODO: remove later, for testing only
+  public Tile getTile(int x, int y) {
+    return grid[x][y];
   }
 }
