@@ -32,6 +32,10 @@
     -fx-hgap: 15.0;
 }
 
+.board {
+    -fx-alignment: CENTER;
+}
+
 .scroll-pane {
     -fx-background-insets: 0 0 0 0;
 }
