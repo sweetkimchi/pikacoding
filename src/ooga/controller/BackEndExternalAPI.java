@@ -19,10 +19,15 @@ public interface BackEndExternalAPI {
   public void setViewController(FrontEndExternalAPI viewController);
 
   /**
-   * Passes in the commands to be parsed and executed
+   * Passes in the commands to be parsed
    * @param commandBlocks List of individual command blocks derived from the blocks in the CodeBuilderArea
    */
-  public void parseAndExecuteCommands(List<CommandBlock> commandBlocks);
+  public void parseCommands(List<CommandBlock> commandBlocks);
+
+  /**
+   * Runs the next command in the command queue
+   */
+  public void runNextCommand();
 
   /**
    * Gets the list of changed states in order to update the frontend.

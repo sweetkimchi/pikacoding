@@ -1,8 +1,8 @@
 package ooga.view.level.codearea;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -20,8 +20,12 @@ public class CodeArea extends GridPane {
     List<String> availableCommands = Collections.singletonList("step");
     commandBank = new CommandBank(availableCommands, this::addCommandBlock);
     programStack = new ProgramStack();
+    ScrollPane programStackHolder = new ScrollPane();
+    programStackHolder.setFitToWidth(true);
+    programStackHolder.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+    programStackHolder.setContent(programStack);
     this.add(commandBank, 0, 0);
-    this.add(programStack, 1, 0);
+    this.add(programStackHolder, 1, 0);
   }
 
   public List<CommandBlock> getProgram() {

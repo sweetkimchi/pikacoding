@@ -36,14 +36,22 @@ public class ModelController implements BackEndExternalAPI {
     }
 
     /**
-     * Passes in the commands to be parsed and executed
+     * Passes in the commands to be parsed
      *
      * @param commandBlocks List of individual command blocks derived from the blocks in the
      *                      CodeBuilderArea
      */
     @Override
-    public void parseAndExecuteCommands(List<CommandBlock> commandBlocks) {
+    public void parseCommands(List<CommandBlock> commandBlocks) {
         CommandExecutor commandExecutor = new CommandExecutor(commandBlocks);
+    }
+
+    /**
+     * Runs the next command in the command queue
+     */
+    @Override
+    public void runNextCommand() {
+
     }
 
     /**

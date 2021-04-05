@@ -5,8 +5,8 @@ import java.util.function.Consumer;
 import javafx.scene.layout.VBox;
 
 /**
- * Displays a list of available commands, allowing the user to click on them to
- * add them to the program stack.
+ * Displays a list of available commands, allowing the user to click on them to add them to the
+ * program stack.
  *
  * @author David Li.
  */
@@ -16,10 +16,8 @@ public class CommandBank extends VBox {
     this.setId("CommandBank");
     this.setSpacing(4);
     availableCommands.forEach(command -> {
-      CommandBlockOption option = new CommandBlockOption(command, e -> {
-        clickOptionAction.accept(command);
-      });
-      option.getRectangle().widthProperty().bind(this.widthProperty());
+      CommandBlockOption option = new CommandBlockOption(command,
+          e -> clickOptionAction.accept(command));
       this.getChildren().add(option);
     });
   }
