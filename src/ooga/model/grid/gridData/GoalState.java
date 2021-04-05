@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 public class GoalState extends BoardState {
-
+  private int numOfCommands;
   public GoalState(
       Map<String, List<Integer>> allAvatarLocations,
-      Map<String, BlockData> allBlockData) {
+      Map<String, BlockData> allBlockData, int numOfCommands) {
     super(allAvatarLocations, allBlockData);
+    this.numOfCommands = numOfCommands;
   }
 
 
