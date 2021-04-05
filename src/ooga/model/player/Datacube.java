@@ -13,4 +13,8 @@ public class Datacube extends Objects {
     public Datacube() {
     }
 
+    @Override
+    public int getId() {
+        return 0;
+    }
 }

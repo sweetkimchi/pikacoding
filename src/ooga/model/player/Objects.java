@@ -1,10 +1,9 @@
 package ooga.model.player;
-import java.util.*;
 
 /**
  * 
  */
-public abstract class Objects implements Elements {
+public abstract class Objects implements Element {
 
     /**
      * Default constructor
