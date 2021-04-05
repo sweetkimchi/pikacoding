@@ -10,7 +10,14 @@ import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.view.ScreenCreator;
 import ooga.view.animation.AnimationPane;
+import ooga.view.level.codearea.CodeArea;
 
+/**
+ * Main view class for levels.
+ * Contains all the main level view elements (board, code area, etc.)
+ *
+ * @author David Li
+ */
 public class LevelView extends BorderPane {
 
   private static final String LEVEL_PROPERTIES = "Level";
@@ -57,6 +64,10 @@ public class LevelView extends BorderPane {
     this.setCenter(board);
     this.setRight(codeArea);
     this.setBottom(controlPanel);
+  }
+
+  private void runProgram() {
+    viewController.parseAndExecuteCommands(codeArea.getProgram());
   }
 
   private void runSimulation() {
