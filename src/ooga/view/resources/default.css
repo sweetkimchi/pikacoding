@@ -16,3 +16,52 @@
 .state-2 {
     -fx-fill: #003366;
 }
+
+.control-panel {
+    -fx-padding: 10 10 10 200;
+    -fx-background-radius: 10;
+    -fx-background-insets: 5;
+    -fx-background-color: #696969;
+    -fx-alignment: CENTER_LEFT;
+    -fx-hgap: 15.0;
+}
+
+.Button1_Reset {
+    -fx-border-radius: 20;
+    -fx-background-insets: 1;
+    -fx-background-color: #bd0000;
+}
+
+.Button1_Reset:hover {
+    -fx-background-color: linear-gradient(#780000, #d00000);
+}
+
+.Button2_Play {
+    -fx-border-radius: 20;
+    -fx-background-insets: 1;
+    -fx-background-color: #00b100;
+}
+
+.Button2_Play:hover {
+    -fx-background-color: linear-gradient(#005f00, #00e000);
+}
+
+.Button3_Pause {
+    -fx-border-radius: 20;
+    -fx-background-insets: 1;
+    -fx-background-color: #00b100;
+}
+
+.Button3_Pause:hover {
+    -fx-background-color: linear-gradient(#005f00, #00e000);
+}
+
+.Button4_Step {
+    -fx-border-radius: 20;
+    -fx-background-insets: 1;
+    -fx-background-color: #00bc00;
+}
+
+.Button4_Step:hover {
+    -fx-background-color: linear-gradient(#005f00, #00e000);
+}
