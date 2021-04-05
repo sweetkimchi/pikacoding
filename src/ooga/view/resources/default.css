@@ -17,6 +17,12 @@
     -fx-fill: #003366;
 }
 
+.command-block-option {
+    -fx-font-size: 12pt;
+    -fx-background-color: green;
+    -fx-padding: 4 6 4 6;
+}
+
 .control-panel {
     -fx-padding: 10 10 10 200;
     -fx-background-radius: 10;
@@ -24,6 +30,10 @@
     -fx-background-color: #696969;
     -fx-alignment: CENTER_LEFT;
     -fx-hgap: 15.0;
+}
+
+.scroll-pane {
+    -fx-background-insets: 0 0 0 0;
 }
 
 .Button1_Reset {
