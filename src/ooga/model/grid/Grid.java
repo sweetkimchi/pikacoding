@@ -1,9 +1,8 @@
 package ooga.model.grid;
 
 import java.util.List;
-import ooga.model.commands.Commands;
 import ooga.model.player.ElementData;
-import ooga.model.player.Elements;
+import ooga.model.player.Element;
 
 /**
  * Grid contains the field with all of the avatars and objects, specific to each new level. It
@@ -28,7 +27,7 @@ public interface Grid {
    *
    * @param gameElement A generic element to be placed on the grid
    */
-  public void addGameElement(Elements gameElement, int xPos, int yPos);
+  public void addGameElement(Element gameElement, int xPos, int yPos);
 
 //  /**
 //   * Executes a command on all of the avatars.

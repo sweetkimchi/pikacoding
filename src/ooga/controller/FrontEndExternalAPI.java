@@ -2,7 +2,7 @@ package ooga.controller;
 
 import java.util.List;
 import ooga.model.grid.gridData.BoardState;
-import ooga.model.player.Elements;
+import ooga.model.player.Element;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -29,7 +29,7 @@ public interface FrontEndExternalAPI {
    * @param id Id of the sprite to be updated
    * @param spriteData Representation of element of the game
    */
-  public void updateSprite(int id, Elements spriteData);
+  public void updateSprite(int id, Element spriteData);
 
   /**
    * Passes in the commands to be parsed and executed

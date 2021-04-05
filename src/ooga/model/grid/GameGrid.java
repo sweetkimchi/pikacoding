@@ -1,19 +1,23 @@
 package ooga.model.grid;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ooga.model.Direction;
 import ooga.model.player.Avatar;
 import ooga.model.player.ElementData;
-import ooga.model.player.Elements;
+import ooga.model.player.Element;
 import ooga.model.player.Objects;
 
+/**
+ * The GameGrid contains all the elements for the grid of the game.
+ */
 public class GameGrid implements Grid {
 
-  private Elements[][] grid;
-  private final Map<Avatar,List<Integer>> avatarList;
+  private Tile[][] grid;
+  private final Map<Avatar, List<Integer>> avatarList;
 
   public GameGrid() {
     avatarList = new HashMap<>();
@@ -21,12 +25,17 @@ public class GameGrid implements Grid {
 
   @Override
   public void setDimensions(int width, int height) {
-    grid = new Elements[width][height];
+    grid = new Tile[width][height];
+    for (int i=0; i<width; i++) {
+      for (int j=0; j<height; j++) {
+        grid[i][j] = new Tile();
+      }
+    }
   }
 
   @Override
-  public void addGameElement(Elements gameElement, int xPos, int yPos) {
-    grid[xPos][yPos] = gameElement;
+  public void addGameElement(Element gameElement, int xPos, int yPos) {
+    grid[xPos][yPos].add(gameElement);
     if (gameElement instanceof Avatar) {
       avatarList.put((Avatar) gameElement, new ArrayList<>());
       avatarList.get(gameElement).addAll(List.of(xPos, yPos));
@@ -51,14 +60,18 @@ public class GameGrid implements Grid {
    * @param direction The direction to be moved
    */
   public void step(int avatarId, Direction direction) {
-    List<Integer> avatarCoordinates = getCoordinatesByAvatarId(avatarId);
-    assert avatarCoordinates != null;
-    Avatar avatar = (Avatar) grid[avatarCoordinates.get(0)][avatarCoordinates.get(1)];
-    switch(direction) {
-      case SELF:
-        break;
-
+    Avatar avatar = getAvatarById(avatarId);
+    List<Integer> avatarCoords = avatarList.get(avatar);
+    assert avatarCoords != null;
+    int currX = avatarCoords.get(0);
+    int currY = avatarCoords.get(1);
+    int newX = currX + direction.getXDel();
+    int newY = currY + direction.getYDel();
+    if (grid[newX][newY].canAddAvatar()) {
+      grid[newX][newY].add(avatar);
+      grid[currX][currY].removeAvatar();
     }
+
   }
 
   /**
@@ -67,7 +80,20 @@ public class GameGrid implements Grid {
    * @param direction The direction from which to pick up a block
    */
   public void pickUp(int avatarId, Direction direction) {
-
+    Avatar avatar = getAvatarById(avatarId);
+    assert avatar != null;
+    List<Integer> avatarCoords = avatarList.get(avatar);
+    assert avatarCoords != null;
+    int currX = avatarCoords.get(0);
+    int currY = avatarCoords.get(1);
+    int newX = currX + direction.getXDel();
+    int newY = currY + direction.getYDel();
+    if (grid[newX][newY].hasBlock()) {
+      avatar.pickUp(grid[newX][newY].getObject());
+      grid[currX][currY].removeBlock();
+    } else {
+      System.out.println("There is no block to be picked up!");
+    }
   }
 
   /**
@@ -77,22 +103,46 @@ public class GameGrid implements Grid {
    */
   public void drop(int avatarId) {
     Avatar avatar = getAvatarById(avatarId);
-    assert avatar != null;
-    Objects block = avatar.drop();
+    List<Integer> avatarCoords = avatarList.get(avatar);
+    int currX = avatarCoords.get(0);
+    int currY = avatarCoords.get(1);
+    if (grid[currX][currY].canAddBlock()) {
+      assert avatar != null;
+      Objects block = avatar.drop();
+      if (block == null) {
+        System.out.println("You are not holding a block!");
+      }
+      grid[currX][currY].add(block);
+    } else {
+      System.out.println("You cannot drop here!");
+    }
 
   }
 
   private Avatar getAvatarById(int id) {
     for (Avatar avatar : avatarList.keySet()) {
-      if (avatar.getId() == id) return avatar;
+      if (avatar.getId() == id) {
+        return avatar;
+      }
     }
     return null; // should never happen
   }
 
-  private List<Integer> getCoordinatesByAvatarId(int id) {
+  /**
+   * Returns a collection of the IDs of all the current avatars.
+   *
+   * @return A collection of integers containing IDs
+   */
+  public Collection<Integer> getAvatarIds() {
+    List<Integer> ids = new ArrayList<>();
     for (Avatar avatar : avatarList.keySet()) {
-
+      ids.add(avatar.getId());
     }
-    return null; // should never happen
+    return ids;
+  }
+
+  //TODO: remove later, for testing only
+  public Tile getTile(int x, int y) {
+    return grid[x][y];
   }
 }
