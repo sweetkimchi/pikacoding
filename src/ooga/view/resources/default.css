@@ -26,6 +26,10 @@
     -fx-hgap: 15.0;
 }
 
+.board {
+    -fx-alignment: CENTER;
+}
+
 .Button1_Reset {
     -fx-border-radius: 20;
     -fx-background-insets: 1;
