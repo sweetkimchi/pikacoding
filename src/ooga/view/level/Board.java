@@ -4,8 +4,11 @@ package ooga.view.level;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
+import javax.swing.text.Element;
+import javax.swing.text.html.ImageView;
 import ooga.view.ScreenCreator;
 
 import java.util.ArrayList;

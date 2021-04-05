@@ -13,6 +13,6 @@ public interface Commands {
 //   *
 //   * @param avatar The avatar upon which to execute the command
 //   */
-//  public void execute(Avatar avatar);
+  public void execute(Avatar avatar);
 
 }

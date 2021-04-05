@@ -1,7 +1,7 @@
 package ooga.controller;
 
 import java.util.List;
-import ooga.model.grid.BoardState;
+import ooga.model.grid.gridData.BoardState;
 import ooga.model.player.Element;
 import ooga.view.level.codearea.CommandBlock;
 

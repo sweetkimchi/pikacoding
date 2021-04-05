@@ -3,6 +3,7 @@
 package ooga.controller;
 import java.util.List;
 import javax.lang.model.util.Elements;
+import ooga.model.grid.gridData.BoardState;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -40,5 +41,7 @@ public interface BackEndExternalAPI {
    * Sets the position of the sprite
    */
   public void setPosition(double x, double y, int id);
+
+  void setBoard(BoardState board);
 
 }
