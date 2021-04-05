@@ -3,6 +3,7 @@ package ooga.model.parser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +18,7 @@ public class InitialConfigurationParser {
   private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
   private InitialState initialState;
   private GoalState goalState;
-
-
+  private Map<String, List<Map<String, List<String>>>> commandsMap;
   public InitialConfigurationParser(int level)  {
     this.level = level;
     this.rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + this.level + "/";
@@ -33,6 +33,11 @@ public class InitialConfigurationParser {
     return this.initialState;
   }
 
+
+  public Map<String, List<Map<String, List<String>>>> getCommandsMap()  {
+    return Collections.unmodifiableMap(commandsMap);
+  }
+
   private void parseLevelInfo() {
     try {
       String filePathToLevelInfoFile = this.rootURLPathForLevel + "level" + this.level + ".json";
@@ -40,7 +45,7 @@ public class InitialConfigurationParser {
           new ObjectMapper().readValue(new FileReader(filePathToLevelInfoFile), HashMap.class);
       parseStartState(result);
       parseEndState(Integer.parseInt((String) result.get("idealNumOfCommands")));
-
+      parseCommands();
     }
     catch (Exception e) {
       //handle later
@@ -117,7 +122,25 @@ public class InitialConfigurationParser {
     }
   }
 
-
+  private void parseCommands()  {
+    try {
+      String filePathToStartState = rootURLPathForLevel + "commands.json";
+      Map<String, Object> result =
+          new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
+      this.commandsMap = new HashMap<>();
+      for (String command: result.keySet()) {
+        List<Map<String, List<String>>> params = new ArrayList<>();
+        for (Map<String, List<String>> param:((Map<String, List<Map<String, List<String>>>>) result.get(command)).get("parameters")) {
+          params.add(param);
+        }
+        this.commandsMap.put(command, params);
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+      //figure out error handling later lol
+    }
+  }
 
 
 }
