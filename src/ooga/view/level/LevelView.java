@@ -24,11 +24,11 @@ public class LevelView extends BorderPane {
   private static final String DEFAULT_CSS = ScreenCreator.RESOURCES.replace(".", "/")
           + "default.css";
 
-  private FrontEndExternalAPI viewController;
-  private MenuBar menuBar;
-  private Board board;
-  private CodeArea codeArea;
-  private ControlPanel controlPanel;
+  private final FrontEndExternalAPI viewController;
+  private final MenuBar menuBar;
+  private final Board board;
+  private final CodeArea codeArea;
+  private final ControlPanel controlPanel;
 
   private AnimationPane animationPane;
   private Timeline timeline;
@@ -63,10 +63,27 @@ public class LevelView extends BorderPane {
     menuBar.setMinHeight(Double.parseDouble(levelResources.getString("MenuBarHeight")));
     codeArea.setMinWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
     controlPanel.setMinHeight(Double.parseDouble(levelResources.getString("ControlPanelHeight")));
+    controlPanel.setButtonAction("Button1_Reset", e -> reset());
+    controlPanel.setButtonAction("Button2_Play", e -> play());
+    controlPanel.setButtonAction("Button3_Pause", e -> pause());
+    controlPanel.setButtonAction("Button4_Step", e -> step());
     this.setTop(menuBar);
     this.setCenter(board);
     this.setRight(codeArea);
     this.setBottom(controlPanel);
+  }
+
+  private void pause() {
+  }
+
+  private void play() {
+  }
+
+  private void reset() {
+  }
+
+  private void step() {
+    System.out.println("step");
   }
 
   private void runProgram() {
