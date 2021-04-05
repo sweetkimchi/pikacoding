@@ -4,7 +4,7 @@
   "blocks":["step", "pickUp", "drop"],
   "startState":"startState.json",
   "endState":"endState.json",
-  "images":"image.json",
-  "Description":"Tell pikachu to step down one tile, pick up block, and drop it again",
+  "images":"images.json",
+  "description":"Tell pikachu to step down one tile, pick up block, and drop it again",
   "idealNumOfCommands":"3"
 }
