@@ -1,4 +1,4 @@
-package ooga.model.player;
+package ooga.model.grid;
 
 public enum Structure {
   FLOOR,

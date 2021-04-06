@@ -11,7 +11,6 @@ import ooga.model.player.Avatar;
 import ooga.model.player.ElementData;
 import ooga.model.player.Element;
 import ooga.model.player.Objects;
-import ooga.model.player.Structure;
 
 /**
  * The GameGrid contains all the elements for the grid of the game.

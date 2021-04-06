@@ -1,10 +1,8 @@
 package ooga.model.grid;
 
-import java.rmi.StubNotFoundException;
 import ooga.model.player.Avatar;
 import ooga.model.player.Element;
 import ooga.model.player.Objects;
-import ooga.model.player.Structure;
 
 /**
  * A Tile is one tile of the grid that can contain some number of elements.
