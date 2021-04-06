@@ -53,6 +53,7 @@ public class Board extends GridPane {
     makeTestingAvatars();
   }
 
+  // TODO: remove after debugging
   private void makeTestingAvatars() {
     Block block1 = new Block(5, 7, xSize - 5.0, ySize - 5.0, this, "10");
     Person person1 = new Person(3, 7, xSize, ySize, this);

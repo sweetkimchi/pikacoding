@@ -1,4 +1,4 @@
-package ooga.view.animation;
+package ooga.model.animation;
 
 import java.lang.reflect.Method;
 import java.util.ArrayDeque;
@@ -7,14 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.animation.Animation;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.view.frontendavatar.FrontEndSprite;
 

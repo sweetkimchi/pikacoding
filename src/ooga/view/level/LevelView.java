@@ -9,7 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.view.ScreenCreator;
-import ooga.view.animation.AnimationPane;
+import ooga.model.animation.AnimationPane;
 import ooga.view.level.codearea.CodeArea;
 
 /**
