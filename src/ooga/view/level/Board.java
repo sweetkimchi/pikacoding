@@ -36,7 +36,13 @@ public class Board extends GridPane {
     // TODO: remove after wired with model
     Random random = new Random();
     for (int i = 0; i < rows*cols; i ++) {
-      int state = random.nextInt(3);
+      int state = 0;
+      if(i < cols || i % cols == 0 || i % cols == cols - 1 || i >= cols * (rows -1)) {
+        state = 2;
+      }
+      else {
+        state = random.nextInt(2);
+      }
       states.add(state);
     }
 
@@ -44,6 +50,12 @@ public class Board extends GridPane {
     xSize = gridXSize / cols;
     ySize = gridYSize / rows;
     makeGrid();
+    makeTestingAvatars();
+  }
+
+  private void makeTestingAvatars() {
+    Block block1 = new Block(5, 7, xSize - 5.0, ySize - 5.0, this, "10");
+    Person person1 = new Person(3, 7, xSize, ySize, this);
   }
 
   private void makeGrid() {
