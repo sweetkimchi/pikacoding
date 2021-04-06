@@ -73,6 +73,8 @@ public class CommandExecutor {
                     System.out.printf("Executing step for avatar ID %d with program counter %d \n", dummy.getId(), dummy.getProgramCounter());
 
                     animationPane.moveAvatar(dummy, getDirection(currentCommand.getParameters().get("direction")));
+
+            //        gameGrid.step(dummy.getId(),getDirection(currentCommand.getParameters().get("direction")));
                     // update program counter
                     dummy.setProgramCounter(dummy.getProgramCounter() + 1);
                 }

@@ -85,6 +85,10 @@ public class LevelView extends BorderPane {
 
   private void play() {
     System.out.println("play");
+    if (!codeIsRunning) {
+      viewController.parseCommands(codeArea.getProgram());
+      codeIsRunning = true;
+    }
     runSimulation();
   }
 
