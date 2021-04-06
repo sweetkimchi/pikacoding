@@ -21,21 +21,22 @@ public class CommandBlockHolder extends HBox {
 
   private int index;
   private String type;
-  private Map<String, List<String>> parameterOptions;
+  private List<Map<String, List<String>>> parameterOptions;
   private Label label;
   private CommandBlock commandBlock;
 
-  public CommandBlockHolder(int index, String type, Consumer<Integer> removeAction) {
+  public CommandBlockHolder(int index, String type, List<Map<String, List<String>>> parameterOptions, Consumer<Integer> removeAction) {
     this.setSpacing(4);
 
     this.index = index;
     this.type = type;
     label = new Label(index + " " + type);
     this.getChildren().add(label);
-    parameterOptions = parseParameterOptions(type);
+    this.parameterOptions = parameterOptions;
     Map<String, String> initialParameters = new HashMap<>();
-    parameterOptions.forEach((parameter, options) -> {
-      initialParameters.put(parameter, options.get(0));
+    parameterOptions.forEach(parameterOption -> {
+      String parameter = parameterOption.keySet().iterator().next();
+      initialParameters.put(parameter, parameterOption.get(parameter).get(0));
     });
     commandBlock = new CommandBlock(index, type, initialParameters);
     initializeDropdowns();
@@ -55,7 +56,9 @@ public class CommandBlockHolder extends HBox {
   }
 
   private void initializeDropdowns() {
-    parameterOptions.forEach((parameter, options) -> {
+    parameterOptions.forEach(parameterOption -> {
+      String parameter = parameterOption.keySet().iterator().next();
+      List<String> options = parameterOption.get(parameter);
       ComboBox<String> dropdown = new ComboBox<>();
       dropdown.getItems().addAll(options);
       dropdown.setOnAction(e -> {
@@ -64,22 +67,6 @@ public class CommandBlockHolder extends HBox {
       dropdown.getSelectionModel().selectFirst();
       this.getChildren().add(dropdown);
     });
-  }
-
-  private Map<String, List<String>> parseParameterOptions(String type) {
-    // TODO: Parse options from json file
-    Map<String, List<String>> options = new LinkedHashMap<>();
-    if (type.equals("step")) {
-      options.put("direction", Arrays.asList("up",
-          "up-right",
-          "right",
-          "down-right",
-          "down",
-          "down-left",
-          "left",
-          "up-left"));
-    }
-    return options;
   }
 
 }
