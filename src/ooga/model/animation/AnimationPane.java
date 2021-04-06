@@ -7,20 +7,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import ooga.controller.BackEndExternalAPI;
-import ooga.controller.FrontEndExternalAPI;
-import ooga.view.frontendavatar.FrontEndSprite;
+import ooga.model.player.Element;
 
 public class AnimationPane {
 
   private BackEndExternalAPI modelController;
   private Deque<Double> commandsToBeExecuted;
   private Deque<String> typeToBeUpdated;
-  private Map<Integer, FrontEndSprite> allAvatarInformation;
+  private Map<Integer, Element> allElementInformation;
 
 
   private static final String DEFAULT_RESOURCES =
@@ -36,7 +32,7 @@ public class AnimationPane {
   public AnimationPane(BackEndExternalAPI modelController){
     this.modelController = modelController;
     commandsToBeExecuted = new ArrayDeque<>();
-    allAvatarInformation = new HashMap<>();
+    allElementInformation = new HashMap<>();
   }
 
   public void updateCommandQueue(String commandType, List<Double> commandValues) {
@@ -109,6 +105,15 @@ public class AnimationPane {
     currentID = avatarID;
     commandsToBeExecuted.add((double) avatarID);
     typeToBeUpdated.add("SetID");
+  }
+
+  public void createAvatar(int id, Element element){
+    allElementInformation.put(id, element);
+   // System.out.println(allElementInformation);
+  }
+
+  public Map<Integer, Element> getAllElementInformation(){
+    return allElementInformation;
   }
 
 
