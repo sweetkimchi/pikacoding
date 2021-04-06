@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 import ooga.controller.BackEndExternalAPI;
+import ooga.model.Direction;
+import ooga.model.player.Avatar;
 import ooga.model.player.Element;
 
 public class AnimationPane {
@@ -115,6 +117,20 @@ public class AnimationPane {
   public Map<Integer, Element> getAllElementInformation(){
     return allElementInformation;
   }
+
+
+  public void moveAvatar(Avatar dummy, Direction direction) {
+
+    int xPrev = dummy.getXCoord();
+    int yPrev = dummy.getYCoord();
+    dummy.setXCoord(dummy.getXCoord() + direction.getXDel());
+    dummy.setYCoord(dummy.getYCoord() + direction.getYDel());
+
+
+    System.out.printf("Moving avatar %d from (%d, %d) in the direction %s to new location (%d, %d)\n", dummy.getId(), xPrev, yPrev, direction, dummy.getXCoord(), dummy.getYCoord());
+
+  }
+
 
 
 }

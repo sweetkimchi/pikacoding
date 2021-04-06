@@ -24,7 +24,7 @@ public class GridTest {
   public void setup() {
     modelController = new ModelController();
     gameGrid = new GameGrid(modelController);
-    avatar = new Avatar(10);
+    avatar = new Avatar(10, 0, 0);
     datacube = new Datacube();
     gameGrid.setDimensions(10, 10);
     gameGrid.addGameElement(avatar, 5, 5);

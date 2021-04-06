@@ -6,8 +6,7 @@ package ooga.model.player;
  * @author Harrison Huang
  */
 public interface Element {
-  
-  int programCounter = 1;
+
   /**
    * Getter for the ID of the element.
    *
@@ -15,6 +14,25 @@ public interface Element {
    */
   int getId();
 
+  /**
+   * @return xCoordinate of the Element
+   */
+  int getXCoord();
+
+  /**
+   * @return yCoordinate of the Element
+   */
+  int getYCoord();
+
+  /**
+   * update the xCoordinate
+   */
+  void setXCoord(int xCoord);
+
+  /**
+   * update the yCoordinate
+   */
+  void setYCoord(int yCoord);
 
 
 }

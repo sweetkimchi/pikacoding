@@ -39,7 +39,7 @@ public class CommandExecutor {
 
         // add all avatars to animation
         for(Map.Entry<String, List<Integer>> entry : initialState.getAllAvatarLocations().entrySet()){
-            animationPane.createAvatar(Integer.parseInt(entry.getKey()),new Avatar(Integer.parseInt(entry.getKey())));
+            animationPane.createAvatar(Integer.parseInt(entry.getKey()),new Avatar(Integer.parseInt(entry.getKey()), entry.getValue().get(0), entry.getValue().get(1)));
         }
 
     //    System.out.println("Initial State of the Board: " + initialState.getAllBlockData().get("1").getLocation());
@@ -62,6 +62,7 @@ public class CommandExecutor {
             Avatar dummy = (Avatar) entry.getValue();
             
             // +1 is needed because program counters are 1 indexed
+            // TODO: refactor with Reflection and properties files
             if (dummy.getProgramCounter() < mapOfCommandBlocks.size() + 1) {
 
                 ended = false;
@@ -71,6 +72,7 @@ public class CommandExecutor {
 
                     System.out.printf("Executing step for avatar ID %d with program counter %d \n", dummy.getId(), dummy.getProgramCounter());
 
+                    animationPane.moveAvatar(dummy, getDirection(currentCommand.getParameters().get("direction")));
                     // update program counter
                     dummy.setProgramCounter(dummy.getProgramCounter() + 1);
                 }
@@ -96,5 +98,36 @@ public class CommandExecutor {
             modelController.declareEndOfAnimation();
         }
 
+    }
+
+
+    // TODO: refactor with Reflection
+    private Direction getDirection(String direction) {
+        Direction dummy = Direction.SELF;
+        if(direction.equals("up")){
+            dummy = Direction.UP;
+        }
+        if(direction.equals("up-right")){
+            dummy = Direction.UP_RIGHT;
+        }
+        if(direction.equals("right")){
+            dummy = Direction.RIGHT;
+        }
+        if(direction.equals("down-right")){
+            dummy = Direction.DOWN_RIGHT;
+        }
+        if(direction.equals("down")){
+            dummy = Direction.DOWN;
+        }
+        if(direction.equals("down-left")){
+            dummy = Direction.DOWN_LEFT;
+        }
+        if(direction.equals("left")){
+            dummy = Direction.LEFT;
+        }
+        if(direction.equals("up-left")){
+            dummy = Direction.UP_LEFT;
+        }
+        return dummy;
     }
 }
