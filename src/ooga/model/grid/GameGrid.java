@@ -26,13 +26,21 @@ public class GameGrid implements Grid {
   }
 
   @Override
-  public void setDimensions(int width, int height) {
-    grid = new Tile[width][height];
-    for (int i=0; i<width; i++) {
-      for (int j=0; j<height; j++) {
+  public void setDimensions(int rows, int cols) {
+    grid = new Tile[rows][cols];
+    for (int i=0; i<rows; i++) {
+      for (int j=0; j<cols; j++) {
         grid[i][j] = new Tile();
       }
     }
+  }
+
+  public Structure getStructure(int x, int y) {
+    return grid[x][y].getStructure();
+  }
+
+  public void setStructure(int x, int y, Structure structure) {
+    grid[x][y].setStructure(structure);
   }
 
   @Override
@@ -72,6 +80,8 @@ public class GameGrid implements Grid {
     if (grid[newX][newY].canAddAvatar()) {
       grid[newX][newY].add(avatar);
       grid[currX][currY].removeAvatar();
+      avatarCoords.set(0, newX);
+      avatarCoords.set(1, newY);
     }
 
   }
@@ -148,11 +158,4 @@ public class GameGrid implements Grid {
     return grid[x][y];
   }
 
-  public Structure getStructure(int x, int y) {
-    return grid[x][y].getStructure();
-  }
-
-  public void setStructure(int x, int y, Structure structure) {
-    grid[x][y].setStructure(structure);
-  }
 }

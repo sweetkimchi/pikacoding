@@ -49,11 +49,11 @@ public class Tile {
   }
 
   public boolean canAddAvatar() {
-    return (structure == null) && (avatar == null);
+    return (structure == Structure.FLOOR) && (avatar == null);
   }
 
   public boolean canAddBlock() {
-    return (structure == null) && (block == null);
+    return (structure == Structure.FLOOR) && (block == null);
   }
 
   public Structure getStructure() {
