@@ -56,7 +56,7 @@ public class LevelView extends BorderPane {
   }
 
 
-  public void setPosition(double x, double y) {
+  public void setPosition(double x, double y, int id) {
     animationPane.setPosition(x, y);
   }
 
@@ -95,6 +95,7 @@ public class LevelView extends BorderPane {
   }
 
   private void reset() {
+    codeIsRunning = false;
     System.out.println("reset");
   }
 

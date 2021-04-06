@@ -78,7 +78,7 @@ public class ViewController implements FrontEndExternalAPI {
      */
     @Override
     public void setPosition(double x, double y, int id) {
-        levelView.setPosition(x,y);
+        levelView.setPosition(x,y, id);
     }
 
     @Override

@@ -29,6 +29,8 @@ public class CommandExecutor {
         this.modelController = modelController;
         mapOfCommandBlocks = new HashMap<>();
         System.out.println("Command block received from frontend");
+        System.out.println("Initial Positions: " + initialState.getAllAvatarLocations());
+        System.out.println("Initial State of the Board: " + initialState.getAllBlockData());
 
         // build a map of all commands to be executed
         for(CommandBlock commandBlock : commandBlocks){

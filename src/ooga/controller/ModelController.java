@@ -82,7 +82,7 @@ public class ModelController implements BackEndExternalAPI {
      */
     @Override
     public void setPosition(double x, double y, int id) {
-
+        viewController.setPosition(x,y,id);
     }
 
     @Override
