@@ -15,34 +15,10 @@
       }
     ]
   },
-  "if": {
-    "parameters": [
-      {
-        "direction": [
-          "up",
-          "up-right",
-          "right",
-          "down-right",
-          "down",
-          "down-left",
-          "left",
-          "up-left"
-        ]
-      },
-      {
-        "comparator": [
-          "equal",
-          "not equal"
-        ]
-      },
-      {
-        "target": [
-          "nothing",
-          "datacube",
-          "hole",
-          "wall"
-        ]
-      }
-    ]
+  "pickUp": {
+    "parameters": []
+  },
+  "drop": {
+    "parameters": []
   }
 }

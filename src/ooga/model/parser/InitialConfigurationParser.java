@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.BlockData;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.grid.gridData.InitialState;
@@ -18,7 +19,7 @@ public class InitialConfigurationParser {
   private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
   private InitialState initialState;
   private GoalState goalState;
-  private Map<String, List<Map<String, List<String>>>> commandsMap;
+  private AvailableCommands availableCommands;
   public InitialConfigurationParser(int level)  {
     this.level = level;
     this.rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + this.level + "/";
@@ -34,8 +35,8 @@ public class InitialConfigurationParser {
   }
 
 
-  public Map<String, List<Map<String, List<String>>>> getCommandsMap()  {
-    return Collections.unmodifiableMap(commandsMap);
+  public AvailableCommands getAvailableCommands()  {
+    return availableCommands;
   }
 
   private void parseLevelInfo() {
@@ -127,14 +128,15 @@ public class InitialConfigurationParser {
       String filePathToStartState = rootURLPathForLevel + "commands.json";
       Map<String, Object> result =
           new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
-      this.commandsMap = new HashMap<>();
+      Map<String, List<Map<String, List<String>>>> commandsMap = new HashMap<>();
       for (String command: result.keySet()) {
         List<Map<String, List<String>>> params = new ArrayList<>();
         for (Map<String, List<String>> param:((Map<String, List<Map<String, List<String>>>>) result.get(command)).get("parameters")) {
           params.add(param);
         }
-        this.commandsMap.put(command, params);
+        commandsMap.put(command, params);
       }
+      availableCommands = new AvailableCommands(commandsMap);
     }
     catch (Exception e) {
       e.printStackTrace();

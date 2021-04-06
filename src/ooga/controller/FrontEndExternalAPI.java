@@ -1,6 +1,8 @@
 package ooga.controller;
 
 import java.util.List;
+import java.util.Map;
+import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.BoardState;
 import ooga.model.player.Element;
 import ooga.view.level.codearea.CommandBlock;
@@ -23,6 +25,12 @@ public interface FrontEndExternalAPI {
    * @param boardState The initial state of the board
    */
   public void setBoard(BoardState boardState);
+
+  /**
+   * Sets the available commands with their parameters and parameter options
+   * @param commandsMap Map from command names to a list of parameters that map to a list of the parameter options.
+   */
+  public void setAvailableCommands(AvailableCommands availableCommands);
 
   /**
    * Updates and individual sprite (avatars, block)
