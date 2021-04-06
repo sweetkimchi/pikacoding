@@ -4,6 +4,7 @@ import java.util.*;
 import javax.lang.model.util.Elements;
 import ooga.model.CommandExecutor;
 import ooga.model.grid.gridData.BoardState;
+import ooga.model.parser.InitialConfigurationParser;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -11,7 +12,9 @@ import ooga.view.level.codearea.CommandBlock;
  */
 public class ModelController implements BackEndExternalAPI {
 
-    FrontEndExternalAPI viewController;
+    private FrontEndExternalAPI viewController;
+    private CommandExecutor commandExecutor;
+    private InitialConfigurationParser initialConfigurationParser;
 
     /**
      * Default constructor
@@ -44,7 +47,10 @@ public class ModelController implements BackEndExternalAPI {
      */
     @Override
     public void parseCommands(List<CommandBlock> commandBlocks) {
-        CommandExecutor commandExecutor = new CommandExecutor(commandBlocks);
+        //TODO: delete after debugging. Initializing level for testing purposes
+        initialConfigurationParser = new InitialConfigurationParser(1);
+
+        commandExecutor = new CommandExecutor(commandBlocks, this, initialConfigurationParser.getInitialState());
     }
 
     /**
@@ -52,7 +58,8 @@ public class ModelController implements BackEndExternalAPI {
      */
     @Override
     public void runNextCommand() {
-
+        commandExecutor.runNextCommand();
+        System.out.println("Running next command");
     }
 
     /**
@@ -74,11 +81,31 @@ public class ModelController implements BackEndExternalAPI {
      */
     @Override
     public void setPosition(double x, double y, int id) {
-
+        viewController.setPosition(x,y,id);
     }
 
     @Override
     public void setBoard(BoardState board) {
 
+    }
+
+    /**
+     * All commands have reached the end and no more to be executed
+     */
+    @Override
+    public void declareEndOfAnimation() {
+        System.out.println("End of Commands");
+    }
+
+    /**
+     * initializes the level
+     *
+     * @param level integer indicating the level
+     * @return BoardState object with level information
+     */
+    @Override
+    public BoardState initializeLevel(int level) {
+        initialConfigurationParser = new InitialConfigurationParser(level);
+        return initialConfigurationParser.getInitialState();
     }
 }

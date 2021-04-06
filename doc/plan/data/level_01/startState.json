@@ -4,17 +4,17 @@
     "3":[6,3],
   },
   "blocks":{
-    "1":{
+    "4":{
       "loc":[1,4],
       "num":4,
       "pickedUp":"False"
     },
-    "2":{
+    "5":{
       "loc":[4,4],
       "num":7,
       "pickedUp":"False"
     },
-    "3":{
+    "6":{
       "loc":[6,4],
       "num":7,
       "pickedUp":"False"

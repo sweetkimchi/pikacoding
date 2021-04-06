@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import ooga.controller.BackEndExternalAPI;
+import ooga.controller.ModelController;
 import ooga.model.Direction;
 import ooga.model.grid.GameGrid;
 import ooga.model.player.Avatar;
@@ -16,11 +18,13 @@ public class GridTest {
   GameGrid gameGrid;
   Avatar avatar;
   Datacube datacube;
+  BackEndExternalAPI modelController;
 
   @BeforeEach
   public void setup() {
-    gameGrid = new GameGrid();
-    avatar = new Avatar(10);
+    modelController = new ModelController();
+    gameGrid = new GameGrid(modelController);
+    avatar = new Avatar(10, 0, 0);
     datacube = new Datacube();
     gameGrid.setDimensions(10, 10);
     gameGrid.addGameElement(avatar, 5, 5);

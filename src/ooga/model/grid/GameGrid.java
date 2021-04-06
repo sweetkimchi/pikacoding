@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import ooga.controller.BackEndExternalAPI;
 import ooga.model.Direction;
 import ooga.model.player.Avatar;
 import ooga.model.player.ElementData;
@@ -19,7 +20,7 @@ public class GameGrid implements Grid {
   private Tile[][] grid;
   private final Map<Avatar, List<Integer>> avatarList;
 
-  public GameGrid() {
+  public GameGrid(BackEndExternalAPI modelController) {
     avatarList = new HashMap<>();
   }
 

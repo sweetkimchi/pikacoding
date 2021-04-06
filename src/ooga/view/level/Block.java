@@ -7,20 +7,21 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class Block extends StackPane {
-  private String number = "5";
   private int row;
   private int col;
   private double width;
   private double height;
   private Text blockText;
   private GridPane grid;
+  private String number;
 
-  public Block(int r, int c, double w, double h, GridPane root) {
+  public Block(int r, int c, double w, double h, GridPane root, String num) {
     row = r;
     col = c;
     width = w;
     height = h;
     grid = root;
+    number = num;
     makeBlock();
   }
 

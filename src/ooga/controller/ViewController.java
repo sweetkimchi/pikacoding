@@ -27,7 +27,7 @@ public class ViewController implements FrontEndExternalAPI {
         screenCreator = new ScreenCreator(this, stage);
         levelView = screenCreator.getLevelView();
 
-        // Just for testing purposes
+        // TODO: delete after testing
         InitialConfigurationParser parser = new InitialConfigurationParser(1);
         setAvailableCommands(parser.getAvailableCommands());
     }
@@ -78,12 +78,18 @@ public class ViewController implements FrontEndExternalAPI {
      */
     @Override
     public void setPosition(double x, double y, int id) {
-        levelView.setPosition(x,y);
+        levelView.setPosition(x,y, id);
     }
 
     @Override
     public void setActiveAvatar(int avatarID) {
         levelView.setActiveAvatar(avatarID);
+    }
+
+    @Override
+    public BoardState initializeLevel(int level) {
+       // return modelController.initializeLevel(level);
+        return null;
     }
 
     /**

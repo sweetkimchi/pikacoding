@@ -26,6 +26,10 @@ public class Board extends GridPane {
   private double xSize;
   private double ySize;
 
+  // TODO: remove after debugging
+  Person person1;
+  Block block1;
+
   public Board() {
     ResourceBundle boardValues = ResourceBundle.getBundle(ScreenCreator.RESOURCES + BOARD_PROPERTIES);
     rows = 10; // TODO: remove after wired with model
@@ -36,7 +40,13 @@ public class Board extends GridPane {
     // TODO: remove after wired with model
     Random random = new Random();
     for (int i = 0; i < rows*cols; i ++) {
-      int state = random.nextInt(3);
+      int state = 0;
+      if(i < cols || i % cols == 0 || i % cols == cols - 1 || i >= cols * (rows -1)) {
+        state = 2;
+      }
+      else {
+        state = random.nextInt(2);
+      }
       states.add(state);
     }
 
@@ -44,6 +54,13 @@ public class Board extends GridPane {
     xSize = gridXSize / cols;
     ySize = gridYSize / rows;
     makeGrid();
+    makeTestingAvatars();
+  }
+
+  // TODO: remove after debugging
+  private void makeTestingAvatars() {
+    block1 = new Block(5, 7, xSize - 5.0, ySize - 5.0, this, "10");
+    person1 = new Person(3, 7, xSize, ySize, this);
   }
 
   private void makeGrid() {
@@ -54,5 +71,9 @@ public class Board extends GridPane {
         this.add(block, j, i);
       }
     }
+  }
+
+  public void moveAvatar(double xCoord, double yCoord){
+    person1.movePerson(xCoord,yCoord);
   }
 }

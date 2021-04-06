@@ -10,7 +10,7 @@ import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
 import ooga.view.ScreenCreator;
-import ooga.view.animation.AnimationPane;
+import ooga.model.animation.AnimationPane;
 import ooga.view.level.codearea.CodeArea;
 
 /**
@@ -31,7 +31,6 @@ public class LevelView extends BorderPane {
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
 
-  private AnimationPane animationPane;
   private Timeline timeline;
 
   private boolean codeIsRunning;
@@ -43,22 +42,20 @@ public class LevelView extends BorderPane {
     board = new Board();
     codeArea = new CodeArea();
     controlPanel = new ControlPanel();
-    animationPane = new AnimationPane(this.viewController);
     codeIsRunning = false;
     initializeViewElements();
+
+
+
   }
 
-  public void updateCommandQueue(String commandType, List<Double> commandValues) {
-    animationPane.updateCommandQueue(commandType, commandValues);
-  }
 
+  public void setPosition(double x, double y, int id) {
 
-  public void setPosition(double x, double y) {
-    animationPane.setPosition(x, y);
   }
 
   public void setActiveAvatar(int avatarID) {
-    animationPane.setActiveAvatar(avatarID);
+
   }
 
   public void setAvailableCommands(AvailableCommands availableCommands) {
@@ -83,13 +80,20 @@ public class LevelView extends BorderPane {
 
   private void pause() {
     System.out.println("pause");
+    timeline.stop();
   }
 
   private void play() {
     System.out.println("play");
+    if (!codeIsRunning) {
+      viewController.parseCommands(codeArea.getProgram());
+      codeIsRunning = true;
+    }
+    runSimulation();
   }
 
   private void reset() {
+    codeIsRunning = false;
     System.out.println("reset");
   }
 
@@ -106,6 +110,7 @@ public class LevelView extends BorderPane {
     timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 
       //     updateTurtleStates();
+      viewController.runNextCommand();
       setAnimationSpeed();
     }));
     timeline.setCycleCount(Animation.INDEFINITE);
@@ -114,7 +119,8 @@ public class LevelView extends BorderPane {
   }
 
   private void setAnimationSpeed() {
-    //   timeline.setRate(userCommand.getAnimationSpeed());
+    // TODO: remove after debugging
+    timeline.setRate(2);
   }
 
 }
