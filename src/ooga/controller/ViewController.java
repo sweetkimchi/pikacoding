@@ -26,7 +26,8 @@ public class ViewController implements FrontEndExternalAPI {
     public ViewController(Stage stage) {
         screenCreator = new ScreenCreator(this, stage);
         levelView = screenCreator.getLevelView();
-        // Just for testing purposes
+
+        // TODO: delete after testing
         InitialConfigurationParser parser = new InitialConfigurationParser(1);
         setAvailableCommands(parser.getAvailableCommands());
     }
@@ -87,7 +88,8 @@ public class ViewController implements FrontEndExternalAPI {
 
     @Override
     public BoardState initializeLevel(int level) {
-        return modelController.initializeLevel(level);
+       // return modelController.initializeLevel(level);
+        return null;
     }
 
     /**

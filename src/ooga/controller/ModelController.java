@@ -47,7 +47,11 @@ public class ModelController implements BackEndExternalAPI {
      */
     @Override
     public void parseCommands(List<CommandBlock> commandBlocks) {
-        commandExecutor = new CommandExecutor(commandBlocks, this);
+        //TODO: delete after debugging. Initializing level for testing purposes
+
+        initialConfigurationParser = new InitialConfigurationParser(1);
+
+        commandExecutor = new CommandExecutor(commandBlocks, this, initialConfigurationParser.getInitialState());
     }
 
     /**

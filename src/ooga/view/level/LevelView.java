@@ -46,6 +46,9 @@ public class LevelView extends BorderPane {
     animationPane = new AnimationPane(this.viewController);
     codeIsRunning = false;
     initializeViewElements();
+
+
+
   }
 
   public void updateCommandQueue(String commandType, List<Double> commandValues) {

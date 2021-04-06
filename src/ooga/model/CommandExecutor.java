@@ -4,6 +4,8 @@ import java.util.*;
 import javafx.scene.web.HTMLEditorSkin.Command;
 import ooga.controller.BackEndExternalAPI;
 import ooga.model.grid.GameGrid;
+import ooga.model.grid.gridData.BoardState;
+import ooga.view.level.Board;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -16,10 +18,12 @@ public class CommandExecutor {
     private int programCounter;
     private BackEndExternalAPI modelController;
     private GameGrid gameGrid;
+    private BoardState initialState;
     /**
      * Default constructor
      */
-    public CommandExecutor(List<CommandBlock> commandBlocks, BackEndExternalAPI modelController) {
+    public CommandExecutor(List<CommandBlock> commandBlocks, BackEndExternalAPI modelController, BoardState initialState) {
+        this.initialState = initialState;
         programCounter = 1;
         gameGrid = new GameGrid(modelController);
         this.modelController = modelController;
