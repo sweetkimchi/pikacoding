@@ -85,6 +85,11 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.setActiveAvatar(avatarID);
     }
 
+    @Override
+    public BoardState initializeLevel(int level) {
+        return modelController.initializeLevel(level);
+    }
+
     /**
      * Passes in the commands to be parsed
      *

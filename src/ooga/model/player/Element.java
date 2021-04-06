@@ -6,7 +6,8 @@ package ooga.model.player;
  * @author Harrison Huang
  */
 public interface Element {
-
+  
+  int programCounter = 1;
   /**
    * Getter for the ID of the element.
    *

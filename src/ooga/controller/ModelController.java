@@ -4,6 +4,7 @@ import java.util.*;
 import javax.lang.model.util.Elements;
 import ooga.model.CommandExecutor;
 import ooga.model.grid.gridData.BoardState;
+import ooga.model.parser.InitialConfigurationParser;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -13,6 +14,7 @@ public class ModelController implements BackEndExternalAPI {
 
     private FrontEndExternalAPI viewController;
     private CommandExecutor commandExecutor;
+    private InitialConfigurationParser initialConfigurationParser;
 
     /**
      * Default constructor
@@ -90,5 +92,17 @@ public class ModelController implements BackEndExternalAPI {
     @Override
     public void declareEndOfAnimation() {
         System.out.println("End of Commands");
+    }
+
+    /**
+     * initializes the level
+     *
+     * @param level integer indicating the level
+     * @return BoardState object with level information
+     */
+    @Override
+    public BoardState initializeLevel(int level) {
+        initialConfigurationParser = new InitialConfigurationParser(level);
+        return initialConfigurationParser.getInitialState();
     }
 }

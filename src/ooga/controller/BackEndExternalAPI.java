@@ -48,4 +48,11 @@ public interface BackEndExternalAPI {
    * All commands have reached the end and no more to be executed
    */
   void declareEndOfAnimation();
+
+  /**
+   * initializes the level
+   * @param level integer indicating the level
+   * @return BoardState object with level information
+   */
+  BoardState initializeLevel(int level);
 }
