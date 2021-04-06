@@ -3,6 +3,7 @@ package ooga.model;
 import java.util.*;
 import javafx.scene.web.HTMLEditorSkin.Command;
 import ooga.controller.BackEndExternalAPI;
+import ooga.model.animation.AnimationPane;
 import ooga.model.grid.GameGrid;
 import ooga.model.grid.gridData.BoardState;
 import ooga.view.level.Board;
@@ -19,6 +20,7 @@ public class CommandExecutor {
     private BackEndExternalAPI modelController;
     private GameGrid gameGrid;
     private BoardState initialState;
+    private AnimationPane animationPane;
     /**
      * Default constructor
      */
@@ -26,6 +28,7 @@ public class CommandExecutor {
         this.initialState = initialState;
         programCounter = 1;
         gameGrid = new GameGrid(modelController);
+        animationPane = new AnimationPane(modelController);
         this.modelController = modelController;
         mapOfCommandBlocks = new HashMap<>();
         System.out.println("Command block received from frontend");

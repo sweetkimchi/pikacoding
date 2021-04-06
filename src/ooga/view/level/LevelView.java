@@ -31,7 +31,6 @@ public class LevelView extends BorderPane {
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
 
-  private AnimationPane animationPane;
   private Timeline timeline;
 
   private boolean codeIsRunning;
@@ -43,7 +42,6 @@ public class LevelView extends BorderPane {
     board = new Board();
     codeArea = new CodeArea();
     controlPanel = new ControlPanel();
-    animationPane = new AnimationPane(this.viewController);
     codeIsRunning = false;
     initializeViewElements();
 
@@ -51,17 +49,13 @@ public class LevelView extends BorderPane {
 
   }
 
-  public void updateCommandQueue(String commandType, List<Double> commandValues) {
-    animationPane.updateCommandQueue(commandType, commandValues);
-  }
-
 
   public void setPosition(double x, double y, int id) {
-    animationPane.setPosition(x, y);
+
   }
 
   public void setActiveAvatar(int avatarID) {
-    animationPane.setActiveAvatar(avatarID);
+
   }
 
   public void setAvailableCommands(AvailableCommands availableCommands) {
