@@ -8,6 +8,7 @@ import javafx.animation.Timeline;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
+import ooga.model.commands.AvailableCommands;
 import ooga.view.ScreenCreator;
 import ooga.view.animation.AnimationPane;
 import ooga.view.level.codearea.CodeArea;
@@ -58,6 +59,10 @@ public class LevelView extends BorderPane {
 
   public void setActiveAvatar(int avatarID) {
     animationPane.setActiveAvatar(avatarID);
+  }
+
+  public void setAvailableCommands(AvailableCommands availableCommands) {
+    codeArea.setAvailableCommands(availableCommands);
   }
 
   private void initializeViewElements() {

@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import ooga.model.commands.AvailableCommands;
 
 /**
  * Area of the level view that displays the command bank and program stack.
@@ -16,9 +17,7 @@ public class CodeArea extends GridPane {
   private ProgramStack programStack;
 
   public CodeArea() {
-    // TODO: figure out which commands are available for this level from the json
-    List<String> availableCommands = Collections.singletonList("step");
-    commandBank = new CommandBank(availableCommands, this::addCommandBlock);
+    commandBank = new CommandBank(this::addCommandBlock);
     programStack = new ProgramStack();
     ScrollPane programStackHolder = new ScrollPane();
     programStackHolder.setFitToWidth(true);
@@ -30,6 +29,10 @@ public class CodeArea extends GridPane {
 
   public List<CommandBlock> getProgram() {
     return programStack.getProgram();
+  }
+
+  public void setAvailableCommands(AvailableCommands availableCommands) {
+    commandBank.addCommands(availableCommands.getCommandNames());
   }
 
   private void addCommandBlock(String command) {

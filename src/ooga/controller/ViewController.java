@@ -4,6 +4,7 @@ import java.util.*;
 import javafx.stage.Stage;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.BoardState;
+import ooga.model.parser.InitialConfigurationParser;
 import ooga.model.player.Element;
 import ooga.view.level.codearea.CommandBlock;
 import ooga.view.ScreenCreator;
@@ -25,6 +26,10 @@ public class ViewController implements FrontEndExternalAPI {
     public ViewController(Stage stage) {
         screenCreator = new ScreenCreator(this, stage);
         levelView = screenCreator.getLevelView();
+
+        // Just for testing purposes
+        InitialConfigurationParser parser = new InitialConfigurationParser(1);
+        setAvailableCommands(parser.getAvailableCommands());
     }
     /**
      *
@@ -50,7 +55,7 @@ public class ViewController implements FrontEndExternalAPI {
 
     @Override
     public void setAvailableCommands(AvailableCommands availableCommands) {
-
+        levelView.setAvailableCommands(availableCommands);
     }
 
     /**
