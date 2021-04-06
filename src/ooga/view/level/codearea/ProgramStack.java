@@ -1,8 +1,11 @@
 package ooga.view.level.codearea;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javafx.scene.layout.VBox;
+import ooga.model.commands.AvailableCommands;
 
 /**
  * Displays the player-created program comprised of command blocks.
@@ -12,15 +15,25 @@ import javafx.scene.layout.VBox;
 public class ProgramStack extends VBox {
 
   private List<CommandBlockHolder> programBlocks;
+  private AvailableCommands availableCommands;
 
   public ProgramStack() {
     programBlocks = new ArrayList<>();
   }
 
+  public void setAvailableCommands(AvailableCommands availableCommands) {
+    this.availableCommands = availableCommands;
+  }
+
   public void addCommandBlock(String command) {
+    List<Map<String, List<String>>> parameterOptions = new ArrayList<>();
+    availableCommands.getParameters(command).forEach(parameter -> {
+      Map<String, List<String>> parameterOptionsMap = new HashMap<>();
+      parameterOptionsMap.put(parameter, availableCommands.getParameterOptions(command, parameter));
+      parameterOptions.add(parameterOptionsMap);
+    });
     CommandBlockHolder commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
-        command,
-        this::removeCommandBlock);
+        command, parameterOptions, this::removeCommandBlock);
     programBlocks.add(commandBlockHolder);
     this.getChildren().add(commandBlockHolder);
   }

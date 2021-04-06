@@ -33,6 +33,7 @@ public class CodeArea extends GridPane {
 
   public void setAvailableCommands(AvailableCommands availableCommands) {
     commandBank.addCommands(availableCommands.getCommandNames());
+    programStack.setAvailableCommands(availableCommands);
   }
 
   private void addCommandBlock(String command) {
