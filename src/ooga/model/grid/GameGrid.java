@@ -11,6 +11,7 @@ import ooga.model.player.Avatar;
 import ooga.model.player.ElementData;
 import ooga.model.player.Element;
 import ooga.model.player.Objects;
+import ooga.model.player.Structure;
 
 /**
  * The GameGrid contains all the elements for the grid of the game.
@@ -145,5 +146,13 @@ public class GameGrid implements Grid {
   //TODO: remove later, for testing only
   public Tile getTile(int x, int y) {
     return grid[x][y];
+  }
+
+  public Structure getStructure(int x, int y) {
+    return grid[x][y].getStructure();
+  }
+
+  public void setStructure(int x, int y, Structure structure) {
+    grid[x][y].setStructure(structure);
   }
 }
