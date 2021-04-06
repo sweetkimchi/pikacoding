@@ -11,7 +11,8 @@ import ooga.view.level.codearea.CommandBlock;
  */
 public class ModelController implements BackEndExternalAPI {
 
-    FrontEndExternalAPI viewController;
+    private FrontEndExternalAPI viewController;
+    private CommandExecutor commandExecutor;
 
     /**
      * Default constructor
@@ -44,7 +45,7 @@ public class ModelController implements BackEndExternalAPI {
      */
     @Override
     public void parseCommands(List<CommandBlock> commandBlocks) {
-        CommandExecutor commandExecutor = new CommandExecutor(commandBlocks);
+        commandExecutor = new CommandExecutor(commandBlocks, this);
     }
 
     /**
@@ -52,7 +53,7 @@ public class ModelController implements BackEndExternalAPI {
      */
     @Override
     public void runNextCommand() {
-
+        commandExecutor.runNextCommand();
         System.out.println("Running next command");
     }
 
@@ -81,5 +82,13 @@ public class ModelController implements BackEndExternalAPI {
     @Override
     public void setBoard(BoardState board) {
 
+    }
+
+    /**
+     * All commands have reached the end and no more to be executed
+     */
+    @Override
+    public void declareEndOfAnimation() {
+        System.out.println("End of Commands");
     }
 }

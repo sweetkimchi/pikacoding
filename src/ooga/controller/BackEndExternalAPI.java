@@ -44,4 +44,8 @@ public interface BackEndExternalAPI {
 
   void setBoard(BoardState board);
 
+  /**
+   * All commands have reached the end and no more to be executed
+   */
+  void declareEndOfAnimation();
 }
