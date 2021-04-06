@@ -53,6 +53,7 @@ public class ModelController implements BackEndExternalAPI {
     @Override
     public void runNextCommand() {
 
+        System.out.println("Running next command");
     }
 
     /**

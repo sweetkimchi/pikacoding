@@ -83,10 +83,12 @@ public class LevelView extends BorderPane {
 
   private void pause() {
     System.out.println("pause");
+    timeline.stop();
   }
 
   private void play() {
     System.out.println("play");
+    runSimulation();
   }
 
   private void reset() {
@@ -106,6 +108,7 @@ public class LevelView extends BorderPane {
     timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 
       //     updateTurtleStates();
+      viewController.runNextCommand();
       setAnimationSpeed();
     }));
     timeline.setCycleCount(Animation.INDEFINITE);
@@ -114,7 +117,8 @@ public class LevelView extends BorderPane {
   }
 
   private void setAnimationSpeed() {
-    //   timeline.setRate(userCommand.getAnimationSpeed());
+    // TODO: remove after debugging
+    timeline.setRate(2);
   }
 
 }

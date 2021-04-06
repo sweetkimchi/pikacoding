@@ -28,8 +28,8 @@ public class Person {
     grid.add(person, col, row);
   }
 
-  public void movePerson(int r, int c) {
-    grid.getChildren().remove(person);
-    grid.add(person, c, r);
+  public void movePerson(double r, double c) {
+    person.setX(r);
+    person.setY(c);
   }
 }

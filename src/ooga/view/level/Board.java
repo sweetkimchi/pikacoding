@@ -26,6 +26,10 @@ public class Board extends GridPane {
   private double xSize;
   private double ySize;
 
+  // TODO: remove after debugging
+  Person person1;
+  Block block1;
+
   public Board() {
     ResourceBundle boardValues = ResourceBundle.getBundle(ScreenCreator.RESOURCES + BOARD_PROPERTIES);
     rows = 10; // TODO: remove after wired with model
@@ -55,8 +59,8 @@ public class Board extends GridPane {
 
   // TODO: remove after debugging
   private void makeTestingAvatars() {
-    Block block1 = new Block(5, 7, xSize - 5.0, ySize - 5.0, this, "10");
-    Person person1 = new Person(3, 7, xSize, ySize, this);
+    block1 = new Block(5, 7, xSize - 5.0, ySize - 5.0, this, "10");
+    person1 = new Person(3, 7, xSize, ySize, this);
   }
 
   private void makeGrid() {
@@ -67,5 +71,9 @@ public class Board extends GridPane {
         this.add(block, j, i);
       }
     }
+  }
+
+  public void moveAvatar(double xCoord, double yCoord){
+    person1.movePerson(xCoord,yCoord);
   }
 }

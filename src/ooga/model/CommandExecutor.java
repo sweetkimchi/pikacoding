@@ -13,6 +13,7 @@ public class CommandExecutor {
      */
     public CommandExecutor(List<CommandBlock> commandBlocks) {
         System.out.println("Command block received from frontend");
+        System.out.println("Received command block: " + commandBlocks);
     }
 
 }
