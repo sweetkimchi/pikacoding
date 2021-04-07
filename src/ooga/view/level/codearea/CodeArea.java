@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import ooga.model.commands.AvailableCommands;
 import ooga.view.ScreenCreator;
 import ooga.view.level.LevelView;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Area of the level view that displays the command bank and program stack.
@@ -24,10 +25,7 @@ public class CodeArea extends GridPane {
   public CodeArea() {
     commandBank = new CommandBank(this::addCommandBlock);
     programStack = new ProgramStack();
-    ScrollPane programStackHolder = new ScrollPane();
-    programStackHolder.setFitToWidth(true);
-    programStackHolder.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-    programStackHolder.setContent(programStack);
+    ScrollPane programStackHolder = initializeProgramStackHolder();
     this.add(commandBank, 0, 0);
     this.add(programStackHolder, 1, 0);
     ResourceBundle sizeProperties = ResourceBundle
@@ -37,6 +35,15 @@ public class CodeArea extends GridPane {
     double programWidth = Double.parseDouble(sizeProperties.getString("CodeAreaWidth")) - commandBankWidth;
     commandBank.setPrefWidth(commandBankWidth);
     programStack.setPrefWidth(programWidth);
+  }
+
+  private ScrollPane initializeProgramStackHolder() {
+    ScrollPane programStackHolder = new ScrollPane();
+    programStackHolder.setFitToWidth(true);
+    programStackHolder.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+    programStackHolder.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+    programStackHolder.setContent(programStack);
+    return programStackHolder;
   }
 
   public List<CommandBlock> getProgram() {
