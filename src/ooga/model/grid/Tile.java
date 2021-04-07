@@ -1,10 +1,8 @@
 package ooga.model.grid;
 
-import java.rmi.StubNotFoundException;
 import ooga.model.player.Avatar;
 import ooga.model.player.Element;
 import ooga.model.player.Objects;
-import ooga.model.player.Structure;
 
 /**
  * A Tile is one tile of the grid that can contain some number of elements.
@@ -24,9 +22,6 @@ public class Tile {
   //TODO: implement reflection here? needs better design
 
   public void add(Element element) {
-    if (element instanceof Structure) {
-      add((Structure) element);
-    }
     if (element instanceof Avatar) {
       add((Avatar) element);
     }
@@ -35,10 +30,8 @@ public class Tile {
     }
   }
 
-  public void add(Structure structure) {
-    if (canAddStructure()) {
-      this.structure = structure;
-    }
+  public void setStructure(Structure structure) {
+    this.structure = structure;
   }
 
   public void add(Avatar avatar) {
@@ -53,19 +46,18 @@ public class Tile {
     }
   }
 
-  public boolean canAddStructure() {
-    return structure == null;
-  }
-
   public boolean canAddAvatar() {
-    return (structure == null) && (avatar == null);
+    return (structure == Structure.FLOOR) && (avatar == null);
   }
 
   public boolean canAddBlock() {
-    return (structure == null) && (block == null);
+    return (structure == Structure.FLOOR) && (block == null);
   }
 
-  //TODO: improve this too (maybe try changing from ArrayList to guarantee ordering?)
+  public Structure getStructure() {
+    return structure;
+  }
+
   public Avatar getAvatar() {
     return avatar;
   }

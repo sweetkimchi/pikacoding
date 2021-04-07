@@ -1,6 +1,5 @@
 package ooga.view.level;
 
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -9,8 +8,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
+import ooga.model.grid.gridData.BoardState;
 import ooga.view.ScreenCreator;
-import ooga.model.animation.AnimationPane;
 import ooga.view.level.codearea.CodeArea;
 
 /**
@@ -35,6 +34,9 @@ public class LevelView extends BorderPane {
 
   private boolean codeIsRunning;
 
+  //TODO: remove after debug
+  private double dummy = 1;
+
   public LevelView(FrontEndExternalAPI viewController) {
     this.viewController = viewController;
     this.getStylesheets().add(DEFAULT_CSS);
@@ -43,10 +45,19 @@ public class LevelView extends BorderPane {
     codeArea = new CodeArea();
     controlPanel = new ControlPanel();
     codeIsRunning = false;
+
+    timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+
+
+      viewController.runNextCommand();
+      setAnimationSpeed();
+
+
+      //TODO: remove after debugging
+      board.moveAvatar(dummy,dummy);
+      dummy++;
+    }));
     initializeViewElements();
-
-
-
   }
 
 
@@ -60,6 +71,10 @@ public class LevelView extends BorderPane {
 
   public void setAvailableCommands(AvailableCommands availableCommands) {
     codeArea.setAvailableCommands(availableCommands);
+  }
+
+  public void initializeBoard(BoardState initialState) {
+    board.initializeBoard(initialState);
   }
 
   private void initializeViewElements() {
@@ -90,10 +105,12 @@ public class LevelView extends BorderPane {
       codeIsRunning = true;
     }
     runSimulation();
+
   }
 
   private void reset() {
     codeIsRunning = false;
+    board.reset();
     System.out.println("reset");
   }
 
@@ -103,16 +120,12 @@ public class LevelView extends BorderPane {
       viewController.parseCommands(codeArea.getProgram());
       codeIsRunning = true;
     }
+    timeline.stop();
     viewController.runNextCommand();
+
   }
 
   private void runSimulation() {
-    timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-
-      //     updateTurtleStates();
-      viewController.runNextCommand();
-      setAnimationSpeed();
-    }));
     timeline.setCycleCount(Animation.INDEFINITE);
     timeline.play();
     timeline.setRate(300);

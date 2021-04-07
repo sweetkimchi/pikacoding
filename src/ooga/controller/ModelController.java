@@ -106,6 +106,7 @@ public class ModelController implements BackEndExternalAPI {
     @Override
     public BoardState initializeLevel(int level) {
         initialConfigurationParser = new InitialConfigurationParser(level);
+        viewController.setAvailableCommands(initialConfigurationParser.getAvailableCommands());
         return initialConfigurationParser.getInitialState();
     }
 }
