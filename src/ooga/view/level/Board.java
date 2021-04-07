@@ -1,17 +1,16 @@
 package ooga.view.level;
 
 
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import ooga.view.ScreenCreator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -49,12 +48,18 @@ public class Board extends GridPane {
       }
       states.add(state);
     }
-
     this.getStyleClass().add("board");
     xSize = gridXSize / cols;
     ySize = gridYSize / rows;
     makeGrid();
     makeTestingAvatars();
+    Button test = new Button("test");
+    test.setOnAction(event -> testing());
+    this.getChildren().add(test);
+  }
+
+  private void testing() {
+    moveAvatar(50, 10);
   }
 
   // TODO: remove after debugging
@@ -73,7 +78,8 @@ public class Board extends GridPane {
     }
   }
 
-  public void moveAvatar(double xCoord, double yCoord){
-    person1.movePerson(xCoord,yCoord);
+  public void moveAvatar(double xDist, double yDist){
+    person1.movePerson(xDist, yDist);
+    //block1.pickUp(xDist, yDist);
   }
 }

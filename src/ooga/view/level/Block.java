@@ -34,8 +34,8 @@ public class Block extends StackPane {
     grid.add(this, col, row);
   }
 
-  public void pickUp(int r, int c) {
-    grid.getChildren().remove(this);
-    grid.add(this, c, r);
+  public void pickUp(double r, double c) {
+    this.setTranslateX(r + this.getTranslateX());
+    this.setTranslateY(c + this.getTranslateY());
   }
 }
