@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.Arrays;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.grid.gridData.InitialState;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ParserTester {
 
