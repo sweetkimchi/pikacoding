@@ -42,6 +42,11 @@ public class LevelView extends BorderPane {
     codeArea = new CodeArea();
     controlPanel = new ControlPanel();
     codeIsRunning = false;
+
+    timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+      viewController.runNextCommand();
+      setAnimationSpeed();
+    }));
     initializeViewElements();
   }
 
@@ -94,6 +99,7 @@ public class LevelView extends BorderPane {
 
   private void reset() {
     codeIsRunning = false;
+    board.reset();
     System.out.println("reset");
   }
 
@@ -103,16 +109,11 @@ public class LevelView extends BorderPane {
       viewController.parseCommands(codeArea.getProgram());
       codeIsRunning = true;
     }
+    timeline.stop();
     viewController.runNextCommand();
   }
 
   private void runSimulation() {
-    timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-
-      //     updateTurtleStates();
-      viewController.runNextCommand();
-      setAnimationSpeed();
-    }));
     timeline.setCycleCount(Animation.INDEFINITE);
     timeline.play();
     timeline.setRate(300);

@@ -25,18 +25,25 @@ public class Board extends GridPane {
   private double xSize;
   private double ySize;
 
-  // TODO: remove after debugging
-  private Map<Integer, Person> avatars;
+  private Map<String, List<Integer>> initialAvatarLocations;
+  private Map<String, BlockData> initialBlockData;
+
+  private Map<Integer, Avatar> avatars;
   private Map<Integer, Block> blocks;
-  Person person1;
-  Block block1;
+//  Avatar avatar1;
+//  Block block1;
 
   public Board() {
   }
 
   public void moveAvatar(double xDist, double yDist) {
-    person1.movePerson(xDist, yDist);
+//    avatar1.moveAvatar(xDist, yDist);
     //block1.pickUp(xDist, yDist);
+  }
+
+  public void reset() {
+    resetAvatarLocations();
+    resetBlockData();
   }
 
   public void initializeBoard(BoardState initialState) {
@@ -70,32 +77,47 @@ public class Board extends GridPane {
 //    this.getChildren().add(test);
   }
 
-  private void testing() {
-    moveAvatar(50, 10);
+//  private void testing() {
+//    moveAvatar(50, 10);
+//  }
+
+  private void resetAvatarLocations() {
+    initialAvatarLocations.forEach((id, location) -> {
+      avatars.get(Integer.parseInt(id)).reset();
+    });
+  }
+
+  private void resetBlockData() {
+    initialBlockData.forEach((id, blockData) -> {
+      blocks.get(Integer.parseInt(id)).reset();
+    });
   }
 
   private void initializeAvatars(Map<String, List<Integer>> allAvatarLocations) {
     avatars = new HashMap<>();
-    allAvatarLocations.forEach((id, location) -> {
-      Person avatar = new Person(location.get(0), location.get(1), xSize, ySize, this);
+    initialAvatarLocations = allAvatarLocations;
+    initialAvatarLocations.forEach((id, location) -> {
+      Avatar avatar = new Avatar(location.get(0), location.get(1), xSize, ySize, this);
       avatars.put(Integer.parseInt(id), avatar);
     });
   }
 
   private void initializeBlocks(Map<String, BlockData> allBlockData) {
     blocks = new HashMap<>();
-    allBlockData.forEach((id, blockData) -> {
-      Block block = new Block(blockData.getLocation().get(0), blockData.getLocation().get(1), xSize - 5.0,
+    initialBlockData = allBlockData;
+    initialBlockData.forEach((id, blockData) -> {
+      Block block = new Block(blockData.getLocation().get(0), blockData.getLocation().get(1),
+          xSize - 5.0,
           ySize - 5.0, this, "" + blockData.getBlockNumber());
       blocks.put(Integer.parseInt(id), block);
     });
   }
 
   // TODO: remove after debugging
-  private void makeTestingAvatars() {
-    block1 = new Block(5, 7, xSize - 5.0, ySize - 5.0, this, "10");
-    person1 = new Person(3, 7, xSize, ySize, this);
-  }
+//  private void makeTestingAvatars() {
+//    block1 = new Block(5, 7, xSize - 5.0, ySize - 5.0, this, "10");
+//    avatar1 = new Avatar(3, 7, xSize, ySize, this);
+//  }
 
   private void makeGrid() {
     for (int i = 0; i < rows; i++) {

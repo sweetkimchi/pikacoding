@@ -25,6 +25,11 @@ public class Block extends StackPane {
     makeBlock();
   }
 
+  public void reset() {
+    this.setTranslateX(0);
+    this.setTranslateY(0);
+  }
+
   private void makeBlock() {
     Rectangle block = new Rectangle(width, height);
     block.setFill(Color.LIGHTSEAGREEN); // TODO: put in resource file
