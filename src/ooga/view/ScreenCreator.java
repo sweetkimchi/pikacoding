@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ooga.controller.FrontEndExternalAPI;
+import ooga.model.grid.gridData.BoardState;
 import ooga.view.level.LevelView;
 
 /**
@@ -27,8 +28,6 @@ public class ScreenCreator {
     this.viewController = viewController;
     this.stage = stage;
 
-    levelView = new LevelView(this.viewController);
-
     initializeStage();
 
     // debug statement
@@ -39,6 +38,16 @@ public class ScreenCreator {
     return levelView;
   }
 
+  public void loadLevel(int level) {
+    levelView = new LevelView(this.viewController);
+
+    ResourceBundle windowResources = ResourceBundle.getBundle(RESOURCES + WINDOW_PROPERTIES);
+    int width = Integer.parseInt(windowResources.getString("Width"));
+    int height = Integer.parseInt(windowResources.getString("Height"));
+    Scene scene = new Scene(levelView, width, height);
+    stage.setScene(scene);
+  }
+
   private void initializeStage() {
     ResourceBundle windowResources = ResourceBundle.getBundle(RESOURCES + WINDOW_PROPERTIES);
     stage.setTitle(windowResources.getString("Title"));
@@ -46,8 +55,6 @@ public class ScreenCreator {
     int height = Integer.parseInt(windowResources.getString("Height"));
     stage.setMinWidth(width);
     stage.setMinHeight(height);
-    Scene scene = new Scene(levelView, width, height);
-    stage.setScene(scene);
     stage.show();
   }
 

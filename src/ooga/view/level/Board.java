@@ -1,6 +1,9 @@
 package ooga.view.level;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -8,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
+import ooga.model.grid.gridData.BoardState;
 import ooga.view.ScreenCreator;
 
 import java.util.ArrayList;
@@ -26,10 +30,19 @@ public class Board extends GridPane {
   private double ySize;
 
   // TODO: remove after debugging
+  private Map<Integer, Person> avatars;
   Person person1;
   Block block1;
 
   public Board() {
+  }
+
+  public void moveAvatar(double xDist, double yDist){
+    person1.movePerson(xDist, yDist);
+    //block1.pickUp(xDist, yDist);
+  }
+
+  public void initializeBoard(BoardState initialState) {
     ResourceBundle boardValues = ResourceBundle.getBundle(ScreenCreator.RESOURCES + BOARD_PROPERTIES);
     rows = 10; // TODO: remove after wired with model
     cols = 14; // TODO: remove after wired with model
@@ -52,14 +65,23 @@ public class Board extends GridPane {
     xSize = gridXSize / cols;
     ySize = gridYSize / rows;
     makeGrid();
-    makeTestingAvatars();
-    Button test = new Button("test");
-    test.setOnAction(event -> testing());
-    this.getChildren().add(test);
+    initializeAvatars(initialState.getAllAvatarLocations());
+//    makeTestingAvatars();
+//    Button test = new Button("test");
+//    test.setOnAction(event -> testing());
+//    this.getChildren().add(test);
   }
 
   private void testing() {
     moveAvatar(50, 10);
+  }
+
+  private void initializeAvatars(Map<String, List<Integer>> allAvatarLocations) {
+    avatars = new HashMap<>();
+    allAvatarLocations.forEach((id, location) -> {
+      Person avatar = new Person(location.get(0), location.get(1), xSize, ySize, this);
+      avatars.put(Integer.parseInt(id), avatar);
+    });
   }
 
   // TODO: remove after debugging
@@ -78,8 +100,4 @@ public class Board extends GridPane {
     }
   }
 
-  public void moveAvatar(double xDist, double yDist){
-    person1.movePerson(xDist, yDist);
-    //block1.pickUp(xDist, yDist);
-  }
 }

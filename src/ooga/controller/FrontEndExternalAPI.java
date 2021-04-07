@@ -57,6 +57,6 @@ public interface FrontEndExternalAPI {
 
   void setActiveAvatar(int avatarID);
 
-  BoardState initializeLevel(int level);
+  void initializeLevel(int level);
 
 }

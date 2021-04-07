@@ -1,6 +1,5 @@
 package ooga.view.level;
 
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -9,8 +8,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
+import ooga.model.grid.gridData.BoardState;
 import ooga.view.ScreenCreator;
-import ooga.model.animation.AnimationPane;
 import ooga.view.level.codearea.CodeArea;
 
 /**
@@ -44,9 +43,6 @@ public class LevelView extends BorderPane {
     controlPanel = new ControlPanel();
     codeIsRunning = false;
     initializeViewElements();
-
-
-
   }
 
 
@@ -60,6 +56,10 @@ public class LevelView extends BorderPane {
 
   public void setAvailableCommands(AvailableCommands availableCommands) {
     codeArea.setAvailableCommands(availableCommands);
+  }
+
+  public void initializeBoard(BoardState initialState) {
+    board.initializeBoard(initialState);
   }
 
   private void initializeViewElements() {

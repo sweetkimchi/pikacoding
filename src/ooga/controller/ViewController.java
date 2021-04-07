@@ -25,11 +25,6 @@ public class ViewController implements FrontEndExternalAPI {
      */
     public ViewController(Stage stage) {
         screenCreator = new ScreenCreator(this, stage);
-        levelView = screenCreator.getLevelView();
-
-        // TODO: delete after testing
-        InitialConfigurationParser parser = new InitialConfigurationParser(1);
-        setAvailableCommands(parser.getAvailableCommands());
     }
     /**
      *
@@ -41,7 +36,6 @@ public class ViewController implements FrontEndExternalAPI {
     public void setModelController(BackEndExternalAPI modelController) {
         this.modelController = modelController;
     }
-
     /**
      * Sets the view board to contain a new level. Instantiates all the elements of the grid,
      * including the dimensions and initial locations of humans and objects.
@@ -87,9 +81,11 @@ public class ViewController implements FrontEndExternalAPI {
     }
 
     @Override
-    public BoardState initializeLevel(int level) {
-       // return modelController.initializeLevel(level);
-        return null;
+    public void initializeLevel(int level) {
+        screenCreator.loadLevel(level);
+        levelView = screenCreator.getLevelView();
+        BoardState initialState = modelController.initializeLevel(1);
+        levelView.initializeBoard(initialState);
     }
 
     /**

@@ -21,6 +21,8 @@ public class Controller {
         viewController = new ViewController(stage);
         viewController.setModelController(modelController);
         modelController.setViewController(viewController);
+
+        viewController.initializeLevel(1);
     }
 
 }
