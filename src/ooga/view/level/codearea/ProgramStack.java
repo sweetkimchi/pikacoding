@@ -18,6 +18,7 @@ public class ProgramStack extends VBox {
   private AvailableCommands availableCommands;
 
   public ProgramStack() {
+    this.setSpacing(5);
     programBlocks = new ArrayList<>();
   }
 

@@ -20,7 +20,7 @@ import ooga.view.level.codearea.CodeArea;
  */
 public class LevelView extends BorderPane {
 
-  private static final String LEVEL_PROPERTIES = "Level";
+  public static final String LEVEL_PROPERTIES = "Level";
   private static final String DEFAULT_CSS = ScreenCreator.RESOURCES.replace(".", "/")
           + "default.css";
 
