@@ -2,12 +2,15 @@ package ooga.model.parser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ooga.model.commands.AvailableCommands;
+import ooga.model.grid.GameGrid;
+import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.BlockData;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.grid.gridData.InitialState;
@@ -20,11 +23,15 @@ public class InitialConfigurationParser {
   private InitialState initialState;
   private GoalState goalState;
   private AvailableCommands availableCommands;
+  private GameGrid gameGrid;
+
   public InitialConfigurationParser(int level)  {
     this.level = level;
     this.rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + this.level + "/";
     this.parseLevelInfo();
   }
+
+  public GameGrid getGameGrid() { return this.gameGrid; }
 
   public GoalState getGoalState() {
     return this.goalState;
@@ -33,7 +40,6 @@ public class InitialConfigurationParser {
   public InitialState getInitialState() {
     return this.initialState;
   }
-
 
   public AvailableCommands getAvailableCommands()  {
     return availableCommands;
@@ -44,11 +50,13 @@ public class InitialConfigurationParser {
       String filePathToLevelInfoFile = this.rootURLPathForLevel + "level" + this.level + ".json";
       HashMap result =
           new ObjectMapper().readValue(new FileReader(filePathToLevelInfoFile), HashMap.class);
+      parseGrid((String) result.get("grid"));
       parseStartState(result);
       parseEndState(Integer.parseInt((String) result.get("idealNumOfCommands")));
       parseCommands();
     }
     catch (Exception e) {
+      e.printStackTrace();
       //handle later
     }
   }
@@ -141,6 +149,29 @@ public class InitialConfigurationParser {
     catch (Exception e) {
       e.printStackTrace();
       //figure out error handling later lol
+    }
+  }
+
+  private void parseGrid(String gridFileName)  {
+    String filePathToStartState = rootURLPathForLevel + gridFileName;
+    try {
+      Map<String, Object> result =
+          new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
+      int width = Integer.parseInt((String)result.get("width"));
+      int height = Integer.parseInt((String)result.get("height"));
+      this.gameGrid = new GameGrid(null);
+      this.gameGrid.setDimensions(height, width);
+      Map<String, List<String>> mapOfGrid = (Map<String, List<String>>) result.get("grid");
+      for (int i = 0; i < height; i++) {
+        List<String> currentRow = (List<String>) mapOfGrid.get("" + i );
+        for (int j = 0; j < width; j++) {
+          this.gameGrid.setStructure(i, j, Structure.valueOf(currentRow.get(j)));
+        }
+
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+      //TODO: Handle Errors Later
     }
   }
 
