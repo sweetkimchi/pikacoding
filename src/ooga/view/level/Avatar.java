@@ -29,8 +29,11 @@ public class Avatar {
   }
 
   public void moveAvatar(double r, double c) {
-    avatar.setTranslateX(r + avatar.getTranslateX());
-    avatar.setTranslateY(c + avatar.getTranslateY());
+    avatar.setTranslateX(width + avatar.getTranslateX());
+    avatar.setTranslateY(height + avatar.getTranslateY());
+//    avatar.setX(r);
+//    avatar.setY(c);
+    System.out.println("Avatar xCoord: " + avatar.getTranslateX());
   }
 
   public void reset() {

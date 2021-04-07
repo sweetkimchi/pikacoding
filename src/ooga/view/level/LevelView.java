@@ -34,6 +34,9 @@ public class LevelView extends BorderPane {
 
   private boolean codeIsRunning;
 
+  //TODO: remove after debug
+  private double dummy = 1;
+
   public LevelView(FrontEndExternalAPI viewController) {
     this.viewController = viewController;
     this.getStylesheets().add(DEFAULT_CSS);
@@ -44,8 +47,15 @@ public class LevelView extends BorderPane {
     codeIsRunning = false;
 
     timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+
+
       viewController.runNextCommand();
       setAnimationSpeed();
+
+
+      //TODO: remove after debugging
+      board.moveAvatar(dummy,dummy);
+      dummy++;
     }));
     initializeViewElements();
   }
@@ -95,6 +105,7 @@ public class LevelView extends BorderPane {
       codeIsRunning = true;
     }
     runSimulation();
+
   }
 
   private void reset() {
@@ -111,6 +122,7 @@ public class LevelView extends BorderPane {
     }
     timeline.stop();
     viewController.runNextCommand();
+
   }
 
   private void runSimulation() {

@@ -37,7 +37,8 @@ public class Board extends GridPane {
   }
 
   public void moveAvatar(double xDist, double yDist) {
-//    avatar1.moveAvatar(xDist, yDist);
+    avatars.get(1).moveAvatar(xDist, yDist);
+    System.out.println();
     //block1.pickUp(xDist, yDist);
   }
 
