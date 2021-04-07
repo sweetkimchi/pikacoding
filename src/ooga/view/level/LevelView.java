@@ -32,13 +32,15 @@ public class LevelView extends BorderPane {
   private final Board board;
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
-  private boolean queueFinished;
 
   private Timeline timeline;
 
   private boolean codeIsRunning;
+  private boolean queueFinished;
+  private boolean step;
 
   //TODO: remove after debug
+  //I'm using this because for some reason, clicking step doesn't play the initial animation (does nothing)
   private double dummy = 1;
 
   public LevelView(FrontEndExternalAPI viewController) {
@@ -50,6 +52,8 @@ public class LevelView extends BorderPane {
     controlPanel = new ControlPanel();
     codeIsRunning = false;
     queueFinished = true;
+    step = false;
+
 
     timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 
@@ -57,9 +61,16 @@ public class LevelView extends BorderPane {
        * if queue is finished run the next command
        * if the que is not finished, it means that the turn is not over yet so execute the animation for the turn
        */
+      System.out.println("Animation running");
       if(queueFinished){
+        if(step && dummy != 1){
+          timeline.stop();
+          step = false;
+        }
+        dummy++;
         viewController.runNextCommand();
         queueFinished = false;
+
       }else{
         updateAnimationForFrontEnd();
       }
@@ -127,18 +138,24 @@ public class LevelView extends BorderPane {
     codeIsRunning = false;
     board.reset();
     timeline.stop();
+    dummy = 1;
     System.out.println("reset");
   }
 
   private void step() {
+
     System.out.println("step");
     if (!codeIsRunning) {
       reset();
       viewController.parseCommands(codeArea.getProgram());
+      queueFinished = false;
       codeIsRunning = true;
     }
-    timeline.stop();
 
+
+    runSimulation();
+
+    step = true;
     /**
      * if queue is finished run the next command
      * if the que is not finished, it means that the turn is not over yet so execute the animation for the turn
