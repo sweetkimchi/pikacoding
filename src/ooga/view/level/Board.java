@@ -37,8 +37,6 @@ public class Board extends StackPane {
   }
 
   public void moveAvatar(double xDist, double yDist) {
-    avatars.get(1).moveAvatar(xDist, yDist);
-    System.out.println();
     //block1.pickUp(xDist, yDist);
   }
 
