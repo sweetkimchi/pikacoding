@@ -2,7 +2,6 @@ package ooga.model;
 
 import java.util.*;
 import java.util.Map.Entry;
-import javafx.scene.web.HTMLEditorSkin.Command;
 import ooga.controller.BackEndExternalAPI;
 import ooga.model.animation.AnimationPane;
 import ooga.model.grid.GameGrid;
