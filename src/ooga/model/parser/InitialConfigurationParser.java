@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.GameGrid;
+import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.BlockData;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.grid.gridData.InitialState;
@@ -40,7 +41,6 @@ public class InitialConfigurationParser {
     return this.initialState;
   }
 
-
   public AvailableCommands getAvailableCommands()  {
     return availableCommands;
   }
@@ -56,6 +56,7 @@ public class InitialConfigurationParser {
       parseCommands();
     }
     catch (Exception e) {
+      e.printStackTrace();
       //handle later
     }
   }
@@ -159,8 +160,15 @@ public class InitialConfigurationParser {
       int width = Integer.parseInt((String)result.get("width"));
       int height = Integer.parseInt((String)result.get("height"));
       this.gameGrid = new GameGrid(null);
-      this.gameGrid.setDimensions(width, height);
+      this.gameGrid.setDimensions(height, width);
+      Map<String, List<String>> mapOfGrid = (Map<String, List<String>>) result.get("grid");
+      for (int i = 0; i < height; i++) {
+        List<String> currentRow = (List<String>) mapOfGrid.get("" + i );
+        for (int j = 0; j < width; j++) {
+          this.gameGrid.setStructure(i, j, Structure.valueOf(currentRow.get(j)));
+        }
 
+      }
     } catch (IOException e) {
       e.printStackTrace();
       //TODO: Handle Errors Later
