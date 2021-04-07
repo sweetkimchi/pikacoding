@@ -99,6 +99,11 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.updateFrontEndElements(updates);
     }
 
+    @Override
+    public void declareEndOfAnimation() {
+        levelView.declareEndOfAnimation();
+    }
+
     /**
      * Passes in the commands to be parsed
      *

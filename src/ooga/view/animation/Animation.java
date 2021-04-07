@@ -113,6 +113,8 @@ public class Animation {
   }
 
   public Map<Integer, Deque<Double>> getAllElementInformation(){
+
+    System.out.println("All element information: " + allElementInformation);
     return allElementInformation;
   }
 

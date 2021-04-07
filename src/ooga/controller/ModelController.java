@@ -95,7 +95,8 @@ public class ModelController implements BackEndExternalAPI {
      */
     @Override
     public void declareEndOfAnimation() {
-        System.out.println("End of Commands");
+
+        viewController.declareEndOfAnimation();
     }
 
     /**

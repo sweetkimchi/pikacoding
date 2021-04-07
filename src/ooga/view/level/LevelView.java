@@ -70,7 +70,6 @@ public class LevelView extends BorderPane {
   }
 
   private void updateAnimationForFrontEnd() {
-    int size = board.getNumberOfAvatars();
     queueFinished = board.updateAnimationForFrontEnd();
   }
 
@@ -114,7 +113,9 @@ public class LevelView extends BorderPane {
 
   private void play() {
     System.out.println("play");
+
     if (!codeIsRunning) {
+      reset();
       viewController.parseCommands(codeArea.getProgram());
       codeIsRunning = true;
     }
@@ -125,12 +126,14 @@ public class LevelView extends BorderPane {
   private void reset() {
     codeIsRunning = false;
     board.reset();
+    timeline.stop();
     System.out.println("reset");
   }
 
   private void step() {
     System.out.println("step");
     if (!codeIsRunning) {
+      reset();
       viewController.parseCommands(codeArea.getProgram());
       codeIsRunning = true;
     }
@@ -166,5 +169,10 @@ public class LevelView extends BorderPane {
 
   public void updateFrontEndElements(Map<String, AvatarData> updates) {
     board.updateFrontEndElements(updates);
+  }
+
+  public void declareEndOfAnimation() {
+    codeIsRunning = false;
+    timeline.stop();
   }
 }

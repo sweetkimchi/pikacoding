@@ -41,6 +41,7 @@ public class Board extends StackPane {
   public void reset() {
     spriteLayer.resetAvatarLocations();
     spriteLayer.resetBlockData();
+    spriteLayer.resetQueue();
     spriteLayer.resetAnimationQueue();
   }
 

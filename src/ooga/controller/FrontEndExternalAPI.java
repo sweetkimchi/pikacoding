@@ -63,4 +63,6 @@ public interface FrontEndExternalAPI {
   void updateAvatarPositions(int id, int xCoord, int yCoord);
 
   void updateFrontEndElements(Map<String, AvatarData> updates);
+
+  void declareEndOfAnimation();
 }

@@ -19,6 +19,7 @@ public class SpriteLayer extends Pane {
   private Map<String, List<Integer>> initialAvatarLocations;
   private Map<String, BlockData> initialBlockData;
   private final Animation animation;
+  private Map<Integer, Deque<Double>> allElementInformation;
 
   public SpriteLayer(double width, double height) {
     this.setMinSize(width, height);
@@ -80,7 +81,8 @@ public class SpriteLayer extends Pane {
   }
 
   public boolean updateAnimationForFrontEnd() {
-    Map<Integer, Deque<Double>> allElementInformation = animation.getAllElementInformation();
+    allElementInformation = animation.getAllElementInformation();
+    System.out.println(allElementInformation);
     boolean finished = true;
     for(Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()){
       if(!entry.getValue().isEmpty()){
@@ -98,5 +100,9 @@ public class SpriteLayer extends Pane {
 
   public void resetAnimationQueue() {
     animation.reset();
+    allElementInformation = new HashMap<>();
+  }
+
+  public void resetQueue() {
   }
 }
