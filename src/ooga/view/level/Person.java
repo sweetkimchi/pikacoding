@@ -29,7 +29,7 @@ public class Person {
   }
 
   public void movePerson(double r, double c) {
-    person.setX(r);
-    person.setY(c);
+    person.setTranslateX(r + person.getTranslateX());
+    person.setTranslateY(c + person.getTranslateY());
   }
 }
