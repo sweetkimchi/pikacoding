@@ -7,7 +7,9 @@ import ooga.model.animation.AnimationPane;
 import ooga.model.grid.GameGrid;
 import ooga.model.grid.gridData.BoardState;
 import ooga.model.player.Avatar;
+import ooga.model.player.AvatarData;
 import ooga.model.player.Element;
+import ooga.model.player.ElementData;
 import ooga.view.level.Board;
 import ooga.view.level.codearea.CommandBlock;
 
@@ -57,22 +59,22 @@ public class CommandExecutor {
     public void runNextCommand() {
         boolean ended = true;
         System.out.println();
-
+        Map<String, AvatarData> updates = new HashMap<>();
         //Map<ID, Values>
-        for (Map.Entry<Integer, Element> entry : animationPane.getAllElementInformation().entrySet()){
+        for (Entry<Integer, Element> entry : animationPane.getAllElementInformation().entrySet()){
             Avatar singleAvatar = (Avatar) entry.getValue();
-            
+
             // +1 is needed because program counters are 1 indexed
             // TODO: refactor with Reflection and properties files
             if (singleAvatar.getProgramCounter() < mapOfCommandBlocks.size() + 1) {
-
+           //     modelController.setAvatarIDForUpdate(singleAvatar.getId());
                 ended = false;
                 CommandBlock currentCommand = mapOfCommandBlocks.get(singleAvatar.getProgramCounter());
+                AvatarData newUpdate = new AvatarData();
                 System.out.println("Command currently running: " + currentCommand.getType() + " with parameter " + currentCommand.getParameters());
                 if(currentCommand.getType().equals("step")){
 
                     System.out.printf("Executing step for avatar ID %d with program counter %d \n", singleAvatar.getId(), singleAvatar.getProgramCounter());
-
 //                    animationPane.moveAvatar(dummy, getDirection(currentCommand.getParameters().get("direction")));
                     int xPrev = singleAvatar.getXCoord();
                     int yPrev = singleAvatar.getYCoord();
@@ -80,9 +82,15 @@ public class CommandExecutor {
             //        gameGrid.step(dummy.getId(),getDirection(currentCommand.getParameters().get("direction")));
                     // update program counter
                     singleAvatar.setProgramCounter(singleAvatar.getProgramCounter() + 1);
-                    for(int i = 0; i < 10; i++){
-                        modelController.updateAvatarPositions(singleAvatar.getId(), singleAvatar.getXCoord(), singleAvatar.getYCoord());
-                    }
+
+                    newUpdate.updatePositions(singleAvatar.getId(), singleAvatar.getXCoord(), singleAvatar.getYCoord());
+
+                    //TODO: delete after debug
+                    modelController.updateAvatarPositions(singleAvatar.getId(), singleAvatar.getXCoord(), singleAvatar.getYCoord());
+
+
+                    //TODO: refactor using a better data structure
+                 //   updates.put("step", newUpdate);
 
                 }
 
@@ -101,6 +109,9 @@ public class CommandExecutor {
 
             }
         }
+
+        //TODO: refactor using a better data structure
+     //   modelController.updateFrontEndElements(updates);
 
         if(ended){
 

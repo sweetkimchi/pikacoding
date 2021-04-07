@@ -1,5 +1,6 @@
 package ooga.view.level;
 
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -9,6 +10,7 @@ import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.BoardState;
+import ooga.model.player.AvatarData;
 import ooga.view.ScreenCreator;
 import ooga.view.level.codearea.CodeArea;
 
@@ -17,6 +19,7 @@ import ooga.view.level.codearea.CodeArea;
  * Contains all the main level view elements (board, code area, etc.)
  *
  * @author David Li
+ * @author Ji Yun Hyo
  */
 public class LevelView extends BorderPane {
 
@@ -29,6 +32,7 @@ public class LevelView extends BorderPane {
   private final Board board;
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
+  private boolean queueFinished;
 
   private Timeline timeline;
 
@@ -45,15 +49,29 @@ public class LevelView extends BorderPane {
     codeArea = new CodeArea();
     controlPanel = new ControlPanel();
     codeIsRunning = false;
+    queueFinished = true;
 
     timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 
-
-      viewController.runNextCommand();
+      /**
+       * if queue is finished run the next command
+       * if the que is not finished, it means that the turn is not over yet so execute the animation for the turn
+       */
+      if(queueFinished){
+        viewController.runNextCommand();
+        queueFinished = false;
+      }else{
+        updateAnimationForFrontEnd();
+      }
       setAnimationSpeed();
 
     }));
     initializeViewElements();
+  }
+
+  private void updateAnimationForFrontEnd() {
+    int size = board.getNumberOfAvatars();
+    queueFinished = board.updateAnimationForFrontEnd();
   }
 
 
@@ -117,7 +135,17 @@ public class LevelView extends BorderPane {
       codeIsRunning = true;
     }
     timeline.stop();
-    viewController.runNextCommand();
+
+    /**
+     * if queue is finished run the next command
+     * if the que is not finished, it means that the turn is not over yet so execute the animation for the turn
+     */
+    if(queueFinished){
+      viewController.runNextCommand();
+      queueFinished = false;
+    }else{
+      updateAnimationForFrontEnd();
+    }
 
   }
 
@@ -129,10 +157,14 @@ public class LevelView extends BorderPane {
 
   private void setAnimationSpeed() {
     // TODO: remove after debugging
-    timeline.setRate(2);
+    timeline.setRate(controlPanel.getSliderSpeed());
   }
 
   public void updateAvatarPositions(int id, int xCoord, int yCoord) {
     board.updateAvatarPositions(id, xCoord, yCoord);
+  }
+
+  public void updateFrontEndElements(Map<String, AvatarData> updates) {
+    board.updateFrontEndElements(updates);
   }
 }

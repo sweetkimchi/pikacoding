@@ -18,20 +18,21 @@ public class Animation {
 
   private Deque<Double> commandsToBeExecuted;
   private Deque<String> typeToBeUpdated;
-  private Map<Integer, Element> allElementInformation;
+  private Map<Integer, Deque<Double>> allElementInformation;
 
 
   private static final String DEFAULT_RESOURCES =
       AnimationPane.class.getPackageName() + ".resources.";
   private static final String UPDATE_NEXT_RESOURCE =
       DEFAULT_RESOURCES + "UpdateNextReflectionActions";
-  private int INCREMENT_FACTOR = 10;
+  private double INCREMENT_FACTOR = 30;
   private int currentID = 1;
   private static final String PANE_BOX_ID = "AvatarView";
 
   public Animation(){
     commandsToBeExecuted = new ArrayDeque<>();
     allElementInformation = new HashMap<>();
+    typeToBeUpdated = new ArrayDeque<>();
   }
 
   public void updateCommandQueue(String commandType, List<Double> commandValues) {
@@ -107,11 +108,11 @@ public class Animation {
   }
 
   public void createAvatar(int id, Element element){
-    allElementInformation.put(id, element);
+
     // System.out.println(allElementInformation);
   }
 
-  public Map<Integer, Element> getAllElementInformation(){
+  public Map<Integer, Deque<Double>> getAllElementInformation(){
     return allElementInformation;
   }
 
@@ -126,5 +127,28 @@ public class Animation {
 
 
 
+  }
+
+  public void queuePositionUpdates(int id, int initialX, int initialY, int xCoord, int yCoord) {
+    double xIncrement = (xCoord - initialX)/ INCREMENT_FACTOR;
+    double yIncrement = (yCoord - initialY)/INCREMENT_FACTOR;
+    Deque<Double> position = new ArrayDeque<>();
+    for (int i = 1; i <= INCREMENT_FACTOR; i++) {
+      position.add(initialX + xIncrement * i);
+      position.add(initialY + yIncrement * i);
+      typeToBeUpdated.add("Positions");
+    }
+    allElementInformation.put(id, position);
+
+
+    System.out.println(yCoord);
+    System.out.println(initialY);
+    System.out.println(allElementInformation);
+  }
+
+  public void reset() {
+    allElementInformation.clear();
+    typeToBeUpdated.clear();
+    commandsToBeExecuted.clear();
   }
 }

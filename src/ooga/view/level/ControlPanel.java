@@ -23,6 +23,7 @@ public class ControlPanel extends GridPane {
   private Map<String, Button> buttons;
   private ResourceBundle buttonImages;
   private int col = 0;
+  private Slider slider;
 
   public ControlPanel() {
     this.getStyleClass().add("control-panel");
@@ -39,7 +40,7 @@ public class ControlPanel extends GridPane {
   }
 
   private void makeSlider() {
-    Slider slider = new Slider();
+    slider = new Slider(10, 1000,50);
     this.add(slider, col, 0);
   }
 
@@ -73,5 +74,9 @@ public class ControlPanel extends GridPane {
     iconView.setFitWidth(ICON_SIZE);
     iconView.setFitHeight(ICON_SIZE);
     return iconView;
+  }
+
+  public double getSliderSpeed() {
+    return slider.getValue();
   }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.BoardState;
+import ooga.model.player.AvatarData;
 import ooga.model.player.Element;
 import ooga.view.level.codearea.CommandBlock;
 
@@ -60,4 +61,6 @@ public interface FrontEndExternalAPI {
   void initializeLevel(int level);
 
   void updateAvatarPositions(int id, int xCoord, int yCoord);
+
+  void updateFrontEndElements(Map<String, AvatarData> updates);
 }

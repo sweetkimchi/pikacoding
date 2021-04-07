@@ -1,5 +1,6 @@
 package ooga.view.level;
 
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,33 @@ public class SpriteLayer extends Pane {
    * @param yCoord
    */
   public void updateAvatarPositions(int id, int xCoord, int yCoord) {
-    avatars.get(id).moveAvatar(xCoord,yCoord);
+    Avatar avatar = avatars.get(id);
+    animation.queuePositionUpdates(id, avatar.getInitialXCoordinate(), avatar.getInitialYCoordinate(), xCoord,yCoord);
+  //  avatars.get(id).moveAvatar(xCoord,yCoord);
+  }
+
+  public int getNumberOfAvatars() {
+    return avatars.size();
+  }
+
+  public boolean updateAnimationForFrontEnd() {
+    Map<Integer, Deque<Double>> allElementInformation = animation.getAllElementInformation();
+    boolean finished = true;
+    for(Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()){
+      if(!entry.getValue().isEmpty()){
+
+        System.out.println("Moving Avatar: " + entry.getValue());
+        double nextX = entry.getValue().pop();
+        double nextY = entry.getValue().pop();
+
+        avatars.get(entry.getKey()).moveAvatar(nextX, nextY);
+        finished = false;
+      }
+    }
+    return finished;
+  }
+
+  public void resetAnimationQueue() {
+    animation.reset();
   }
 }
