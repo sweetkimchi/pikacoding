@@ -1,6 +1,5 @@
 package ooga.view.level.codearea;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.control.ScrollPane;
@@ -8,7 +7,6 @@ import javafx.scene.layout.GridPane;
 import ooga.model.commands.AvailableCommands;
 import ooga.view.ScreenCreator;
 import ooga.view.level.LevelView;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Area of the level view that displays the command bank and program stack.
@@ -32,7 +30,8 @@ public class CodeArea extends GridPane {
         .getBundle(ScreenCreator.RESOURCES + CODEAREA_PROPERTIES);
     double commandBankWidth = Double.parseDouble(sizeProperties.getString("CommandBankWidth"));
     sizeProperties = ResourceBundle.getBundle(ScreenCreator.RESOURCES + LevelView.LEVEL_PROPERTIES);
-    double programWidth = Double.parseDouble(sizeProperties.getString("CodeAreaWidth")) - commandBankWidth;
+    double programWidth =
+        Double.parseDouble(sizeProperties.getString("CodeAreaWidth")) - commandBankWidth;
     commandBank.setPrefWidth(commandBankWidth);
     programStack.setPrefWidth(programWidth);
   }

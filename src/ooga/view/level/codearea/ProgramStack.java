@@ -1,6 +1,7 @@
 package ooga.view.level.codearea;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,9 @@ public class ProgramStack extends VBox {
 
   private List<CommandBlockHolder> programBlocks;
   private AvailableCommands availableCommands;
+
+  private boolean awaitingNewIndex = false;
+  private int newIndex = 0;
 
   public ProgramStack() {
     this.setSpacing(5);
@@ -34,9 +38,15 @@ public class ProgramStack extends VBox {
       parameterOptions.add(parameterOptionsMap);
     });
     CommandBlockHolder commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
-        command, parameterOptions, this::removeCommandBlock);
+        command, parameterOptions, this);
     programBlocks.add(commandBlockHolder);
     this.getChildren().add(commandBlockHolder);
+  }
+
+  public List<CommandBlock> getProgram() {
+    List<CommandBlock> program = new ArrayList<>();
+    programBlocks.forEach(commandBlockHolder -> program.add(commandBlockHolder.getCommandBlock()));
+    return program;
   }
 
   public void removeCommandBlock(int index) {
@@ -47,9 +57,52 @@ public class ProgramStack extends VBox {
     }
   }
 
-  public List<CommandBlock> getProgram() {
-    List<CommandBlock> program = new ArrayList<>();
-    programBlocks.forEach(commandBlockHolder -> program.add(commandBlockHolder.getCommandBlock()));
-    return program;
+  public void startDrag(CommandBlockHolder commandBlockHolder) {
+    newIndex = commandBlockHolder.getCommandBlock().getIndex();
+    awaitingNewIndex = true;
+    programBlocks.forEach(other -> {
+      other.setOnMouseEntered(e -> {
+        if (awaitingNewIndex) {
+          newIndex = other.getCommandBlock().getIndex();
+          moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
+          stopDrag();
+        }
+      });
+    });
+  }
+
+  private void moveCommandBlock(int oldIndex, int newIndex) {
+//    int total = programBlocks.size();
+//    removeCommandBlock(commandBlockHolder.getCommandBlock().getIndex());
+//    CommandBlockHolder previous = commandBlockHolder;
+//    for (int i = newIndex; i < total - 1; i++) {
+//      CommandBlockHolder current = programBlocks.get(i);
+//      programBlocks.set(i, previous);
+//      programBlocks.get(i).setIndex(i + 1);
+//      this.getChildren().add(i, previous);
+//      previous = current;
+//    }
+//    previous.setIndex(total);
+//    programBlocks.add(previous);
+//    this.getChildren().add(previous);
+
+    if (oldIndex < newIndex) {
+      Collections.rotate(programBlocks.subList(oldIndex - 1, newIndex), -1);
+    }
+    else if (oldIndex > newIndex) {
+      Collections.rotate(programBlocks.subList(newIndex - 1, oldIndex), 1);
+    }
+    this.getChildren().clear();
+    for (int i = 0; i < programBlocks.size(); i++) {
+      programBlocks.get(i).setIndex(i + 1);
+      this.getChildren().add(programBlocks.get(i));
+    }
+  }
+
+  private void stopDrag() {
+    programBlocks.forEach(other -> {
+      other.setOnMouseEntered(e -> {});
+    });
+    awaitingNewIndex = false;
   }
 }

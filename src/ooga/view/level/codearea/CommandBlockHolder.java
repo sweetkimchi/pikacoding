@@ -3,7 +3,6 @@ package ooga.view.level.codearea;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -15,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 
 /**
  * JavaFX element that displays a CommandBlock. Shows line number, command type, and parameter
@@ -32,14 +32,17 @@ public class CommandBlockHolder extends GridPane {
   private List<Map<String, List<String>>> parameterOptions;
   private Label indexLabel;
   private CommandBlock commandBlock;
+  private ImageView hamburgerMenu;
+  private ProgramStack programStack;
 
   private int columns;
 
   public CommandBlockHolder(int index, String type,
-      List<Map<String, List<String>>> parameterOptions, Consumer<Integer> removeAction) {
+      List<Map<String, List<String>>> parameterOptions, ProgramStack programStack) {
     this.getStyleClass().add("command-block-holder");
     this.setHgap(5);
     this.columns = 0;
+    this.programStack = programStack;
     indexLabel = new Label();
     indexLabel.getStyleClass().add("command-index");
     addItem(indexLabel, INDEX_WIDTH);
@@ -63,13 +66,16 @@ public class CommandBlockHolder extends GridPane {
 
     Button removeButton = new Button("x");
     removeButton.setPrefHeight(ITEM_HEIGHT);
-    removeButton.setOnAction(e -> removeAction.accept(this.index));
+    removeButton.setOnAction(e -> programStack.removeCommandBlock(this.index));
     addItem(removeButton, 0);
 
-    ImageView hamburgerMenu = new ImageView(new Image(HAMBURGER_MENU_IMAGE));
+    hamburgerMenu = new ImageView(new Image(HAMBURGER_MENU_IMAGE));
     hamburgerMenu.setFitHeight(ITEM_HEIGHT);
     hamburgerMenu.setFitWidth(ITEM_HEIGHT);
     addItem(hamburgerMenu, 0);
+    hamburgerMenu.setOnMousePressed(e -> {
+      programStack.startDrag(this);
+    });
 
     setIndex(index);
     this.setPadding(new Insets(4, 4, 4, 4));
