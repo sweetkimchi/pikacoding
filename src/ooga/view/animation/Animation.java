@@ -1,4 +1,4 @@
-package ooga.model.animation;
+package ooga.view.animation;
 
 import java.lang.reflect.Method;
 import java.util.ArrayDeque;
@@ -10,12 +10,12 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 import ooga.controller.BackEndExternalAPI;
 import ooga.model.Direction;
+import ooga.model.animation.AnimationPane;
 import ooga.model.player.Avatar;
 import ooga.model.player.Element;
 
-public class AnimationPane {
+public class Animation {
 
-  private BackEndExternalAPI modelController;
   private Deque<Double> commandsToBeExecuted;
   private Deque<String> typeToBeUpdated;
   private Map<Integer, Element> allElementInformation;
@@ -29,10 +29,7 @@ public class AnimationPane {
   private int currentID = 1;
   private static final String PANE_BOX_ID = "AvatarView";
 
-
-
-  public AnimationPane(BackEndExternalAPI modelController){
-    this.modelController = modelController;
+  public Animation(){
     commandsToBeExecuted = new ArrayDeque<>();
     allElementInformation = new HashMap<>();
   }
@@ -54,8 +51,8 @@ public class AnimationPane {
       key = typeToBeUpdated.removeFirst();
       try {
         String methodName = updateNextActionResources.getString(key);
-        Method m = AnimationPane.this.getClass().getDeclaredMethod(methodName);
-        m.invoke(AnimationPane.this);
+        Method m = Animation.this.getClass().getDeclaredMethod(methodName);
+        m.invoke(Animation.this);
       } catch (Exception e) {
         new Alert(Alert.AlertType.ERROR);
       }
@@ -111,7 +108,7 @@ public class AnimationPane {
 
   public void createAvatar(int id, Element element){
     allElementInformation.put(id, element);
-   // System.out.println(allElementInformation);
+    // System.out.println(allElementInformation);
   }
 
   public Map<Integer, Element> getAllElementInformation(){
@@ -130,7 +127,4 @@ public class AnimationPane {
 
 
   }
-
-
-
 }

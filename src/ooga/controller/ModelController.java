@@ -109,4 +109,9 @@ public class ModelController implements BackEndExternalAPI {
         viewController.setAvailableCommands(initialConfigurationParser.getAvailableCommands());
         return initialConfigurationParser.getInitialState();
     }
+
+    @Override
+    public void updateAvatarPositions(int id, int xCoord, int yCoord) {
+        viewController.updateAvatarPositions(id, xCoord, yCoord);
+    }
 }

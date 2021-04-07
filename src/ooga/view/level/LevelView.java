@@ -52,10 +52,6 @@ public class LevelView extends BorderPane {
       viewController.runNextCommand();
       setAnimationSpeed();
 
-
-      //TODO: remove after debugging
-      board.moveAvatar(dummy,dummy);
-      dummy++;
     }));
     initializeViewElements();
   }
@@ -136,4 +132,7 @@ public class LevelView extends BorderPane {
     timeline.setRate(2);
   }
 
+  public void updateAvatarPositions(int id, int xCoord, int yCoord) {
+    board.updateAvatarPositions(id, xCoord, yCoord);
+  }
 }

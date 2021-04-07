@@ -59,4 +59,5 @@ public interface FrontEndExternalAPI {
 
   void initializeLevel(int level);
 
+  void updateAvatarPositions(int id, int xCoord, int yCoord);
 }

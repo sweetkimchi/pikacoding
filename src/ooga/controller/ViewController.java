@@ -88,6 +88,11 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.initializeBoard(initialState);
     }
 
+    @Override
+    public void updateAvatarPositions(int id, int xCoord, int yCoord) {
+        levelView.updateAvatarPositions(id, xCoord,yCoord);
+    }
+
     /**
      * Passes in the commands to be parsed
      *

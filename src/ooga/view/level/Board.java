@@ -36,9 +36,6 @@ public class Board extends StackPane {
   public Board() {
   }
 
-  public void moveAvatar(double xDist, double yDist) {
-    //block1.pickUp(xDist, yDist);
-  }
 
   public void reset() {
     spriteLayer.resetAvatarLocations();
@@ -100,4 +97,7 @@ public class Board extends StackPane {
     }
   }
 
+  public void updateAvatarPositions(int id, int xCoord, int yCoord) {
+    spriteLayer.updateAvatarPositions(id, xCoord,yCoord);
+  }
 }

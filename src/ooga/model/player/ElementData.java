@@ -1,6 +1,6 @@
 package ooga.model.player;
 
-public class ElementData {
+abstract class ElementData {
 
   public ElementData(Element element) {
 
