@@ -6,18 +6,18 @@ import javafx.scene.layout.GridPane;
 
 public class Avatar {
   private static final String avatarImage = "PikachuAvatar.gif"; // TODO: put in resource file or get passed
-  private int row;
-  private int col;
+  private int initialXCoordinate;
+  private int initialYCoordinate;
   private double width;
   private double height;
-  private GridPane grid;
+  private SpriteLayer spriteLayer;
   private ImageView avatar;
-  public Avatar(int r, int c, double w, double h, GridPane root) {
-    row = r;
-    col = c;
+  public Avatar(int x, int y, double w, double h, SpriteLayer root) {
+    initialXCoordinate = x;
+    initialYCoordinate = y;
     width = w;
     height = h;
-    grid = root;
+    spriteLayer = root;
     makeAvatar();
   }
 
@@ -25,19 +25,17 @@ public class Avatar {
     avatar = new ImageView(new Image(avatarImage));
     avatar.setFitWidth(width);
     avatar.setFitHeight(height);
-    grid.add(avatar, col, row);
+    reset();
+    spriteLayer.getChildren().add(avatar);
   }
 
-  public void moveAvatar(double r, double c) {
-    avatar.setTranslateX(width + avatar.getTranslateX());
-    avatar.setTranslateY(height + avatar.getTranslateY());
-//    avatar.setX(r);
-//    avatar.setY(c);
-    System.out.println("Avatar xCoord: " + avatar.getTranslateX());
+  public void moveAvatar(double x, double y) {
+    avatar.setX(x * width);
+    avatar.setY(y * height);
   }
 
   public void reset() {
-    avatar.setTranslateX(0);
-    avatar.setTranslateY(0);
+    avatar.setX(initialXCoordinate * width);
+    avatar.setY(initialYCoordinate * height);
   }
 }

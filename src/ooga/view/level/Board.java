@@ -7,15 +7,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Stack;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import ooga.model.grid.gridData.BlockData;
 import ooga.model.grid.gridData.BoardState;
 import ooga.view.ScreenCreator;
 
-public class Board extends GridPane {
+public class Board extends StackPane {
 
   private static final String BOARD_PROPERTIES = "Board";
+
+  private GridPane gridLayer;
+  private SpriteLayer spriteLayer;
 
   private int rows; // TODO: passed from BoardState
   private int cols; // TODO: passed from BoardState
@@ -25,11 +30,6 @@ public class Board extends GridPane {
   private double xSize;
   private double ySize;
 
-  private Map<String, List<Integer>> initialAvatarLocations;
-  private Map<String, BlockData> initialBlockData;
-
-  private Map<Integer, Avatar> avatars;
-  private Map<Integer, Block> blocks;
 //  Avatar avatar1;
 //  Block block1;
 
@@ -43,8 +43,8 @@ public class Board extends GridPane {
   }
 
   public void reset() {
-    resetAvatarLocations();
-    resetBlockData();
+    spriteLayer.resetAvatarLocations();
+    spriteLayer.resetBlockData();
   }
 
   public void initializeBoard(BoardState initialState) {
@@ -54,6 +54,9 @@ public class Board extends GridPane {
     cols = 14; // TODO: remove after wired with model
     gridXSize = Double.parseDouble(boardValues.getString("gridXSize"));
     gridYSize = Double.parseDouble(boardValues.getString("gridYSize"));
+    gridLayer = new GridPane();
+    spriteLayer = new SpriteLayer(gridXSize, gridYSize);
+    this.getChildren().addAll(gridLayer, spriteLayer);
     states = new ArrayList<>(); // TODO: remove after wired with model
     // TODO: remove after wired with model
     Random random = new Random();
@@ -66,12 +69,13 @@ public class Board extends GridPane {
       }
       states.add(state);
     }
-    this.getStyleClass().add("board");
+    gridLayer.getStyleClass().add("board");
     xSize = gridXSize / cols;
     ySize = gridYSize / rows;
     makeGrid();
-    initializeAvatars(initialState.getAllAvatarLocations());
-    initializeBlocks(initialState.getAllBlockData());
+    spriteLayer.setSizes(xSize, ySize);
+    spriteLayer.initializeAvatars(initialState.getAllAvatarLocations());
+    spriteLayer.initializeBlocks(initialState.getAllBlockData());
 //    makeTestingAvatars();
 //    Button test = new Button("test");
 //    test.setOnAction(event -> testing());
@@ -81,38 +85,6 @@ public class Board extends GridPane {
 //  private void testing() {
 //    moveAvatar(50, 10);
 //  }
-
-  private void resetAvatarLocations() {
-    initialAvatarLocations.forEach((id, location) -> {
-      avatars.get(Integer.parseInt(id)).reset();
-    });
-  }
-
-  private void resetBlockData() {
-    initialBlockData.forEach((id, blockData) -> {
-      blocks.get(Integer.parseInt(id)).reset();
-    });
-  }
-
-  private void initializeAvatars(Map<String, List<Integer>> allAvatarLocations) {
-    avatars = new HashMap<>();
-    initialAvatarLocations = allAvatarLocations;
-    initialAvatarLocations.forEach((id, location) -> {
-      Avatar avatar = new Avatar(location.get(0), location.get(1), xSize, ySize, this);
-      avatars.put(Integer.parseInt(id), avatar);
-    });
-  }
-
-  private void initializeBlocks(Map<String, BlockData> allBlockData) {
-    blocks = new HashMap<>();
-    initialBlockData = allBlockData;
-    initialBlockData.forEach((id, blockData) -> {
-      Block block = new Block(blockData.getLocation().get(0), blockData.getLocation().get(1),
-          xSize - 5.0,
-          ySize - 5.0, this, "" + blockData.getBlockNumber());
-      blocks.put(Integer.parseInt(id), block);
-    });
-  }
 
   // TODO: remove after debugging
 //  private void makeTestingAvatars() {
@@ -125,7 +97,7 @@ public class Board extends GridPane {
       for (int j = 0; j < cols; j++) {
         Rectangle block = new Rectangle(xSize, ySize);
         block.getStyleClass().add("state-" + states.get(j + i * cols));
-        this.add(block, j, i);
+        gridLayer.add(block, j, i);
       }
     }
   }

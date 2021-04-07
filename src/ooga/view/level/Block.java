@@ -1,42 +1,47 @@
 package ooga.view.level;
 
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class Block extends StackPane {
-  private int row;
-  private int col;
+
+  private static final double PADDING_RATIO = 0.1;
+
+  private int initialXCoordinate;
+  private int initialYCoordinate;
   private double width;
   private double height;
+  private double padding;
   private Text blockText;
-  private GridPane grid;
+  private SpriteLayer spriteLayer;
   private String number;
 
-  public Block(int r, int c, double w, double h, GridPane root, String num) {
-    row = r;
-    col = c;
+  public Block(int x, int y, double w, double h, SpriteLayer root, String num) {
+    initialXCoordinate = x;
+    initialYCoordinate = y;
     width = w;
     height = h;
-    grid = root;
+    padding = PADDING_RATIO * width;
+    spriteLayer = root;
     number = num;
     makeBlock();
   }
 
   public void reset() {
-    this.setTranslateX(0);
-    this.setTranslateY(0);
+    this.setTranslateX(initialXCoordinate * width + padding);
+    this.setTranslateY(initialYCoordinate * height + padding);
   }
 
   private void makeBlock() {
-    Rectangle block = new Rectangle(width, height);
+    Rectangle block = new Rectangle(width - 2 * padding, height - 2 * padding);
     block.setFill(Color.LIGHTSEAGREEN); // TODO: put in resource file
     blockText = new Text(number);
     this.getChildren().add(block);
     this.getChildren().add(blockText);
-    grid.add(this, col, row);
+    reset();
+    spriteLayer.getChildren().add(this);
   }
 
   public void pickUp(double r, double c) {
