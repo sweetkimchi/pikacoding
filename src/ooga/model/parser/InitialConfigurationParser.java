@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +23,21 @@ public class InitialConfigurationParser {
   private GoalState goalState;
   private AvailableCommands availableCommands;
   private GameGrid gameGrid;
+  private boolean errorOccurred = false;
+  private String errorMessage = "";
 
   public InitialConfigurationParser(int level)  {
     this.level = level;
     this.rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + this.level + "/";
     this.parseLevelInfo();
+  }
+
+  public boolean getErrorOccurred()  {
+    return this.errorOccurred;
+  }
+
+  public String getErrorMessage() {
+    return this.errorMessage;
   }
 
   public GameGrid getGameGrid() { return this.gameGrid; }
@@ -56,8 +65,8 @@ public class InitialConfigurationParser {
       parseCommands();
     }
     catch (Exception e) {
-      e.printStackTrace();
-      //handle later
+      this.errorMessage = "Error parsing level file";
+      this.errorOccurred = true;
     }
   }
 
@@ -75,8 +84,8 @@ public class InitialConfigurationParser {
           (int) initial.get("numPeople"),
           (int) initial.get("level"));
     } catch (Exception e) {
-      e.printStackTrace();
-      //figure out error handling later lol
+      this.errorMessage = "Error parsing start state";
+      this.errorOccurred = true;
     }
 
   }
@@ -90,8 +99,8 @@ public class InitialConfigurationParser {
       parseBlockData((Map<String, Object>) result.get("blocks")), numOfCommands);
     }
     catch (Exception e) {
-      e.printStackTrace();
-      //figure out error handling later lol
+      this.errorMessage = "Error parsing end state";
+      this.errorOccurred = true;
     }
 
   }
@@ -125,9 +134,9 @@ public class InitialConfigurationParser {
       return (HashMap<String, String>) result;
     }
     catch (Exception e) {
-      e.printStackTrace();
+      this.errorMessage = "Error parsing image locations";
+      this.errorOccurred = true;
       return null;
-      //HANDLE LATER
     }
   }
 
@@ -147,8 +156,8 @@ public class InitialConfigurationParser {
       availableCommands = new AvailableCommands(commandsMap);
     }
     catch (Exception e) {
-      e.printStackTrace();
-      //figure out error handling later lol
+      this.errorMessage = "Error parsing commands";
+      this.errorOccurred = true;
     }
   }
 
@@ -163,15 +172,20 @@ public class InitialConfigurationParser {
       this.gameGrid.setDimensions(height, width);
       Map<String, List<String>> mapOfGrid = (Map<String, List<String>>) result.get("grid");
       for (int i = 0; i < height; i++) {
-        List<String> currentRow = (List<String>) mapOfGrid.get("" + i );
+        List<String> currentRow = mapOfGrid.get("" + i );
+        if (currentRow.size() != width) {
+          errorOccurred = true;
+          errorMessage = "Error parsing grid dimensions";
+          return;
+        }
         for (int j = 0; j < width; j++) {
           this.gameGrid.setStructure(i, j, Structure.valueOf(currentRow.get(j)));
         }
 
       }
     } catch (IOException e) {
-      e.printStackTrace();
-      //TODO: Handle Errors Later
+      this.errorMessage = "Error parsing grid";
+      this.errorOccurred = true;
     }
   }
 
