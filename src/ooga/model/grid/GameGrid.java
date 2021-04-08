@@ -23,6 +23,10 @@ public class GameGrid implements Grid {
     avatarList = new HashMap<>();
   }
 
+  public Map<Avatar, List<Integer>> getAvatarList() {
+    return avatarList;
+  }
+
   @Override
   public void setDimensions(int x, int y) {
     grid = new Tile[x][y];

@@ -84,8 +84,8 @@ public class InitialConfigurationParser {
       HashMap result =
           new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
       this.initialState = new InitialState(
-          parseAvatarLocations((Map<String, Object>) result.get("peopleLocations")),
-          parseBlockData((Map<String, Object>) result.get("blocks")),
+          parseAvatarLocations((Map<String, Object>) result.get("peopleLocations"), true),
+          parseBlockData((Map<String, Object>) result.get("blocks"), true),
           (List<String>) initial.get("blocks"),
           parseImageLocations((String) initial.get("images")),
           (String) initial.get("description"),
@@ -103,8 +103,8 @@ public class InitialConfigurationParser {
       String filePathToStartState = rootURLPathForLevel + "endState.json";
       Map<String, Object> result =
           new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
-      this.goalState = new GoalState(parseAvatarLocations((Map<String, Object>) result.get("peopleLocations")),
-      parseBlockData((Map<String, Object>) result.get("blocks")), numOfCommands);
+      this.goalState = new GoalState(parseAvatarLocations((Map<String, Object>) result.get("peopleLocations"), false),
+      parseBlockData((Map<String, Object>) result.get("blocks"), false), numOfCommands);
     }
     catch (Exception e) {
       this.errorMessage = "Error parsing end state";
@@ -113,18 +113,21 @@ public class InitialConfigurationParser {
 
   }
 
-  private Map<String, List<Integer>> parseAvatarLocations(Map<String, Object> peopleLocations)  {
+  private Map<String, List<Integer>> parseAvatarLocations(Map<String, Object> peopleLocations, boolean addToGameGrid)  {
     Map<String, List<Integer>> mapOfPeople = new HashMap<>();
     for (String s: peopleLocations.keySet())  {
       List<Integer> avatarLocation = (List<Integer>) peopleLocations.get(s);
       mapOfPeople.put(s, avatarLocation);
-      this.gameGrid.addGameElement(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
-          avatarLocation.get(1)), avatarLocation.get(0), avatarLocation.get(1));
+      if (addToGameGrid) {
+        this.gameGrid.addGameElement(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
+            avatarLocation.get(1)), avatarLocation.get(0), avatarLocation.get(1));
+      }
+
     }
     return mapOfPeople;
   }
 
-  private Map<String, BlockData> parseBlockData(Map<String, Object> blocks) {
+  private Map<String, BlockData> parseBlockData(Map<String, Object> blocks, boolean addToGameGrid) {
     Map<String, BlockData> allBlockData = new HashMap<>();
 
     for (String s: blocks.keySet()) {
@@ -134,8 +137,11 @@ public class InitialConfigurationParser {
           (int) currentBlock.get("num"), Boolean.parseBoolean(
           (String) currentBlock.get("pickedUp")));
       allBlockData.put(s, blockData);
-      this.gameGrid.addGameElement(new Datacube(Integer.parseInt(s), blockLoc.get(0),
-          blockLoc.get(1)), blockLoc.get(0), blockLoc.get(1));
+      if (addToGameGrid)  {
+        this.gameGrid.addGameElement(new Datacube(Integer.parseInt(s), blockLoc.get(0),
+            blockLoc.get(1)), blockLoc.get(0), blockLoc.get(1));
+      }
+
     }
     return allBlockData;
   }
