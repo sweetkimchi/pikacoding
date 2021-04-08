@@ -78,12 +78,14 @@ public class CommandExecutor {
 //                    animationPane.moveAvatar(dummy, getDirection(currentCommand.getParameters().get("direction")));
                     int xPrev = singleAvatar.getXCoord();
                     int yPrev = singleAvatar.getYCoord();
-                      singleAvatar.step(getDirection(currentCommand.getParameters().get("direction")));
+
+                    singleAvatar.step(getDirection(currentCommand.getParameters().get("direction")));
             //        gameGrid.step(dummy.getId(),getDirection(currentCommand.getParameters().get("direction")));
                     // update program counter
                     singleAvatar.setProgramCounter(singleAvatar.getProgramCounter() + 1);
 
                     newUpdate.updatePositions(singleAvatar.getId(), singleAvatar.getXCoord(), singleAvatar.getYCoord());
+           //         gameGrid.step(singleAvatar.getId(),getDirection(currentCommand.getParameters().get("direction")));
 
                     //TODO: delete after debug
                     modelController.updateAvatarPositions(singleAvatar.getId(), singleAvatar.getXCoord(), singleAvatar.getYCoord());
