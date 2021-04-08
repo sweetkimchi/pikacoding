@@ -38,6 +38,7 @@ public class ParserTester {
     assertEquals(Structure.FLOOR, gameGrid.getStructure(4, 1));
     assertEquals(Structure.FLOOR, gameGrid.getStructure(2, 3));
     assertEquals(Structure.WALL, gameGrid.getStructure(0, 0));
+    assertEquals(gameGrid.getAvatarList().size(), 3);
   }
 
   @Test
