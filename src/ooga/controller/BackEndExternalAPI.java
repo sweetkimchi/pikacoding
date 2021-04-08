@@ -2,8 +2,10 @@
 
 package ooga.controller;
 import java.util.List;
+import java.util.Map;
 import javax.lang.model.util.Elements;
 import ooga.model.grid.gridData.BoardState;
+import ooga.model.player.AvatarData;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -55,4 +57,10 @@ public interface BackEndExternalAPI {
    * @return BoardState object with level information
    */
   BoardState initializeLevel(int level);
+
+  void updateAvatarPositions(int id, int xCoord, int yCoord);
+
+  void setAvatarIDForUpdate(int id);
+
+  void updateFrontEndElements(Map<String, AvatarData> updates);
 }

@@ -1,5 +1,6 @@
 package ooga.view.level;
 
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -9,6 +10,7 @@ import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.BoardState;
+import ooga.model.player.AvatarData;
 import ooga.view.ScreenCreator;
 import ooga.view.level.codearea.CodeArea;
 
@@ -17,6 +19,7 @@ import ooga.view.level.codearea.CodeArea;
  * Contains all the main level view elements (board, code area, etc.)
  *
  * @author David Li
+ * @author Ji Yun Hyo
  */
 public class LevelView extends BorderPane {
 
@@ -33,8 +36,11 @@ public class LevelView extends BorderPane {
   private Timeline timeline;
 
   private boolean codeIsRunning;
+  private boolean queueFinished;
+  private boolean step;
 
   //TODO: remove after debug
+  //I'm using this because for some reason, clicking step doesn't play the initial animation (does nothing)
   private double dummy = 1;
 
   public LevelView(FrontEndExternalAPI viewController) {
@@ -45,19 +51,37 @@ public class LevelView extends BorderPane {
     codeArea = new CodeArea();
     controlPanel = new ControlPanel();
     codeIsRunning = false;
+    queueFinished = true;
+    step = false;
+
 
     timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 
+      /**
+       * if queue is finished run the next command
+       * if the que is not finished, it means that the turn is not over yet so execute the animation for the turn
+       */
+      System.out.println("Animation running");
+      if(queueFinished){
+        if(step && dummy != 1){
+          timeline.stop();
+          step = false;
+        }
+        dummy++;
+        viewController.runNextCommand();
+        queueFinished = false;
 
-      viewController.runNextCommand();
+      }else{
+        updateAnimationForFrontEnd();
+      }
       setAnimationSpeed();
 
-
-      //TODO: remove after debugging
-      board.moveAvatar(dummy,dummy);
-      dummy++;
     }));
     initializeViewElements();
+  }
+
+  private void updateAnimationForFrontEnd() {
+    queueFinished = board.updateAnimationForFrontEnd();
   }
 
 
@@ -100,28 +124,49 @@ public class LevelView extends BorderPane {
 
   private void play() {
     System.out.println("play");
+    step = false;
     if (!codeIsRunning) {
+      reset();
       viewController.parseCommands(codeArea.getProgram());
       codeIsRunning = true;
     }
     runSimulation();
+
 
   }
 
   private void reset() {
     codeIsRunning = false;
     board.reset();
+    timeline.stop();
+    dummy = 1;
     System.out.println("reset");
   }
 
   private void step() {
+
     System.out.println("step");
     if (!codeIsRunning) {
+      reset();
       viewController.parseCommands(codeArea.getProgram());
+      queueFinished = false;
       codeIsRunning = true;
     }
-    timeline.stop();
-    viewController.runNextCommand();
+
+
+    runSimulation();
+
+    step = true;
+    /**
+     * if queue is finished run the next command
+     * if the que is not finished, it means that the turn is not over yet so execute the animation for the turn
+     */
+    if(queueFinished){
+      viewController.runNextCommand();
+      queueFinished = false;
+    }else{
+      updateAnimationForFrontEnd();
+    }
 
   }
 
@@ -133,7 +178,19 @@ public class LevelView extends BorderPane {
 
   private void setAnimationSpeed() {
     // TODO: remove after debugging
-    timeline.setRate(2);
+    timeline.setRate(controlPanel.getSliderSpeed());
   }
 
+  public void updateAvatarPositions(int id, int xCoord, int yCoord) {
+    board.updateAvatarPositions(id, xCoord, yCoord);
+  }
+
+  public void updateFrontEndElements(Map<String, AvatarData> updates) {
+    board.updateFrontEndElements(updates);
+  }
+
+  public void declareEndOfAnimation() {
+    codeIsRunning = false;
+    timeline.stop();
+  }
 }

@@ -89,4 +89,15 @@ public class Avatar extends Player {
         return ret;
     }
 
+    public void step(Direction direction){
+        int xPrev = xCoord;
+        int yPrev = yCoord;
+        this.xCoord = xPrev + direction.getXDel();
+        this.yCoord = yPrev + direction.getYDel();
+
+        System.out.printf("Moving avatar %d from (%d, %d) in the direction %s to new location (%d, %d)\n", id, xPrev, yPrev, direction, xCoord, yCoord);
+    }
+
+
+
 }

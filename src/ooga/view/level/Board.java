@@ -13,6 +13,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import ooga.model.grid.gridData.BlockData;
 import ooga.model.grid.gridData.BoardState;
+import ooga.model.player.AvatarData;
 import ooga.view.ScreenCreator;
 
 public class Board extends StackPane {
@@ -36,13 +37,12 @@ public class Board extends StackPane {
   public Board() {
   }
 
-  public void moveAvatar(double xDist, double yDist) {
-    //block1.pickUp(xDist, yDist);
-  }
 
   public void reset() {
     spriteLayer.resetAvatarLocations();
     spriteLayer.resetBlockData();
+    spriteLayer.resetQueue();
+    spriteLayer.resetAnimationQueue();
   }
 
   public void initializeBoard(BoardState initialState) {
@@ -100,4 +100,26 @@ public class Board extends StackPane {
     }
   }
 
+  public void updateAvatarPositions(int id, int xCoord, int yCoord) {
+    spriteLayer.updateAvatarPositions(id, xCoord,yCoord);
+  }
+
+  //TODO: refactor (CommandExecuter)
+  public void updateFrontEndElements(Map<String, AvatarData> updates) {
+    for(Map.Entry<String, AvatarData> entry: updates.entrySet()){
+      System.out.println("Updating: " + entry.getKey());
+      for(Integer value : entry.getValue().getPositionUpdates()){
+        System.out.println("Values: " + value);
+      }
+
+    }
+  }
+
+  public int getNumberOfAvatars() {
+    return spriteLayer.getNumberOfAvatars();
+  }
+
+  public boolean updateAnimationForFrontEnd() {
+    return spriteLayer.updateAnimationForFrontEnd();
+  }
 }

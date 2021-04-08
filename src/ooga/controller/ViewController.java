@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.BoardState;
 import ooga.model.parser.InitialConfigurationParser;
+import ooga.model.player.AvatarData;
 import ooga.model.player.Element;
 import ooga.view.level.codearea.CommandBlock;
 import ooga.view.ScreenCreator;
@@ -86,6 +87,21 @@ public class ViewController implements FrontEndExternalAPI {
         levelView = screenCreator.getLevelView();
         BoardState initialState = modelController.initializeLevel(1);
         levelView.initializeBoard(initialState);
+    }
+
+    @Override
+    public void updateAvatarPositions(int id, int xCoord, int yCoord) {
+        levelView.updateAvatarPositions(id, xCoord,yCoord);
+    }
+
+    @Override
+    public void updateFrontEndElements(Map<String, AvatarData> updates) {
+        levelView.updateFrontEndElements(updates);
+    }
+
+    @Override
+    public void declareEndOfAnimation() {
+        levelView.declareEndOfAnimation();
     }
 
     /**

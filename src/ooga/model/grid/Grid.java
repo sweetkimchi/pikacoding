@@ -1,7 +1,6 @@
 package ooga.model.grid;
 
 import java.util.List;
-import ooga.model.player.ElementData;
 import ooga.model.player.Element;
 
 /**
@@ -36,11 +35,11 @@ public interface Grid {
 //   */
 //  public void executeOnAvatars(Commands command);
 
-  /**
-   * Returns a list of sprites that have been changed in the grid.
-   *
-   * @return The list of changed sprites
-   */
-  public List<ElementData> getChangedSprites();
+//  /**
+//   * Returns a list of sprites that have been changed in the grid.
+//   *
+//   * @return The list of changed sprites
+//   */
+//  public List<ElementData> getChangedSprites();
 
 }

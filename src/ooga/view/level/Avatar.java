@@ -38,4 +38,12 @@ public class Avatar {
     avatar.setX(initialXCoordinate * width);
     avatar.setY(initialYCoordinate * height);
   }
+
+  public int getInitialXCoordinate(){
+    return (int) (avatar.getX()/width);
+  }
+
+  public int getInitialYCoordinate(){
+    return (int) (avatar.getY()/height);
+  }
 }

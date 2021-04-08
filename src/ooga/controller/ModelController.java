@@ -5,6 +5,7 @@ import javax.lang.model.util.Elements;
 import ooga.model.CommandExecutor;
 import ooga.model.grid.gridData.BoardState;
 import ooga.model.parser.InitialConfigurationParser;
+import ooga.model.player.AvatarData;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -94,7 +95,8 @@ public class ModelController implements BackEndExternalAPI {
      */
     @Override
     public void declareEndOfAnimation() {
-        System.out.println("End of Commands");
+
+        viewController.declareEndOfAnimation();
     }
 
     /**
@@ -108,5 +110,20 @@ public class ModelController implements BackEndExternalAPI {
         initialConfigurationParser = new InitialConfigurationParser(level);
         viewController.setAvailableCommands(initialConfigurationParser.getAvailableCommands());
         return initialConfigurationParser.getInitialState();
+    }
+
+    @Override
+    public void updateAvatarPositions(int id, int xCoord, int yCoord) {
+        viewController.updateAvatarPositions(id, xCoord, yCoord);
+    }
+
+    @Override
+    public void setAvatarIDForUpdate(int id) {
+
+    }
+
+    @Override
+    public void updateFrontEndElements(Map<String, AvatarData> updates) {
+        viewController.updateFrontEndElements(updates);
     }
 }

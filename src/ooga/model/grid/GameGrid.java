@@ -8,7 +8,6 @@ import java.util.Map;
 import ooga.controller.BackEndExternalAPI;
 import ooga.model.Direction;
 import ooga.model.player.Avatar;
-import ooga.model.player.ElementData;
 import ooga.model.player.Element;
 import ooga.model.player.Objects;
 
@@ -58,10 +57,6 @@ public class GameGrid implements Grid {
 //    }
 //  }
 
-  @Override
-  public List<ElementData> getChangedSprites() {
-    return null;
-  }
 
   /**
    * Moves the avatar in a cardinal direction.
