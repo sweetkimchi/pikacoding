@@ -124,7 +124,7 @@ public class LevelView extends BorderPane {
 
   private void play() {
     System.out.println("play");
-
+    step = false;
     if (!codeIsRunning) {
       reset();
       viewController.parseCommands(codeArea.getProgram());
