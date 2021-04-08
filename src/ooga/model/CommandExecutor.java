@@ -35,16 +35,11 @@ public class CommandExecutor {
         this.gameGrid = gameGrid;
         System.out.println("Avatar IDs: " + gameGrid.getAvatarIds());
         System.out.println("Avatars: " + gameGrid.getAvatarList());
-        animationPane = new AnimationPane(modelController);
         this.modelController = modelController;
         mapOfCommandBlocks = new HashMap<>();
         System.out.println("Command block received from frontend");
         System.out.println("Initial Avatar Positions: " + initialState.getAllAvatarLocations().entrySet());
 
-        // add all avatars to animation
-        for(Map.Entry<String, List<Integer>> entry : initialState.getAllAvatarLocations().entrySet()){
-            animationPane.createAvatar(Integer.parseInt(entry.getKey()),new Avatar(Integer.parseInt(entry.getKey()), entry.getValue().get(0), entry.getValue().get(1)));
-        }
 
     //    System.out.println("Initial State of the Board: " + initialState.getAllBlockData().get("1").getLocation());
 
@@ -64,8 +59,8 @@ public class CommandExecutor {
         System.out.println();
         Map<String, AvatarData> updates = new HashMap<>();
         //Map<ID, Values>
-        for (Map.Entry<Integer, Element> entry : animationPane.getAllElementInformation().entrySet()){
-            Avatar singleAvatar = (Avatar) entry.getValue();
+        for (Map.Entry<Avatar, List<Integer>> entry : gameGrid.getAvatarList().entrySet()){
+            Avatar singleAvatar = (Avatar) entry.getKey();
 
             // +1 is needed because program counters are 1 indexed
             // TODO: refactor with Reflection and properties files
@@ -82,15 +77,19 @@ public class CommandExecutor {
                     int xPrev = singleAvatar.getXCoord();
                     int yPrev = singleAvatar.getYCoord();
 
-                    singleAvatar.step(getDirection(currentCommand.getParameters().get("direction")));
+               //     singleAvatar.step(getDirection(currentCommand.getParameters().get("direction")));
             //        gameGrid.step(dummy.getId(),getDirection(currentCommand.getParameters().get("direction")));
                     // update program counter
-                    singleAvatar.setProgramCounter(singleAvatar.getProgramCounter() + 1);
 
+                    gameGrid.step(singleAvatar.getId(),getDirection(currentCommand.getParameters().get("direction")));
+                    List<Integer> avatarCoordinates = gameGrid.getAvatarCoords(singleAvatar.getId());
+                    singleAvatar.setXCoord(avatarCoordinates.get(0));
+                    singleAvatar.setYCoord(avatarCoordinates.get(1));
 
                     newUpdate.updatePositions(singleAvatar.getId(), singleAvatar.getXCoord(), singleAvatar.getYCoord());
            //         gameGrid.step(singleAvatar.getId(),getDirection(currentCommand.getParameters().get("direction")));
 
+                    singleAvatar.setProgramCounter(singleAvatar.getProgramCounter() + 1);
                     //TODO: delete after debug
                     modelController.updateAvatarPositions(singleAvatar.getId(), singleAvatar.getXCoord(), singleAvatar.getYCoord());
 
