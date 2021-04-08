@@ -65,7 +65,8 @@ public class Board extends StackPane {
   private void makeGrid(Structure[][] structures) {
     for (int x = 0; x < cols; x++) {
       for (int y = 0; y < rows; y++) {
-        Rectangle block = new Rectangle(xSize, ySize);
+        Rectangle block = new Rectangle(Math.ceil(xSize), Math.ceil(ySize));
+        block.getStyleClass().add("state");
         block.getStyleClass().add("state-" + structures[x][y].name().toLowerCase(Locale.ROOT));
         gridLayer.add(block, x, y);
       }
