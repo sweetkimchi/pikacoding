@@ -20,11 +20,9 @@ public class GridTest {
   private GameGrid gameGrid;
   private Avatar avatar;
   private Datacube datacube;
-  private BackEndExternalAPI modelController;
 
   @BeforeEach
   public void setup() {
-    modelController = new ModelController();
     gameGrid = new GameGrid();
     avatar = new Avatar(10, 0, 0);
     datacube = new Datacube(0, 0, 0);
