@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 public class CommandBlockOption extends Button {
 
   public CommandBlockOption(String command, EventHandler<ActionEvent> eventHandler) {
+    this.setId(command + "-option-button");
     this.getStyleClass().add("command-block-option");
     this.setText(command);
     this.setOnAction(eventHandler);

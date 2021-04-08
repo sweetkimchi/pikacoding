@@ -23,7 +23,8 @@ public class CommandBank extends VBox {
   public void addCommands(Set<String> commands) {
     commands.forEach(command -> {
       CommandBlockOption option = new CommandBlockOption(command,
-          e -> clickOptionAction.accept(command));
+          e -> {
+        clickOptionAction.accept(command);});
       this.getChildren().add(option);
     });
   }
