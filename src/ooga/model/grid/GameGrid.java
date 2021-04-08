@@ -23,6 +23,10 @@ public class GameGrid implements Grid {
     avatarList = new HashMap<>();
   }
 
+  public Map<Avatar, List<Integer>> getAvatarList() {
+    return avatarList;
+  }
+
   @Override
   public void setDimensions(int x, int y) {
     grid = new Tile[x][y];
@@ -78,6 +82,10 @@ public class GameGrid implements Grid {
       avatarCoords.set(1, newY);
     }
 
+  }
+
+  public List<Integer> getAvatarCoords(int avatarID){
+    return avatarList.get(getAvatarById(avatarID));
   }
 
   /**
@@ -151,5 +159,6 @@ public class GameGrid implements Grid {
   public Tile getTile(int x, int y) {
     return grid[x][y];
   }
+
 
 }
