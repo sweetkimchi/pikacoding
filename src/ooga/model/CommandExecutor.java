@@ -28,10 +28,11 @@ public class CommandExecutor {
     /**
      * Default constructor
      */
-    public CommandExecutor(List<CommandBlock> commandBlocks, BackEndExternalAPI modelController, BoardState initialState) {
+    public CommandExecutor(List<CommandBlock> commandBlocks, BackEndExternalAPI modelController, BoardState initialState,
+        GameGrid gameGrid) {
         this.initialState = initialState;
         programCounter = 1;
-        gameGrid = new GameGrid(modelController);
+        this.gameGrid = gameGrid;
         animationPane = new AnimationPane(modelController);
         this.modelController = modelController;
         mapOfCommandBlocks = new HashMap<>();

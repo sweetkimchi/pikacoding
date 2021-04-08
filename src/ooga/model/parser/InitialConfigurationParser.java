@@ -11,8 +11,11 @@ import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.GameGrid;
 import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.BlockData;
+import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.grid.gridData.InitialState;
+import ooga.model.player.Avatar;
+import ooga.model.player.Datacube;
 
 public class InitialConfigurationParser {
 
@@ -25,6 +28,7 @@ public class InitialConfigurationParser {
   private GameGrid gameGrid;
   private boolean errorOccurred = false;
   private String errorMessage = "";
+  private GameGridData gameGridData;
 
   public InitialConfigurationParser(int level)  {
     this.level = level;
@@ -52,6 +56,10 @@ public class InitialConfigurationParser {
 
   public AvailableCommands getAvailableCommands()  {
     return availableCommands;
+  }
+
+  public GameGridData getGameGridData() {
+    return this.gameGridData;
   }
 
   private void parseLevelInfo() {
@@ -108,7 +116,10 @@ public class InitialConfigurationParser {
   private Map<String, List<Integer>> parseAvatarLocations(Map<String, Object> peopleLocations)  {
     Map<String, List<Integer>> mapOfPeople = new HashMap<>();
     for (String s: peopleLocations.keySet())  {
-      mapOfPeople.put(s, (List<Integer>) peopleLocations.get(s));
+      List<Integer> avatarLocation = (List<Integer>) peopleLocations.get(s);
+      mapOfPeople.put(s, avatarLocation);
+      this.gameGrid.addGameElement(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
+          avatarLocation.get(1)), avatarLocation.get(0), avatarLocation.get(1));
     }
     return mapOfPeople;
   }
@@ -118,10 +129,13 @@ public class InitialConfigurationParser {
 
     for (String s: blocks.keySet()) {
       Map<String, Object> currentBlock = (Map<String, Object>) blocks.get(s);
-      BlockData blockData = new BlockData((List<Integer>) currentBlock.get("loc"),
+      List<Integer> blockLoc = (List<Integer>) currentBlock.get("loc");
+      BlockData blockData = new BlockData(blockLoc,
           (int) currentBlock.get("num"), Boolean.parseBoolean(
           (String) currentBlock.get("pickedUp")));
       allBlockData.put(s, blockData);
+      this.gameGrid.addGameElement(new Datacube(Integer.parseInt(s), blockLoc.get(0),
+          blockLoc.get(1)), blockLoc.get(0), blockLoc.get(1));
     }
     return allBlockData;
   }
@@ -168,8 +182,8 @@ public class InitialConfigurationParser {
           new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
       int width = Integer.parseInt((String)result.get("width"));
       int height = Integer.parseInt((String)result.get("height"));
-      this.gameGrid = new GameGrid(null);
-      this.gameGrid.setDimensions(height, width);
+      this.gameGrid = new GameGrid();
+      this.gameGrid.setDimensions(width, height);
       Map<String, List<String>> mapOfGrid = (Map<String, List<String>>) result.get("grid");
       for (int i = 0; i < height; i++) {
         List<String> currentRow = mapOfGrid.get("" + i );
@@ -179,10 +193,10 @@ public class InitialConfigurationParser {
           return;
         }
         for (int j = 0; j < width; j++) {
-          this.gameGrid.setStructure(i, j, Structure.valueOf(currentRow.get(j)));
+          this.gameGrid.setStructure(j, i, Structure.valueOf(currentRow.get(j)));
         }
-
       }
+      this.gameGridData = new GameGridData(this.gameGrid, width, height);
     } catch (IOException e) {
       this.errorMessage = "Error parsing grid";
       this.errorOccurred = true;
