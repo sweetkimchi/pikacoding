@@ -14,6 +14,8 @@ import ooga.model.grid.gridData.BlockData;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.grid.gridData.InitialState;
+import ooga.model.player.Avatar;
+import ooga.model.player.Datacube;
 
 public class InitialConfigurationParser {
 
@@ -114,7 +116,10 @@ public class InitialConfigurationParser {
   private Map<String, List<Integer>> parseAvatarLocations(Map<String, Object> peopleLocations)  {
     Map<String, List<Integer>> mapOfPeople = new HashMap<>();
     for (String s: peopleLocations.keySet())  {
-      mapOfPeople.put(s, (List<Integer>) peopleLocations.get(s));
+      List<Integer> avatarLocation = (List<Integer>) peopleLocations.get(s);
+      mapOfPeople.put(s, avatarLocation);
+      this.gameGrid.addGameElement(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
+          avatarLocation.get(1)), avatarLocation.get(0), avatarLocation.get(1));
     }
     return mapOfPeople;
   }
@@ -124,10 +129,13 @@ public class InitialConfigurationParser {
 
     for (String s: blocks.keySet()) {
       Map<String, Object> currentBlock = (Map<String, Object>) blocks.get(s);
-      BlockData blockData = new BlockData((List<Integer>) currentBlock.get("loc"),
+      List<Integer> blockLoc = (List<Integer>) currentBlock.get("loc");
+      BlockData blockData = new BlockData(blockLoc,
           (int) currentBlock.get("num"), Boolean.parseBoolean(
           (String) currentBlock.get("pickedUp")));
       allBlockData.put(s, blockData);
+      this.gameGrid.addGameElement(new Datacube(Integer.parseInt(s), blockLoc.get(0),
+          blockLoc.get(1)), blockLoc.get(0), blockLoc.get(1));
     }
     return allBlockData;
   }
