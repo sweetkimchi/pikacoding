@@ -65,6 +65,7 @@ public class CommandBlockHolder extends GridPane {
     this.getColumnConstraints().add(columnConstraints);
 
     Button removeButton = new Button("x");
+    removeButton.setId("remove-button-" + index);
     removeButton.setPrefHeight(ITEM_HEIGHT);
     removeButton.setOnAction(e -> programStack.removeCommandBlock(this.index));
     addItem(removeButton, 0);

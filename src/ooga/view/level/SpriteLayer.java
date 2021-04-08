@@ -22,6 +22,7 @@ public class SpriteLayer extends Pane {
   private Map<Integer, Deque<Double>> allElementInformation;
 
   public SpriteLayer(double width, double height) {
+    this.setId("sprite-layer");
     this.setMinSize(width, height);
     this.setMaxSize(width, height);
     animation = new Animation();

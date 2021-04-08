@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 public class Avatar {
+
   private static final String avatarImage = "PikachuAvatar.gif"; // TODO: put in resource file or get passed
   private int initialXCoordinate;
   private int initialYCoordinate;
@@ -12,6 +13,7 @@ public class Avatar {
   private double height;
   private SpriteLayer spriteLayer;
   private ImageView avatar;
+
   public Avatar(int x, int y, double w, double h, SpriteLayer root) {
     initialXCoordinate = x;
     initialYCoordinate = y;
@@ -23,6 +25,7 @@ public class Avatar {
 
   private void makeAvatar() {
     avatar = new ImageView(new Image(avatarImage));
+    avatar.getStyleClass().add("avatar");
     avatar.setFitWidth(width);
     avatar.setFitHeight(height);
     reset();
