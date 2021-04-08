@@ -132,6 +132,7 @@ public class LevelView extends BorderPane {
     }
     runSimulation();
 
+
   }
 
   private void reset() {
