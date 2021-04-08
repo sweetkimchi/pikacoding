@@ -1,37 +1,55 @@
 package ooga.view.level.codearea;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 
 /**
- * JavaFX element that displays a CommandBlock.
- * Shows line number, command type, and parameter dropdown menus.
+ * JavaFX element that displays a CommandBlock. Shows line number, command type, and parameter
+ * dropdown menus.
  *
  * @author David Li
  */
-public class CommandBlockHolder extends HBox {
+public class CommandBlockHolder extends GridPane {
+
+  private static final double INDEX_WIDTH = 20;
+  private static final String HAMBURGER_MENU_IMAGE = "ThreeLines.png";
+  private static final double ITEM_HEIGHT = 20;
 
   private int index;
-  private String type;
   private List<Map<String, List<String>>> parameterOptions;
-  private Label label;
+  private Label indexLabel;
   private CommandBlock commandBlock;
+  private ImageView hamburgerMenu;
+  private ProgramStack programStack;
 
-  public CommandBlockHolder(int index, String type, List<Map<String, List<String>>> parameterOptions, Consumer<Integer> removeAction) {
-    this.setSpacing(4);
+  private int columns;
 
-    this.index = index;
-    this.type = type;
-    label = new Label(index + " " + type);
-    this.getChildren().add(label);
+  public CommandBlockHolder(int index, String type,
+      List<Map<String, List<String>>> parameterOptions, ProgramStack programStack) {
+    this.getStyleClass().add("command-block-holder");
+    this.setHgap(5);
+    this.columns = 0;
+    this.programStack = programStack;
+    indexLabel = new Label();
+    indexLabel.getStyleClass().add("command-index");
+    addItem(indexLabel, INDEX_WIDTH);
+    indexLabel.setAlignment(Pos.CENTER);
+    Label command = new Label(type);
+    command.getStyleClass().add("command-block-name");
+    addItem(command, 0);
     this.parameterOptions = parameterOptions;
     Map<String, String> initialParameters = new HashMap<>();
     parameterOptions.forEach(parameterOption -> {
@@ -40,9 +58,27 @@ public class CommandBlockHolder extends HBox {
     });
     commandBlock = new CommandBlock(index, type, initialParameters);
     initializeDropdowns();
+
+    ColumnConstraints columnConstraints = new ColumnConstraints();
+    columnConstraints.setHgrow(Priority.ALWAYS);
+    this.add(new Label(), columns++, 0);
+    this.getColumnConstraints().add(columnConstraints);
+
     Button removeButton = new Button("x");
-    removeButton.setOnAction(e -> removeAction.accept(this.index));
-    this.getChildren().add(removeButton);
+    removeButton.setPrefHeight(ITEM_HEIGHT);
+    removeButton.setOnAction(e -> programStack.removeCommandBlock(this.index));
+    addItem(removeButton, 0);
+
+    hamburgerMenu = new ImageView(new Image(HAMBURGER_MENU_IMAGE));
+    hamburgerMenu.setFitHeight(ITEM_HEIGHT);
+    hamburgerMenu.setFitWidth(ITEM_HEIGHT);
+    addItem(hamburgerMenu, 0);
+    hamburgerMenu.setOnMousePressed(e -> {
+      programStack.startDrag(this);
+    });
+
+    setIndex(index);
+    this.setPadding(new Insets(4, 4, 4, 4));
   }
 
   public CommandBlock getCommandBlock() {
@@ -52,7 +88,20 @@ public class CommandBlockHolder extends HBox {
   public void setIndex(int index) {
     this.index = index;
     commandBlock.setIndex(index);
-    label.setText(index + " " + type);
+    String prefix = "";
+    if (index < 10) {
+      prefix = "0";
+    }
+    indexLabel.setText(prefix + index);
+  }
+
+  private void addItem(Node node, double width) {
+    ColumnConstraints columnConstraints = new ColumnConstraints();
+    if (width > 0) {
+      columnConstraints.setPrefWidth(width);
+    }
+    this.add(node, columns++, 0);
+    this.getColumnConstraints().add(columnConstraints);
   }
 
   private void initializeDropdowns() {
@@ -65,7 +114,7 @@ public class CommandBlockHolder extends HBox {
         commandBlock.setParameter(parameter, dropdown.getValue());
       });
       dropdown.getSelectionModel().selectFirst();
-      this.getChildren().add(dropdown);
+      addItem(dropdown, 120);
     });
   }
 

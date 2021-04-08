@@ -1,10 +1,8 @@
 package ooga.view.level.codearea;
 
-import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import javafx.scene.layout.VBox;
-import ooga.model.commands.AvailableCommands;
 
 /**
  * Displays a list of available commands, allowing the user to click on them to add them to the
