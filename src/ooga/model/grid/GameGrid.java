@@ -2,6 +2,7 @@ package ooga.model.grid;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -152,6 +153,7 @@ public class GameGrid implements Grid {
     for (Avatar avatar : avatarList.keySet()) {
       ids.add(avatar.getId());
     }
+    Collections.sort(ids);
     return ids;
   }
 
