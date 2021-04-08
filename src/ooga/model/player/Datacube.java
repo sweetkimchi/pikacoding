@@ -9,10 +9,14 @@ public class Datacube extends Objects {
 
     private int xCoord;
     private int yCoord;
+    private final int id;
     /**
      * Default constructor
      */
-    public Datacube() {
+    public Datacube(int id, int xCoord, int yCoord) {
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
+        this.id = id;
     }
 
     /**

@@ -19,15 +19,15 @@ public class GameGrid implements Grid {
   private Tile[][] grid;
   private final Map<Avatar, List<Integer>> avatarList;
 
-  public GameGrid(BackEndExternalAPI modelController) {
+  public GameGrid() {
     avatarList = new HashMap<>();
   }
 
   @Override
-  public void setDimensions(int rows, int cols) {
-    grid = new Tile[rows][cols];
-    for (int i=0; i<rows; i++) {
-      for (int j=0; j<cols; j++) {
+  public void setDimensions(int x, int y) {
+    grid = new Tile[x][y];
+    for (int i=0; i<x; i++) {
+      for (int j=0; j<y; j++) {
         grid[i][j] = new Tile();
       }
     }
