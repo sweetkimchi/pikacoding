@@ -33,6 +33,7 @@ public class CommandExecutor {
         this.initialState = initialState;
         programCounter = 1;
         this.gameGrid = gameGrid;
+        System.out.println("Avatar grid: " + gameGrid.getAvatarIds());
         animationPane = new AnimationPane(modelController);
         this.modelController = modelController;
         mapOfCommandBlocks = new HashMap<>();
