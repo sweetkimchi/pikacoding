@@ -22,6 +22,7 @@ public class ProgramStack extends VBox {
   private int newIndex = 0;
 
   public ProgramStack() {
+    this.setId("program-stack");
     this.setSpacing(5);
     programBlocks = new ArrayList<>();
   }
@@ -72,20 +73,6 @@ public class ProgramStack extends VBox {
   }
 
   private void moveCommandBlock(int oldIndex, int newIndex) {
-//    int total = programBlocks.size();
-//    removeCommandBlock(commandBlockHolder.getCommandBlock().getIndex());
-//    CommandBlockHolder previous = commandBlockHolder;
-//    for (int i = newIndex; i < total - 1; i++) {
-//      CommandBlockHolder current = programBlocks.get(i);
-//      programBlocks.set(i, previous);
-//      programBlocks.get(i).setIndex(i + 1);
-//      this.getChildren().add(i, previous);
-//      previous = current;
-//    }
-//    previous.setIndex(total);
-//    programBlocks.add(previous);
-//    this.getChildren().add(previous);
-
     if (oldIndex < newIndex) {
       Collections.rotate(programBlocks.subList(oldIndex - 1, newIndex), -1);
     }
