@@ -5,16 +5,16 @@
     -fx-background: #d9d9d9;
 }
 
-.state-0 {
-    -fx-fill: #B8B8B8;
+.state-wall {
+    -fx-fill: brown;
 }
 
-.state-1 {
-    -fx-fill: #000033;
+.state-floor {
+    -fx-fill: rgb(200, 200, 200);
 }
 
-.state-2 {
-    -fx-fill: #003366;
+.state-hole {
+    -fx-fill: black;
 }
 
 .command-block-option {

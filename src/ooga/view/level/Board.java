@@ -2,12 +2,14 @@ package ooga.view.level;
 
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
+import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.AvatarData;
@@ -22,7 +24,6 @@ public class Board extends StackPane {
 
   private int rows;
   private int cols;
-  private ArrayList<Integer> states; // TODO: passed from BoardState
   private double gridXSize;
   private double gridYSize;
   private double xSize;
@@ -52,32 +53,21 @@ public class Board extends StackPane {
     gridLayer = new GridPane();
     spriteLayer = new SpriteLayer(gridXSize, gridYSize);
     this.getChildren().addAll(gridLayer, spriteLayer);
-    states = new ArrayList<>();
-    Random random = new Random();
-    for (int i = 0; i < rows * cols; i++) {
-      int state = 0;
-      if (i < cols || i % cols == 0 || i % cols == cols - 1 || i >= cols * (rows - 1)) {
-        state = 2;
-      } else {
-        state = random.nextInt(2);
-      }
-      states.add(state);
-    }
     gridLayer.getStyleClass().add("board");
     xSize = gridXSize / cols;
     ySize = gridYSize / rows;
-    makeGrid();
+    makeGrid(gameGridData.getStructures());
     spriteLayer.setSizes(xSize, ySize);
     spriteLayer.initializeBlocks(initialState.getAllBlockData());
     spriteLayer.initializeAvatars(initialState.getAllAvatarLocations());
   }
 
-  private void makeGrid() {
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
+  private void makeGrid(Structure[][] structures) {
+    for (int x = 0; x < cols; x++) {
+      for (int y = 0; y < rows; y++) {
         Rectangle block = new Rectangle(xSize, ySize);
-        block.getStyleClass().add("state-" + states.get(j + i * cols));
-        gridLayer.add(block, j, i);
+        block.getStyleClass().add("state-" + structures[x][y].name().toLowerCase(Locale.ROOT));
+        gridLayer.add(block, x, y);
       }
     }
   }
