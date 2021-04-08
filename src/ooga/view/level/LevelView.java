@@ -10,6 +10,8 @@ import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.BoardState;
+import ooga.model.grid.gridData.GameGridData;
+import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.AvatarData;
 import ooga.view.ScreenCreator;
 import ooga.view.level.codearea.CodeArea;
@@ -97,8 +99,8 @@ public class LevelView extends BorderPane {
     codeArea.setAvailableCommands(availableCommands);
   }
 
-  public void initializeBoard(BoardState initialState) {
-    board.initializeBoard(initialState);
+  public void initializeBoard(GameGridData gameGridData, InitialState initialState) {
+    board.initializeBoard(gameGridData, initialState);
   }
 
   private void initializeViewElements() {

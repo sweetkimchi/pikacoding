@@ -84,6 +84,10 @@ public class GameGrid implements Grid {
 
   }
 
+  public List<Integer> getAvatarCoords(int avatarID){
+    return avatarList.get(getAvatarById(avatarID));
+  }
+
   /**
    * Directs the avatar to pick up a block.
    *
@@ -155,5 +159,6 @@ public class GameGrid implements Grid {
   public Tile getTile(int x, int y) {
     return grid[x][y];
   }
+
 
 }
