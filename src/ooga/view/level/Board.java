@@ -2,17 +2,14 @@ package ooga.view.level;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.Stack;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
-import ooga.model.grid.gridData.BlockData;
-import ooga.model.grid.gridData.BoardState;
+import ooga.model.grid.gridData.GameGridData;
+import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.AvatarData;
 import ooga.view.ScreenCreator;
 
@@ -23,8 +20,8 @@ public class Board extends StackPane {
   private GridPane gridLayer;
   private SpriteLayer spriteLayer;
 
-  private int rows; // TODO: passed from BoardState
-  private int cols; // TODO: passed from BoardState
+  private int rows;
+  private int cols;
   private ArrayList<Integer> states; // TODO: passed from BoardState
   private double gridXSize;
   private double gridYSize;
@@ -45,18 +42,17 @@ public class Board extends StackPane {
     spriteLayer.resetAnimationQueue();
   }
 
-  public void initializeBoard(BoardState initialState) {
+  public void initializeBoard(GameGridData gameGridData, InitialState initialState) {
     ResourceBundle boardValues = ResourceBundle
         .getBundle(ScreenCreator.RESOURCES + BOARD_PROPERTIES);
-    rows = 10; // TODO: remove after wired with model
-    cols = 14; // TODO: remove after wired with model
+    rows = gameGridData.getRows();
+    cols = gameGridData.getColumns();
     gridXSize = Double.parseDouble(boardValues.getString("gridXSize"));
     gridYSize = Double.parseDouble(boardValues.getString("gridYSize"));
     gridLayer = new GridPane();
     spriteLayer = new SpriteLayer(gridXSize, gridYSize);
     this.getChildren().addAll(gridLayer, spriteLayer);
-    states = new ArrayList<>(); // TODO: remove after wired with model
-    // TODO: remove after wired with model
+    states = new ArrayList<>();
     Random random = new Random();
     for (int i = 0; i < rows * cols; i++) {
       int state = 0;
@@ -72,23 +68,9 @@ public class Board extends StackPane {
     ySize = gridYSize / rows;
     makeGrid();
     spriteLayer.setSizes(xSize, ySize);
-    spriteLayer.initializeAvatars(initialState.getAllAvatarLocations());
     spriteLayer.initializeBlocks(initialState.getAllBlockData());
-//    makeTestingAvatars();
-//    Button test = new Button("test");
-//    test.setOnAction(event -> testing());
-//    this.getChildren().add(test);
+    spriteLayer.initializeAvatars(initialState.getAllAvatarLocations());
   }
-
-//  private void testing() {
-//    moveAvatar(50, 10);
-//  }
-
-  // TODO: remove after debugging
-//  private void makeTestingAvatars() {
-//    block1 = new Block(5, 7, xSize - 5.0, ySize - 5.0, this, "10");
-//    avatar1 = new Avatar(3, 7, xSize, ySize, this);
-//  }
 
   private void makeGrid() {
     for (int i = 0; i < rows; i++) {
@@ -101,14 +83,14 @@ public class Board extends StackPane {
   }
 
   public void updateAvatarPositions(int id, int xCoord, int yCoord) {
-    spriteLayer.updateAvatarPositions(id, xCoord,yCoord);
+    spriteLayer.updateAvatarPositions(id, xCoord, yCoord);
   }
 
   //TODO: refactor (CommandExecuter)
   public void updateFrontEndElements(Map<String, AvatarData> updates) {
-    for(Map.Entry<String, AvatarData> entry: updates.entrySet()){
+    for (Map.Entry<String, AvatarData> entry : updates.entrySet()) {
       System.out.println("Updating: " + entry.getKey());
-      for(Integer value : entry.getValue().getPositionUpdates()){
+      for (Integer value : entry.getValue().getPositionUpdates()) {
         System.out.println("Values: " + value);
       }
 

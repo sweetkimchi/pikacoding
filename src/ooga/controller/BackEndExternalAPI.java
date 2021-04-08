@@ -56,7 +56,7 @@ public interface BackEndExternalAPI {
    * @param level integer indicating the level
    * @return BoardState object with level information
    */
-  BoardState initializeLevel(int level);
+  void initializeLevel(int level);
 
   void updateAvatarPositions(int id, int xCoord, int yCoord);
 

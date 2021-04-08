@@ -4,6 +4,8 @@ import java.util.*;
 import javafx.stage.Stage;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.BoardState;
+import ooga.model.grid.gridData.GameGridData;
+import ooga.model.grid.gridData.InitialState;
 import ooga.model.parser.InitialConfigurationParser;
 import ooga.model.player.AvatarData;
 import ooga.model.player.Element;
@@ -41,11 +43,12 @@ public class ViewController implements FrontEndExternalAPI {
      * Sets the view board to contain a new level. Instantiates all the elements of the grid,
      * including the dimensions and initial locations of humans and objects.
      *
-     * @param boardState The initial state of the board
+     * @param gameGridData The tile information of the grid
+     * @param initialState The initial state of the board sprites
      */
     @Override
-    public void setBoard(BoardState boardState) {
-
+    public void setBoard(GameGridData gameGridData, InitialState initialState) {
+        levelView.initializeBoard(gameGridData, initialState);
     }
 
     @Override
@@ -85,8 +88,7 @@ public class ViewController implements FrontEndExternalAPI {
     public void initializeLevel(int level) {
         screenCreator.loadLevel(level);
         levelView = screenCreator.getLevelView();
-        BoardState initialState = modelController.initializeLevel(1);
-        levelView.initializeBoard(initialState);
+        modelController.initializeLevel(level);
     }
 
     @Override

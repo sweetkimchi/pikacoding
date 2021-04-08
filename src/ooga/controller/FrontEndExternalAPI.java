@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.BoardState;
+import ooga.model.grid.gridData.GameGridData;
+import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.AvatarData;
 import ooga.model.player.Element;
 import ooga.view.level.codearea.CommandBlock;
@@ -23,13 +25,15 @@ public interface FrontEndExternalAPI {
 
   /**
    * Sets the view board to contain a new level. Instantiates all the elements of the grid, including the dimensions and initial locations of humans and objects.
-   * @param boardState The initial state of the board
+   *
+   * @param gameGridData The tile information of the grid
+   * @param initialState The initial state of the board sprites
    */
-  public void setBoard(BoardState boardState);
+  public void setBoard(GameGridData gameGridData, InitialState initialState);
 
   /**
    * Sets the available commands with their parameters and parameter options
-   * @param commandsMap Map from command names to a list of parameters that map to a list of the parameter options.
+   * @param availableCommands Map from command names to a list of parameters that map to a list of the parameter options.
    */
   public void setAvailableCommands(AvailableCommands availableCommands);
 
