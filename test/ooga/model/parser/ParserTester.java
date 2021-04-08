@@ -35,8 +35,9 @@ public class ParserTester {
     InitialConfigurationParser tester = new InitialConfigurationParser(1);
     GameGrid gameGrid = tester.getGameGrid();
 
-    assertEquals(Structure.WALL, gameGrid.getStructure(4, 1));
+    assertEquals(Structure.FLOOR, gameGrid.getStructure(4, 1));
     assertEquals(Structure.FLOOR, gameGrid.getStructure(2, 3));
+    assertEquals(Structure.WALL, gameGrid.getStructure(0, 0));
   }
 
   @Test
