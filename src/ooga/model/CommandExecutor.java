@@ -33,7 +33,8 @@ public class CommandExecutor {
         this.initialState = initialState;
         programCounter = 1;
         this.gameGrid = gameGrid;
-        System.out.println("Avatar grid: " + gameGrid.getAvatarIds());
+        System.out.println("Avatar IDs: " + gameGrid.getAvatarIds());
+        System.out.println("Avatars: " + gameGrid.getAvatarList());
         animationPane = new AnimationPane(modelController);
         this.modelController = modelController;
         mapOfCommandBlocks = new HashMap<>();
@@ -63,7 +64,7 @@ public class CommandExecutor {
         System.out.println();
         Map<String, AvatarData> updates = new HashMap<>();
         //Map<ID, Values>
-        for (Entry<Integer, Element> entry : animationPane.getAllElementInformation().entrySet()){
+        for (Map.Entry<Integer, Element> entry : animationPane.getAllElementInformation().entrySet()){
             Avatar singleAvatar = (Avatar) entry.getValue();
 
             // +1 is needed because program counters are 1 indexed
@@ -85,6 +86,7 @@ public class CommandExecutor {
             //        gameGrid.step(dummy.getId(),getDirection(currentCommand.getParameters().get("direction")));
                     // update program counter
                     singleAvatar.setProgramCounter(singleAvatar.getProgramCounter() + 1);
+
 
                     newUpdate.updatePositions(singleAvatar.getId(), singleAvatar.getXCoord(), singleAvatar.getYCoord());
            //         gameGrid.step(singleAvatar.getId(),getDirection(currentCommand.getParameters().get("direction")));
