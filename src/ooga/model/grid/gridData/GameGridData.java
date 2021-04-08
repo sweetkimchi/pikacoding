@@ -11,17 +11,17 @@ public class GameGridData {
   private int rows;
   private int columns;
 
-  public GameGridData(GameGrid gameGrid, int rows, int columns) {
+  public GameGridData(GameGrid gameGrid, int x, int y) {
     this.gameGrid = gameGrid;
-    this.rows = rows;
-    this.columns = columns;
-    structures = new Structure[rows][columns];
+    this.rows = y;
+    this.columns = x;
+    structures = new Structure[x][y];
     setStructures();
   }
 
   private void setStructures()  {
-    for (int i=0; i<rows; i++) {
-      for (int j=0; j<columns; j++) {
+    for (int i=0; i<columns; i++) {
+      for (int j=0; j<rows; j++) {
         structures[i][j] = gameGrid.getStructure(i,j);
       }
     }

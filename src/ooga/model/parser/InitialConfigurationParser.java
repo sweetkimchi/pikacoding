@@ -183,7 +183,7 @@ public class InitialConfigurationParser {
       int width = Integer.parseInt((String)result.get("width"));
       int height = Integer.parseInt((String)result.get("height"));
       this.gameGrid = new GameGrid();
-      this.gameGrid.setDimensions(height, width);
+      this.gameGrid.setDimensions(width, height);
       Map<String, List<String>> mapOfGrid = (Map<String, List<String>>) result.get("grid");
       for (int i = 0; i < height; i++) {
         List<String> currentRow = mapOfGrid.get("" + i );
@@ -193,10 +193,10 @@ public class InitialConfigurationParser {
           return;
         }
         for (int j = 0; j < width; j++) {
-          this.gameGrid.setStructure(i, j, Structure.valueOf(currentRow.get(j)));
+          this.gameGrid.setStructure(j, i, Structure.valueOf(currentRow.get(j)));
         }
       }
-      this.gameGridData = new GameGridData(this.gameGrid, height, width);
+      this.gameGridData = new GameGridData(this.gameGrid, width, height);
     } catch (IOException e) {
       this.errorMessage = "Error parsing grid";
       this.errorOccurred = true;
