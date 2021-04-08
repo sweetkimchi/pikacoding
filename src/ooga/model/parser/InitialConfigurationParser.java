@@ -11,6 +11,7 @@ import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.GameGrid;
 import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.BlockData;
+import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.grid.gridData.InitialState;
 
@@ -25,6 +26,7 @@ public class InitialConfigurationParser {
   private GameGrid gameGrid;
   private boolean errorOccurred = false;
   private String errorMessage = "";
+  private GameGridData gameGridData;
 
   public InitialConfigurationParser(int level)  {
     this.level = level;
@@ -52,6 +54,10 @@ public class InitialConfigurationParser {
 
   public AvailableCommands getAvailableCommands()  {
     return availableCommands;
+  }
+
+  public GameGridData getGameGridData() {
+    return this.gameGridData;
   }
 
   private void parseLevelInfo() {
@@ -168,7 +174,7 @@ public class InitialConfigurationParser {
           new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
       int width = Integer.parseInt((String)result.get("width"));
       int height = Integer.parseInt((String)result.get("height"));
-      this.gameGrid = new GameGrid(null);
+      this.gameGrid = new GameGrid();
       this.gameGrid.setDimensions(height, width);
       Map<String, List<String>> mapOfGrid = (Map<String, List<String>>) result.get("grid");
       for (int i = 0; i < height; i++) {
@@ -181,8 +187,8 @@ public class InitialConfigurationParser {
         for (int j = 0; j < width; j++) {
           this.gameGrid.setStructure(i, j, Structure.valueOf(currentRow.get(j)));
         }
-
       }
+      this.gameGridData = new GameGridData(this.gameGrid, height, width);
     } catch (IOException e) {
       this.errorMessage = "Error parsing grid";
       this.errorOccurred = true;
