@@ -50,7 +50,7 @@ public class ControlPanel extends GridPane {
       buttons.put(o.toString(), button);
       button.setGraphic(setIcon(buttonImages.getString(o.toString())));
       button.getStyleClass().add(o.toString());
-//    button.setId(idsForTesting.getString(key));
+      button.setId(o.toString() + "-button");
 //      button.setOnAction(event -> reflectionMethod(o.toString()));
       this.add(button, col, 0);
       col++;

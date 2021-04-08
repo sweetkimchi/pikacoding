@@ -44,6 +44,17 @@ public class Board extends StackPane {
   }
 
   public void initializeBoard(GameGridData gameGridData, InitialState initialState) {
+    setSizing(gameGridData);
+    spriteLayer = new SpriteLayer(gridXSize, gridYSize);
+    this.getChildren().addAll(gridLayer, spriteLayer);
+    gridLayer.getStyleClass().add("board");
+    makeGrid(gameGridData.getStructures());
+    spriteLayer.setSizes(xSize, ySize);
+    spriteLayer.initializeBlocks(initialState.getAllBlockData());
+    spriteLayer.initializeAvatars(initialState.getAllAvatarLocations());
+  }
+
+  private void setSizing(GameGridData gameGridData) {
     ResourceBundle boardValues = ResourceBundle
         .getBundle(ScreenCreator.RESOURCES + BOARD_PROPERTIES);
     rows = gameGridData.getRows();
@@ -56,19 +67,12 @@ public class Board extends StackPane {
     gridXSize = xSize * cols;
     gridYSize = ySize * rows;
     gridLayer = new GridPane();
-    spriteLayer = new SpriteLayer(gridXSize, gridYSize);
-    this.getChildren().addAll(gridLayer, spriteLayer);
-    gridLayer.getStyleClass().add("board");
-    makeGrid(gameGridData.getStructures());
-    spriteLayer.setSizes(xSize, ySize);
-    spriteLayer.initializeBlocks(initialState.getAllBlockData());
-    spriteLayer.initializeAvatars(initialState.getAllAvatarLocations());
   }
 
   private void makeGrid(Structure[][] structures) {
     for (int x = 0; x < cols; x++) {
       for (int y = 0; y < rows; y++) {
-        Rectangle block = new Rectangle(Math.ceil(xSize), Math.ceil(ySize));
+        Rectangle block = new Rectangle(xSize, ySize);
         block.getStyleClass().add("state");
         block.getStyleClass().add("state-" + structures[x][y].name().toLowerCase(Locale.ROOT));
         gridLayer.add(block, x, y);
