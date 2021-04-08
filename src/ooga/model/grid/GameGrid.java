@@ -19,7 +19,7 @@ public class GameGrid implements Grid {
   private Tile[][] grid;
   private final Map<Avatar, List<Integer>> avatarList;
 
-  public GameGrid(BackEndExternalAPI modelController) {
+  public GameGrid() {
     avatarList = new HashMap<>();
   }
 

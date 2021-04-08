@@ -24,7 +24,7 @@ public class GridTest {
   @BeforeEach
   public void setup() {
     modelController = new ModelController();
-    gameGrid = new GameGrid(modelController);
+    gameGrid = new GameGrid();
     avatar = new Avatar(10, 0, 0);
     datacube = new Datacube();
     gameGrid.setDimensions(10, 10);

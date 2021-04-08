@@ -51,7 +51,8 @@ public class ModelController implements BackEndExternalAPI {
         //TODO: delete after debugging. Initializing level for testing purposes
         initialConfigurationParser = new InitialConfigurationParser(1);
 
-        commandExecutor = new CommandExecutor(commandBlocks, this, initialConfigurationParser.getInitialState());
+        commandExecutor = new CommandExecutor(commandBlocks, this, initialConfigurationParser.getInitialState(),
+            initialConfigurationParser.getGameGrid());
     }
 
     /**
