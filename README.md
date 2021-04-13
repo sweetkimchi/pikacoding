@@ -18,6 +18,8 @@ Hours Spent:
 
 
 ### Resources Used
+* https://randomprogrammingstuff.wordpress.com/2019/10/04/connect-to-google-firebase-using-admin-java-sdk-quick-start-tutorial/
+
 
 
 ### Running the Program
