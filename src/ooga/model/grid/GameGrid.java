@@ -149,6 +149,7 @@ public class GameGrid implements Grid {
     for (Avatar avatar : avatarList.keySet()) {
       ids.add(avatar.getId());
     }
+    Collections.sort(ids);
     return ids;
   }
 

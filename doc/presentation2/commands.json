@@ -16,16 +16,9 @@
     ]
   },
   "pickUp": {
-    "parameters": [
-      {
-        "noParams": true
-      }]
+    "parameters": []
   },
   "drop": {
-    "parameters": [
-      {
-        "noParams": true
-      }
-    ]
+    "parameters": []
   }
 }

@@ -8,6 +8,9 @@ import javafx.scene.layout.Pane;
 import ooga.model.grid.gridData.BlockData;
 import ooga.view.animation.Animation;
 
+/**
+ * @author Ji Yun Hyo
+ */
 public class SpriteLayer extends Pane {
 
   private double xSize;
@@ -83,12 +86,12 @@ public class SpriteLayer extends Pane {
 
   public boolean updateAnimationForFrontEnd() {
     allElementInformation = animation.getAllElementInformation();
-    System.out.println(allElementInformation);
+ //   System.out.println(allElementInformation);
     boolean finished = true;
     for(Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()){
       if(!entry.getValue().isEmpty()){
 
-        System.out.println("Moving Avatar: " + entry.getValue());
+       // System.out.println("Moving Avatar: " + entry.getValue());
         double nextX = entry.getValue().pop();
         double nextY = entry.getValue().pop();
 

@@ -69,4 +69,6 @@ public interface FrontEndExternalAPI {
   void updateFrontEndElements(Map<String, AvatarData> updates);
 
   void declareEndOfAnimation();
+
+  void setScore(int score);
 }
