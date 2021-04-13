@@ -95,7 +95,7 @@ public class Avatar extends Player {
         this.xCoord = xPrev + direction.getXDel();
         this.yCoord = yPrev + direction.getYDel();
 
-        System.out.printf("Moving avatar %d from (%d, %d) in the direction %s to new location (%d, %d)\n", id, xPrev, yPrev, direction, xCoord, yCoord);
+    //    System.out.printf("Moving avatar %d from (%d, %d) in the direction %s to new location (%d, %d)\n", id, xPrev, yPrev, direction, xCoord, yCoord);
     }
 
 
