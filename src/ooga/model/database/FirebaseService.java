@@ -3,8 +3,11 @@ package ooga.model.database;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.FileInputStream;
@@ -33,7 +36,6 @@ public class FirebaseService {
     FirebaseApp.initializeApp(options);
 
     db = FirebaseDatabase.getInstance();
-    System.out.println(db);
   }
 
 
@@ -73,6 +75,29 @@ public class FirebaseService {
 
     }
   }
+
+  public void readDBContentsForLevelInit(int level) throws InterruptedException {
+    DatabaseReference ref = db
+        .getReference("level_info/level"+level+"/");
+    CountDownLatch done = new CountDownLatch(1);
+    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(DataSnapshot dataSnapshot) {
+        System.out.println("here");
+        Object object = dataSnapshot.getValue(Object.class);
+        String json = new Gson().toJson(object);
+        System.out.println(json);
+        done.countDown();
+      }
+      @Override
+      public void onCancelled(DatabaseError databaseError) {
+        // Code
+      }
+    });
+    done.await();
+  }
+
+
 
   public FirebaseDatabase getDb() {
     return db;
