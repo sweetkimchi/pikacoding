@@ -41,8 +41,6 @@ public class CommandExecutor {
         score = 0;
 //        System.out.println("Command block received from frontend");
 //        System.out.println("Initial Avatar Positions: " + initialState.getAllAvatarLocations().entrySet());
-
-
     //    System.out.println("Initial State of the Board: " + initialState.getAllBlockData().get("1").getLocation());
 
         // build a map of all commands to be executed
