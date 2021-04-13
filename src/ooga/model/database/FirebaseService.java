@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-import org.json.simple.JSONObject;
 
 public class FirebaseService {
   private FirebaseDatabase db;
