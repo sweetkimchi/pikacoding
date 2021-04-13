@@ -24,7 +24,9 @@ public class GoalState extends BoardState {
     }
 
     for (String id: super.getAllBlockData().keySet()) {
-
+      BlockData blockData = super.getAllBlockData().get(id);
+      currentGrid.getTile(blockData.getLocation().get(0),
+          blockData.getLocation().get(1));
     }
     return true;
   }
