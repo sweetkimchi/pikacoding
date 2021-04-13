@@ -122,7 +122,6 @@ public class CommandExecutor {
      //   modelController.updateFrontEndElements(updates);
 
         if(ended){
-
             modelController.declareEndOfAnimation();
         }
 
