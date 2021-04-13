@@ -114,7 +114,7 @@ public class Animation {
 
   public Map<Integer, Deque<Double>> getAllElementInformation(){
 
-    System.out.println("All element information: " + allElementInformation);
+//    System.out.println("All element information: " + allElementInformation);
     return allElementInformation;
   }
 
@@ -143,9 +143,9 @@ public class Animation {
     allElementInformation.put(id, position);
 
 
-    System.out.println(yCoord);
-    System.out.println(initialY);
-    System.out.println(allElementInformation);
+//    System.out.println(yCoord);
+//    System.out.println(initialY);
+//    System.out.println(allElementInformation);
   }
 
   public void reset() {

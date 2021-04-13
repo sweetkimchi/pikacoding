@@ -63,7 +63,7 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void runNextCommand() {
     commandExecutor.runNextCommand();
-    System.out.println("Running next command");
+
   }
 
   /**
@@ -129,5 +129,15 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void updateFrontEndElements(Map<String, AvatarData> updates) {
     viewController.updateFrontEndElements(updates);
+  }
+
+  /**
+   * updates the score and sends it to the frontend
+   *
+   * @param score
+   */
+  @Override
+  public void updateScore(int score) {
+    viewController.setScore(score);
   }
 }

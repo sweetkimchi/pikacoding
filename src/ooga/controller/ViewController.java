@@ -106,6 +106,12 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.declareEndOfAnimation();
     }
 
+    @Override
+    public void setScore(int score) {
+        //TODO: edit as you see fit (screenCreator vs levelView)
+        screenCreator.setScore(score);
+    }
+
     /**
      * Passes in the commands to be parsed
      *
