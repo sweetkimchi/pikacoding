@@ -144,7 +144,12 @@ public class InitialConfigurationParser {
       for (String command: commands.keySet()) {
         List<Map<String, List<String>>> params = new ArrayList<>();
         for (Map<String, List<String>> param:((Map<String, List<Map<String, List<String>>>>) commands.get(command)).get("parameters")) {
-          params.add(param);
+          if (param.containsKey("noParams"))  {
+            continue;
+          }
+          else  {
+            params.add(param);
+          }
         }
         commandsMap.put(command, params);
       }

@@ -15,5 +15,6 @@ public class Tester {
 
   public static void main(String[] args)  {
     InitialConfigurationParser x = new InitialConfigurationParser(1, new FirebaseService());
+    x.getInitialState();
   }
 }

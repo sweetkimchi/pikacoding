@@ -53,7 +53,7 @@ class ViewTest extends ApplicationTest {
 
   @Test
   void testAvatarMovement() {
-    ImageView avatarImage = (ImageView) getPrivateField(avatars.get(1), "avatar");
+    ImageView avatarImage = (ImageView) getPrivateField(avatars.get(7), "avatar");
     double initialY = avatarImage.getY();
     clickOn(lookup("#step-option-button").queryButton());
     Platform.runLater(() -> lookup("#step-option-button").queryButton().fire());
