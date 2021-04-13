@@ -20,13 +20,12 @@ public class ParserTester {
     InitialConfigurationParser tester = new InitialConfigurationParser(1);
     GoalState goalState = tester.getGoalState();
     InitialState initialState = tester.getInitialState();
-
+    System.out.println(tester.getErrorMessage());
     assertEquals(1, initialState.getLevel());
     assertEquals(3, initialState.getNumPeople());
     assertEquals(Arrays.asList("step", "pickUp", "drop"), initialState.getCommandsAvailable());
-    assertNotNull(initialState.getImageLocations());
     assertNotNull(goalState.getAllAvatarLocations());
-    assertNotNull(goalState.getAllAvatarLocations().get("1"));
+    assertNotNull(goalState.getAllAvatarLocations().get("7"));
     assertFalse(tester.getErrorOccurred());
   }
 
@@ -35,8 +34,8 @@ public class ParserTester {
     InitialConfigurationParser tester = new InitialConfigurationParser(1);
     GameGrid gameGrid = tester.getGameGrid();
 
-    assertEquals(Structure.FLOOR, gameGrid.getStructure(4, 1));
-    assertEquals(Structure.FLOOR, gameGrid.getStructure(2, 3));
+    assertEquals(Structure.HOLE, gameGrid.getStructure(4, 1));
+    assertEquals(Structure.HOLE, gameGrid.getStructure(2, 3));
     assertEquals(Structure.WALL, gameGrid.getStructure(0, 0));
     assertEquals(gameGrid.getAvatarList().size(), 3);
   }

@@ -39,6 +39,8 @@ public class FirebaseService {
   }
 
 
+  //TODO: Remap with property files instead of hard coded values
+
   public void saveGameLevel(int level) {
     DatabaseReference ref = db.getReference("data");
     System.out.println(ref);
@@ -62,8 +64,7 @@ public class FirebaseService {
   private void setDatabaseContents(String pathInDB, String pathToFile)  {
     try {
       Map<String, Object> jsonMap = new Gson().fromJson(new FileReader(pathToFile)
-          , new TypeToken<HashMap<String, Object>>() {
-          }.getType());
+          , new TypeToken<HashMap<String, Object>>() {}.getType());
       CountDownLatch done = new CountDownLatch(1);
       //Database Error is de, database reference is dr
       //https://stackoverflow.com/questions/49723347/how-to-save-data-to-firebase-using-java-desktop
@@ -76,17 +77,17 @@ public class FirebaseService {
     }
   }
 
-  public void readDBContentsForLevelInit(int level) throws InterruptedException {
+  public String readDBContentsForLevelInit(int level) throws InterruptedException {
     DatabaseReference ref = db
         .getReference("level_info/level"+level+"/");
     CountDownLatch done = new CountDownLatch(1);
+
+    final String[] json = {""};
     ref.addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
-        System.out.println("here");
         Object object = dataSnapshot.getValue(Object.class);
-        String json = new Gson().toJson(object);
-        System.out.println(json);
+        json[0] = new Gson().toJson(object);
         done.countDown();
       }
       @Override
@@ -95,6 +96,7 @@ public class FirebaseService {
       }
     });
     done.await();
+    return json[0];
   }
 
 
