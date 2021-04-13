@@ -6,12 +6,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import ooga.controller.BackEndExternalAPI;
 import ooga.model.Direction;
+import ooga.model.grid.gridData.TileData;
 import ooga.model.player.Avatar;
 import ooga.model.player.Datacube;
 import ooga.model.player.Element;
-import ooga.model.player.Objects;
+import ooga.model.player.Block;
 
 /**
  * The GameGrid contains all the elements for the grid of the game.
@@ -100,7 +100,7 @@ public class GameGrid implements Grid {
     int newX = currX + direction.getXDel();
     int newY = currY + direction.getYDel();
     if (grid[newX][newY].hasBlock()) {
-      avatar.pickUp(grid[newX][newY].getObject());
+      avatar.pickUp(grid[newX][newY].getBlock());
       grid[currX][currY].removeBlock();
     } else {
       System.out.println("There is no block to be picked up!");
@@ -119,7 +119,7 @@ public class GameGrid implements Grid {
     int currY = avatarCoords.get(1);
     if (grid[currX][currY].canAddBlock()) {
       assert avatar != null;
-      Objects block = avatar.drop();
+      Block block = avatar.drop();
       if (block == null) {
         System.out.println("You are not holding a block!");
       }
@@ -153,9 +153,15 @@ public class GameGrid implements Grid {
     return ids;
   }
 
-  //TODO: remove later, for testing only
-  public Tile getTile(int x, int y) {
-    return grid[x][y];
+  /**
+   * Retrieves the information of a queried Tile as a TileData object.
+   *
+   * @param x The x-coordinate of the tile
+   * @param y The y-coordinate of the tile
+   * @return A TileData object containing information about the tile
+   */
+  public TileData getTile(int x, int y) {
+    return new TileData(grid[x][y]);
   }
 
 

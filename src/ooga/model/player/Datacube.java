@@ -1,11 +1,9 @@
 package ooga.model.player;
 
-import java.util.*;
-
 /**
  * 
  */
-public class Datacube extends Objects {
+public class Datacube extends Block {
 
     private int xCoord;
     private int yCoord;

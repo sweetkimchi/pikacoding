@@ -92,7 +92,7 @@ public class GridTest {
     gameGrid.pickUp(10, Direction.SELF);
     gameGrid.step(10, Direction.RIGHT);
     gameGrid.drop(10);
-    assertEquals(datacube, gameGrid.getTile(6, 5).getObject());
+    assertEquals(datacube.getId(), gameGrid.getTile(6, 5).getBlockId());
   }
 
 }

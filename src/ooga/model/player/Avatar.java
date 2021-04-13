@@ -1,6 +1,5 @@
 package ooga.model.player;
 
-import java.util.*;
 import ooga.model.Direction;
 
 /**
@@ -9,7 +8,7 @@ import ooga.model.Direction;
 public class Avatar extends Player {
 
     private final int id;
-    private Objects heldItem;
+    private Block heldItem;
     private int xCoord;
     private int yCoord;
 
@@ -74,7 +73,7 @@ public class Avatar extends Player {
      *
      * @param toPickUp The block to pick up
      */
-    public void pickUp(Objects toPickUp) {
+    public void pickUp(Block toPickUp) {
         heldItem = toPickUp;
     }
 
@@ -83,8 +82,8 @@ public class Avatar extends Player {
      *
      * @return The block that was dropped
      */
-    public Objects drop() {
-        Objects ret = heldItem;
+    public Block drop() {
+        Block ret = heldItem;
         heldItem = null;
         return ret;
     }
