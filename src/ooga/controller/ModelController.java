@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import javax.lang.model.util.Elements;
 import ooga.model.CommandExecutor;
+import ooga.model.database.FirebaseService;
 import ooga.model.grid.gridData.BoardState;
 import ooga.model.parser.InitialConfigurationParser;
 import ooga.model.player.AvatarData;
@@ -17,11 +18,13 @@ public class ModelController implements BackEndExternalAPI {
   private FrontEndExternalAPI viewController;
   private CommandExecutor commandExecutor;
   private InitialConfigurationParser initialConfigurationParser;
+  private FirebaseService firebaseService;
 
   /**
    * Default constructor
    */
   public ModelController() {
+    firebaseService = new FirebaseService();
   }
 
   /**
@@ -50,7 +53,7 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void parseCommands(List<CommandBlock> commandBlocks) {
     //TODO: delete after debugging. Initializing level for testing purposes
-    initialConfigurationParser = new InitialConfigurationParser(1);
+    initialConfigurationParser = new InitialConfigurationParser(1, this.firebaseService);
 
     commandExecutor = new CommandExecutor(commandBlocks, this,
         initialConfigurationParser.getInitialState(),
@@ -110,7 +113,7 @@ public class ModelController implements BackEndExternalAPI {
    */
   @Override
   public void initializeLevel(int level) {
-    initialConfigurationParser = new InitialConfigurationParser(level);
+    initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService);
     viewController.setBoard(initialConfigurationParser.getGameGridData(),
         initialConfigurationParser.getInitialState());
     viewController.setAvailableCommands(initialConfigurationParser.getAvailableCommands());
