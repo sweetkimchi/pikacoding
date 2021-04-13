@@ -18,24 +18,29 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 public class FirebaseService {
+
   private FirebaseDatabase db;
   private String rootURLPathForLevel;
   private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
 
-  public FirebaseService() throws IOException {
+  public FirebaseService() {
 
+    try{
+      FileInputStream serviceAccount =
+          new FileInputStream("data/team-three-ooga-firebase-adminsdk-fgx3y-59d0e7e80b.json");
 
-    FileInputStream serviceAccount =
-        new FileInputStream("data/team-three-ooga-firebase-adminsdk-fgx3y-59d0e7e80b.json");
+      FirebaseOptions options = new FirebaseOptions.Builder()
+          .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+          .setDatabaseUrl("https://team-three-ooga-default-rtdb.firebaseio.com")
+          .build();
 
-    FirebaseOptions options = new FirebaseOptions.Builder()
-        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-        .setDatabaseUrl("https://team-three-ooga-default-rtdb.firebaseio.com")
-        .build();
+      FirebaseApp.initializeApp(options);
 
-    FirebaseApp.initializeApp(options);
+      db = FirebaseDatabase.getInstance();
+    }
+    catch (Exception e) {
+    }
 
-    db = FirebaseDatabase.getInstance();
   }
 
 
