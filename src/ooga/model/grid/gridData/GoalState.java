@@ -2,6 +2,7 @@ package ooga.model.grid.gridData;
 
 import java.util.List;
 import java.util.Map;
+import ooga.model.grid.GameGrid;
 
 public class GoalState extends BoardState {
   private int numOfCommands;
@@ -15,8 +16,16 @@ public class GoalState extends BoardState {
 
 
 
-  public boolean checkGameEnded() {
-    //TODO Fill in logic later
-    return false;
+  public boolean checkGameEnded(GameGrid currentGrid) {
+    for (String id: super.getAllAvatarLocations().keySet()) {
+      if (!super.getAllAvatarLocations().get(id).equals(currentGrid.getAvatarCoords(Integer.parseInt(id))))  {
+        return false;
+      }
+    }
+
+    for (String id: super.getAllBlockData().keySet()) {
+
+    }
+    return true;
   }
 }
