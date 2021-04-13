@@ -110,6 +110,9 @@ public class CommandExecutor {
                     // update program counter
                     singleAvatar.setProgramCounter(singleAvatar.getProgramCounter() + 1);
                 }
+                if(currentCommand.getType().equals("jump")){
+                    singleAvatar.setProgramCounter(Integer.parseInt(currentCommand.getParameters().get("jump")));
+                }
 
 
             }
