@@ -21,16 +21,12 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import org.json.simple.JSONObject;
 
-
 public class FirebaseService {
   private FirebaseDatabase db;
   private String rootURLPathForLevel;
   private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
 
-
   public FirebaseService() throws IOException {
-
-
 
 
     FileInputStream serviceAccount =
@@ -54,20 +50,35 @@ public class FirebaseService {
     DatabaseReference levelsRef = ref.child("startState/level"+level);
     this.rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + level + "/";
     String filePathToLevelInfoFile = this.rootURLPathForLevel + "level" + level + ".json";
+    String filePathToStartState = rootURLPathForLevel + "startState.json";
+    String filePathToEndState = rootURLPathForLevel + "endState.json";
+    String filePathToCommands = rootURLPathForLevel + "commands.json";
+    String filePathToGridState = rootURLPathForLevel + "grid.json";
+    String rootDBPath = "level_info/level"+level+"/";
+    setDatabaseContents(rootDBPath+"levelInfo", filePathToLevelInfoFile);
+    setDatabaseContents(rootDBPath+"startState", filePathToStartState);
+    setDatabaseContents(rootDBPath+"endState", filePathToEndState);
+    setDatabaseContents(rootDBPath+"commands", filePathToCommands);
+    setDatabaseContents(rootDBPath+"grid", filePathToGridState);
 
+
+  }
+
+  private void setDatabaseContents(String pathInDB, String pathToFile)  {
     try {
-      Map<String, Object> jsonMap = new Gson().fromJson(new FileReader(filePathToLevelInfoFile)
+      Map<String, Object> jsonMap = new Gson().fromJson(new FileReader(pathToFile)
           , new TypeToken<HashMap<String, Object>>() {
           }.getType());
       CountDownLatch done = new CountDownLatch(1);
-      FirebaseDatabase.getInstance().getReference("levels/" + "level" + level).setValue(jsonMap,
+      //Database Error is de, database reference is dr
+      //https://stackoverflow.com/questions/49723347/how-to-save-data-to-firebase-using-java-desktop
+      db.getReference(pathInDB).setValue(jsonMap,
           (de, dr) -> done.countDown());
       done.await();
     }
     catch (Exception e) {
 
     }
-
   }
 
   public FirebaseDatabase getDb() {
