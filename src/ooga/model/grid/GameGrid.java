@@ -2,12 +2,14 @@ package ooga.model.grid;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ooga.controller.BackEndExternalAPI;
 import ooga.model.Direction;
 import ooga.model.player.Avatar;
+import ooga.model.player.Datacube;
 import ooga.model.player.Element;
 import ooga.model.player.Objects;
 
@@ -24,7 +26,7 @@ public class GameGrid implements Grid {
   }
 
   public Map<Avatar, List<Integer>> getAvatarList() {
-    return avatarList;
+    return Collections.unmodifiableMap(avatarList);
   }
 
   @Override
@@ -52,15 +54,10 @@ public class GameGrid implements Grid {
       avatarList.put((Avatar) gameElement, new ArrayList<>());
       avatarList.get(gameElement).addAll(List.of(xPos, yPos));
     }
+    if (gameElement instanceof Datacube) {
+
+    }
   }
-
-//  @Override
-//  public void executeOnAvatars(Commands commands) {
-//    for (Avatar avatar : avatarList.keySet()) {
-//      commands.execute(avatar);
-//    }
-//  }
-
 
   /**
    * Moves the avatar in a cardinal direction.

@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import ooga.controller.BackEndExternalAPI;
-import ooga.controller.ModelController;
 import ooga.model.Direction;
 import ooga.model.grid.GameGrid;
 import ooga.model.grid.Structure;
@@ -40,12 +38,12 @@ public class GridTest {
   }
 
   @Test
-  public void getAvatarIds() {
+  public void getAvatarIdsHasCurrentAvatar() {
     assertTrue(gameGrid.getAvatarIds().contains(10));
   }
 
   @Test
-  public void setUpStructures() {
+  public void setUpStructuresCorrectly() {
     assertEquals(Structure.FLOOR, gameGrid.getStructure(5, 3));
     assertEquals(Structure.WALL, gameGrid.getStructure(0, 3));
   }
@@ -59,15 +57,34 @@ public class GridTest {
   }
 
   @Test
-  public void avatarCantPickUp() {
-    gameGrid.pickUp(10, Direction.UP);
-    assertNull(avatar.drop());
+  public void avatarAttemptsToStepIntoWall() {
+    gameGrid.setStructure(6, 5, Structure.WALL);
+    assertTrue(gameGrid.getTile(5,5).hasAvatar());
+    gameGrid.step(10, Direction.RIGHT);
+    assertFalse(gameGrid.getTile(6,5).hasAvatar());
+    assertTrue(gameGrid.getTile(5,5).hasAvatar());
+  }
+
+  @Test
+  public void avatarAttemptsToStepIntoAnotherAvatar() {
+    Avatar newAvatar = new Avatar(15, 0, 0);
+    gameGrid.addGameElement(newAvatar, 6, 6);
+    assertTrue(gameGrid.getTile(5,5).hasAvatar());
+    gameGrid.step(10, Direction.DOWN_RIGHT);
+    assertTrue(gameGrid.getTile(6,6).hasAvatar());
+    assertTrue(gameGrid.getTile(5,5).hasAvatar());
   }
 
   @Test
   public void avatarPickUpDatacubeSameTile() {
     gameGrid.pickUp(10, Direction.SELF);
     assertEquals(datacube, avatar.drop());
+  }
+
+  @Test
+  public void avatarCantPickUp() {
+    gameGrid.pickUp(10, Direction.UP);
+    assertNull(avatar.drop());
   }
 
   @Test
