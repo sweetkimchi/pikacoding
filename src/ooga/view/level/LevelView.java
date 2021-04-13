@@ -63,7 +63,7 @@ public class LevelView extends BorderPane {
        * if queue is finished run the next command
        * if the que is not finished, it means that the turn is not over yet so execute the animation for the turn
        */
-      System.out.println("Animation running");
+     // System.out.println("Animation running");
       if(queueFinished){
         if(step && dummy != 1){
           timeline.stop();
@@ -192,6 +192,7 @@ public class LevelView extends BorderPane {
   }
 
   public void declareEndOfAnimation() {
+
     codeIsRunning = false;
     timeline.stop();
   }
