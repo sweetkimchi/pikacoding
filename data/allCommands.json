@@ -21,6 +21,13 @@
   "drop": {
     "parameters": []
   },
+  "jump": {
+    "parameters": [
+      {
+        "destination": []
+      }
+    ]
+  },
   "if": {
     "parameters": [
       {

@@ -20,5 +20,12 @@
   },
   "drop": {
     "parameters": []
+  },
+  "jump": {
+    "parameters": [
+      {
+        "destination": []
+      }
+    ]
   }
 }
