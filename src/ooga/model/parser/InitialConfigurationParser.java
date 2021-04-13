@@ -162,7 +162,6 @@ public class InitialConfigurationParser {
       int height = Integer.parseInt((String)Grid.get("height"));
       this.gameGrid = new GameGrid();
       this.gameGrid.setDimensions(width, height);
-      System.out.println(Grid);
       List<List<String>> mapOfGrid = (List<List<String>>) Grid.get("grid");
       for (int i = 0; i < height; i++) {
         List<String> currentRow = mapOfGrid.get(i);

@@ -49,7 +49,6 @@ public class FirebaseService {
 
   public void saveGameLevel(int level) {
     DatabaseReference ref = db.getReference("data");
-    System.out.println(ref);
     DatabaseReference levelsRef = ref.child("startState/level"+level);
     this.rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + level + "/";
     String filePathToLevelInfoFile = this.rootURLPathForLevel + "level" + level + ".json";
