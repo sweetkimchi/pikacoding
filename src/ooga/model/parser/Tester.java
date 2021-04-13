@@ -8,11 +8,12 @@ import java.util.Iterator;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ooga.model.database.FirebaseService;
 
 public class Tester {
 
 
   public static void main(String[] args)  {
-    InitialConfigurationParser x = new InitialConfigurationParser(1);
+    InitialConfigurationParser x = new InitialConfigurationParser(1, new FirebaseService());
   }
 }

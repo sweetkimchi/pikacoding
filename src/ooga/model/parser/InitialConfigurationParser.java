@@ -31,16 +31,17 @@ public class InitialConfigurationParser {
   private boolean errorOccurred = false;
   private String errorMessage = "";
   private GameGridData gameGridData;
+  private FirebaseService firebaseService;
 
-  public InitialConfigurationParser(int level)  {
+  public InitialConfigurationParser(int level, FirebaseService firebaseService)  {
     this.level = level;
+    this.firebaseService = firebaseService;
     this.rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + this.level + "/";
     this.parseLevelInfo();
   }
 
   private void parseLevelInfo() {
     try {
-      FirebaseService firebaseService = new FirebaseService();
 
       String jsonFromDB = firebaseService.readDBContentsForLevelInit(this.level);
       HashMap result =

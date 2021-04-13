@@ -5,19 +5,27 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
+import ooga.model.database.FirebaseService;
 import ooga.model.grid.GameGrid;
 import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.grid.gridData.InitialState;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ParserTester {
 
+  private FirebaseService firebaseService = new FirebaseService();
 
   @Test
   public void checkParseLevel1() {
-    InitialConfigurationParser tester = new InitialConfigurationParser(1);
+    InitialConfigurationParser tester = new InitialConfigurationParser(1, firebaseService);
     GoalState goalState = tester.getGoalState();
     InitialState initialState = tester.getInitialState();
     System.out.println(tester.getErrorMessage());
@@ -31,7 +39,8 @@ public class ParserTester {
 
   @Test
   public void checkGameGridParseLevel1()  {
-    InitialConfigurationParser tester = new InitialConfigurationParser(1);
+
+    InitialConfigurationParser tester = new InitialConfigurationParser(1, this.firebaseService);
     GameGrid gameGrid = tester.getGameGrid();
 
     assertEquals(Structure.HOLE, gameGrid.getStructure(4, 1));
@@ -42,7 +51,8 @@ public class ParserTester {
 
   @Test
   public void checkParseWrongLevel(){
-    InitialConfigurationParser tester = new InitialConfigurationParser(0);
+
+    InitialConfigurationParser tester = new InitialConfigurationParser(0, this.firebaseService);
     assertTrue(tester.getErrorOccurred());
   }
 }

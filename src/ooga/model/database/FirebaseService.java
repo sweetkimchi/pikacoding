@@ -39,6 +39,7 @@ public class FirebaseService {
       db = FirebaseDatabase.getInstance();
     }
     catch (Exception e) {
+      e.printStackTrace();
     }
 
   }
@@ -73,7 +74,7 @@ public class FirebaseService {
       CountDownLatch done = new CountDownLatch(1);
       //Database Error is de, database reference is dr
       //https://stackoverflow.com/questions/49723347/how-to-save-data-to-firebase-using-java-desktop
-      db.getReference(pathInDB).setValue(jsonMap,
+      FirebaseDatabase.getInstance().getReference(pathInDB).setValue(jsonMap,
           (de, dr) -> done.countDown());
       done.await();
     }
@@ -83,7 +84,7 @@ public class FirebaseService {
   }
 
   public String readDBContentsForLevelInit(int level) throws InterruptedException {
-    DatabaseReference ref = db
+    DatabaseReference ref = FirebaseDatabase.getInstance()
         .getReference("level_info/level"+level+"/");
     CountDownLatch done = new CountDownLatch(1);
 
