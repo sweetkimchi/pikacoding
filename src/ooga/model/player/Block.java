@@ -3,12 +3,12 @@ package ooga.model.player;
 /**
  * 
  */
-public abstract class Objects implements Element {
+public abstract class Block implements Element {
 
     /**
      * Default constructor
      */
-    public Objects() {
+    public Block() {
     }
 
 }

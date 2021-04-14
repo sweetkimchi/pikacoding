@@ -3,14 +3,14 @@ package ooga.model.grid;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import ooga.controller.BackEndExternalAPI;
 import ooga.model.Direction;
+import ooga.model.grid.gridData.BlockData;
+import ooga.model.grid.gridData.TileData;
 import ooga.model.player.Avatar;
+import ooga.model.player.DataCube;
 import ooga.model.player.Element;
-import ooga.model.player.Objects;
+import ooga.model.player.Block;
 
 /**
  * The GameGrid contains all the elements for the grid of the game.
@@ -18,14 +18,24 @@ import ooga.model.player.Objects;
 public class GameGrid implements Grid {
 
   private Tile[][] grid;
-  private final Map<Avatar, List<Integer>> avatarList;
+  private final List<Avatar> avatarList;
+  private final List<DataCube> dataCubeList;
 
   public GameGrid() {
-    avatarList = new HashMap<>();
+    avatarList = new ArrayList<>();
+    dataCubeList = new ArrayList<>();
   }
 
-  public Map<Avatar, List<Integer>> getAvatarList() {
-    return avatarList;
+  public List<Avatar> getAvatarList() {
+    return Collections.unmodifiableList(avatarList);
+  }
+
+  public List<BlockData> getBlockData() {
+    List<BlockData> ret = new ArrayList<>();
+    for (DataCube dataCube : dataCubeList) {
+      ret.add(new BlockData(dataCube));
+    }
+    return ret;
   }
 
   @Override
@@ -47,21 +57,17 @@ public class GameGrid implements Grid {
   }
 
   @Override
-  public void addGameElement(Element gameElement, int xPos, int yPos) {
+  public void addGameElement(Element gameElement) {
+    int xPos = gameElement.getXCoord();
+    int yPos = gameElement.getYCoord();
     grid[xPos][yPos].add(gameElement);
     if (gameElement instanceof Avatar) {
-      avatarList.put((Avatar) gameElement, new ArrayList<>());
-      avatarList.get(gameElement).addAll(List.of(xPos, yPos));
+      avatarList.add((Avatar) gameElement);
+    }
+    if (gameElement instanceof DataCube) {
+      dataCubeList.add((DataCube) gameElement);
     }
   }
-
-//  @Override
-//  public void executeOnAvatars(Commands commands) {
-//    for (Avatar avatar : avatarList.keySet()) {
-//      commands.execute(avatar);
-//    }
-//  }
-
 
   /**
    * Moves the avatar in a cardinal direction.
@@ -70,23 +76,20 @@ public class GameGrid implements Grid {
    */
   public void step(int avatarId, Direction direction) {
     Avatar avatar = getAvatarById(avatarId);
-    List<Integer> avatarCoords = avatarList.get(avatar);
-    assert avatarCoords != null;
-    int currX = avatarCoords.get(0);
-    int currY = avatarCoords.get(1);
+    assert avatar != null;
+    int currX = avatar.getXCoord();
+    int currY = avatar.getYCoord();
     int newX = currX + direction.getXDel();
     int newY = currY + direction.getYDel();
     if (grid[newX][newY].canAddAvatar()) {
       grid[newX][newY].add(avatar);
       grid[currX][currY].removeAvatar();
-      avatarCoords.set(0, newX);
-      avatarCoords.set(1, newY);
+      avatar.step(direction);
+    } else {
+      //TODO: throw error to handler?
+      System.out.println("The avatar cannot step here!");
     }
 
-  }
-
-  public List<Integer> getAvatarCoords(int avatarID){
-    return avatarList.get(getAvatarById(avatarID));
   }
 
   /**
@@ -97,16 +100,15 @@ public class GameGrid implements Grid {
   public void pickUp(int avatarId, Direction direction) {
     Avatar avatar = getAvatarById(avatarId);
     assert avatar != null;
-    List<Integer> avatarCoords = avatarList.get(avatar);
-    assert avatarCoords != null;
-    int currX = avatarCoords.get(0);
-    int currY = avatarCoords.get(1);
+    int currX = avatar.getXCoord();
+    int currY = avatar.getYCoord();
     int newX = currX + direction.getXDel();
     int newY = currY + direction.getYDel();
     if (grid[newX][newY].hasBlock()) {
-      avatar.pickUp(grid[newX][newY].getObject());
+      avatar.pickUp(grid[newX][newY].getBlock());
       grid[currX][currY].removeBlock();
     } else {
+      //TODO: throw error to handler
       System.out.println("There is no block to be picked up!");
     }
   }
@@ -118,24 +120,26 @@ public class GameGrid implements Grid {
    */
   public void drop(int avatarId) {
     Avatar avatar = getAvatarById(avatarId);
-    List<Integer> avatarCoords = avatarList.get(avatar);
-    int currX = avatarCoords.get(0);
-    int currY = avatarCoords.get(1);
+    assert avatar != null;
+    int currX = avatar.getXCoord();
+    int currY = avatar.getYCoord();
     if (grid[currX][currY].canAddBlock()) {
-      assert avatar != null;
-      Objects block = avatar.drop();
+      Block block = avatar.drop();
       if (block == null) {
+        //TODO: throw error to handler
         System.out.println("You are not holding a block!");
       }
       grid[currX][currY].add(block);
     } else {
+      //TODO: throw error to handler
       System.out.println("You cannot drop here!");
+
     }
 
   }
 
   private Avatar getAvatarById(int id) {
-    for (Avatar avatar : avatarList.keySet()) {
+    for (Avatar avatar : avatarList) {
       if (avatar.getId() == id) {
         return avatar;
       }
@@ -150,17 +154,25 @@ public class GameGrid implements Grid {
    */
   public Collection<Integer> getAvatarIds() {
     List<Integer> ids = new ArrayList<>();
-    for (Avatar avatar : avatarList.keySet()) {
+    for (Avatar avatar : avatarList) {
       ids.add(avatar.getId());
     }
     Collections.sort(ids);
     return ids;
   }
 
-  //TODO: remove later, for testing only
+  /**
+   * Retrieves the information of a queried Tile as a TileData object.
+   *
+   * @param x The x-coordinate of the tile
+   * @param y The y-coordinate of the tile
+   * @return A TileData object containing information about the tile
+   */
+  public TileData getTileData(int x, int y) {
+    return new TileData(grid[x][y]);
+  }
+
   public Tile getTile(int x, int y) {
     return grid[x][y];
   }
-
-
 }
