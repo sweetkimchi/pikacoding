@@ -59,14 +59,19 @@ public class Avatar extends Player {
         this.yCoord = yCoord;
     }
 
-//    /**
-//     * Moves the avatar in a cardinal direction.
-//     *
-//     * @param direction The direction to be moved
-//     */
-//    public void step(Direction direction) {
-//
-//    }
+    /**
+     * Moves the avatar in a cardinal direction.
+     *
+     * @param direction The direction to be moved
+     */
+    public void step(Direction direction) {
+        int xPrev = xCoord;
+        int yPrev = yCoord;
+        this.xCoord = xPrev + direction.getXDel();
+        this.yCoord = yPrev + direction.getYDel();
+
+        //    System.out.printf("Moving avatar %d from (%d, %d) in the direction %s to new location (%d, %d)\n", id, xPrev, yPrev, direction, xCoord, yCoord);
+    }
 
     /**
      * Directs the avatar to pick up a block.
@@ -87,16 +92,4 @@ public class Avatar extends Player {
         heldItem = null;
         return ret;
     }
-
-    public void step(Direction direction){
-        int xPrev = xCoord;
-        int yPrev = yCoord;
-        this.xCoord = xPrev + direction.getXDel();
-        this.yCoord = yPrev + direction.getYDel();
-
-    //    System.out.printf("Moving avatar %d from (%d, %d) in the direction %s to new location (%d, %d)\n", id, xPrev, yPrev, direction, xCoord, yCoord);
-    }
-
-
-
 }

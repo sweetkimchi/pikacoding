@@ -1,7 +1,9 @@
 package ooga.model.grid.gridData;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import ooga.model.player.DataCube;
 
 public class BlockData {
   private List<Integer> location;
@@ -14,6 +16,14 @@ public class BlockData {
     this.location = location;
     this.blockNumber = blockNumber;
     this.pickedUp = pickedUp;
+  }
+
+  public BlockData(DataCube dataCube) {
+    location = new ArrayList<>();
+    location.addAll(List.of(dataCube.getXCoord(), dataCube.getYCoord()));
+    blockNumber = dataCube.getDisplayNum();
+    pickedUp = dataCube.isHeld();
+    // TODO: do something with the datacube ID num?
   }
 
 
