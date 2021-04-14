@@ -12,10 +12,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import ooga.view.level.codearea.CommandBlock;
 
 public class FirebaseService {
 
@@ -57,19 +59,31 @@ public class FirebaseService {
     String filePathToCommands = rootURLPathForLevel + "commands.json";
     String filePathToGridState = rootURLPathForLevel + "grid.json";
     String rootDBPath = "level_info/level"+level+"/";
-    setDatabaseContents(rootDBPath+"levelInfo", filePathToLevelInfoFile);
-    setDatabaseContents(rootDBPath+"startState", filePathToStartState);
-    setDatabaseContents(rootDBPath+"endState", filePathToEndState);
-    setDatabaseContents(rootDBPath+"commands", filePathToCommands);
-    setDatabaseContents(rootDBPath+"grid", filePathToGridState);
+    setDatabaseContentsFromFile(rootDBPath+"levelInfo", filePathToLevelInfoFile);
+    setDatabaseContentsFromFile(rootDBPath+"startState", filePathToStartState);
+    setDatabaseContentsFromFile(rootDBPath+"endState", filePathToEndState);
+    setDatabaseContentsFromFile(rootDBPath+"commands", filePathToCommands);
+    setDatabaseContentsFromFile(rootDBPath+"grid", filePathToGridState);
 
 
   }
 
-  private void setDatabaseContents(String pathInDB, String pathToFile)  {
+
+  private void setDatabaseContentsFromFile(String pathInDB, String pathToFile)  {
+    Map<String, Object> jsonMap = null;
     try {
-      Map<String, Object> jsonMap = new Gson().fromJson(new FileReader(pathToFile)
+       jsonMap = new Gson().fromJson(new FileReader(pathToFile)
           , new TypeToken<HashMap<String, Object>>() {}.getType());
+    }
+    catch (Exception e) {
+      return;
+    }
+    setDatabaseContentsWithMap(jsonMap, pathInDB);
+  }
+
+  private void setDatabaseContentsWithMap(Map<String, Object> jsonMap, String pathInDB)  {
+
+    try{
       CountDownLatch done = new CountDownLatch(1);
       //Database Error is de, database reference is dr
       //https://stackoverflow.com/questions/49723347/how-to-save-data-to-firebase-using-java-desktop
@@ -104,10 +118,20 @@ public class FirebaseService {
     return json[0];
   }
 
+  public void setCurrentState(String userName, List<CommandBlock> commandBlocks)  {
+    List<Map<String, Object>> listOfCommands = new ArrayList<>();
+    commandBlocks.forEach(commandBlock -> listOfCommands.add(createJSONForCommandBlock(commandBlock)));
+    Map<String, Object> jsonMap = new HashMap<>();
+    jsonMap.put(userName, listOfCommands);
+    setDatabaseContentsWithMap(jsonMap, "gameState/");
+  }
 
-
-  public FirebaseDatabase getDb() {
-    return db;
+  private Map<String, Object> createJSONForCommandBlock(CommandBlock commandBlock) {
+    Map<String, Object> map = new HashMap<>();
+    map.put("index", commandBlock.getIndex());
+    map.put("type", commandBlock.getType());
+    map.put("parameters", commandBlock.getParameters());
+    return map;
   }
 
 }
