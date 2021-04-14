@@ -63,4 +63,10 @@ public interface BackEndExternalAPI {
   void setAvatarIDForUpdate(int id);
 
   void updateFrontEndElements(Map<String, AvatarData> updates);
+
+  /**
+   * updates the score and sends it to the frontend
+   * @param score
+   */
+  void updateScore(int score);
 }
