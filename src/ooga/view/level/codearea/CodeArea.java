@@ -1,7 +1,10 @@
 package ooga.view.level.codearea;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import ooga.model.commands.AvailableCommands;
@@ -34,15 +37,18 @@ public class CodeArea extends GridPane {
         Double.parseDouble(sizeProperties.getString("CodeAreaWidth")) - commandBankWidth;
     commandBank.setPrefWidth(commandBankWidth);
     programStack.setPrefWidth(programWidth);
+
+//    Map<Integer, Integer> lines = new HashMap<>();
+//    lines.put(7, 1);
+//    lines.put(8, 2);
+//    lines.put(9, 2);
+//    Button test = new Button("test");
+//    test.setOnAction(e -> setLineIndicators(lines));
+//    commandBank.getChildren().add(test);
   }
 
-  private ScrollPane initializeProgramStackHolder() {
-    ScrollPane programStackHolder = new ScrollPane();
-    programStackHolder.setFitToWidth(true);
-    programStackHolder.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-    programStackHolder.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-    programStackHolder.setContent(programStack);
-    return programStackHolder;
+  public void setLineIndicators(Map<Integer, Integer> lineNumbers) {
+    programStack.setLineIndicators(lineNumbers);
   }
 
   public List<CommandBlock> getProgram() {
@@ -52,6 +58,15 @@ public class CodeArea extends GridPane {
   public void setAvailableCommands(AvailableCommands availableCommands) {
     commandBank.addCommands(availableCommands.getCommandNames());
     programStack.setAvailableCommands(availableCommands);
+  }
+
+  private ScrollPane initializeProgramStackHolder() {
+    ScrollPane programStackHolder = new ScrollPane();
+    programStackHolder.setFitToWidth(true);
+    programStackHolder.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+    programStackHolder.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+    programStackHolder.setContent(programStack);
+    return programStackHolder;
   }
 
   private void addCommandBlock(String command) {

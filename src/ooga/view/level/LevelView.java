@@ -142,6 +142,7 @@ public class LevelView extends BorderPane {
     board.reset();
     timeline.stop();
     dummy = 1;
+
     System.out.println("reset");
   }
 
@@ -175,7 +176,7 @@ public class LevelView extends BorderPane {
   private void runSimulation() {
     timeline.setCycleCount(Animation.INDEFINITE);
     timeline.play();
-    timeline.setRate(300);
+    timeline.setRate(100);
   }
 
   private void setAnimationSpeed() {
@@ -195,5 +196,9 @@ public class LevelView extends BorderPane {
 
     codeIsRunning = false;
     timeline.stop();
+  }
+
+  public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
+    codeArea.setLineIndicators(lineUpdates);
   }
 }

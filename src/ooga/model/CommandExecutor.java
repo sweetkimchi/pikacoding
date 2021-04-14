@@ -59,8 +59,9 @@ public class CommandExecutor {
 
 
         boolean ended = true;
-        System.out.println();
-        Map<String, AvatarData> updates = new HashMap<>();
+//        System.out.println();
+        Map<Integer, Integer> lineUpdates = new HashMap<>();
+
         //Map<ID, Values>
         for (Avatar avatar : gameGrid.getAvatarList()){
 
@@ -68,13 +69,15 @@ public class CommandExecutor {
             // TODO: refactor with Reflection and properties files
             if (avatar.getProgramCounter() < mapOfCommandBlocks.size() + 1) {
            //     modelController.setAvatarIDForUpdate(singleAvatar.getId());
+
+                lineUpdates.put(avatar.getId(), avatar.getProgramCounter());
                 score++;
                 modelController.updateScore(score);
                 ended = false;
                 CommandBlock currentCommand = mapOfCommandBlocks.get(avatar.getProgramCounter());
-                System.out.printf("Running command #%d for avatar ID: %d\n", avatar.getProgramCounter(), avatar.getId());
+//                System.out.printf("Running command #%d for avatar ID: %d\n", singleAvatar.getProgramCounter(), singleAvatar.getId());
                 AvatarData newUpdate = new AvatarData();
-                System.out.println("Command currently running: " + currentCommand.getType() + " with parameter " + currentCommand.getParameters());
+//                System.out.println("Command currently running: " + currentCommand.getType() + " with parameter " + currentCommand.getParameters());
                 if(currentCommand.getType().equals("step")){
 
 //                    System.out.printf("Executing step for avatar ID %d with program counter %d \n", singleAvatar.getId(), singleAvatar.getProgramCounter());
@@ -91,7 +94,7 @@ public class CommandExecutor {
 //                    avatar.setXCoord(avatarCoordinates.get(0));
 //                    avatar.setYCoord(avatarCoordinates.get(1));
 
-                    newUpdate.updatePositions(avatar.getId(), avatar.getXCoord(), avatar.getYCoord());
+                    newUpdate.updatePositions(avatar.getId(), avatar.getXCoord(), avatar.getYCoord(), avatar.getProgramCounter());
            //         gameGrid.step(singleAvatar.getId(),getDirection(currentCommand.getParameters().get("direction")));
 
                     avatar.setProgramCounter(avatar.getProgramCounter() + 1);
@@ -122,6 +125,10 @@ public class CommandExecutor {
 
             }
         }
+
+
+        modelController.setLineIndicators(lineUpdates);
+
 
         //TODO: refactor using a better data structure
      //   modelController.updateFrontEndElements(updates);

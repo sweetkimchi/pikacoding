@@ -143,4 +143,15 @@ public class ModelController implements BackEndExternalAPI {
   public void updateScore(int score) {
     viewController.setScore(score);
   }
+
+  /**
+   * updates the line numbers for the avatars
+   *
+   * @param lineUpdates
+   */
+  @Override
+  public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
+    viewController.setLineIndicators(lineUpdates);
+
+  }
 }

@@ -40,7 +40,7 @@ public class ControlPanel extends GridPane {
   }
 
   private void makeSlider() {
-    slider = new Slider(10, 1000,50);
+    slider = new Slider(10, 100,25);
     this.add(slider, col, 0);
   }
 

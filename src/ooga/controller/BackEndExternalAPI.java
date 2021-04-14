@@ -69,4 +69,10 @@ public interface BackEndExternalAPI {
    * @param score
    */
   void updateScore(int score);
+
+  /**
+   * updates the line numbers for the avatars
+   * @param lineUpdates
+   */
+  void setLineIndicators(Map<Integer, Integer> lineUpdates);
 }
