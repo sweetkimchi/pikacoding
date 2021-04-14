@@ -57,6 +57,7 @@ public class CommandBlockHolder extends GridPane {
     background.setFill(Color.GRAY);
     lineIndicatorHolder.getChildren().addAll(background, lineIndicators);
     addItem(lineIndicatorHolder, LINE_INDICATORS_WIDTH);
+
     indexLabel = new Label();
     indexLabel.getStyleClass().add("command-index");
     addItem(indexLabel, INDEX_WIDTH);
@@ -110,10 +111,11 @@ public class CommandBlockHolder extends GridPane {
     indexLabel.setText(prefix + index);
   }
 
-  public void setLineIndicators(int... ids) {
+  public void setLineIndicators(List<Integer> ids) {
     lineIndicators.getChildren().clear();
     for (int id : ids) {
-      lineIndicators.getChildren().add(new Label("" + id));
+      Label indicator = new Label("" + id);
+      lineIndicators.getChildren().add(indicator);
     }
   }
 

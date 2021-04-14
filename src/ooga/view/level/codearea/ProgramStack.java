@@ -91,6 +91,15 @@ public class ProgramStack extends VBox {
     });
   }
 
+  public void setLineIndicators(Map<Integer, Integer> lineNumbers) {
+    List<List<Integer>> indicators = new ArrayList<>();
+    programBlocks.forEach(commandBlockHolder -> indicators.add(new ArrayList<>()));
+    lineNumbers.forEach((id, lineNumber) -> indicators.get(lineNumber - 1).add(id));
+    for (int i = 0; i < programBlocks.size(); i++) {
+      programBlocks.get(i).setLineIndicators(indicators.get(i));
+    }
+  }
+
   private void moveCommandBlock(int oldIndex, int newIndex) {
     if (oldIndex < newIndex) {
       Collections.rotate(programBlocks.subList(oldIndex - 1, newIndex), -1);
@@ -111,4 +120,5 @@ public class ProgramStack extends VBox {
     });
     awaitingNewIndex = false;
   }
+
 }
