@@ -13,8 +13,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -25,12 +29,15 @@ import org.jetbrains.annotations.NotNull;
  */
 public class CommandBlockHolder extends GridPane {
 
+  private static final double LINE_INDICATORS_WIDTH = 60;
   private static final double INDEX_WIDTH = 20;
+  private static final double ITEM_HEIGHT = 30;
+  private static final double PADDING = 4;
   private static final String HAMBURGER_MENU_IMAGE = "ThreeLines.png";
-  private static final double ITEM_HEIGHT = 20;
 
   private int index;
   private List<Map<String, List<String>>> parameterOptions;
+  private HBox lineIndicators;
   private Label indexLabel;
   private CommandBlock commandBlock;
   private ImageView hamburgerMenu;
@@ -44,6 +51,12 @@ public class CommandBlockHolder extends GridPane {
     this.setHgap(5);
     this.columns = 0;
     this.programStack = programStack;
+    lineIndicators = new HBox();
+    StackPane lineIndicatorHolder = new StackPane();
+    Rectangle background = new Rectangle(LINE_INDICATORS_WIDTH, ITEM_HEIGHT + 2 * PADDING);
+    background.setFill(Color.GRAY);
+    lineIndicatorHolder.getChildren().addAll(background, lineIndicators);
+    addItem(lineIndicatorHolder, LINE_INDICATORS_WIDTH);
     indexLabel = new Label();
     indexLabel.getStyleClass().add("command-index");
     addItem(indexLabel, INDEX_WIDTH);
@@ -75,8 +88,12 @@ public class CommandBlockHolder extends GridPane {
       programStack.startDrag(this);
     });
 
+    RowConstraints rowConstraints = new RowConstraints();
+    rowConstraints.setMinHeight(ITEM_HEIGHT);
+    this.getRowConstraints().add(rowConstraints);
+
     setIndex(index);
-    this.setPadding(new Insets(4, 4, 4, 4));
+//    this.setPadding(new Insets(4, 4, 4, 4));
   }
 
   public CommandBlock getCommandBlock() {
@@ -91,6 +108,13 @@ public class CommandBlockHolder extends GridPane {
       prefix = "0";
     }
     indexLabel.setText(prefix + index);
+  }
+
+  public void setLineIndicators(int... ids) {
+    lineIndicators.getChildren().clear();
+    for (int id : ids) {
+      lineIndicators.getChildren().add(new Label("" + id));
+    }
   }
 
   protected void initializeDropdowns() {

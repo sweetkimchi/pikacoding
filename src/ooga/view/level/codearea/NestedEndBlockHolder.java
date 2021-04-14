@@ -1,8 +1,6 @@
 package ooga.view.level.codearea;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class NestedEndBlockHolder extends CommandBlockHolder {
 
@@ -22,4 +20,5 @@ public class NestedEndBlockHolder extends CommandBlockHolder {
     programStack.removeCommandBlock(beginCommandBlockHolder.getIndex());
     programStack.removeCommandBlock(getIndex());
   }
+
 }
