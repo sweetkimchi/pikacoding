@@ -24,7 +24,7 @@ public class Avatar {
   }
 
   private void makeAvatar() {
-    avatar = new ImageView(new Image(avatarImage));
+    avatar = new ImageView(new Image("PikachuAvatar.gif"));
     avatar.getStyleClass().add("avatar");
     avatar.setFitWidth(width);
     avatar.setFitHeight(height);
@@ -48,5 +48,9 @@ public class Avatar {
 
   public int getInitialYCoordinate(){
     return (int) (avatar.getY()/height);
+  }
+
+  public void setAvatarImage(String image){
+    avatar.setImage(new Image(image));
   }
 }
