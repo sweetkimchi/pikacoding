@@ -6,7 +6,7 @@ import ooga.model.grid.Tile;
 public class TileData {
 
   public static final int EMPTY = -1;
-  private Structure structure;
+  private final Structure structure;
   private int avatarId = EMPTY;
   private int blockId = EMPTY;
 

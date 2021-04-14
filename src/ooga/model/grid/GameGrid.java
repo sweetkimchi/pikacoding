@@ -77,6 +77,8 @@ public class GameGrid implements Grid {
       grid[currX][currY].removeAvatar();
       avatarCoords.set(0, newX);
       avatarCoords.set(1, newY);
+    } else {
+      //TODO: throw error to handler?
     }
 
   }
@@ -103,6 +105,7 @@ public class GameGrid implements Grid {
       avatar.pickUp(grid[newX][newY].getBlock());
       grid[currX][currY].removeBlock();
     } else {
+      //TODO: throw error to handler
       System.out.println("There is no block to be picked up!");
     }
   }
@@ -121,11 +124,14 @@ public class GameGrid implements Grid {
       assert avatar != null;
       Block block = avatar.drop();
       if (block == null) {
+        //TODO: throw error to handler
         System.out.println("You are not holding a block!");
       }
       grid[currX][currY].add(block);
     } else {
+      //TODO: throw error to handler
       System.out.println("You cannot drop here!");
+
     }
 
   }
