@@ -62,12 +62,13 @@ public class CommandExecutor {
         boolean ended = true;
         Map<Integer, Integer> lineUpdates = new HashMap<>();
 
-//
         for(Player avatar : elementInformationBundle.getAvatarList()){
             if (avatar.getProgramCounter() < commandBlocks.size() + 1){
                 ended = false;
                 lineUpdates.put(avatar.getId(), avatar.getProgramCounter());
                 commandBlocks.get(avatar.getProgramCounter() - 1).execute(avatar.getId());
+                score++;
+                modelController.updateScore(score);
             }
         }
 
