@@ -15,6 +15,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * JavaFX element that displays a CommandBlock. Shows line number, command type, and parameter
@@ -51,11 +52,7 @@ public class CommandBlockHolder extends GridPane {
     command.getStyleClass().add("command-block-name");
     addItem(command, 0);
     this.parameterOptions = parameterOptions;
-    Map<String, String> initialParameters = new HashMap<>();
-    parameterOptions.forEach(parameterOption -> {
-      String parameter = parameterOption.keySet().iterator().next();
-      initialParameters.put(parameter, parameterOption.get(parameter).get(0));
-    });
+    Map<String, String> initialParameters = setInitialParameters(parameterOptions);
     commandBlock = new CommandBlock(index, type, initialParameters);
     initializeDropdowns();
 
@@ -96,16 +93,7 @@ public class CommandBlockHolder extends GridPane {
     indexLabel.setText(prefix + index);
   }
 
-  private void addItem(Node node, double width) {
-    ColumnConstraints columnConstraints = new ColumnConstraints();
-    if (width > 0) {
-      columnConstraints.setPrefWidth(width);
-    }
-    this.add(node, columns++, 0);
-    this.getColumnConstraints().add(columnConstraints);
-  }
-
-  private void initializeDropdowns() {
+  protected void initializeDropdowns() {
     parameterOptions.forEach(parameterOption -> {
       String parameter = parameterOption.keySet().iterator().next();
       List<String> options = parameterOption.get(parameter);
@@ -117,6 +105,28 @@ public class CommandBlockHolder extends GridPane {
       dropdown.getSelectionModel().selectFirst();
       addItem(dropdown, 120);
     });
+  }
+
+  protected List<Map<String, List<String>>> getParameterOptions() {
+    return parameterOptions;
+  }
+
+  protected void addItem(Node node, double width) {
+    ColumnConstraints columnConstraints = new ColumnConstraints();
+    if (width > 0) {
+      columnConstraints.setPrefWidth(width);
+    }
+    this.add(node, columns++, 0);
+    this.getColumnConstraints().add(columnConstraints);
+  }
+
+  private Map<String, String> setInitialParameters(List<Map<String, List<String>>> parameterOptions) {
+    Map<String, String> initialParameters = new HashMap<>();
+    parameterOptions.forEach(parameterOption -> {
+      String parameter = parameterOption.keySet().iterator().next();
+      initialParameters.put(parameter, parameterOption.get(parameter).get(0));
+    });
+    return initialParameters;
   }
 
 }

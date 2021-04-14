@@ -50,8 +50,8 @@ public class Board extends StackPane {
     gridLayer.getStyleClass().add("board");
     makeGrid(gameGridData.getStructures());
     spriteLayer.setSizes(xSize, ySize);
-    spriteLayer.initializeBlocks(initialState.getAllBlockData());
     spriteLayer.initializeAvatars(initialState.getAllAvatarLocations());
+    spriteLayer.initializeBlocks(initialState.getAllBlockData());
   }
 
   private void setSizing(GameGridData gameGridData) {
