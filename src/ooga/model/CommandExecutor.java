@@ -75,7 +75,7 @@ public class CommandExecutor {
                 CommandBlock currentCommand = mapOfCommandBlocks.get(singleAvatar.getProgramCounter());
                 System.out.printf("Running command #%d for avatar ID: %d\n", singleAvatar.getProgramCounter(), singleAvatar.getId());
                 AvatarData newUpdate = new AvatarData();
-//                System.out.println("Command currently running: " + currentCommand.getType() + " with parameter " + currentCommand.getParameters());
+                System.out.println("Command currently running: " + currentCommand.getType() + " with parameter " + currentCommand.getParameters());
                 if(currentCommand.getType().equals("step")){
 
 //                    System.out.printf("Executing step for avatar ID %d with program counter %d \n", singleAvatar.getId(), singleAvatar.getProgramCounter());

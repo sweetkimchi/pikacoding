@@ -4,7 +4,7 @@ import java.util.*;
 import ooga.model.player.Avatar;
 
 /**
- * 
+ * @author Ji Yun Hyo
  */
 public class Step extends BasicCommands {
 
