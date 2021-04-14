@@ -3,10 +3,8 @@ package ooga.controller;
 import java.util.*;
 import javafx.stage.Stage;
 import ooga.model.commands.AvailableCommands;
-import ooga.model.grid.gridData.BoardState;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
-import ooga.model.parser.InitialConfigurationParser;
 import ooga.model.player.AvatarData;
 import ooga.model.player.Element;
 import ooga.view.level.codearea.CommandBlock;
@@ -85,8 +83,13 @@ public class ViewController implements FrontEndExternalAPI {
     }
 
     @Override
+    public void loadStartMenu() {
+        screenCreator.loadStartMenu();
+    }
+
+    @Override
     public void initializeLevel(int level) {
-        screenCreator.loadLevel(level);
+        screenCreator.initializeLevelView();
         levelView = screenCreator.getLevelView();
         modelController.initializeLevel(level);
     }
