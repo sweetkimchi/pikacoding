@@ -36,12 +36,13 @@ public class Block extends StackPane {
   }
 
   public void moveBlock(double x, double y) {
-//    this.setTranslateX(x * width + padding);
+    System.out.println(x);
+    this.setTranslateX(x * width + padding);
     currentX = x;
-//    this.setTranslateY(y * height + padding -  PICKEDUP_SHIFT * height);
+    this.setTranslateY(y * height + padding -  PICKEDUP_SHIFT * height);
     currentY = y;
-    block.setX(currentX);
-    block.setY(currentY);
+//    block.setX(currentX);
+//    block.setY(currentY);
   }
 
   public void setShiftHeight(double percent) {
@@ -65,11 +66,11 @@ public class Block extends StackPane {
   }
 
   public int getInitialXCoordinate(){
-    return (int) (block.getX()/width);
+    return (int) currentX;
   }
 
   public int getInitialYCoordinate(){
-    return (int) (block.getY()/height);
+    return (int) currentY;
   }
 
   private void makeBlock() {
