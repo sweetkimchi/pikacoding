@@ -1,5 +1,6 @@
 package ooga.view.level;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
@@ -142,6 +143,7 @@ public class LevelView extends BorderPane {
     board.reset();
     timeline.stop();
     dummy = 1;
+    codeArea.setLineIndicators(new HashMap<>());
 
     System.out.println("reset");
   }
@@ -196,5 +198,9 @@ public class LevelView extends BorderPane {
 
     codeIsRunning = false;
     timeline.stop();
+  }
+
+  public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
+    codeArea.setLineIndicators(lineUpdates);
   }
 }

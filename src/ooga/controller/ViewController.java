@@ -113,6 +113,16 @@ public class ViewController implements FrontEndExternalAPI {
     }
 
     /**
+     * sets the line number for the avatar
+     *
+     * @param lineUpdates
+     */
+    @Override
+    public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
+        levelView.setLineIndicators(lineUpdates);
+    }
+
+    /**
      * Passes in the commands to be parsed
      *
      * @param commandBlocks List of individual command blocks derived from the blocks in the
