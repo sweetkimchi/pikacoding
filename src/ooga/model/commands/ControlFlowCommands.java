@@ -6,12 +6,12 @@ import ooga.model.grid.ElementInformationBundle;
 /**
  * @author Ji Yun Hyo
  */
-public abstract class BasicCommands extends Commands {
+public abstract class ControlFlowCommands extends Commands {
 
     /**
      * Default constructor
      */
-    public BasicCommands(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
+    public ControlFlowCommands(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
         super(elementInformationBundle, parameters);
     }
 
