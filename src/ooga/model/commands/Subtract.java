@@ -36,5 +36,8 @@ public class Subtract extends BasicCommands {
     }
 
     avatar.setProgramCounter(avatar.getProgramCounter() + 1);
+
+    //TODO: send updates to ElementInformationBundle
+
   }
 }

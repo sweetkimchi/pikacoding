@@ -32,5 +32,8 @@ public class Add extends BasicCommands {
 
     avatar.setProgramCounter(avatar.getProgramCounter() + 1);
 
+    //TODO: send updates to ElementInformationBundle
+
+
   }
 }
