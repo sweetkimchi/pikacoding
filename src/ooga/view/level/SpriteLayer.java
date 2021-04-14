@@ -109,4 +109,15 @@ public class SpriteLayer extends Pane {
 
   public void resetQueue() {
   }
+
+  // TODO: EXAMPLE OF HOW PICKUP/DROP SHOULD WORK
+  public void pickUP(int id, double percent) {
+    Block block = blocks.get(id);
+    block.animatePickUp(percent);
+  }
+
+  public void drop(int id, double percent) {
+    Block block = blocks.get(id);
+    block.animateDrop(percent);
+  }
 }
