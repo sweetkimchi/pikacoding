@@ -62,6 +62,8 @@ public interface FrontEndExternalAPI {
 
   void setActiveAvatar(int avatarID);
 
+  void loadStartMenu();
+
   void initializeLevel(int level);
 
   void updateAvatarPositions(int id, int xCoord, int yCoord);
@@ -69,4 +71,12 @@ public interface FrontEndExternalAPI {
   void updateFrontEndElements(Map<String, AvatarData> updates);
 
   void declareEndOfAnimation();
+
+  void setScore(int score);
+
+  /**
+   * sets the line number for the avatar
+   * @param lineUpdates
+   */
+  void setLineIndicators(Map<Integer, Integer> lineUpdates);
 }

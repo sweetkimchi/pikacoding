@@ -1,11 +1,15 @@
 package ooga.view.level;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
@@ -30,6 +34,7 @@ public class LevelView extends BorderPane {
           + "default.css";
 
   private final FrontEndExternalAPI viewController;
+  private final ScreenCreator screenCreator;
   private final MenuBar menuBar;
   private final Board board;
   private final CodeArea codeArea;
@@ -45,10 +50,11 @@ public class LevelView extends BorderPane {
   //I'm using this because for some reason, clicking step doesn't play the initial animation (does nothing)
   private double dummy = 1;
 
-  public LevelView(FrontEndExternalAPI viewController) {
+  public LevelView(FrontEndExternalAPI viewController, ScreenCreator screenCreator) {
     this.viewController = viewController;
+    this.screenCreator = screenCreator;
     this.getStylesheets().add(DEFAULT_CSS);
-    menuBar = new MenuBar();
+    menuBar = new MenuBar(e -> openPauseMenu());
     board = new Board();
     codeArea = new CodeArea();
     controlPanel = new ControlPanel();
@@ -63,7 +69,7 @@ public class LevelView extends BorderPane {
        * if queue is finished run the next command
        * if the que is not finished, it means that the turn is not over yet so execute the animation for the turn
        */
-      System.out.println("Animation running");
+     // System.out.println("Animation running");
       if(queueFinished){
         if(step && dummy != 1){
           timeline.stop();
@@ -82,10 +88,6 @@ public class LevelView extends BorderPane {
     initializeViewElements();
   }
 
-  private void updateAnimationForFrontEnd() {
-    queueFinished = board.updateAnimationForFrontEnd();
-  }
-
 
   public void setPosition(double x, double y, int id) {
 
@@ -101,6 +103,33 @@ public class LevelView extends BorderPane {
 
   public void initializeBoard(GameGridData gameGridData, InitialState initialState) {
     board.initializeBoard(gameGridData, initialState);
+  }
+
+  private void openPauseMenu() {
+    VBox pauseMenu = new VBox();
+    pauseMenu.getChildren().add(new Label("Paused"));
+    Button resumeButton = new Button("Resume");
+    resumeButton.setOnAction(e -> {
+      this.setCenter(board);
+      this.setRight(codeArea);
+      this.setBottom(controlPanel);
+    });
+    pauseMenu.getChildren().add(resumeButton);
+    Button startMenuButton = new Button("Home");
+    startMenuButton.setOnAction(e -> screenCreator.loadStartMenu());
+    pauseMenu.getChildren().add(startMenuButton);
+
+    Button levelSelectorButton = new Button("Level Selector");
+    levelSelectorButton.setOnAction(e -> screenCreator.loadLevelSelector());
+    pauseMenu.getChildren().add(levelSelectorButton);
+
+    this.setCenter(pauseMenu);
+    this.setRight(null);
+    this.setBottom(null);
+  }
+
+  private void updateAnimationForFrontEnd() {
+    queueFinished = board.updateAnimationForFrontEnd();
   }
 
   private void initializeViewElements() {
@@ -142,6 +171,8 @@ public class LevelView extends BorderPane {
     board.reset();
     timeline.stop();
     dummy = 1;
+    codeArea.setLineIndicators(new HashMap<>());
+
     System.out.println("reset");
   }
 
@@ -175,7 +206,7 @@ public class LevelView extends BorderPane {
   private void runSimulation() {
     timeline.setCycleCount(Animation.INDEFINITE);
     timeline.play();
-    timeline.setRate(300);
+    timeline.setRate(100);
   }
 
   private void setAnimationSpeed() {
@@ -192,7 +223,12 @@ public class LevelView extends BorderPane {
   }
 
   public void declareEndOfAnimation() {
+
     codeIsRunning = false;
     timeline.stop();
+  }
+
+  public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
+    codeArea.setLineIndicators(lineUpdates);
   }
 }

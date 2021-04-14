@@ -2,7 +2,7 @@ package ooga.model.grid;
 
 import ooga.model.player.Avatar;
 import ooga.model.player.Element;
-import ooga.model.player.Objects;
+import ooga.model.player.Block;
 
 /**
  * A Tile is one tile of the grid that can contain some number of elements.
@@ -13,7 +13,7 @@ public class Tile {
 
   private Structure structure;
   private Avatar avatar;
-  private Objects block;
+  private Block block;
 
   public Tile() {
 
@@ -25,8 +25,8 @@ public class Tile {
     if (element instanceof Avatar) {
       add((Avatar) element);
     }
-    if (element instanceof Objects) {
-      add((Objects) element);
+    if (element instanceof Block) {
+      add((Block) element);
     }
   }
 
@@ -40,7 +40,7 @@ public class Tile {
     }
   }
 
-  public void add(Objects block) {
+  public void add(Block block) {
     if (canAddBlock()) {
       this.block = block;
     }
@@ -62,7 +62,7 @@ public class Tile {
     return avatar;
   }
 
-  public Objects getObject() {
+  public Block getBlock() {
     return block;
   }
 

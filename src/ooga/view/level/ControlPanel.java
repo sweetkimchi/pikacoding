@@ -1,13 +1,11 @@
 package ooga.view.level;
 
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -18,7 +16,6 @@ import ooga.view.ScreenCreator;
 public class ControlPanel extends GridPane {
 
   private static final String BUTTON_IMAGES = "ControlPanelButtons";
-  private static final String REFLECTION_METHODS = "ControlPanelReflectionActions";
   private static final int ICON_SIZE = 30; //TODO: put in properties file
   private Map<String, Button> buttons;
   private ResourceBundle buttonImages;
@@ -40,7 +37,7 @@ public class ControlPanel extends GridPane {
   }
 
   private void makeSlider() {
-    slider = new Slider(10, 1000,50);
+    slider = new Slider(10, 100,25);
     this.add(slider, col, 0);
   }
 
@@ -51,21 +48,8 @@ public class ControlPanel extends GridPane {
       button.setGraphic(setIcon(buttonImages.getString(o.toString())));
       button.getStyleClass().add(o.toString());
       button.setId(o.toString() + "-button");
-//      button.setOnAction(event -> reflectionMethod(o.toString()));
       this.add(button, col, 0);
       col++;
-    }
-  }
-
-  private void reflectionMethod(String key) {
-    try {
-      ResourceBundle reflectionResource = ResourceBundle
-          .getBundle(ScreenCreator.RESOURCES + REFLECTION_METHODS);
-      String methodName = reflectionResource.getString(key);
-      Method m = ControlPanel.this.getClass().getDeclaredMethod(methodName);
-      m.invoke(ControlPanel.this);
-    } catch (Exception e) {
-      new Alert(Alert.AlertType.ERROR);
     }
   }
 

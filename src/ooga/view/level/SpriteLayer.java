@@ -8,10 +8,16 @@ import javafx.scene.layout.Pane;
 import ooga.model.grid.gridData.BlockData;
 import ooga.view.animation.Animation;
 
+/**
+ * @author Ji Yun Hyo
+ */
 public class SpriteLayer extends Pane {
 
   private double xSize;
   private double ySize;
+
+  private int i = 0;
+  private int k = 0;
 
   private Map<Integer, Avatar> avatars;
   private Map<Integer, Block> blocks;
@@ -83,15 +89,26 @@ public class SpriteLayer extends Pane {
 
   public boolean updateAnimationForFrontEnd() {
     allElementInformation = animation.getAllElementInformation();
-    System.out.println(allElementInformation);
+ //   System.out.println(allElementInformation);
     boolean finished = true;
     for(Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()){
       if(!entry.getValue().isEmpty()){
 
-        System.out.println("Moving Avatar: " + entry.getValue());
+
+       // System.out.println("Moving Avatar: " + entry.getValue());
         double nextX = entry.getValue().pop();
         double nextY = entry.getValue().pop();
 
+        double currentX = avatars.get(entry.getKey()).getInitialXCoordinate();
+        double currentY = avatars.get(entry.getKey()).getInitialYCoordinate();
+
+
+//        System.out.println("CurrentX: " + currentX);
+//        System.out.println("CurrentY: " + currentY);
+//        System.out.println("NextX: " + nextX);
+//        System.out.println("NextY: " + nextY);
+
+//        System.out.println();
         avatars.get(entry.getKey()).moveAvatar(nextX, nextY);
         finished = false;
       }
@@ -105,5 +122,14 @@ public class SpriteLayer extends Pane {
   }
 
   public void resetQueue() {
+  }
+
+  //TODO: refactor with css
+  public void resetAvatarImages() {
+    if(allElementInformation != null){
+      for(Map.Entry<Integer,Avatar> entry : avatars.entrySet()){
+        avatars.get(entry.getKey()).setAvatarImage("PikachuAvatar.gif");
+      }
+    }
   }
 }

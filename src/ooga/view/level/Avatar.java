@@ -13,6 +13,9 @@ public class Avatar {
   private double height;
   private SpriteLayer spriteLayer;
   private ImageView avatar;
+  private int i = 0;
+  private int k = 0;
+  private int j = 0;
 
   public Avatar(int x, int y, double w, double h, SpriteLayer root) {
     initialXCoordinate = x;
@@ -24,7 +27,7 @@ public class Avatar {
   }
 
   private void makeAvatar() {
-    avatar = new ImageView(new Image(avatarImage));
+    avatar = new ImageView(new Image("PikachuAvatar.gif"));
     avatar.getStyleClass().add("avatar");
     avatar.setFitWidth(width);
     avatar.setFitHeight(height);
@@ -33,8 +36,33 @@ public class Avatar {
   }
 
   public void moveAvatar(double x, double y) {
+    double currentX = avatar.getX();
+    double currentY = avatar.getY();
+    double nextX = x * width;
+    double nextY = y * height;
     avatar.setX(x * width);
     avatar.setY(y * height);
+
+    // TODO: refactor
+    if(currentX < nextX) {
+      int num = ((i) % 6) + 1;
+      setAvatarImage("AnimatedPikachuRight" + num + ".gif");
+      i++;
+    }else if(nextX < currentX){
+      int num = ((k) % 6) + 1;
+      setAvatarImage("AnimatedPikachuLeft" + num + ".gif");
+      k++;
+    }
+    else if(nextX == currentX && nextY == currentY){
+
+//      setAvatarImage("AnimatedPikachuFDBK" + num + ".gif");
+      setAvatarImage("PikachuAvatar.gif");
+
+    }else if(nextX == currentX && nextY != currentY){
+      int num = ((j) % 10) + 1;
+      setAvatarImage("AnimatedPikachuFDBK" + num + ".gif");
+      j++;
+    }
   }
 
   public void reset() {
@@ -48,5 +76,9 @@ public class Avatar {
 
   public int getInitialYCoordinate(){
     return (int) (avatar.getY()/height);
+  }
+
+  public void setAvatarImage(String image){
+    avatar.setImage(new Image(image));
   }
 }

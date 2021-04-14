@@ -1,21 +1,20 @@
 package ooga.model.parser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ooga.model.commands.AvailableCommands;
-import ooga.model.grid.GameGrid;
+import ooga.model.database.FirebaseService;
+import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.BlockData;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.Avatar;
-import ooga.model.player.Datacube;
+import ooga.model.player.DataCube;
 
 public class InitialConfigurationParser {
 
@@ -25,88 +24,64 @@ public class InitialConfigurationParser {
   private InitialState initialState;
   private GoalState goalState;
   private AvailableCommands availableCommands;
-  private GameGrid gameGrid;
+  private ElementInformationBundle elementInformationBundle;
   private boolean errorOccurred = false;
   private String errorMessage = "";
   private GameGridData gameGridData;
+  private FirebaseService firebaseService;
 
-  public InitialConfigurationParser(int level)  {
+  public InitialConfigurationParser(int level, FirebaseService firebaseService)  {
     this.level = level;
+    this.firebaseService = firebaseService;
     this.rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + this.level + "/";
     this.parseLevelInfo();
   }
 
-  public boolean getErrorOccurred()  {
-    return this.errorOccurred;
-  }
-
-  public String getErrorMessage() {
-    return this.errorMessage;
-  }
-
-  public GameGrid getGameGrid() { return this.gameGrid; }
-
-  public GoalState getGoalState() {
-    return this.goalState;
-  }
-
-  public InitialState getInitialState() {
-    return this.initialState;
-  }
-
-  public AvailableCommands getAvailableCommands()  {
-    return availableCommands;
-  }
-
-  public GameGridData getGameGridData() {
-    return this.gameGridData;
-  }
-
   private void parseLevelInfo() {
     try {
-      String filePathToLevelInfoFile = this.rootURLPathForLevel + "level" + this.level + ".json";
+
+      String jsonFromDB = firebaseService.readDBContentsForLevelInit(this.level);
       HashMap result =
-          new ObjectMapper().readValue(new FileReader(filePathToLevelInfoFile), HashMap.class);
-      parseGrid((String) result.get("grid"));
-      parseStartState(result);
-      parseEndState(Integer.parseInt((String) result.get("idealNumOfCommands")));
-      parseCommands();
+          new ObjectMapper().readValue(jsonFromDB, HashMap.class);
+      HashMap<String, Object> levelInfo = (HashMap<String, Object>) result.get("levelInfo");
+      parseGrid((HashMap) result.get("grid"));
+      parseStartState((HashMap) result.get("startState"), levelInfo);
+      parseEndState(Integer.parseInt((String) levelInfo.get("idealNumOfCommands")), (HashMap)
+          result.get("endState"));
+      parseCommands((HashMap) result.get("commands"));
     }
     catch (Exception e) {
+      e.printStackTrace();
       this.errorMessage = "Error parsing level file";
       this.errorOccurred = true;
     }
   }
 
-  private void parseStartState(HashMap initial) {
+  private void parseStartState(HashMap startState, HashMap initial) {
     try {
-      String filePathToStartState = rootURLPathForLevel + "startState.json";
-      HashMap result =
-          new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
       this.initialState = new InitialState(
-          parseAvatarLocations((Map<String, Object>) result.get("peopleLocations"), true),
-          parseBlockData((Map<String, Object>) result.get("blocks"), true),
+          parseAvatarLocations((Map<String, Object>) startState.get("peopleLocations"), true),
+          parseBlockData((Map<String, Object>) startState.get("blocks"), true),
           (List<String>) initial.get("blocks"),
-          parseImageLocations((String) initial.get("images")),
+          null,
           (String) initial.get("description"),
           (int) initial.get("numPeople"),
           (int) initial.get("level"));
     } catch (Exception e) {
+      e.printStackTrace();
       this.errorMessage = "Error parsing start state";
       this.errorOccurred = true;
     }
 
   }
 
-  private void parseEndState(int numOfCommands)  {
+  private void parseEndState(int numOfCommands, HashMap endState)  {
     try {
-      String filePathToStartState = rootURLPathForLevel + "endState.json";
-      Map<String, Object> result =
-          new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
-      this.goalState = new GoalState(parseAvatarLocations((Map<String, Object>) result.get("peopleLocations"), false),
-      parseBlockData((Map<String, Object>) result.get("blocks"), false), numOfCommands);
+      this.goalState = new GoalState(parseAvatarLocations((Map<String, Object>) endState.get("peopleLocations"), false),
+      parseBlockData((Map<String, Object>) endState.get("blocks"), false), numOfCommands);
     }
     catch (Exception e) {
+      e.printStackTrace();
       this.errorMessage = "Error parsing end state";
       this.errorOccurred = true;
     }
@@ -119,8 +94,8 @@ public class InitialConfigurationParser {
       List<Integer> avatarLocation = (List<Integer>) peopleLocations.get(s);
       mapOfPeople.put(s, avatarLocation);
       if (addToGameGrid) {
-        this.gameGrid.addGameElement(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
-            avatarLocation.get(1)), avatarLocation.get(0), avatarLocation.get(1));
+        this.elementInformationBundle.addGameElement(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
+            avatarLocation.get(1)));
       }
 
     }
@@ -138,38 +113,40 @@ public class InitialConfigurationParser {
           (String) currentBlock.get("pickedUp")));
       allBlockData.put(s, blockData);
       if (addToGameGrid)  {
-        this.gameGrid.addGameElement(new Datacube(Integer.parseInt(s), blockLoc.get(0),
-            blockLoc.get(1)), blockLoc.get(0), blockLoc.get(1));
+        this.elementInformationBundle.addGameElement(new DataCube(Integer.parseInt(s), blockLoc.get(0),
+            blockLoc.get(1), 0));
       }
 
     }
     return allBlockData;
   }
 
-  private Map<String, String> parseImageLocations(String imageLocations) {
-    try {
-      String filePathToStartState = rootURLPathForLevel + imageLocations;
-      HashMap result =
-          new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
-      return (HashMap<String, String>) result;
-    }
-    catch (Exception e) {
-      this.errorMessage = "Error parsing image locations";
-      this.errorOccurred = true;
-      return null;
-    }
-  }
+//  private Map<String, String> parseImageLocations(String imageLocations) {
+//    try {
+//      String filePathToStartState = rootURLPathForLevel + imageLocations;
+//      HashMap result =
+//          new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
+//      return (HashMap<String, String>) result;
+//    }
+//    catch (Exception e) {
+//      this.errorMessage = "Error parsing image locations";
+//      this.errorOccurred = true;
+//      return null;
+//    }
+//  }
 
-  private void parseCommands()  {
+  private void parseCommands(HashMap<String, Object> commands)  {
     try {
-      String filePathToStartState = rootURLPathForLevel + "commands.json";
-      Map<String, Object> result =
-          new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
       Map<String, List<Map<String, List<String>>>> commandsMap = new HashMap<>();
-      for (String command: result.keySet()) {
+      for (String command: commands.keySet()) {
         List<Map<String, List<String>>> params = new ArrayList<>();
-        for (Map<String, List<String>> param:((Map<String, List<Map<String, List<String>>>>) result.get(command)).get("parameters")) {
-          params.add(param);
+        for (Map<String, List<String>> param:((Map<String, List<Map<String, List<String>>>>) commands.get(command)).get("parameters")) {
+          if (param.containsKey("noParams"))  {
+            continue;
+          }
+          else  {
+            params.add(param);
+          }
         }
         commandsMap.put(command, params);
       }
@@ -181,33 +158,57 @@ public class InitialConfigurationParser {
     }
   }
 
-  private void parseGrid(String gridFileName)  {
-    String filePathToStartState = rootURLPathForLevel + gridFileName;
+  private void parseGrid(HashMap Grid)  {
     try {
-      Map<String, Object> result =
-          new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
-      int width = Integer.parseInt((String)result.get("width"));
-      int height = Integer.parseInt((String)result.get("height"));
-      this.gameGrid = new GameGrid();
-      this.gameGrid.setDimensions(width, height);
-      Map<String, List<String>> mapOfGrid = (Map<String, List<String>>) result.get("grid");
+      int width = Integer.parseInt((String)Grid.get("width"));
+      int height = Integer.parseInt((String)Grid.get("height"));
+      this.elementInformationBundle = new ElementInformationBundle();
+      this.elementInformationBundle.setDimensions(width, height);
+      List<List<String>> mapOfGrid = (List<List<String>>) Grid.get("grid");
       for (int i = 0; i < height; i++) {
-        List<String> currentRow = mapOfGrid.get("" + i );
+        List<String> currentRow = mapOfGrid.get(i);
         if (currentRow.size() != width) {
           errorOccurred = true;
           errorMessage = "Error parsing grid dimensions";
           return;
         }
         for (int j = 0; j < width; j++) {
-          this.gameGrid.setStructure(j, i, Structure.valueOf(currentRow.get(j)));
+          this.elementInformationBundle.setStructure(j, i, Structure.valueOf(currentRow.get(j)));
         }
       }
-      this.gameGridData = new GameGridData(this.gameGrid, width, height);
-    } catch (IOException e) {
+      this.gameGridData = new GameGridData(this.elementInformationBundle, width, height);
+    } catch (Exception e) {
+      e.printStackTrace();
       this.errorMessage = "Error parsing grid";
       this.errorOccurred = true;
     }
   }
 
+
+  public boolean getErrorOccurred()  {
+    return this.errorOccurred;
+  }
+
+  public String getErrorMessage() {
+    return this.errorMessage;
+  }
+
+  public ElementInformationBundle getGameGrid() { return this.elementInformationBundle; }
+
+  public GoalState getGoalState() {
+    return this.goalState;
+  }
+
+  public InitialState getInitialState() {
+    return this.initialState;
+  }
+
+  public AvailableCommands getAvailableCommands()  {
+    return availableCommands;
+  }
+
+  public GameGridData getGameGridData() {
+    return this.gameGridData;
+  }
 
 }

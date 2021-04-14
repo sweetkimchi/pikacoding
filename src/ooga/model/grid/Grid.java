@@ -1,6 +1,5 @@
 package ooga.model.grid;
 
-import java.util.List;
 import ooga.model.player.Element;
 
 /**
@@ -26,7 +25,7 @@ public interface Grid {
    *
    * @param gameElement A generic element to be placed on the grid
    */
-  public void addGameElement(Element gameElement, int xPos, int yPos);
+  public void addGameElement(Element gameElement);
 
 //  /**
 //   * Executes a command on all of the avatars.

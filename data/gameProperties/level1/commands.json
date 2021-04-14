@@ -16,9 +16,53 @@
     ]
   },
   "pickUp": {
-    "parameters": []
+    "parameters": [
+      {
+        "noParams": true
+      }]
   },
   "drop": {
-    "parameters": []
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "jump": {
+    "parameters": [
+      {
+        "destination": ["1"]
+      }
+    ]
+  },
+  "if": {
+    "parameters": [
+      {
+        "direction": [
+          "up",
+          "up-right",
+          "right",
+          "down-right",
+          "down",
+          "down-left",
+          "left",
+          "up-left"
+        ]
+      },
+      {
+        "comparator": [
+          "equal",
+          "not equal"
+        ]
+      },
+      {
+        "target": [
+          "nothing",
+          "datacube",
+          "hole",
+          "wall"
+        ]
+      }
+    ]
   }
 }

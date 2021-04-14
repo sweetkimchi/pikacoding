@@ -6,6 +6,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.ResourceBundle;
+
+import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
@@ -41,6 +44,7 @@ public class Board extends StackPane {
     spriteLayer.resetBlockData();
     spriteLayer.resetQueue();
     spriteLayer.resetAnimationQueue();
+    spriteLayer.resetAvatarImages();
   }
 
   public void initializeBoard(GameGridData gameGridData, InitialState initialState) {
@@ -50,8 +54,8 @@ public class Board extends StackPane {
     gridLayer.getStyleClass().add("board");
     makeGrid(gameGridData.getStructures());
     spriteLayer.setSizes(xSize, ySize);
-    spriteLayer.initializeBlocks(initialState.getAllBlockData());
     spriteLayer.initializeAvatars(initialState.getAllAvatarLocations());
+    spriteLayer.initializeBlocks(initialState.getAllBlockData());
   }
 
   private void setSizing(GameGridData gameGridData) {

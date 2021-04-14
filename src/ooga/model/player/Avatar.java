@@ -1,6 +1,5 @@
 package ooga.model.player;
 
-import java.util.*;
 import ooga.model.Direction;
 
 /**
@@ -9,7 +8,7 @@ import ooga.model.Direction;
 public class Avatar extends Player {
 
     private final int id;
-    private Objects heldItem;
+    private Block heldItem;
     private int xCoord;
     private int yCoord;
 
@@ -60,21 +59,34 @@ public class Avatar extends Player {
         this.yCoord = yCoord;
     }
 
-//    /**
-//     * Moves the avatar in a cardinal direction.
-//     *
-//     * @param direction The direction to be moved
-//     */
-//    public void step(Direction direction) {
-//
-//    }
+    /**
+     * Moves the avatar in a cardinal direction.
+     *
+     * @param direction The direction to be moved
+     */
+    public void step(Direction direction) {
+        int xPrev = xCoord;
+        int yPrev = yCoord;
+        setXCoord(xPrev + direction.getXDel());
+        setYCoord(yPrev + direction.getYDel());
+        moveHeldItemLocation();
+
+        //    System.out.printf("Moving avatar %d from (%d, %d) in the direction %s to new location (%d, %d)\n", id, xPrev, yPrev, direction, xCoord, yCoord);
+    }
+
+    private void moveHeldItemLocation() {
+        if (heldItem != null) {
+            heldItem.setXCoord(getXCoord());
+            heldItem.setYCoord(getYCoord());
+        }
+    }
 
     /**
      * Directs the avatar to pick up a block.
      *
      * @param toPickUp The block to pick up
      */
-    public void pickUp(Objects toPickUp) {
+    public void pickUp(Block toPickUp) {
         heldItem = toPickUp;
     }
 
@@ -83,21 +95,17 @@ public class Avatar extends Player {
      *
      * @return The block that was dropped
      */
-    public Objects drop() {
-        Objects ret = heldItem;
+    public Block drop() {
+        Block ret = heldItem;
         heldItem = null;
         return ret;
     }
 
-    public void step(Direction direction){
-        int xPrev = xCoord;
-        int yPrev = yCoord;
-        this.xCoord = xPrev + direction.getXDel();
-        this.yCoord = yPrev + direction.getYDel();
-
-        System.out.printf("Moving avatar %d from (%d, %d) in the direction %s to new location (%d, %d)\n", id, xPrev, yPrev, direction, xCoord, yCoord);
+    public boolean hasBlock() {
+        return heldItem != null;
     }
 
-
-
+    public Block getHeldItem() {
+        return heldItem;
+    }
 }

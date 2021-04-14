@@ -21,12 +21,18 @@ public class ScreenCreator {
   private Stage stage;
   private LevelView levelView;
 
+  private final double width;
+  private final double height;
+
   /**
    * Default constructor
    */
   public ScreenCreator(FrontEndExternalAPI viewController, Stage stage) {
     this.viewController = viewController;
     this.stage = stage;
+    ResourceBundle windowResources = ResourceBundle.getBundle(RESOURCES + WINDOW_PROPERTIES);
+    width = Double.parseDouble(windowResources.getString("Width"));
+    height = Double.parseDouble(windowResources.getString("Height"));
 
     initializeStage();
 
@@ -38,13 +44,21 @@ public class ScreenCreator {
     return levelView;
   }
 
-  public void loadLevel(int level) {
-    levelView = new LevelView(this.viewController);
-
-    ResourceBundle windowResources = ResourceBundle.getBundle(RESOURCES + WINDOW_PROPERTIES);
-    int width = Integer.parseInt(windowResources.getString("Width"));
-    int height = Integer.parseInt(windowResources.getString("Height"));
+  public void initializeLevelView() {
+    levelView = new LevelView(this.viewController, this);
     Scene scene = new Scene(levelView, width, height);
+    stage.setScene(scene);
+  }
+
+  public void loadStartMenu() {
+    StartMenu startMenu = new StartMenu(e -> loadLevelSelector());
+    Scene scene = new Scene(startMenu, width, height);
+    stage.setScene(scene);
+  }
+
+  public void loadLevelSelector() {
+    LevelSelector levelSelector = new LevelSelector(level -> viewController.initializeLevel(level));
+    Scene scene = new Scene(levelSelector, width, height);
     stage.setScene(scene);
   }
 
@@ -58,4 +72,7 @@ public class ScreenCreator {
     stage.show();
   }
 
+  public void setScore(int score) {
+    System.out.println("SCORE (ScreenCreator): " + score);
+  }
 }

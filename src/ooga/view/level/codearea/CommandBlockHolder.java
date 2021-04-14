@@ -13,8 +13,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * JavaFX element that displays a CommandBlock. Shows line number, command type, and parameter
@@ -24,12 +29,15 @@ import javafx.scene.layout.StackPane;
  */
 public class CommandBlockHolder extends GridPane {
 
+  private static final double LINE_INDICATORS_WIDTH = 60;
   private static final double INDEX_WIDTH = 20;
+  private static final double ITEM_HEIGHT = 30;
+  private static final double PADDING = 4;
   private static final String HAMBURGER_MENU_IMAGE = "ThreeLines.png";
-  private static final double ITEM_HEIGHT = 20;
 
   private int index;
   private List<Map<String, List<String>>> parameterOptions;
+  private HBox lineIndicators;
   private Label indexLabel;
   private CommandBlock commandBlock;
   private ImageView hamburgerMenu;
@@ -43,6 +51,13 @@ public class CommandBlockHolder extends GridPane {
     this.setHgap(5);
     this.columns = 0;
     this.programStack = programStack;
+    lineIndicators = new HBox();
+    StackPane lineIndicatorHolder = new StackPane();
+    Rectangle background = new Rectangle(LINE_INDICATORS_WIDTH, ITEM_HEIGHT + 2 * PADDING);
+    background.setFill(Color.GRAY);
+    lineIndicatorHolder.getChildren().addAll(background, lineIndicators);
+    addItem(lineIndicatorHolder, LINE_INDICATORS_WIDTH);
+
     indexLabel = new Label();
     indexLabel.getStyleClass().add("command-index");
     addItem(indexLabel, INDEX_WIDTH);
@@ -51,11 +66,7 @@ public class CommandBlockHolder extends GridPane {
     command.getStyleClass().add("command-block-name");
     addItem(command, 0);
     this.parameterOptions = parameterOptions;
-    Map<String, String> initialParameters = new HashMap<>();
-    parameterOptions.forEach(parameterOption -> {
-      String parameter = parameterOption.keySet().iterator().next();
-      initialParameters.put(parameter, parameterOption.get(parameter).get(0));
-    });
+    Map<String, String> initialParameters = setInitialParameters(parameterOptions);
     commandBlock = new CommandBlock(index, type, initialParameters);
     initializeDropdowns();
 
@@ -67,7 +78,7 @@ public class CommandBlockHolder extends GridPane {
     Button removeButton = new Button("x");
     removeButton.setId("remove-button-" + index);
     removeButton.setPrefHeight(ITEM_HEIGHT);
-    removeButton.setOnAction(e -> programStack.removeCommandBlock(this.index));
+    removeButton.setOnAction(e -> removeAction(programStack));
     addItem(removeButton, 0);
 
     hamburgerMenu = new ImageView(new Image(HAMBURGER_MENU_IMAGE));
@@ -78,8 +89,12 @@ public class CommandBlockHolder extends GridPane {
       programStack.startDrag(this);
     });
 
+    RowConstraints rowConstraints = new RowConstraints();
+    rowConstraints.setMinHeight(ITEM_HEIGHT);
+    this.getRowConstraints().add(rowConstraints);
+
     setIndex(index);
-    this.setPadding(new Insets(4, 4, 4, 4));
+//    this.setPadding(new Insets(4, 4, 4, 4));
   }
 
   public CommandBlock getCommandBlock() {
@@ -96,16 +111,15 @@ public class CommandBlockHolder extends GridPane {
     indexLabel.setText(prefix + index);
   }
 
-  private void addItem(Node node, double width) {
-    ColumnConstraints columnConstraints = new ColumnConstraints();
-    if (width > 0) {
-      columnConstraints.setPrefWidth(width);
+  public void setLineIndicators(List<Integer> ids) {
+    lineIndicators.getChildren().clear();
+    for (int id : ids) {
+      Label indicator = new Label("" + id);
+      lineIndicators.getChildren().add(indicator);
     }
-    this.add(node, columns++, 0);
-    this.getColumnConstraints().add(columnConstraints);
   }
 
-  private void initializeDropdowns() {
+  protected void initializeDropdowns() {
     parameterOptions.forEach(parameterOption -> {
       String parameter = parameterOption.keySet().iterator().next();
       List<String> options = parameterOption.get(parameter);
@@ -117,6 +131,36 @@ public class CommandBlockHolder extends GridPane {
       dropdown.getSelectionModel().selectFirst();
       addItem(dropdown, 120);
     });
+  }
+
+  protected List<Map<String, List<String>>> getParameterOptions() {
+    return parameterOptions;
+  }
+
+  protected void addItem(Node node, double width) {
+    ColumnConstraints columnConstraints = new ColumnConstraints();
+    if (width > 0) {
+      columnConstraints.setPrefWidth(width);
+    }
+    this.add(node, columns++, 0);
+    this.getColumnConstraints().add(columnConstraints);
+  }
+
+  protected void removeAction(ProgramStack programStack) {
+    programStack.removeCommandBlock(this.index);
+  }
+
+  protected int getIndex() {
+    return index;
+  }
+
+  private Map<String, String> setInitialParameters(List<Map<String, List<String>>> parameterOptions) {
+    Map<String, String> initialParameters = new HashMap<>();
+    parameterOptions.forEach(parameterOption -> {
+      String parameter = parameterOption.keySet().iterator().next();
+      initialParameters.put(parameter, parameterOption.get(parameter).get(0));
+    });
+    return initialParameters;
   }
 
 }
