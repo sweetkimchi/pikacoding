@@ -3,7 +3,7 @@ package ooga.model.commands;
 import ooga.model.player.Avatar;
 
 /**
- * 
+ * @author Ji Yun Hyo
  */
 public class If extends ConditionalCommands {
 

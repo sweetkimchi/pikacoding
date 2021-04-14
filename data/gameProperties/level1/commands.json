@@ -27,5 +27,12 @@
         "noParams": true
       }
     ]
+  },
+  "jump": {
+    "parameters": [
+      {
+        "destination": ["1"]
+      }
+    ]
   }
 }
