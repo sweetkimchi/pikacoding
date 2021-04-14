@@ -5,7 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.HashMap;
+import java.util.Map;
+import javafx.stage.Stage;
+import ooga.controller.ModelController;
+import ooga.controller.ViewController;
 import ooga.model.Direction;
+import ooga.model.commands.Step;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
 import ooga.model.player.Avatar;
@@ -18,10 +24,16 @@ public class GridTest {
   private ElementInformationBundle elementInformationBundle;
   private Avatar avatar;
   private DataCube dataCube;
+  private ModelController modelController;
+  private ViewController viewController;
 
   @BeforeEach
   public void setup() {
     elementInformationBundle = new ElementInformationBundle();
+//    modelController = new ModelController();
+//    viewController = new ViewController(new Stage());
+//    modelController.setViewController(viewController);
+//    elementInformationBundle.setModelController(modelController);
     avatar = new Avatar(10, 5, 5);
     dataCube = new DataCube(0, 5, 5, 0);
     elementInformationBundle.setDimensions(10, 10);
@@ -51,6 +63,10 @@ public class GridTest {
   @Test
   public void avatarStepRight() {
     assertTrue(elementInformationBundle.getTileData(5,5).hasAvatar());
+//    Map<String,String> parameters = new HashMap<>();
+//    parameters.put("direction","right");
+//    Step step = new Step(elementInformationBundle, parameters);
+//    step.execute(10);
     elementInformationBundle.step(10, Direction.RIGHT);
     assertTrue(elementInformationBundle.getTileData(6,5).hasAvatar());
     assertFalse(elementInformationBundle.getTileData(5,5).hasAvatar());
