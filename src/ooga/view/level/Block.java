@@ -7,7 +7,8 @@ import javafx.scene.text.Text;
 
 public class Block extends StackPane {
 
-  private static final double PADDING_RATIO = 0.1;
+  private static final double PADDING_RATIO = 0.25;
+  private static final double PICKEDUP_SHIFT = 0.5;
 
   private int initialXCoordinate;
   private int initialYCoordinate;
@@ -27,6 +28,19 @@ public class Block extends StackPane {
     spriteLayer = root;
     number = num;
     makeBlock();
+  }
+
+  public void moveBlock(int x, int y) {
+    this.setTranslateX(x * width + padding);
+    this.setTranslateY(y * height + padding);
+  }
+
+  public void animatePickUp(double percent) {
+
+  }
+
+  public void animateDrop(double percent) {
+
   }
 
   public void reset() {
