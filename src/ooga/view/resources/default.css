@@ -7,11 +7,16 @@
 
 .start-screen {
     -fx-alignment: CENTER;
-    -fx-spacing: 5.0;
+    -fx-spacing: 10.0;
 }
 
 .title {
     -fx-font-size: 20pt;
+}
+
+.level-selector {
+    -fx-alignment: CENTER;
+    -fx-spacing: 5.0;
 }
 
 .state {

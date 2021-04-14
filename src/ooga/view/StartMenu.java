@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 public class StartMenu extends BorderPane {
-  private static final String DEFAULT_CSS = ScreenCreator.RESOURCES.replace(".", "/")
+  public static final String DEFAULT_CSS = ScreenCreator.RESOURCES.replace(".", "/")
           + "default.css";
 
   public StartMenu(EventHandler<ActionEvent> startAction) {
