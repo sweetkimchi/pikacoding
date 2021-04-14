@@ -36,10 +36,12 @@ public class Block extends StackPane {
   }
 
   public void moveBlock(double x, double y) {
-    this.setTranslateX(x * width + padding);
+//    this.setTranslateX(x * width + padding);
     currentX = x;
-    this.setTranslateY(y * height + padding -  PICKEDUP_SHIFT * height);
+//    this.setTranslateY(y * height + padding -  PICKEDUP_SHIFT * height);
     currentY = y;
+    block.setX(currentX);
+    block.setY(currentY);
   }
 
   public void setShiftHeight(double percent) {
@@ -74,6 +76,8 @@ public class Block extends StackPane {
     block = new Rectangle(width - 2 * padding, height - 2 * padding);
     block.setFill(Color.LIGHTSEAGREEN); // TODO: put in resource file
 
+    block.setX(currentX);
+    block.setY(currentY);
     blockText = new Text(number);
     this.getChildren().add(block);
     this.getChildren().add(blockText);
