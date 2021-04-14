@@ -16,15 +16,6 @@ public class If extends ConditionalCommands {
         super(elementInformationBundle, parameters);
     }
 
-    /**
-     * Executes the command on an Avatar.
-     *
-     * @param avatar The avatar upon which to execute the command
-     */
-    public void execute(Avatar avatar) {
-
-    }
-
     @Override
     public void execute(int ID) {
 

@@ -6,12 +6,12 @@ import ooga.model.grid.ElementInformationBundle;
 /**
  * @author Ji Yun Hyo
  */
-public abstract class LoopCommands extends Commands {
+public abstract class ControlFlowCommands extends Commands {
 
     /**
      * Default constructor
      */
-    public LoopCommands(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
+    public ControlFlowCommands(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
         super(elementInformationBundle, parameters);
     }
 

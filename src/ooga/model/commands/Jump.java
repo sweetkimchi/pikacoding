@@ -7,7 +7,7 @@ import ooga.model.player.Avatar;
 /**
  * @author Ji Yun Hyo
  */
-public class Jump extends LoopCommands {
+public class Jump extends ControlFlowCommands {
 
 
     /**

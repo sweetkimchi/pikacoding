@@ -46,8 +46,10 @@ public class Step extends BasicCommands {
             System.out.println("The avatar cannot step here!");
         }
 
-        avatar.setProgramCounter(avatar.getProgramCounter() + 1);
         getElementInformationBundle().getModelController().updateAvatarPositions(avatar.getId(), avatar.getXCoord(), avatar.getYCoord());
+
+
+        avatar.setProgramCounter(avatar.getProgramCounter() + 1);
 
     }
 }

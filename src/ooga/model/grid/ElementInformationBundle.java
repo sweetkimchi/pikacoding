@@ -27,8 +27,8 @@ public class ElementInformationBundle implements InformationBundle {
   private Tile[][] grid;
   private final List<Player> avatarList;
   private final List<Block> dataCubeList;
-  Map<Integer, Integer> lineUpdates;
-  AvatarData newUpdate;
+  private Map<Integer, Integer> lineUpdates;
+  private AvatarData newUpdate;
   private BackEndExternalAPI modelController;
 
   public ElementInformationBundle() {
@@ -87,10 +87,6 @@ public class ElementInformationBundle implements InformationBundle {
     if (gameElement instanceof DataCube) {
       dataCubeList.add((DataCube) gameElement);
     }
-  }
-
-  public void addUpdates(){
-
   }
 
   //TODO: Remove
