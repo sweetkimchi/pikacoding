@@ -30,32 +30,20 @@ public class Block extends StackPane {
     padding = PADDING_RATIO * width;
     spriteLayer = root;
     number = num;
-    currentX = initialXCoordinate * width + padding;
-    currentY = initialYCoordinate * height + padding;
+    currentX = initialXCoordinate;
+    currentY = initialYCoordinate;
     makeBlock();
   }
 
   public void moveBlock(int x, int y) {
     this.setTranslateX(x * width + padding);
-    currentX = block.getX();
-    this.setTranslateY(y * height + padding);
-    currentY = block.getY();
-    System.out.println(currentX);
-    System.out.println(currentY);
+    currentX = x;
+    this.setTranslateY(y * height + padding -  PICKEDUP_SHIFT * height);
+    currentY = y;
   }
 
-  public void animatePickUp(double percent) {
-    System.out.println(currentY);
-    this.setTranslateY(currentY - width * percent);
-    currentY = this.getTranslateY();
-    System.out.println(currentY);
-  }
-
-  public void animateDrop(double percent) {
-    System.out.println(currentY);
-    this.setTranslateY(currentY + width * percent);
-    currentY = this.getTranslateY();
-    System.out.println(currentY);
+  public void setShiftHeight(double percent) {
+    this.setTranslateY(currentY * height - height * PICKEDUP_SHIFT * percent + padding);
   }
 
   /**
