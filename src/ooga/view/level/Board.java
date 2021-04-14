@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -55,11 +56,12 @@ public class Board extends StackPane {
     spriteLayer.initializeAvatars(initialState.getAllAvatarLocations());
     spriteLayer.initializeBlocks(initialState.getAllBlockData());
 
+
+    // TODO: REMOVE AFTER TESTING
     Button test = new Button("pickUp");
-    this.getChildren().add(test);
     test.setOnAction(event -> pickUp());
     Button test1 = new Button("drop");
-    this.getChildren().add(test1);
+    this.getChildren().addAll(test, test1);
     test1.setOnAction((event -> drop()));
   }
 
