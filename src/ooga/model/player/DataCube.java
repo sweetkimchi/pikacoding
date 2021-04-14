@@ -1,5 +1,7 @@
 package ooga.model.player;
 
+import ooga.model.Direction;
+
 /**
  * DataCubes are a type of object that avatars can interact with and manipulate. They contain a
  * display number that can be manipulated.
@@ -68,6 +70,12 @@ public class DataCube extends Block {
     public void setYCoord(int yCoord) {
         this.yCoord = yCoord;
     }
+
+    @Override
+    public void step(Direction direction) {
+
+    }
+
 
     public int getDisplayNum() {
         return displayNum;

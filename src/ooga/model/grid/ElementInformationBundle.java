@@ -1,44 +1,64 @@
 package ooga.model.grid;
 
+import com.google.api.Backend;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import ooga.controller.BackEndExternalAPI;
 import ooga.model.Direction;
+import ooga.model.InformationBundle;
 import ooga.model.grid.gridData.BlockData;
 import ooga.model.grid.gridData.TileData;
 import ooga.model.player.Avatar;
+import ooga.model.player.AvatarData;
 import ooga.model.player.DataCube;
 import ooga.model.player.Element;
 import ooga.model.player.Block;
+import ooga.model.player.Player;
 
 /**
  * The GameGrid contains all the elements for the grid of the game.
  */
-public class GameGrid implements Grid {
+public class ElementInformationBundle implements InformationBundle {
 
   private Tile[][] grid;
-  private final List<Avatar> avatarList;
-  private final List<DataCube> dataCubeList;
+  private final List<Player> avatarList;
+  private final List<Block> dataCubeList;
+  Map<Integer, Integer> lineUpdates;
+  AvatarData newUpdate;
+  private BackEndExternalAPI modelController;
 
-  public GameGrid() {
+  public ElementInformationBundle() {
     avatarList = new ArrayList<>();
     dataCubeList = new ArrayList<>();
+    lineUpdates = new HashMap<>();
+    newUpdate = new AvatarData();
   }
 
-  public List<Avatar> getAvatarList() {
+  public List<Player> getAvatarList() {
     return Collections.unmodifiableList(avatarList);
+  }
+
+  public void setModelController(BackEndExternalAPI modelController){
+    this.modelController = modelController;
+  }
+
+  public BackEndExternalAPI getModelController(){
+    return modelController;
   }
 
   public List<BlockData> getBlockData() {
     List<BlockData> ret = new ArrayList<>();
-    for (DataCube dataCube : dataCubeList) {
+    for (Block dataCube : dataCubeList) {
       ret.add(new BlockData(dataCube));
     }
     return ret;
   }
 
-  @Override
+
   public void setDimensions(int x, int y) {
     grid = new Tile[x][y];
     for (int i=0; i<x; i++) {
@@ -56,7 +76,7 @@ public class GameGrid implements Grid {
     grid[x][y].setStructure(structure);
   }
 
-  @Override
+
   public void addGameElement(Element gameElement) {
     int xPos = gameElement.getXCoord();
     int yPos = gameElement.getYCoord();
@@ -69,13 +89,18 @@ public class GameGrid implements Grid {
     }
   }
 
+  public void addUpdates(){
+
+  }
+
+  //TODO: Remove
   /**
    * Moves the avatar in a cardinal direction.
    *
    * @param direction The direction to be moved
    */
   public void step(int avatarId, Direction direction) {
-    Avatar avatar = getAvatarById(avatarId);
+    Element avatar = getAvatarById(avatarId);
     assert avatar != null;
     int currX = avatar.getXCoord();
     int currY = avatar.getYCoord();
@@ -92,13 +117,9 @@ public class GameGrid implements Grid {
 
   }
 
-  /**
-   * Directs the avatar to pick up a block.
-   *
-   * @param direction The direction from which to pick up a block
-   */
+  //TODO: Remove
   public void pickUp(int avatarId, Direction direction) {
-    Avatar avatar = getAvatarById(avatarId);
+    Player avatar = getAvatarById(avatarId);
     assert avatar != null;
     int currX = avatar.getXCoord();
     int currY = avatar.getYCoord();
@@ -113,13 +134,15 @@ public class GameGrid implements Grid {
     }
   }
 
+
+  //TODO: Remove
   /**
    * Directs the avatar to drop the block it is holding.
    *
    * @param avatarId The id of the avatar
    */
   public void drop(int avatarId) {
-    Avatar avatar = getAvatarById(avatarId);
+    Player avatar = getAvatarById(avatarId);
     assert avatar != null;
     int currX = avatar.getXCoord();
     int currY = avatar.getYCoord();
@@ -138,8 +161,8 @@ public class GameGrid implements Grid {
 
   }
 
-  private Avatar getAvatarById(int id) {
-    for (Avatar avatar : avatarList) {
+  public Player getAvatarById(int id) {
+    for (Player avatar : avatarList) {
       if (avatar.getId() == id) {
         return avatar;
       }
@@ -154,7 +177,7 @@ public class GameGrid implements Grid {
    */
   public Collection<Integer> getAvatarIds() {
     List<Integer> ids = new ArrayList<>();
-    for (Avatar avatar : avatarList) {
+    for (Element avatar : avatarList) {
       ids.add(avatar.getId());
     }
     Collections.sort(ids);

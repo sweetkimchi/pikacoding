@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ooga.model.Direction;
-import ooga.model.grid.GameGrid;
+import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
 import ooga.model.player.Avatar;
 import ooga.model.player.DataCube;
@@ -15,84 +15,84 @@ import org.junit.jupiter.api.Test;
 
 public class GridTest {
 
-  private GameGrid gameGrid;
+  private ElementInformationBundle elementInformationBundle;
   private Avatar avatar;
   private DataCube dataCube;
 
   @BeforeEach
   public void setup() {
-    gameGrid = new GameGrid();
+    elementInformationBundle = new ElementInformationBundle();
     avatar = new Avatar(10, 5, 5);
     dataCube = new DataCube(0, 5, 5, 0);
-    gameGrid.setDimensions(10, 10);
+    elementInformationBundle.setDimensions(10, 10);
     for (int i=0; i<10; i++) {
       for (int j=0; j<10; j++) {
-        gameGrid.setStructure(i, j, Structure.FLOOR);
+        elementInformationBundle.setStructure(i, j, Structure.FLOOR);
         if (i==0 || i==9 || j==0 || j==9) {
-          gameGrid.setStructure(i, j, Structure.WALL);
+          elementInformationBundle.setStructure(i, j, Structure.WALL);
         }
       }
     }
-    gameGrid.addGameElement(avatar);
-    gameGrid.addGameElement(dataCube);
+    elementInformationBundle.addGameElement(avatar);
+    elementInformationBundle.addGameElement(dataCube);
   }
 
   @Test
   public void getAvatarIdsHasCurrentAvatar() {
-    assertTrue(gameGrid.getAvatarIds().contains(10));
+    assertTrue(elementInformationBundle.getAvatarIds().contains(10));
   }
 
   @Test
   public void setUpStructuresCorrectly() {
-    assertEquals(Structure.FLOOR, gameGrid.getStructure(5, 3));
-    assertEquals(Structure.WALL, gameGrid.getStructure(0, 3));
+    assertEquals(Structure.FLOOR, elementInformationBundle.getStructure(5, 3));
+    assertEquals(Structure.WALL, elementInformationBundle.getStructure(0, 3));
   }
 
   @Test
   public void avatarStepRight() {
-    assertTrue(gameGrid.getTileData(5,5).hasAvatar());
-    gameGrid.step(10, Direction.RIGHT);
-    assertTrue(gameGrid.getTileData(6,5).hasAvatar());
-    assertFalse(gameGrid.getTileData(5,5).hasAvatar());
+    assertTrue(elementInformationBundle.getTileData(5,5).hasAvatar());
+    elementInformationBundle.step(10, Direction.RIGHT);
+    assertTrue(elementInformationBundle.getTileData(6,5).hasAvatar());
+    assertFalse(elementInformationBundle.getTileData(5,5).hasAvatar());
   }
 
   @Test
   public void avatarAttemptsToStepIntoWall() {
-    gameGrid.setStructure(6, 5, Structure.WALL);
-    assertTrue(gameGrid.getTileData(5,5).hasAvatar());
-    gameGrid.step(10, Direction.RIGHT);
-    assertFalse(gameGrid.getTileData(6,5).hasAvatar());
-    assertTrue(gameGrid.getTileData(5,5).hasAvatar());
+    elementInformationBundle.setStructure(6, 5, Structure.WALL);
+    assertTrue(elementInformationBundle.getTileData(5,5).hasAvatar());
+    elementInformationBundle.step(10, Direction.RIGHT);
+    assertFalse(elementInformationBundle.getTileData(6,5).hasAvatar());
+    assertTrue(elementInformationBundle.getTileData(5,5).hasAvatar());
   }
 
   @Test
   public void avatarAttemptsToStepIntoAnotherAvatar() {
     Avatar newAvatar = new Avatar(15, 6, 6);
-    gameGrid.addGameElement(newAvatar);
-    assertTrue(gameGrid.getTileData(5,5).hasAvatar());
-    gameGrid.step(10, Direction.DOWN_RIGHT);
-    assertTrue(gameGrid.getTileData(6,6).hasAvatar());
-    assertTrue(gameGrid.getTileData(5,5).hasAvatar());
+    elementInformationBundle.addGameElement(newAvatar);
+    assertTrue(elementInformationBundle.getTileData(5,5).hasAvatar());
+    elementInformationBundle.step(10, Direction.DOWN_RIGHT);
+    assertTrue(elementInformationBundle.getTileData(6,6).hasAvatar());
+    assertTrue(elementInformationBundle.getTileData(5,5).hasAvatar());
   }
 
   @Test
   public void avatarPickUpDataCubeSameTile() {
-    gameGrid.pickUp(10, Direction.SELF);
+    elementInformationBundle.pickUp(10, Direction.SELF);
     assertEquals(dataCube, avatar.drop());
   }
 
   @Test
   public void avatarCantPickUp() {
-    gameGrid.pickUp(10, Direction.UP);
+    elementInformationBundle.pickUp(10, Direction.UP);
     assertNull(avatar.drop());
   }
 
   @Test
   public void avatarPickUpDataCubeAndMove() {
-    gameGrid.pickUp(10, Direction.SELF);
-    gameGrid.step(10, Direction.RIGHT);
-    gameGrid.drop(10);
-    assertEquals(dataCube.getId(), gameGrid.getTileData(6, 5).getBlockId());
+    elementInformationBundle.pickUp(10, Direction.SELF);
+    elementInformationBundle.step(10, Direction.RIGHT);
+    elementInformationBundle.drop(10);
+    assertEquals(dataCube.getId(), elementInformationBundle.getTileData(6, 5).getBlockId());
   }
 
 }

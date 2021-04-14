@@ -1,18 +1,17 @@
 package ooga.model.grid.gridData;
 
-import ooga.model.grid.GameGrid;
+import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
-import ooga.model.grid.Tile;
 
 public class GameGridData {
 
   private Structure[][] structures;
-  private GameGrid gameGrid;
+  private ElementInformationBundle elementInformationBundle;
   private int rows;
   private int columns;
 
-  public GameGridData(GameGrid gameGrid, int x, int y) {
-    this.gameGrid = gameGrid;
+  public GameGridData(ElementInformationBundle elementInformationBundle, int x, int y) {
+    this.elementInformationBundle = elementInformationBundle;
     this.rows = y;
     this.columns = x;
     structures = new Structure[x][y];
@@ -22,7 +21,7 @@ public class GameGridData {
   private void setStructures()  {
     for (int i=0; i<columns; i++) {
       for (int j=0; j<rows; j++) {
-        structures[i][j] = gameGrid.getStructure(i,j);
+        structures[i][j] = elementInformationBundle.getStructure(i,j);
       }
     }
   }

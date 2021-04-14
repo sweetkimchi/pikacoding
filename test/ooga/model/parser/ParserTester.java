@@ -5,18 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 import ooga.model.database.FirebaseService;
-import ooga.model.grid.GameGrid;
+import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.grid.gridData.InitialState;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ParserTester {
@@ -41,12 +35,12 @@ public class ParserTester {
   public void checkGameGridParseLevel1()  {
 
     InitialConfigurationParser tester = new InitialConfigurationParser(1, this.firebaseService);
-    GameGrid gameGrid = tester.getGameGrid();
+    ElementInformationBundle elementInformationBundle = tester.getGameGrid();
 
-    assertEquals(Structure.HOLE, gameGrid.getStructure(4, 1));
-    assertEquals(Structure.HOLE, gameGrid.getStructure(2, 3));
-    assertEquals(Structure.WALL, gameGrid.getStructure(0, 0));
-    assertEquals(gameGrid.getAvatarList().size(), 3);
+    assertEquals(Structure.HOLE, elementInformationBundle.getStructure(4, 1));
+    assertEquals(Structure.HOLE, elementInformationBundle.getStructure(2, 3));
+    assertEquals(Structure.WALL, elementInformationBundle.getStructure(0, 0));
+    assertEquals(elementInformationBundle.getAvatarList().size(), 3);
   }
 
   @Test

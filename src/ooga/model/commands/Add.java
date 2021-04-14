@@ -1,28 +1,22 @@
 package ooga.model.commands;
 
-import ooga.model.grid.GameGrid;
+import java.util.Map;
+import ooga.model.grid.ElementInformationBundle;
 import ooga.model.player.Avatar;
 import ooga.model.player.Block;
 import ooga.model.player.DataCube;
 
 public class Add extends BasicCommands {
 
-  private final GameGrid gameGrid;
+  private final ElementInformationBundle elementInformationBundle;
 
-  public Add(GameGrid gameGrid) {
-    this.gameGrid = gameGrid;
+  public Add(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
+    super(elementInformationBundle,parameters);
+    this.elementInformationBundle = elementInformationBundle;
   }
 
   @Override
-  public void execute(Avatar avatar) {
-    Block avatarBlock = avatar.getHeldItem();
-    Block gridBlock = gameGrid.getTile(avatar.getXCoord(), avatar.getYCoord()).getBlock();
-    //TODO: avoid instanceof
-    if (avatarBlock instanceof DataCube avatarCube && gridBlock instanceof DataCube gridCube) {
-      avatarCube.setDisplayNum(avatarCube.getDisplayNum() + gridCube.getDisplayNum());
-    } else {
-      //TODO: handle error
-      System.out.println("You cannot add here!");
-    }
+  public void execute(int ID) {
+
   }
 }

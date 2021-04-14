@@ -3,6 +3,7 @@ package ooga.model.grid.gridData;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import ooga.model.player.Block;
 import ooga.model.player.DataCube;
 
 public class BlockData {
@@ -18,7 +19,7 @@ public class BlockData {
     this.pickedUp = pickedUp;
   }
 
-  public BlockData(DataCube dataCube) {
+  public BlockData(Block dataCube) {
     location = new ArrayList<>();
     location.addAll(List.of(dataCube.getXCoord(), dataCube.getYCoord()));
     blockNumber = dataCube.getDisplayNum();

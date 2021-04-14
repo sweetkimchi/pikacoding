@@ -1,34 +1,53 @@
 package ooga.model.commands;
 
-import java.util.*;
+import java.util.Map;
 import ooga.model.Direction;
-import ooga.model.grid.GameGrid;
+import ooga.model.grid.ElementInformationBundle;
 import ooga.model.player.Avatar;
+import ooga.model.player.Element;
+import ooga.model.player.Player;
 
 /**
  * @author Ji Yun Hyo
  */
 public class Step extends BasicCommands {
 
-    private final GameGrid gameGrid;
-    private final Direction direction;
 
     /**
      * Default constructor
      */
-    public Step(GameGrid gameGrid, Direction direction) {
-        this.gameGrid = gameGrid;
-        this.direction = direction;
+    public Step(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
+        super(elementInformationBundle, parameters);
     }
 
     /**
      * Executes the command on an Avatar.
      *
-     * @param avatar The avatar upon which to execute the command
      */
     @Override
-    public void execute(Avatar avatar) {
-        gameGrid.step(avatar.getId(), direction);
+    public void execute(int ID) {
+        Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
+        Direction direction = getDirection(getParameters().get("direction"));
+        assert avatar != null;
+        int currX = avatar.getXCoord();
+        int currY = avatar.getYCoord();
+        int newX = currX + direction.getXDel();
+        int newY = currY + direction.getYDel();
+
+        System.out.println(getElementInformationBundle().getTile(newX, newY).getStructure());
+
+        if (getElementInformationBundle().getTile(newX, newY).canAddAvatar()) {
+            getElementInformationBundle().getTile(newX, newY).add(avatar);
+            getElementInformationBundle().getTile(currX, currY).removeAvatar();
+            avatar.setXCoord(newX);
+            avatar.setYCoord(newY);
+        } else {
+            //TODO: throw error to handler?
+            System.out.println("The avatar cannot step here!");
+        }
+
+        avatar.setProgramCounter(avatar.getProgramCounter() + 1);
+        getElementInformationBundle().getModelController().updateAvatarPositions(avatar.getId(), avatar.getXCoord(), avatar.getYCoord());
 
     }
 }

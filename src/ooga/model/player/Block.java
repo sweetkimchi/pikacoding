@@ -11,4 +11,7 @@ public abstract class Block implements Element {
     public Block() {
     }
 
+  public abstract int getDisplayNum();
+
+  public abstract boolean isHeld();
 }
