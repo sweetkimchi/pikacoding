@@ -72,7 +72,9 @@ public class SpriteLayer extends Pane {
     });
 
     Button test = new Button("shift");
-    test.setOnAction(e -> blocks.get(5).moveBlock(1, 1));
+    test.setOnAction(e -> {
+      blocks.get(5).moveBlock(1, 1);
+    });
     this.getChildren().add(test);
   }
 
