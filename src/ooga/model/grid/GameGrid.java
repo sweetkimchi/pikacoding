@@ -3,9 +3,7 @@ package ooga.model.grid;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import ooga.model.Direction;
 import ooga.model.grid.gridData.TileData;
 import ooga.model.player.Avatar;
@@ -19,14 +17,14 @@ import ooga.model.player.Block;
 public class GameGrid implements Grid {
 
   private Tile[][] grid;
-  private final Map<Avatar, List<Integer>> avatarList;
+  private final List<Avatar> avatarList;
 
   public GameGrid() {
-    avatarList = new HashMap<>();
+    avatarList = new ArrayList<>();
   }
 
-  public Map<Avatar, List<Integer>> getAvatarList() {
-    return Collections.unmodifiableMap(avatarList);
+  public List<Avatar> getAvatarList() {
+    return Collections.unmodifiableList(avatarList);
   }
 
   @Override
@@ -48,11 +46,12 @@ public class GameGrid implements Grid {
   }
 
   @Override
-  public void addGameElement(Element gameElement, int xPos, int yPos) {
+  public void addGameElement(Element gameElement) {
+    int xPos = gameElement.getXCoord();
+    int yPos = gameElement.getYCoord();
     grid[xPos][yPos].add(gameElement);
     if (gameElement instanceof Avatar) {
-      avatarList.put((Avatar) gameElement, new ArrayList<>());
-      avatarList.get(gameElement).addAll(List.of(xPos, yPos));
+      avatarList.add((Avatar) gameElement);
     }
     if (gameElement instanceof DataCube) {
 
@@ -66,26 +65,20 @@ public class GameGrid implements Grid {
    */
   public void step(int avatarId, Direction direction) {
     Avatar avatar = getAvatarById(avatarId);
-    List<Integer> avatarCoords = avatarList.get(avatar);
-    assert avatarCoords != null;
-    int currX = avatarCoords.get(0);
-    int currY = avatarCoords.get(1);
+    assert avatar != null;
+    int currX = avatar.getXCoord();
+    int currY = avatar.getYCoord();
     int newX = currX + direction.getXDel();
     int newY = currY + direction.getYDel();
     if (grid[newX][newY].canAddAvatar()) {
       grid[newX][newY].add(avatar);
       grid[currX][currY].removeAvatar();
-      avatarCoords.set(0, newX);
-      avatarCoords.set(1, newY);
+      avatar.step(direction);
     } else {
       //TODO: throw error to handler?
       System.out.println("The avatar cannot step here!");
     }
 
-  }
-
-  public List<Integer> getAvatarCoords(int avatarID){
-    return Collections.unmodifiableList(avatarList.get(getAvatarById(avatarID)));
   }
 
   /**
@@ -96,10 +89,8 @@ public class GameGrid implements Grid {
   public void pickUp(int avatarId, Direction direction) {
     Avatar avatar = getAvatarById(avatarId);
     assert avatar != null;
-    List<Integer> avatarCoords = avatarList.get(avatar);
-    assert avatarCoords != null;
-    int currX = avatarCoords.get(0);
-    int currY = avatarCoords.get(1);
+    int currX = avatar.getXCoord();
+    int currY = avatar.getYCoord();
     int newX = currX + direction.getXDel();
     int newY = currY + direction.getYDel();
     if (grid[newX][newY].hasBlock()) {
@@ -118,11 +109,10 @@ public class GameGrid implements Grid {
    */
   public void drop(int avatarId) {
     Avatar avatar = getAvatarById(avatarId);
-    List<Integer> avatarCoords = avatarList.get(avatar);
-    int currX = avatarCoords.get(0);
-    int currY = avatarCoords.get(1);
+    assert avatar != null;
+    int currX = avatar.getXCoord();
+    int currY = avatar.getYCoord();
     if (grid[currX][currY].canAddBlock()) {
-      assert avatar != null;
       Block block = avatar.drop();
       if (block == null) {
         //TODO: throw error to handler
@@ -137,18 +127,8 @@ public class GameGrid implements Grid {
 
   }
 
-  /**
-   * Directs the avatar to add the value of the block it is standing on to the value of the block
-   * it is holding.
-   *
-   * @param avatarId
-   */
-  public void add(int avatarId) {
-
-  }
-
   private Avatar getAvatarById(int id) {
-    for (Avatar avatar : avatarList.keySet()) {
+    for (Avatar avatar : avatarList) {
       if (avatar.getId() == id) {
         return avatar;
       }
@@ -163,7 +143,7 @@ public class GameGrid implements Grid {
    */
   public Collection<Integer> getAvatarIds() {
     List<Integer> ids = new ArrayList<>();
-    for (Avatar avatar : avatarList.keySet()) {
+    for (Avatar avatar : avatarList) {
       ids.add(avatar.getId());
     }
     Collections.sort(ids);

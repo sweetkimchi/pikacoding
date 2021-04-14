@@ -1,6 +1,8 @@
 package ooga.model.commands;
 
 import java.util.*;
+import ooga.model.Direction;
+import ooga.model.grid.GameGrid;
 import ooga.model.player.Avatar;
 
 /**
@@ -8,10 +10,15 @@ import ooga.model.player.Avatar;
  */
 public class Step extends BasicCommands {
 
+    private GameGrid gameGrid;
+    private Direction direction;
+
     /**
      * Default constructor
      */
-    public Step() {
+    public Step(GameGrid gameGrid, Direction direction) {
+        this.gameGrid = gameGrid;
+        this.direction = direction;
     }
 
     /**
@@ -21,6 +28,7 @@ public class Step extends BasicCommands {
      */
     @Override
     public void execute(Avatar avatar) {
+        gameGrid.step(avatar.getId(), direction);
 
     }
 }

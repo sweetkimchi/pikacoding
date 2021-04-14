@@ -95,7 +95,7 @@ public class InitialConfigurationParser {
       mapOfPeople.put(s, avatarLocation);
       if (addToGameGrid) {
         this.gameGrid.addGameElement(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
-            avatarLocation.get(1)), avatarLocation.get(0), avatarLocation.get(1));
+            avatarLocation.get(1)));
       }
 
     }
@@ -114,7 +114,7 @@ public class InitialConfigurationParser {
       allBlockData.put(s, blockData);
       if (addToGameGrid)  {
         this.gameGrid.addGameElement(new DataCube(Integer.parseInt(s), blockLoc.get(0),
-            blockLoc.get(1), 0), blockLoc.get(0), blockLoc.get(1));
+            blockLoc.get(1), 0));
       }
 
     }

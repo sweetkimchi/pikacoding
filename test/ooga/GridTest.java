@@ -22,8 +22,8 @@ public class GridTest {
   @BeforeEach
   public void setup() {
     gameGrid = new GameGrid();
-    avatar = new Avatar(10, 0, 0);
-    dataCube = new DataCube(0, 0, 0, 0);
+    avatar = new Avatar(10, 5, 5);
+    dataCube = new DataCube(0, 5, 5, 0);
     gameGrid.setDimensions(10, 10);
     for (int i=0; i<10; i++) {
       for (int j=0; j<10; j++) {
@@ -33,8 +33,8 @@ public class GridTest {
         }
       }
     }
-    gameGrid.addGameElement(avatar, 5, 5);
-    gameGrid.addGameElement(dataCube, 5, 5);
+    gameGrid.addGameElement(avatar);
+    gameGrid.addGameElement(dataCube);
   }
 
   @Test
@@ -67,8 +67,8 @@ public class GridTest {
 
   @Test
   public void avatarAttemptsToStepIntoAnotherAvatar() {
-    Avatar newAvatar = new Avatar(15, 0, 0);
-    gameGrid.addGameElement(newAvatar, 6, 6);
+    Avatar newAvatar = new Avatar(15, 6, 6);
+    gameGrid.addGameElement(newAvatar);
     assertTrue(gameGrid.getTile(5,5).hasAvatar());
     gameGrid.step(10, Direction.DOWN_RIGHT);
     assertTrue(gameGrid.getTile(6,6).hasAvatar());

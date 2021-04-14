@@ -67,10 +67,18 @@ public class Avatar extends Player {
     public void step(Direction direction) {
         int xPrev = xCoord;
         int yPrev = yCoord;
-        this.xCoord = xPrev + direction.getXDel();
-        this.yCoord = yPrev + direction.getYDel();
+        setXCoord(xPrev + direction.getXDel());
+        setYCoord(yPrev + direction.getYDel());
+        moveHeldItemLocation();
 
         //    System.out.printf("Moving avatar %d from (%d, %d) in the direction %s to new location (%d, %d)\n", id, xPrev, yPrev, direction, xCoord, yCoord);
+    }
+
+    private void moveHeldItemLocation() {
+        if (heldItem != null) {
+            heldItem.setXCoord(getXCoord());
+            heldItem.setYCoord(getYCoord());
+        }
     }
 
     /**
@@ -91,5 +99,9 @@ public class Avatar extends Player {
         Block ret = heldItem;
         heldItem = null;
         return ret;
+    }
+
+    public boolean hasBlock() {
+        return heldItem != null;
     }
 }
