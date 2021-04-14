@@ -108,7 +108,7 @@ public class SpriteLayer extends Pane {
 //        System.out.println("NextX: " + nextX);
 //        System.out.println("NextY: " + nextY);
 
-        System.out.println();
+//        System.out.println();
         avatars.get(entry.getKey()).moveAvatar(nextX, nextY);
         finished = false;
       }
