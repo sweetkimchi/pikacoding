@@ -8,13 +8,15 @@ public class DataCube extends Block {
     private int xCoord;
     private int yCoord;
     private final int id;
+    private int displayNum;
     /**
      * Default constructor
      */
-    public DataCube(int id, int xCoord, int yCoord) {
+    public DataCube(int id, int xCoord, int yCoord, int displayNum) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.id = id;
+        this.setDisplayNum(displayNum);
     }
 
     /**
@@ -24,7 +26,7 @@ public class DataCube extends Block {
      */
     @Override
     public int getId() {
-        return 0;
+        return id;
     }
 
     /**
@@ -32,7 +34,7 @@ public class DataCube extends Block {
      */
     @Override
     public int getXCoord() {
-        return 0;
+        return xCoord;
     }
 
     /**
@@ -40,7 +42,7 @@ public class DataCube extends Block {
      */
     @Override
     public int getYCoord() {
-        return 0;
+        return yCoord;
     }
 
     /**
@@ -48,7 +50,7 @@ public class DataCube extends Block {
      */
     @Override
     public void setXCoord(int xCoord) {
-
+        this.xCoord = xCoord;
     }
 
     /**
@@ -56,6 +58,14 @@ public class DataCube extends Block {
      */
     @Override
     public void setYCoord(int yCoord) {
+        this.yCoord = yCoord;
+    }
 
+    public int getDisplayNum() {
+        return displayNum;
+    }
+
+    public void setDisplayNum(int displayNum) {
+        this.displayNum = displayNum;
     }
 }

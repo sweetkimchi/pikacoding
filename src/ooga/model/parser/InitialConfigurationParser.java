@@ -114,7 +114,7 @@ public class InitialConfigurationParser {
       allBlockData.put(s, blockData);
       if (addToGameGrid)  {
         this.gameGrid.addGameElement(new DataCube(Integer.parseInt(s), blockLoc.get(0),
-            blockLoc.get(1)), blockLoc.get(0), blockLoc.get(1));
+            blockLoc.get(1), 0), blockLoc.get(0), blockLoc.get(1));
       }
 
     }

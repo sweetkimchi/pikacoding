@@ -23,7 +23,7 @@ public class GridTest {
   public void setup() {
     gameGrid = new GameGrid();
     avatar = new Avatar(10, 0, 0);
-    dataCube = new DataCube(0, 0, 0);
+    dataCube = new DataCube(0, 0, 0, 0);
     gameGrid.setDimensions(10, 10);
     for (int i=0; i<10; i++) {
       for (int j=0; j<10; j++) {

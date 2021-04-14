@@ -79,6 +79,7 @@ public class GameGrid implements Grid {
       avatarCoords.set(1, newY);
     } else {
       //TODO: throw error to handler?
+      System.out.println("The avatar cannot step here!");
     }
 
   }
@@ -133,6 +134,16 @@ public class GameGrid implements Grid {
       System.out.println("You cannot drop here!");
 
     }
+
+  }
+
+  /**
+   * Directs the avatar to add the value of the block it is standing on to the value of the block
+   * it is holding.
+   *
+   * @param avatarId
+   */
+  public void add(int avatarId) {
 
   }
 
