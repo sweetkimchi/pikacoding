@@ -20,7 +20,7 @@ import ooga.model.player.Block;
 import ooga.model.player.Player;
 
 /**
- * The GameGrid contains all the elements for the grid of the game.
+ * @author Ji Yun Hyo
  */
 public class ElementInformationBundle implements InformationBundle {
 
