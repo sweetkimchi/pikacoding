@@ -39,9 +39,13 @@ public class Throw extends BasicCommands {
       while (true) {
         if (nextTile == null || !nextTile.canAddBlock() || direction == Direction.SELF) {
           currTile.add(block);
+          block.setXCoord(currX);
+          block.setYCoord(currY);
           break;
         }
         currTile = nextTile;
+        currX = newX;
+        currY = newY;
         newX += direction.getXDel();
         newY += direction.getYDel();
         nextTile = getElementInformationBundle().getTile(newX,newY);

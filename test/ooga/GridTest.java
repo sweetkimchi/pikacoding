@@ -20,6 +20,7 @@ import ooga.model.commands.Drop;
 import ooga.model.commands.PickUp;
 import ooga.model.commands.Step;
 import ooga.model.commands.Subtract;
+import ooga.model.commands.Throw;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.BoardState;
@@ -231,6 +232,28 @@ public class GridTest {
     subtract.execute(10);
     subtract.execute(10);
     assertEquals(6, dataCube.getDisplayNum());
+  }
+
+  @Test
+  public void throwStraightIntoWall() {
+    avatarPickUpDataCubeSameTile();
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "right");
+    Throw throwCommand = new Throw(elementInformationBundle, parameters);
+    throwCommand.execute(10);
+    assertEquals(8, dataCube.getXCoord());
+    assertEquals(5, dataCube.getYCoord());
+  }
+
+  @Test
+  public void throwDiagonalIntoWall() {
+    avatarPickUpDataCubeSameTile();
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "down-left");
+    Throw throwCommand = new Throw(elementInformationBundle, parameters);
+    throwCommand.execute(10);
+    assertEquals(2, dataCube.getXCoord());
+    assertEquals(8, dataCube.getYCoord());
   }
 
 }
