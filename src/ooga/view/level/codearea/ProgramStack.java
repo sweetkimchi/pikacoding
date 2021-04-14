@@ -38,8 +38,15 @@ public class ProgramStack extends VBox {
       parameterOptionsMap.put(parameter, availableCommands.getParameterOptions(command, parameter));
       parameterOptions.add(parameterOptionsMap);
     });
-    CommandBlockHolder commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
-        command, parameterOptions, this);
+    CommandBlockHolder commandBlockHolder;
+    if (command.equals("jump")) {
+      commandBlockHolder = new JumpCommandBlockHolder(programBlocks.size() + 1,
+          command, parameterOptions, this);
+    }
+    else {
+      commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
+          command, parameterOptions, this);
+    }
     programBlocks.add(commandBlockHolder);
     this.getChildren().add(commandBlockHolder);
   }
