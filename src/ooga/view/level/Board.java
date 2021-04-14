@@ -6,6 +6,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.ResourceBundle;
+
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
@@ -52,6 +54,21 @@ public class Board extends StackPane {
     spriteLayer.setSizes(xSize, ySize);
     spriteLayer.initializeAvatars(initialState.getAllAvatarLocations());
     spriteLayer.initializeBlocks(initialState.getAllBlockData());
+
+    Button test = new Button("pickUp");
+    this.getChildren().add(test);
+    test.setOnAction(event -> pickUp());
+    Button test1 = new Button("drop");
+    this.getChildren().add(test1);
+    test1.setOnAction((event -> drop()));
+  }
+
+  private void drop() {
+    spriteLayer.drop(4, 0.1);
+  }
+
+  private void pickUp() {
+    spriteLayer.pickUP(4, 0.10);
   }
 
   private void setSizing(GameGridData gameGridData) {
