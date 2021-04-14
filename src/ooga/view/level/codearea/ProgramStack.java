@@ -42,19 +42,19 @@ public class ProgramStack extends VBox {
           command, parameterOptions, this);
       programBlocks.add(commandBlockHolder);
       this.getChildren().add(commandBlockHolder);
-    }
-    else if (command.equals("if")) {
-      NestedBeginBlockHolder beginCommandBlockHolder = new NestedBeginBlockHolder(programBlocks.size() + 1,
+    } else if (command.equals("if")) {
+      NestedBeginBlockHolder beginCommandBlockHolder = new NestedBeginBlockHolder(
+          programBlocks.size() + 1,
           command, parameterOptions, this);
       programBlocks.add(beginCommandBlockHolder);
-      NestedEndBlockHolder endCommandBlockHolder = new NestedEndBlockHolder(programBlocks.size() + 1,
+      NestedEndBlockHolder endCommandBlockHolder = new NestedEndBlockHolder(
+          programBlocks.size() + 1,
           command, this);
       programBlocks.add(endCommandBlockHolder);
       beginCommandBlockHolder.attachEndHolder(endCommandBlockHolder);
       endCommandBlockHolder.attachBeginHolder(beginCommandBlockHolder);
       this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder);
-    }
-    else {
+    } else {
       CommandBlockHolder commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
           command, parameterOptions, this);
       programBlocks.add(commandBlockHolder);
@@ -79,7 +79,7 @@ public class ProgramStack extends VBox {
   public void startMove(CommandBlockHolder commandBlockHolder) {
     newIndex = commandBlockHolder.getCommandBlock().getIndex();
     programBlocks.forEach(other -> {
-      other.disableButtons();
+      other.setButtonsDisabled(true);
       other.setOnMouseEntered(e -> {
         newIndex = other.getCommandBlock().getIndex();
       });
@@ -101,16 +101,18 @@ public class ProgramStack extends VBox {
 
   private void resetMouseActions() {
     programBlocks.forEach(commandBlockHolder -> {
-      commandBlockHolder.setOnMouseEntered(e -> {});
-      commandBlockHolder.setOnMouseClicked(e -> {});
+      commandBlockHolder.setButtonsDisabled(false);
+      commandBlockHolder.setOnMouseEntered(e -> {
+      });
+      commandBlockHolder.setOnMouseClicked(e -> {
+      });
     });
   }
 
   private void moveCommandBlock(int oldIndex, int newIndex) {
     if (oldIndex < newIndex) {
       Collections.rotate(programBlocks.subList(oldIndex - 1, newIndex), -1);
-    }
-    else if (oldIndex > newIndex) {
+    } else if (oldIndex > newIndex) {
       Collections.rotate(programBlocks.subList(newIndex - 1, oldIndex), 1);
     }
     this.getChildren().clear();

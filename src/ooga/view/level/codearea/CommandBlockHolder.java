@@ -1,5 +1,6 @@
 package ooga.view.level.codearea;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,7 @@ public class CommandBlockHolder extends GridPane {
   private CommandBlock commandBlock;
   private Button moveButton;
   private Button removeButton;
+  private List<ComboBox<String>> dropdowns;
   private ProgramStack programStack;
 
   private int columns;
@@ -65,6 +67,7 @@ public class CommandBlockHolder extends GridPane {
     this.parameterOptions = parameterOptions;
     Map<String, String> initialParameters = setInitialParameters(parameterOptions);
     commandBlock = new CommandBlock(index, type, initialParameters);
+    dropdowns = new ArrayList<>();
     initializeDropdowns();
 
     ColumnConstraints columnConstraints = new ColumnConstraints();
@@ -72,7 +75,7 @@ public class CommandBlockHolder extends GridPane {
     this.add(new Label(), columns++, 0);
     this.getColumnConstraints().add(columnConstraints);
 
-    Button removeButton = new Button("x");
+    removeButton = new Button("x");
     removeButton.setId("remove-button-" + index);
     removeButton.setPrefHeight(ITEM_HEIGHT);
     removeButton.setOnAction(e -> removeAction(programStack));
@@ -112,9 +115,10 @@ public class CommandBlockHolder extends GridPane {
     }
   }
 
-  public void disableButtons() {
-    moveButton.setDisable(true);
-
+  public void setButtonsDisabled(boolean disabled) {
+    moveButton.setDisable(disabled);
+    removeButton.setDisable(disabled);
+    dropdowns.forEach(dropdown -> dropdown.setDisable(disabled));
   }
 
   protected void initializeDropdowns() {
@@ -128,11 +132,16 @@ public class CommandBlockHolder extends GridPane {
       });
       dropdown.getSelectionModel().selectFirst();
       addItem(dropdown, 120);
+      dropdowns.add(dropdown);
     });
   }
 
   protected List<Map<String, List<String>>> getParameterOptions() {
     return parameterOptions;
+  }
+
+  protected List<ComboBox<String>> getDropdowns() {
+    return dropdowns;
   }
 
   protected void addItem(Node node, double width) {
