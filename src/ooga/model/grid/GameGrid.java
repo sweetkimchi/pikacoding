@@ -9,7 +9,7 @@ import java.util.Map;
 import ooga.model.Direction;
 import ooga.model.grid.gridData.TileData;
 import ooga.model.player.Avatar;
-import ooga.model.player.Datacube;
+import ooga.model.player.DataCube;
 import ooga.model.player.Element;
 import ooga.model.player.Block;
 
@@ -54,7 +54,7 @@ public class GameGrid implements Grid {
       avatarList.put((Avatar) gameElement, new ArrayList<>());
       avatarList.get(gameElement).addAll(List.of(xPos, yPos));
     }
-    if (gameElement instanceof Datacube) {
+    if (gameElement instanceof DataCube) {
 
     }
   }
@@ -82,7 +82,7 @@ public class GameGrid implements Grid {
   }
 
   public List<Integer> getAvatarCoords(int avatarID){
-    return avatarList.get(getAvatarById(avatarID));
+    return Collections.unmodifiableList(avatarList.get(getAvatarById(avatarID)));
   }
 
   /**

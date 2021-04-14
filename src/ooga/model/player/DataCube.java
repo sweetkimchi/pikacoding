@@ -3,7 +3,7 @@ package ooga.model.player;
 /**
  * 
  */
-public class Datacube extends Block {
+public class DataCube extends Block {
 
     private int xCoord;
     private int yCoord;
@@ -11,7 +11,7 @@ public class Datacube extends Block {
     /**
      * Default constructor
      */
-    public Datacube(int id, int xCoord, int yCoord) {
+    public DataCube(int id, int xCoord, int yCoord) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.id = id;

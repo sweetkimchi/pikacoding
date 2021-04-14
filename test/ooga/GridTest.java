@@ -9,7 +9,7 @@ import ooga.model.Direction;
 import ooga.model.grid.GameGrid;
 import ooga.model.grid.Structure;
 import ooga.model.player.Avatar;
-import ooga.model.player.Datacube;
+import ooga.model.player.DataCube;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,13 +17,13 @@ public class GridTest {
 
   private GameGrid gameGrid;
   private Avatar avatar;
-  private Datacube datacube;
+  private DataCube dataCube;
 
   @BeforeEach
   public void setup() {
     gameGrid = new GameGrid();
     avatar = new Avatar(10, 0, 0);
-    datacube = new Datacube(0, 0, 0);
+    dataCube = new DataCube(0, 0, 0);
     gameGrid.setDimensions(10, 10);
     for (int i=0; i<10; i++) {
       for (int j=0; j<10; j++) {
@@ -34,7 +34,7 @@ public class GridTest {
       }
     }
     gameGrid.addGameElement(avatar, 5, 5);
-    gameGrid.addGameElement(datacube, 5, 5);
+    gameGrid.addGameElement(dataCube, 5, 5);
   }
 
   @Test
@@ -76,9 +76,9 @@ public class GridTest {
   }
 
   @Test
-  public void avatarPickUpDatacubeSameTile() {
+  public void avatarPickUpDataCubeSameTile() {
     gameGrid.pickUp(10, Direction.SELF);
-    assertEquals(datacube, avatar.drop());
+    assertEquals(dataCube, avatar.drop());
   }
 
   @Test
@@ -88,11 +88,11 @@ public class GridTest {
   }
 
   @Test
-  public void avatarPickUpDatacubeAndMove() {
+  public void avatarPickUpDataCubeAndMove() {
     gameGrid.pickUp(10, Direction.SELF);
     gameGrid.step(10, Direction.RIGHT);
     gameGrid.drop(10);
-    assertEquals(datacube.getId(), gameGrid.getTile(6, 5).getBlockId());
+    assertEquals(dataCube.getId(), gameGrid.getTile(6, 5).getBlockId());
   }
 
 }
