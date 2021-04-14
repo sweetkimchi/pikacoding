@@ -16,6 +16,9 @@ public class SpriteLayer extends Pane {
   private double xSize;
   private double ySize;
 
+  private int i = 0;
+  private int k = 0;
+
   private Map<Integer, Avatar> avatars;
   private Map<Integer, Block> blocks;
 
@@ -91,10 +94,21 @@ public class SpriteLayer extends Pane {
     for(Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()){
       if(!entry.getValue().isEmpty()){
 
+
        // System.out.println("Moving Avatar: " + entry.getValue());
         double nextX = entry.getValue().pop();
         double nextY = entry.getValue().pop();
 
+        double currentX = avatars.get(entry.getKey()).getInitialXCoordinate();
+        double currentY = avatars.get(entry.getKey()).getInitialYCoordinate();
+
+
+//        System.out.println("CurrentX: " + currentX);
+//        System.out.println("CurrentY: " + currentY);
+//        System.out.println("NextX: " + nextX);
+//        System.out.println("NextY: " + nextY);
+
+//        System.out.println();
         avatars.get(entry.getKey()).moveAvatar(nextX, nextY);
         finished = false;
       }
