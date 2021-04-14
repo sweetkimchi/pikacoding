@@ -129,7 +129,6 @@ public class SpriteLayer extends Pane {
     if(allElementInformation != null){
       for(Map.Entry<Integer,Avatar> entry : avatars.entrySet()){
         avatars.get(entry.getKey()).setAvatarImage("PikachuAvatar.gif");
-        System.out.println("Okay");
       }
     }
   }
