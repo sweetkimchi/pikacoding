@@ -55,22 +55,6 @@ public class Board extends StackPane {
     spriteLayer.setSizes(xSize, ySize);
     spriteLayer.initializeAvatars(initialState.getAllAvatarLocations());
     spriteLayer.initializeBlocks(initialState.getAllBlockData());
-
-
-    // TODO: REMOVE AFTER TESTING
-    Button test = new Button("pickUp");
-    test.setOnAction(event -> pickUp());
-    Button test1 = new Button("drop");
-    this.getChildren().addAll(test, test1);
-    test1.setOnAction((event -> drop()));
-  }
-
-  private void drop() {
-    spriteLayer.drop(4, 0.1);
-  }
-
-  private void pickUp() {
-    spriteLayer.pickUP(4, 0.10);
   }
 
   private void setSizing(GameGridData gameGridData) {
