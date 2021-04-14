@@ -57,7 +57,9 @@ public class ScreenCreator {
   }
 
   private void loadLevelSelector() {
-
+    LevelSelector levelSelector = new LevelSelector(level -> viewController.initializeLevel(level));
+    Scene scene = new Scene(levelSelector, width, height);
+    stage.setScene(scene);
   }
 
   private void initializeStage() {
