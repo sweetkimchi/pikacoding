@@ -8,6 +8,8 @@ import javafx.scene.control.ComboBox;
 
 public class JumpCommandBlockHolder extends CommandBlockHolder {
 
+  private ComboBox<String> lineSelector;
+
   public JumpCommandBlockHolder(int index, String type,
       List<Map<String, List<String>>> parameterOptions,
       ProgramStack programStack) {
@@ -15,27 +17,30 @@ public class JumpCommandBlockHolder extends CommandBlockHolder {
   }
 
   @Override
-  protected Map<String, String> setInitialParameters(
-      List<Map<String, List<String>>> parameterOptions) {
-    Map<String, String> initialParameters = new HashMap<>();
-    String parameter = parameterOptions.get(0).keySet().iterator().next();
-    initialParameters.put(parameter, "1");
-    return initialParameters;
+  public void setIndex(int index) {
+    super.setIndex(index);
+    updateDropdown();
   }
 
   @Override
   protected void initializeDropdowns() {
-      String parameter = getParameterOptions().get(0).keySet().iterator().next();
-      List<String> options = new ArrayList<>();
-      for (int i = 1; i <= getCommandBlock().getIndex(); i++) {
-        options.add(Integer.toString(i));
-      }
-      ComboBox<String> dropdown = new ComboBox<>();
-      dropdown.getItems().addAll(options);
-      dropdown.setOnAction(e -> {
-        getCommandBlock().setParameter(parameter, dropdown.getValue());
-      });
-      dropdown.getSelectionModel().selectFirst();
-      addItem(dropdown, 120);
+    String parameter = getParameterOptions().get(0).keySet().iterator().next();
+    lineSelector = new ComboBox<>();
+    updateDropdown();
+    lineSelector.setOnAction(e -> {
+      getCommandBlock().setParameter(parameter, lineSelector.getValue());
+    });
+    lineSelector.getSelectionModel().selectFirst();
+    addItem(lineSelector, 120);
+  }
+
+  private void updateDropdown() {
+    lineSelector.getItems().clear();
+    List<String> options = new ArrayList<>();
+    for (int i = 1; i <= getCommandBlock().getIndex(); i++) {
+      options.add(Integer.toString(i));
+    }
+    lineSelector.getItems().addAll(options);
+    lineSelector.getSelectionModel().selectFirst();
   }
 }

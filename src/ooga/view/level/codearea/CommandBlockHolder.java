@@ -93,15 +93,6 @@ public class CommandBlockHolder extends GridPane {
     indexLabel.setText(prefix + index);
   }
 
-  protected Map<String, String> setInitialParameters(List<Map<String, List<String>>> parameterOptions) {
-    Map<String, String> initialParameters = new HashMap<>();
-    parameterOptions.forEach(parameterOption -> {
-      String parameter = parameterOption.keySet().iterator().next();
-      initialParameters.put(parameter, parameterOption.get(parameter).get(0));
-    });
-    return initialParameters;
-  }
-
   protected void initializeDropdowns() {
     parameterOptions.forEach(parameterOption -> {
       String parameter = parameterOption.keySet().iterator().next();
@@ -127,6 +118,15 @@ public class CommandBlockHolder extends GridPane {
     }
     this.add(node, columns++, 0);
     this.getColumnConstraints().add(columnConstraints);
+  }
+
+  private Map<String, String> setInitialParameters(List<Map<String, List<String>>> parameterOptions) {
+    Map<String, String> initialParameters = new HashMap<>();
+    parameterOptions.forEach(parameterOption -> {
+      String parameter = parameterOption.keySet().iterator().next();
+      initialParameters.put(parameter, parameterOption.get(parameter).get(0));
+    });
+    return initialParameters;
   }
 
 }
