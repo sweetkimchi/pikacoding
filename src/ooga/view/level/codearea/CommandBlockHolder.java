@@ -64,7 +64,7 @@ public class CommandBlockHolder extends GridPane {
     Button removeButton = new Button("x");
     removeButton.setId("remove-button-" + index);
     removeButton.setPrefHeight(ITEM_HEIGHT);
-    removeButton.setOnAction(e -> programStack.removeCommandBlock(this.index));
+    removeButton.setOnAction(e -> removeAction(programStack));
     addItem(removeButton, 0);
 
     hamburgerMenu = new ImageView(new Image(HAMBURGER_MENU_IMAGE));
@@ -118,6 +118,14 @@ public class CommandBlockHolder extends GridPane {
     }
     this.add(node, columns++, 0);
     this.getColumnConstraints().add(columnConstraints);
+  }
+
+  protected void removeAction(ProgramStack programStack) {
+    programStack.removeCommandBlock(this.index);
+  }
+
+  protected int getIndex() {
+    return index;
   }
 
   private Map<String, String> setInitialParameters(List<Map<String, List<String>>> parameterOptions) {

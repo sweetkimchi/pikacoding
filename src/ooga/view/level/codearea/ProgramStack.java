@@ -51,6 +51,8 @@ public class ProgramStack extends VBox {
       NestedEndBlockHolder endCommandBlockHolder = new NestedEndBlockHolder(programBlocks.size() + 1,
           command, this);
       programBlocks.add(endCommandBlockHolder);
+      beginCommandBlockHolder.attachEndHolder(endCommandBlockHolder);
+      endCommandBlockHolder.attachBeginHolder(beginCommandBlockHolder);
       this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder);
     }
     else {
