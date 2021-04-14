@@ -197,4 +197,8 @@ public class LevelView extends BorderPane {
     codeIsRunning = false;
     timeline.stop();
   }
+
+  public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
+    codeArea.setLineIndicators(lineUpdates);
+  }
 }

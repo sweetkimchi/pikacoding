@@ -60,7 +60,8 @@ public class CommandExecutor {
 
         boolean ended = true;
 //        System.out.println();
-        Map<String, AvatarData> updates = new HashMap<>();
+        Map<Integer, Integer> lineUpdates = new HashMap<>();
+
         //Map<ID, Values>
         for (Map.Entry<Avatar, List<Integer>> entry : gameGrid.getAvatarList().entrySet()){
             Avatar singleAvatar = (Avatar) entry.getKey();
@@ -69,6 +70,8 @@ public class CommandExecutor {
             // TODO: refactor with Reflection and properties files
             if (singleAvatar.getProgramCounter() < mapOfCommandBlocks.size() + 1) {
            //     modelController.setAvatarIDForUpdate(singleAvatar.getId());
+
+                lineUpdates.put(singleAvatar.getId(), singleAvatar.getProgramCounter());
                 score++;
                 modelController.updateScore(score);
                 ended = false;
@@ -123,6 +126,10 @@ public class CommandExecutor {
 
             }
         }
+
+
+        modelController.setLineIndicators(lineUpdates);
+
 
         //TODO: refactor using a better data structure
      //   modelController.updateFrontEndElements(updates);

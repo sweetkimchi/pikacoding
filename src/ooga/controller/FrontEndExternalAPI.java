@@ -71,4 +71,10 @@ public interface FrontEndExternalAPI {
   void declareEndOfAnimation();
 
   void setScore(int score);
+
+  /**
+   * sets the line number for the avatar
+   * @param lineUpdates
+   */
+  void setLineIndicators(Map<Integer, Integer> lineUpdates);
 }

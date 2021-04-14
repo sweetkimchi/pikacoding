@@ -38,17 +38,29 @@ public class ProgramStack extends VBox {
       parameterOptionsMap.put(parameter, availableCommands.getParameterOptions(command, parameter));
       parameterOptions.add(parameterOptionsMap);
     });
-    CommandBlockHolder commandBlockHolder;
     if (command.equals("jump")) {
-      commandBlockHolder = new JumpCommandBlockHolder(programBlocks.size() + 1,
+      CommandBlockHolder commandBlockHolder = new JumpCommandBlockHolder(programBlocks.size() + 1,
           command, parameterOptions, this);
+      programBlocks.add(commandBlockHolder);
+      this.getChildren().add(commandBlockHolder);
+    }
+    else if (command.equals("if")) {
+      NestedBeginBlockHolder beginCommandBlockHolder = new NestedBeginBlockHolder(programBlocks.size() + 1,
+          command, parameterOptions, this);
+      programBlocks.add(beginCommandBlockHolder);
+      NestedEndBlockHolder endCommandBlockHolder = new NestedEndBlockHolder(programBlocks.size() + 1,
+          command, this);
+      programBlocks.add(endCommandBlockHolder);
+      beginCommandBlockHolder.attachEndHolder(endCommandBlockHolder);
+      endCommandBlockHolder.attachBeginHolder(beginCommandBlockHolder);
+      this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder);
     }
     else {
-      commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
+      CommandBlockHolder commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
           command, parameterOptions, this);
+      programBlocks.add(commandBlockHolder);
+      this.getChildren().add(commandBlockHolder);
     }
-    programBlocks.add(commandBlockHolder);
-    this.getChildren().add(commandBlockHolder);
   }
 
   public List<CommandBlock> getProgram() {
@@ -79,6 +91,15 @@ public class ProgramStack extends VBox {
     });
   }
 
+  public void setLineIndicators(Map<Integer, Integer> lineNumbers) {
+    List<List<Integer>> indicators = new ArrayList<>();
+    programBlocks.forEach(commandBlockHolder -> indicators.add(new ArrayList<>()));
+    lineNumbers.forEach((id, lineNumber) -> indicators.get(lineNumber - 1).add(id));
+    for (int i = 0; i < programBlocks.size(); i++) {
+      programBlocks.get(i).setLineIndicators(indicators.get(i));
+    }
+  }
+
   private void moveCommandBlock(int oldIndex, int newIndex) {
     if (oldIndex < newIndex) {
       Collections.rotate(programBlocks.subList(oldIndex - 1, newIndex), -1);
@@ -99,4 +120,5 @@ public class ProgramStack extends VBox {
     });
     awaitingNewIndex = false;
   }
+
 }
