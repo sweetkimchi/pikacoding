@@ -63,19 +63,18 @@ public class CommandExecutor {
         Map<Integer, Integer> lineUpdates = new HashMap<>();
 
         //Map<ID, Values>
-        for (Map.Entry<Avatar, List<Integer>> entry : gameGrid.getAvatarList().entrySet()){
-            Avatar singleAvatar = (Avatar) entry.getKey();
+        for (Avatar avatar : gameGrid.getAvatarList()){
 
             // +1 is needed because program counters are 1 indexed
             // TODO: refactor with Reflection and properties files
-            if (singleAvatar.getProgramCounter() < mapOfCommandBlocks.size() + 1) {
+            if (avatar.getProgramCounter() < mapOfCommandBlocks.size() + 1) {
            //     modelController.setAvatarIDForUpdate(singleAvatar.getId());
 
-                lineUpdates.put(singleAvatar.getId(), singleAvatar.getProgramCounter());
+                lineUpdates.put(avatar.getId(), avatar.getProgramCounter());
                 score++;
                 modelController.updateScore(score);
                 ended = false;
-                CommandBlock currentCommand = mapOfCommandBlocks.get(singleAvatar.getProgramCounter());
+                CommandBlock currentCommand = mapOfCommandBlocks.get(avatar.getProgramCounter());
 //                System.out.printf("Running command #%d for avatar ID: %d\n", singleAvatar.getProgramCounter(), singleAvatar.getId());
                 AvatarData newUpdate = new AvatarData();
 //                System.out.println("Command currently running: " + currentCommand.getType() + " with parameter " + currentCommand.getParameters());
@@ -83,24 +82,24 @@ public class CommandExecutor {
 
 //                    System.out.printf("Executing step for avatar ID %d with program counter %d \n", singleAvatar.getId(), singleAvatar.getProgramCounter());
 //                    animationPane.moveAvatar(dummy, getDirection(currentCommand.getParameters().get("direction")));
-                    int xPrev = singleAvatar.getXCoord();
-                    int yPrev = singleAvatar.getYCoord();
+                    int xPrev = avatar.getXCoord();
+                    int yPrev = avatar.getYCoord();
 
                //     singleAvatar.step(getDirection(currentCommand.getParameters().get("direction")));
             //        gameGrid.step(dummy.getId(),getDirection(currentCommand.getParameters().get("direction")));
                     // update program counter
 
-                    gameGrid.step(singleAvatar.getId(),getDirection(currentCommand.getParameters().get("direction")));
-                    List<Integer> avatarCoordinates = gameGrid.getAvatarCoords(singleAvatar.getId());
-                    singleAvatar.setXCoord(avatarCoordinates.get(0));
-                    singleAvatar.setYCoord(avatarCoordinates.get(1));
+                    gameGrid.step(avatar.getId(),getDirection(currentCommand.getParameters().get("direction")));
+//                    List<Integer> avatarCoordinates = gameGrid.getAvatarCoords(avatar.getId());
+//                    avatar.setXCoord(avatarCoordinates.get(0));
+//                    avatar.setYCoord(avatarCoordinates.get(1));
 
-                    newUpdate.updatePositions(singleAvatar.getId(), singleAvatar.getXCoord(), singleAvatar.getYCoord(), singleAvatar.getProgramCounter());
+                    newUpdate.updatePositions(avatar.getId(), avatar.getXCoord(), avatar.getYCoord(), avatar.getProgramCounter());
            //         gameGrid.step(singleAvatar.getId(),getDirection(currentCommand.getParameters().get("direction")));
 
-                    singleAvatar.setProgramCounter(singleAvatar.getProgramCounter() + 1);
+                    avatar.setProgramCounter(avatar.getProgramCounter() + 1);
                     //TODO: delete after debug
-                    modelController.updateAvatarPositions(singleAvatar.getId(), singleAvatar.getXCoord(), singleAvatar.getYCoord());
+                    modelController.updateAvatarPositions(avatar.getId(), avatar.getXCoord(), avatar.getYCoord());
 
 
                     //TODO: refactor using a better data structure
@@ -111,16 +110,16 @@ public class CommandExecutor {
                 if(currentCommand.getType().equals("drop")){
     //                System.out.printf("Executing drop for avatar ID %d with program counter %d \n", singleAvatar.getId(), singleAvatar.getProgramCounter());
                     // update program counter
-                    singleAvatar.setProgramCounter(singleAvatar.getProgramCounter() + 1);
+                    avatar.setProgramCounter(avatar.getProgramCounter() + 1);
                 }
 
                 if(currentCommand.getType().equals("pickUp")){
 //                    System.out.printf("Executing pickUp for avatar ID %d with program counter %d \n", singleAvatar.getId(), singleAvatar.getProgramCounter());
                     // update program counter
-                    singleAvatar.setProgramCounter(singleAvatar.getProgramCounter() + 1);
+                    avatar.setProgramCounter(avatar.getProgramCounter() + 1);
                 }
                 if(currentCommand.getType().equals("jump")){
-                    singleAvatar.setProgramCounter(Integer.parseInt(currentCommand.getParameters().get("destination")));
+                    avatar.setProgramCounter(Integer.parseInt(currentCommand.getParameters().get("destination")));
                 }
 
 

@@ -1,9 +1,6 @@
 package ooga.model.parser;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +14,7 @@ import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.Avatar;
-import ooga.model.player.Datacube;
+import ooga.model.player.DataCube;
 
 public class InitialConfigurationParser {
 
@@ -98,7 +95,7 @@ public class InitialConfigurationParser {
       mapOfPeople.put(s, avatarLocation);
       if (addToGameGrid) {
         this.gameGrid.addGameElement(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
-            avatarLocation.get(1)), avatarLocation.get(0), avatarLocation.get(1));
+            avatarLocation.get(1)));
       }
 
     }
@@ -116,8 +113,8 @@ public class InitialConfigurationParser {
           (String) currentBlock.get("pickedUp")));
       allBlockData.put(s, blockData);
       if (addToGameGrid)  {
-        this.gameGrid.addGameElement(new Datacube(Integer.parseInt(s), blockLoc.get(0),
-            blockLoc.get(1)), blockLoc.get(0), blockLoc.get(1));
+        this.gameGrid.addGameElement(new DataCube(Integer.parseInt(s), blockLoc.get(0),
+            blockLoc.get(1), 0));
       }
 
     }
