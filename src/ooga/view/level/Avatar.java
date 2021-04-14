@@ -13,6 +13,8 @@ public class Avatar {
   private double height;
   private SpriteLayer spriteLayer;
   private ImageView avatar;
+  private int i = 0;
+  private int k = 0;
 
   public Avatar(int x, int y, double w, double h, SpriteLayer root) {
     initialXCoordinate = x;
@@ -33,8 +35,22 @@ public class Avatar {
   }
 
   public void moveAvatar(double x, double y) {
+    double currentX = avatar.getX();
+    double currentY = avatar.getY();
+    double nextX = x * width;
+    double nextY = y * height;
     avatar.setX(x * width);
     avatar.setY(y * height);
+
+    if(currentX < nextX) {
+      int num = ((i / 30) % 6) + 1;
+      setAvatarImage("AnimatedPikachuRight" + num + ".gif");
+      i++;
+    }else if(nextX < currentX){
+      int num = ((k/30) % 6) + 1;
+      setAvatarImage("AnimatedPikachuLeft" + num + ".gif");
+      k++;
+    }
   }
 
   public void reset() {
