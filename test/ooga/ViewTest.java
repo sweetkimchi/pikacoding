@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.Controller;
+import ooga.controller.FrontEndExternalAPI;
 import ooga.view.level.Avatar;
 import ooga.view.level.SpriteLayer;
 import ooga.view.level.codearea.ProgramStack;
@@ -20,13 +21,16 @@ import org.testfx.framework.junit5.ApplicationTest;
 class ViewTest extends ApplicationTest {
 
   private BackEndExternalAPI modelController;
+  private FrontEndExternalAPI viewController;
   private ProgramStack programStack;
   private Map<Integer, Avatar> avatars;
 
   @Override
   public void start(Stage stage) throws Exception {
     Controller controller = new Controller(stage);
+    viewController = (FrontEndExternalAPI)  getPrivateField(controller, "viewController");
     modelController = (BackEndExternalAPI)  getPrivateField(controller, "modelController");
+    viewController.initializeLevel(1);
     avatars = (Map<Integer, Avatar>) getPrivateField(lookup("#sprite-layer").queryAs(SpriteLayer.class), "avatars");
     programStack = lookup("#program-stack").queryAs(ProgramStack.class);
   }
