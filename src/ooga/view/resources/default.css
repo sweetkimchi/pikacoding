@@ -5,6 +5,15 @@
     -fx-background: #d9d9d9;
 }
 
+.start-screen {
+    -fx-alignment: CENTER;
+    -fx-spacing: 5.0;
+}
+
+.title {
+    -fx-font-size: 20pt;
+}
+
 .state {
     -fx-stroke: rgb(80, 80, 80);
     -fx-stroke-width: 0.5px;
