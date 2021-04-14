@@ -3,6 +3,7 @@ package ooga.model.commands;
 import java.util.Map;
 import ooga.model.Direction;
 import ooga.model.grid.ElementInformationBundle;
+import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
 import ooga.model.player.Element;
 import ooga.model.player.Player;
@@ -28,17 +29,17 @@ public class Step extends BasicCommands {
     public void execute(int ID) {
         Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
         Direction direction = getDirection(getParameters().get("direction"));
-        assert avatar != null;
         int currX = avatar.getXCoord();
         int currY = avatar.getYCoord();
         int newX = currX + direction.getXDel();
         int newY = currY + direction.getYDel();
+        Tile prevTile = getElementInformationBundle().getTile(currX, currY);
+        Tile nextTile = getElementInformationBundle().getTile(newX, newY);
+        //System.out.println(nextTile.getStructure());
 
-        System.out.println(getElementInformationBundle().getTile(newX, newY).getStructure());
-
-        if (getElementInformationBundle().getTile(newX, newY).canAddAvatar()) {
-            getElementInformationBundle().getTile(newX, newY).add(avatar);
-            getElementInformationBundle().getTile(currX, currY).removeAvatar();
+        if (nextTile.canAddAvatar()) {
+            nextTile.add(avatar);
+            prevTile.removeAvatar();
             avatar.setXCoord(newX);
             avatar.setYCoord(newY);
         } else {

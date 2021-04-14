@@ -1,0 +1,44 @@
+package ooga.model.commands;
+
+import java.util.Map;
+import ooga.model.Direction;
+import ooga.model.grid.ElementInformationBundle;
+import ooga.model.grid.Tile;
+import ooga.model.player.Avatar;
+
+public class PickUp extends BasicCommands {
+
+  /**
+   * Default constructor
+   *
+   * @param elementInformationBundle
+   * @param parameters
+   */
+  public PickUp(ElementInformationBundle elementInformationBundle,
+      Map<String, String> parameters) {
+    super(elementInformationBundle, parameters);
+  }
+
+  @Override
+  public void execute(int ID) {
+    Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
+    //TODO: determine if pick up should take in parameter, now defaults to the same tile
+    //Direction direction = getDirection(getParameters().get("direction"));
+    Direction direction = Direction.SELF;
+    int currX = avatar.getXCoord();
+    int currY = avatar.getYCoord();
+    int newX = currX + direction.getXDel();
+    int newY = currY + direction.getYDel();
+    Tile tileToPickUpFrom = getElementInformationBundle().getTile(newX,newY);
+    if (tileToPickUpFrom.hasBlock()) {
+      avatar.pickUp(tileToPickUpFrom.getBlock());
+      tileToPickUpFrom.removeBlock();
+    } else {
+      //TODO: throw error to handler
+      System.out.println("There is no block to be picked up!");
+    }
+
+    avatar.setProgramCounter(avatar.getProgramCounter() + 1);
+
+  }
+}
