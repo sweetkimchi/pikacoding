@@ -63,6 +63,8 @@ public class Block extends StackPane {
   public void reset() {
     this.setTranslateX(initialXCoordinate * width + padding);
     this.setTranslateY(initialYCoordinate * height + padding);
+    currentX = initialXCoordinate * width + padding;
+    currentY = initialYCoordinate * height + padding;
   }
 
   public int getInitialXCoordinate(){

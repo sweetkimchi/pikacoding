@@ -43,16 +43,17 @@ public class Step extends BasicCommands {
             prevTile.removeAvatar();
             avatar.setXCoord(newX);
             avatar.setYCoord(newY);
+            if(avatar.hasBlock()){
+                avatar.getHeldItem().setXCoord(newX);
+                avatar.getHeldItem().setYCoord(newY);
+                getElementInformationBundle().getModelController().updateBlockPositions(avatar.getHeldItem().getId(), avatar.getHeldItem().getXCoord(), avatar.getHeldItem().getYCoord());
+            }
         } else {
             //TODO: throw error to handler?
             System.out.println("The avatar cannot step here!");
         }
 
-        if(avatar.hasBlock()){
-            avatar.getHeldItem().setXCoord(newX);
-            avatar.getHeldItem().setYCoord(newY);
-            getElementInformationBundle().getModelController().updateBlockPositions(avatar.getHeldItem().getId(), avatar.getHeldItem().getXCoord(), avatar.getHeldItem().getYCoord());
-        }
+
 
         getElementInformationBundle().getModelController().updateAvatarPositions(avatar.getId(), avatar.getXCoord(), avatar.getYCoord());
 
