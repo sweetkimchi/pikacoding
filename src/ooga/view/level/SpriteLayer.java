@@ -103,10 +103,10 @@ public class SpriteLayer extends Pane {
         double currentY = avatars.get(entry.getKey()).getInitialYCoordinate();
 
 
-        System.out.println("CurrentX: " + currentX);
-        System.out.println("CurrentY: " + currentY);
-        System.out.println("NextX: " + nextX);
-        System.out.println("NextY: " + nextY);
+//        System.out.println("CurrentX: " + currentX);
+//        System.out.println("CurrentY: " + currentY);
+//        System.out.println("NextX: " + nextX);
+//        System.out.println("NextY: " + nextY);
 
         System.out.println();
         avatars.get(entry.getKey()).moveAvatar(nextX, nextY);
