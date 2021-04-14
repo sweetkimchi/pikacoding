@@ -18,7 +18,6 @@ public class ProgramStack extends VBox {
   private List<CommandBlockHolder> programBlocks;
   private AvailableCommands availableCommands;
 
-  private boolean awaitingNewIndex = false;
   private int newIndex = 0;
 
   public ProgramStack() {
@@ -43,19 +42,19 @@ public class ProgramStack extends VBox {
           command, parameterOptions, this);
       programBlocks.add(commandBlockHolder);
       this.getChildren().add(commandBlockHolder);
-    }
-    else if (command.equals("if")) {
-      NestedBeginBlockHolder beginCommandBlockHolder = new NestedBeginBlockHolder(programBlocks.size() + 1,
+    } else if (command.equals("if")) {
+      NestedBeginBlockHolder beginCommandBlockHolder = new NestedBeginBlockHolder(
+          programBlocks.size() + 1,
           command, parameterOptions, this);
       programBlocks.add(beginCommandBlockHolder);
-      NestedEndBlockHolder endCommandBlockHolder = new NestedEndBlockHolder(programBlocks.size() + 1,
+      NestedEndBlockHolder endCommandBlockHolder = new NestedEndBlockHolder(
+          programBlocks.size() + 1,
           command, this);
       programBlocks.add(endCommandBlockHolder);
       beginCommandBlockHolder.attachEndHolder(endCommandBlockHolder);
       endCommandBlockHolder.attachBeginHolder(beginCommandBlockHolder);
       this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder);
-    }
-    else {
+    } else {
       CommandBlockHolder commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
           command, parameterOptions, this);
       programBlocks.add(commandBlockHolder);
@@ -77,16 +76,21 @@ public class ProgramStack extends VBox {
     }
   }
 
-  public void startDrag(CommandBlockHolder commandBlockHolder) {
+  public void startMove(CommandBlockHolder commandBlockHolder) {
     newIndex = commandBlockHolder.getCommandBlock().getIndex();
-    awaitingNewIndex = true;
+    commandBlockHolder.getStyleClass().add("command-block-selected");
     programBlocks.forEach(other -> {
+      other.setButtonsDisabled(true);
       other.setOnMouseEntered(e -> {
-        if (awaitingNewIndex) {
-          newIndex = other.getCommandBlock().getIndex();
-          moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
-          stopDrag();
-        }
+        other.getStyleClass().add("command-block-hovered");
+        newIndex = other.getCommandBlock().getIndex();
+      });
+      other.setOnMouseExited(e -> {
+        other.getStyleClass().remove("command-block-hovered");
+      });
+      other.setOnMouseClicked(e -> {
+        moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
+        resetMouseActions();
       });
     });
   }
@@ -100,11 +104,22 @@ public class ProgramStack extends VBox {
     }
   }
 
+  private void resetMouseActions() {
+    programBlocks.forEach(commandBlockHolder -> {
+      commandBlockHolder.getStyleClass().remove("command-block-selected");
+      commandBlockHolder.getStyleClass().remove("command-block-hovered");
+      commandBlockHolder.setButtonsDisabled(false);
+      commandBlockHolder.setOnMouseEntered(e -> {
+      });
+      commandBlockHolder.setOnMouseClicked(e -> {
+      });
+    });
+  }
+
   private void moveCommandBlock(int oldIndex, int newIndex) {
     if (oldIndex < newIndex) {
       Collections.rotate(programBlocks.subList(oldIndex - 1, newIndex), -1);
-    }
-    else if (oldIndex > newIndex) {
+    } else if (oldIndex > newIndex) {
       Collections.rotate(programBlocks.subList(newIndex - 1, oldIndex), 1);
     }
     this.getChildren().clear();
@@ -112,13 +127,6 @@ public class ProgramStack extends VBox {
       programBlocks.get(i).setIndex(i + 1);
       this.getChildren().add(programBlocks.get(i));
     }
-  }
-
-  private void stopDrag() {
-    programBlocks.forEach(other -> {
-      other.setOnMouseEntered(e -> {});
-    });
-    awaitingNewIndex = false;
   }
 
 }
