@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AvatarData {
+public class AvatarData extends ElementData{
 
   private Map<String, List<Integer>> avatarData;
   private int id;
@@ -14,22 +14,7 @@ public class AvatarData {
   private int lineNumber;
 
   public AvatarData(){
-    avatarData = new HashMap<>();
-  }
-
-  public void updatePositions(int id, int xCoord, int yCoord, int lineNumber) {
-    this.id = id;
-    this.xCoord = xCoord;
-    this.yCoord = yCoord;
-    this.lineNumber = lineNumber;
-  }
-
-  public List<Integer> getPositionUpdates(){
-    List<Integer> positions = new ArrayList<>();
-    positions.add(id);
-    positions.add(xCoord);
-    positions.add(yCoord);
-    return positions;
+    super();
   }
 
   public int getCommandLineNumber(){

@@ -35,7 +35,7 @@ public class Block extends StackPane {
     makeBlock();
   }
 
-  public void moveBlock(int x, int y) {
+  public void moveBlock(double x, double y) {
     this.setTranslateX(x * width + padding);
     currentX = block.getX();
     this.setTranslateY(y * height + padding);
@@ -74,9 +74,18 @@ public class Block extends StackPane {
     this.setTranslateY(initialYCoordinate * height + padding);
   }
 
+  public int getInitialXCoordinate(){
+    return (int) (block.getX()/width);
+  }
+
+  public int getInitialYCoordinate(){
+    return (int) (block.getY()/height);
+  }
+
   private void makeBlock() {
     block = new Rectangle(width - 2 * padding, height - 2 * padding);
     block.setFill(Color.LIGHTSEAGREEN); // TODO: put in resource file
+
     blockText = new Text(number);
     this.getChildren().add(block);
     this.getChildren().add(blockText);

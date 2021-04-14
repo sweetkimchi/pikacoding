@@ -75,4 +75,8 @@ public interface BackEndExternalAPI {
    * @param lineUpdates
    */
   void setLineIndicators(Map<Integer, Integer> lineUpdates);
+
+  void updateBlock(int id, boolean b);
+
+  void updateBlockPositions(int id, int xCoord, int yCoord);
 }

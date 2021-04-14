@@ -5,6 +5,7 @@ import ooga.model.Direction;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
+import ooga.model.player.Block;
 
 public class PickUp extends BasicCommands {
 
@@ -31,13 +32,17 @@ public class PickUp extends BasicCommands {
     int newY = currY + direction.getYDel();
     Tile tileToPickUpFrom = getElementInformationBundle().getTile(newX,newY);
     if (tileToPickUpFrom.hasBlock()) {
-      avatar.pickUp(tileToPickUpFrom.getBlock());
+      Block block = tileToPickUpFrom.getBlock();
+      System.out.println("Pickup " + block.getId());
+
+      avatar.pickUp(block);
+
+      getElementInformationBundle().getModelController().updateBlock(block.getId(), avatar.hasBlock());
       tileToPickUpFrom.removeBlock();
     } else {
       //TODO: throw error to handler
       System.out.println("There is no block to be picked up!");
     }
-
     avatar.setProgramCounter(avatar.getProgramCounter() + 1);
 
   }

@@ -31,6 +31,9 @@ public class Drop extends BasicCommands {
       if (block == null) {
         //TODO: throw error to handler
         System.out.println("You are not holding a block!");
+      }else{
+        getElementInformationBundle().getModelController().updateBlock(block.getId(),
+            avatar.hasBlock());
       }
       currTile.add(block);
     } else {

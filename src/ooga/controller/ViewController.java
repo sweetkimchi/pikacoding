@@ -125,6 +125,11 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.setLineIndicators(lineUpdates);
     }
 
+    @Override
+    public void updateBlockPositions(int id, int xCoord, int yCoord) {
+        levelView.updateBlockPositions(id, xCoord,yCoord);
+    }
+
     /**
      * Passes in the commands to be parsed
      *

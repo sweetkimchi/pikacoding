@@ -154,4 +154,14 @@ public class ModelController implements BackEndExternalAPI {
     viewController.setLineIndicators(lineUpdates);
 
   }
+
+  @Override
+  public void updateBlock(int id, boolean b) {
+    System.out.println("Updating block "+ id + " because now the blockheld is " + b);
+  }
+
+  @Override
+  public void updateBlockPositions(int id, int xCoord, int yCoord) {
+    viewController.updateBlockPositions(id, xCoord, yCoord);
+  }
 }
