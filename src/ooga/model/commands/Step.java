@@ -10,8 +10,8 @@ import ooga.model.player.Avatar;
  */
 public class Step extends BasicCommands {
 
-    private GameGrid gameGrid;
-    private Direction direction;
+    private final GameGrid gameGrid;
+    private final Direction direction;
 
     /**
      * Default constructor

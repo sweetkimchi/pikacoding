@@ -168,9 +168,11 @@ public class GameGrid implements Grid {
    * @param y The y-coordinate of the tile
    * @return A TileData object containing information about the tile
    */
-  public TileData getTile(int x, int y) {
+  public TileData getTileData(int x, int y) {
     return new TileData(grid[x][y]);
   }
 
-
+  public Tile getTile(int x, int y) {
+    return grid[x][y];
+  }
 }

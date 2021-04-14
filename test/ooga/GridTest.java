@@ -50,29 +50,29 @@ public class GridTest {
 
   @Test
   public void avatarStepRight() {
-    assertTrue(gameGrid.getTile(5,5).hasAvatar());
+    assertTrue(gameGrid.getTileData(5,5).hasAvatar());
     gameGrid.step(10, Direction.RIGHT);
-    assertTrue(gameGrid.getTile(6,5).hasAvatar());
-    assertFalse(gameGrid.getTile(5,5).hasAvatar());
+    assertTrue(gameGrid.getTileData(6,5).hasAvatar());
+    assertFalse(gameGrid.getTileData(5,5).hasAvatar());
   }
 
   @Test
   public void avatarAttemptsToStepIntoWall() {
     gameGrid.setStructure(6, 5, Structure.WALL);
-    assertTrue(gameGrid.getTile(5,5).hasAvatar());
+    assertTrue(gameGrid.getTileData(5,5).hasAvatar());
     gameGrid.step(10, Direction.RIGHT);
-    assertFalse(gameGrid.getTile(6,5).hasAvatar());
-    assertTrue(gameGrid.getTile(5,5).hasAvatar());
+    assertFalse(gameGrid.getTileData(6,5).hasAvatar());
+    assertTrue(gameGrid.getTileData(5,5).hasAvatar());
   }
 
   @Test
   public void avatarAttemptsToStepIntoAnotherAvatar() {
     Avatar newAvatar = new Avatar(15, 6, 6);
     gameGrid.addGameElement(newAvatar);
-    assertTrue(gameGrid.getTile(5,5).hasAvatar());
+    assertTrue(gameGrid.getTileData(5,5).hasAvatar());
     gameGrid.step(10, Direction.DOWN_RIGHT);
-    assertTrue(gameGrid.getTile(6,6).hasAvatar());
-    assertTrue(gameGrid.getTile(5,5).hasAvatar());
+    assertTrue(gameGrid.getTileData(6,6).hasAvatar());
+    assertTrue(gameGrid.getTileData(5,5).hasAvatar());
   }
 
   @Test
@@ -92,7 +92,7 @@ public class GridTest {
     gameGrid.pickUp(10, Direction.SELF);
     gameGrid.step(10, Direction.RIGHT);
     gameGrid.drop(10);
-    assertEquals(dataCube.getId(), gameGrid.getTile(6, 5).getBlockId());
+    assertEquals(dataCube.getId(), gameGrid.getTileData(6, 5).getBlockId());
   }
 
 }

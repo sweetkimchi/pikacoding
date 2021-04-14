@@ -104,4 +104,8 @@ public class Avatar extends Player {
     public boolean hasBlock() {
         return heldItem != null;
     }
+
+    public Block getHeldItem() {
+        return heldItem;
+    }
 }
