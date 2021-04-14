@@ -25,6 +25,7 @@ public class CommandExecutor {
     private GameGrid gameGrid;
     private BoardState initialState;
     private AnimationPane animationPane;
+    private int score;
     /**
      * Default constructor
      */
@@ -33,14 +34,13 @@ public class CommandExecutor {
         this.initialState = initialState;
         programCounter = 1;
         this.gameGrid = gameGrid;
-        System.out.println("Avatar IDs: " + gameGrid.getAvatarIds());
-        System.out.println("Avatars: " + gameGrid.getAvatarList());
+//        System.out.println("Avatar IDs: " + gameGrid.getAvatarIds());
+//        System.out.println("Avatars: " + gameGrid.getAvatarList());
         this.modelController = modelController;
         mapOfCommandBlocks = new HashMap<>();
-        System.out.println("Command block received from frontend");
-        System.out.println("Initial Avatar Positions: " + initialState.getAllAvatarLocations().entrySet());
-
-
+        score = 0;
+//        System.out.println("Command block received from frontend");
+//        System.out.println("Initial Avatar Positions: " + initialState.getAllAvatarLocations().entrySet());
     //    System.out.println("Initial State of the Board: " + initialState.getAllBlockData().get("1").getLocation());
 
         // build a map of all commands to be executed
@@ -55,6 +55,9 @@ public class CommandExecutor {
     }
 
     public void runNextCommand() {
+
+
+
         boolean ended = true;
         System.out.println();
         Map<String, AvatarData> updates = new HashMap<>();
@@ -66,13 +69,16 @@ public class CommandExecutor {
             // TODO: refactor with Reflection and properties files
             if (singleAvatar.getProgramCounter() < mapOfCommandBlocks.size() + 1) {
            //     modelController.setAvatarIDForUpdate(singleAvatar.getId());
+                score++;
+                modelController.updateScore(score);
                 ended = false;
                 CommandBlock currentCommand = mapOfCommandBlocks.get(singleAvatar.getProgramCounter());
+                System.out.printf("Running command #%d for avatar ID: %d\n", singleAvatar.getProgramCounter(), singleAvatar.getId());
                 AvatarData newUpdate = new AvatarData();
-                System.out.println("Command currently running: " + currentCommand.getType() + " with parameter " + currentCommand.getParameters());
+//                System.out.println("Command currently running: " + currentCommand.getType() + " with parameter " + currentCommand.getParameters());
                 if(currentCommand.getType().equals("step")){
 
-                    System.out.printf("Executing step for avatar ID %d with program counter %d \n", singleAvatar.getId(), singleAvatar.getProgramCounter());
+//                    System.out.printf("Executing step for avatar ID %d with program counter %d \n", singleAvatar.getId(), singleAvatar.getProgramCounter());
 //                    animationPane.moveAvatar(dummy, getDirection(currentCommand.getParameters().get("direction")));
                     int xPrev = singleAvatar.getXCoord();
                     int yPrev = singleAvatar.getYCoord();
@@ -100,15 +106,18 @@ public class CommandExecutor {
                 }
 
                 if(currentCommand.getType().equals("drop")){
-                    System.out.printf("Executing drop for avatar ID %d with program counter %d \n", singleAvatar.getId(), singleAvatar.getProgramCounter());
+    //                System.out.printf("Executing drop for avatar ID %d with program counter %d \n", singleAvatar.getId(), singleAvatar.getProgramCounter());
                     // update program counter
                     singleAvatar.setProgramCounter(singleAvatar.getProgramCounter() + 1);
                 }
 
                 if(currentCommand.getType().equals("pickUp")){
-                    System.out.printf("Executing pickUp for avatar ID %d with program counter %d \n", singleAvatar.getId(), singleAvatar.getProgramCounter());
+//                    System.out.printf("Executing pickUp for avatar ID %d with program counter %d \n", singleAvatar.getId(), singleAvatar.getProgramCounter());
                     // update program counter
                     singleAvatar.setProgramCounter(singleAvatar.getProgramCounter() + 1);
+                }
+                if(currentCommand.getType().equals("jump")){
+                    singleAvatar.setProgramCounter(Integer.parseInt(currentCommand.getParameters().get("jump")));
                 }
 
 
@@ -119,8 +128,10 @@ public class CommandExecutor {
      //   modelController.updateFrontEndElements(updates);
 
         if(ended){
-
+            System.out.println("SCORE (CommandExecutor): " + score);
             modelController.declareEndOfAnimation();
+
+            score = 0;
         }
 
     }
