@@ -44,6 +44,7 @@ public class Board extends StackPane {
     spriteLayer.resetBlockData();
     spriteLayer.resetQueue();
     spriteLayer.resetAnimationQueue();
+    spriteLayer.resetAvatarImages();
   }
 
   public void initializeBoard(GameGridData gameGridData, InitialState initialState) {

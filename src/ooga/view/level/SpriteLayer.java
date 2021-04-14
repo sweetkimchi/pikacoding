@@ -123,4 +123,13 @@ public class SpriteLayer extends Pane {
 
   public void resetQueue() {
   }
+
+  //TODO: refactor with css
+  public void resetAvatarImages() {
+    if(allElementInformation != null){
+      for(Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()){
+        avatars.get(entry.getKey()).setAvatarImage("PikachuAvatar.gif");
+      }
+    }
+  }
 }
