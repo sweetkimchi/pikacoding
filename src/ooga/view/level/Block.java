@@ -58,6 +58,17 @@ public class Block extends StackPane {
     System.out.println(currentY);
   }
 
+  /**
+   * Purpose: update number on datacube based on what backend/controller passes.
+   * @param num
+   */
+  public void updateCubeNumber(int num) {
+    this.getChildren().remove(blockText);
+    number = String.valueOf(num);
+    blockText.setText(number);
+    this.getChildren().add(blockText);
+  }
+
   public void reset() {
     this.setTranslateX(initialXCoordinate * width + padding);
     this.setTranslateY(initialYCoordinate * height + padding);
