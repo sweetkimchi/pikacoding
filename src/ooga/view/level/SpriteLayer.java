@@ -127,8 +127,9 @@ public class SpriteLayer extends Pane {
   //TODO: refactor with css
   public void resetAvatarImages() {
     if(allElementInformation != null){
-      for(Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()){
+      for(Map.Entry<Integer,Avatar> entry : avatars.entrySet()){
         avatars.get(entry.getKey()).setAvatarImage("PikachuAvatar.gif");
+        System.out.println("Okay");
       }
     }
   }
