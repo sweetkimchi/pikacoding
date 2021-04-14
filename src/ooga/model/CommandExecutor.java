@@ -59,7 +59,7 @@ public class CommandExecutor {
 
 
         boolean ended = true;
-        System.out.println();
+//        System.out.println();
         Map<String, AvatarData> updates = new HashMap<>();
         //Map<ID, Values>
         for (Map.Entry<Avatar, List<Integer>> entry : gameGrid.getAvatarList().entrySet()){
@@ -73,9 +73,9 @@ public class CommandExecutor {
                 modelController.updateScore(score);
                 ended = false;
                 CommandBlock currentCommand = mapOfCommandBlocks.get(singleAvatar.getProgramCounter());
-                System.out.printf("Running command #%d for avatar ID: %d\n", singleAvatar.getProgramCounter(), singleAvatar.getId());
+//                System.out.printf("Running command #%d for avatar ID: %d\n", singleAvatar.getProgramCounter(), singleAvatar.getId());
                 AvatarData newUpdate = new AvatarData();
-                System.out.println("Command currently running: " + currentCommand.getType() + " with parameter " + currentCommand.getParameters());
+//                System.out.println("Command currently running: " + currentCommand.getType() + " with parameter " + currentCommand.getParameters());
                 if(currentCommand.getType().equals("step")){
 
 //                    System.out.printf("Executing step for avatar ID %d with program counter %d \n", singleAvatar.getId(), singleAvatar.getProgramCounter());
@@ -92,7 +92,7 @@ public class CommandExecutor {
                     singleAvatar.setXCoord(avatarCoordinates.get(0));
                     singleAvatar.setYCoord(avatarCoordinates.get(1));
 
-                    newUpdate.updatePositions(singleAvatar.getId(), singleAvatar.getXCoord(), singleAvatar.getYCoord());
+                    newUpdate.updatePositions(singleAvatar.getId(), singleAvatar.getXCoord(), singleAvatar.getYCoord(), singleAvatar.getProgramCounter());
            //         gameGrid.step(singleAvatar.getId(),getDirection(currentCommand.getParameters().get("direction")));
 
                     singleAvatar.setProgramCounter(singleAvatar.getProgramCounter() + 1);
