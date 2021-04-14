@@ -11,6 +11,7 @@ public class LevelSelector extends BorderPane {
   private static final int NUM_LEVELS = 3;
 
   public LevelSelector(Consumer<Integer> loadLevelAction) {
+    this.getStylesheets().add(StartMenu.DEFAULT_CSS);
     VBox levels = new VBox();
     for (int level = 1; level <= NUM_LEVELS; level++) {
       Button levelButton = new Button("Level " + level);
@@ -18,8 +19,8 @@ public class LevelSelector extends BorderPane {
       levelButton.setOnAction(e -> loadLevelAction.accept(thisLevel));
       levels.getChildren().add(levelButton);
     }
+    levels.getStyleClass().add("level-selector");
     this.setCenter(levels);
-    BorderPane.setAlignment(levels, Pos.CENTER);
   }
 
 }
