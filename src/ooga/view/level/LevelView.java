@@ -18,6 +18,7 @@ import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.AvatarData;
 import ooga.view.ScreenCreator;
+import ooga.view.StartMenu;
 import ooga.view.level.codearea.CodeArea;
 
 /**
@@ -30,8 +31,6 @@ import ooga.view.level.codearea.CodeArea;
 public class LevelView extends BorderPane {
 
   public static final String LEVEL_PROPERTIES = "Level";
-  private static final String DEFAULT_CSS = ScreenCreator.RESOURCES.replace(".", "/")
-          + "default.css";
 
   private final FrontEndExternalAPI viewController;
   private final ScreenCreator screenCreator;
@@ -53,7 +52,7 @@ public class LevelView extends BorderPane {
   public LevelView(FrontEndExternalAPI viewController, ScreenCreator screenCreator) {
     this.viewController = viewController;
     this.screenCreator = screenCreator;
-    this.getStylesheets().add(DEFAULT_CSS);
+    this.getStylesheets().add(StartMenu.DEFAULT_CSS);
     menuBar = new MenuBar(e -> openPauseMenu());
     board = new Board();
     codeArea = new CodeArea();
