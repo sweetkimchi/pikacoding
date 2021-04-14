@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import ooga.model.Direction;
+import ooga.model.grid.gridData.BlockData;
 import ooga.model.grid.gridData.TileData;
 import ooga.model.player.Avatar;
 import ooga.model.player.DataCube;
@@ -18,13 +19,23 @@ public class GameGrid implements Grid {
 
   private Tile[][] grid;
   private final List<Avatar> avatarList;
+  private final List<DataCube> dataCubeList;
 
   public GameGrid() {
     avatarList = new ArrayList<>();
+    dataCubeList = new ArrayList<>();
   }
 
   public List<Avatar> getAvatarList() {
     return Collections.unmodifiableList(avatarList);
+  }
+
+  public List<BlockData> getBlockData() {
+    List<BlockData> ret = new ArrayList<>();
+    for (DataCube dataCube : dataCubeList) {
+      ret.add(new BlockData(dataCube));
+    }
+    return ret;
   }
 
   @Override
@@ -54,7 +65,7 @@ public class GameGrid implements Grid {
       avatarList.add((Avatar) gameElement);
     }
     if (gameElement instanceof DataCube) {
-
+      dataCubeList.add((DataCube) gameElement);
     }
   }
 
