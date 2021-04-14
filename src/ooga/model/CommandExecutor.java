@@ -68,9 +68,10 @@ public class CommandExecutor {
 
             // +1 is needed because program counters are 1 indexed
             // TODO: refactor with Reflection and properties files
-            lineUpdates.put(singleAvatar.getId(), singleAvatar.getProgramCounter());
             if (singleAvatar.getProgramCounter() < mapOfCommandBlocks.size() + 1) {
            //     modelController.setAvatarIDForUpdate(singleAvatar.getId());
+
+                lineUpdates.put(singleAvatar.getId(), singleAvatar.getProgramCounter());
                 score++;
                 modelController.updateScore(score);
                 ended = false;
