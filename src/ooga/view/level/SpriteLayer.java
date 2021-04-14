@@ -4,6 +4,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import ooga.model.grid.gridData.BlockData;
 import ooga.view.animation.Animation;
@@ -69,6 +70,10 @@ public class SpriteLayer extends Pane {
           ySize, this, "" + blockData.getBlockNumber());
       blocks.put(Integer.parseInt(id), block);
     });
+
+    Button test = new Button("shift");
+    test.setOnAction(e -> blocks.get(5).moveBlock(1, 1));
+    this.getChildren().add(test);
   }
 
   /**

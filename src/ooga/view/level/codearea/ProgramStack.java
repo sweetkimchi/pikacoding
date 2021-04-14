@@ -18,7 +18,6 @@ public class ProgramStack extends VBox {
   private List<CommandBlockHolder> programBlocks;
   private AvailableCommands availableCommands;
 
-  private boolean awaitingNewIndex = false;
   private int newIndex = 0;
 
   public ProgramStack() {
@@ -77,16 +76,16 @@ public class ProgramStack extends VBox {
     }
   }
 
-  public void startDrag(CommandBlockHolder commandBlockHolder) {
+  public void startMove(CommandBlockHolder commandBlockHolder) {
     newIndex = commandBlockHolder.getCommandBlock().getIndex();
-    awaitingNewIndex = true;
     programBlocks.forEach(other -> {
+      other.disableButtons();
       other.setOnMouseEntered(e -> {
-        if (awaitingNewIndex) {
-          newIndex = other.getCommandBlock().getIndex();
-          moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
-          stopDrag();
-        }
+        newIndex = other.getCommandBlock().getIndex();
+      });
+      other.setOnMouseClicked(e -> {
+        moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
+        resetMouseActions();
       });
     });
   }
@@ -98,6 +97,13 @@ public class ProgramStack extends VBox {
     for (int i = 0; i < programBlocks.size(); i++) {
       programBlocks.get(i).setLineIndicators(indicators.get(i));
     }
+  }
+
+  private void resetMouseActions() {
+    programBlocks.forEach(commandBlockHolder -> {
+      commandBlockHolder.setOnMouseEntered(e -> {});
+      commandBlockHolder.setOnMouseClicked(e -> {});
+    });
   }
 
   private void moveCommandBlock(int oldIndex, int newIndex) {
@@ -112,13 +118,6 @@ public class ProgramStack extends VBox {
       programBlocks.get(i).setIndex(i + 1);
       this.getChildren().add(programBlocks.get(i));
     }
-  }
-
-  private void stopDrag() {
-    programBlocks.forEach(other -> {
-      other.setOnMouseEntered(e -> {});
-    });
-    awaitingNewIndex = false;
   }
 
 }

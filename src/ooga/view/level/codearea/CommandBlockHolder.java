@@ -9,8 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -19,7 +17,6 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * JavaFX element that displays a CommandBlock. Shows line number, command type, and parameter
@@ -33,14 +30,14 @@ public class CommandBlockHolder extends GridPane {
   private static final double INDEX_WIDTH = 20;
   private static final double ITEM_HEIGHT = 30;
   private static final double PADDING = 4;
-  private static final String HAMBURGER_MENU_IMAGE = "ThreeLines.png";
 
   private int index;
   private List<Map<String, List<String>>> parameterOptions;
   private HBox lineIndicators;
   private Label indexLabel;
   private CommandBlock commandBlock;
-  private ImageView hamburgerMenu;
+  private Button moveButton;
+  private Button removeButton;
   private ProgramStack programStack;
 
   private int columns;
@@ -48,7 +45,7 @@ public class CommandBlockHolder extends GridPane {
   public CommandBlockHolder(int index, String type,
       List<Map<String, List<String>>> parameterOptions, ProgramStack programStack) {
     this.getStyleClass().add("command-block-holder");
-    this.setHgap(5);
+    this.setHgap(4);
     this.columns = 0;
     this.programStack = programStack;
     lineIndicators = new HBox();
@@ -81,20 +78,16 @@ public class CommandBlockHolder extends GridPane {
     removeButton.setOnAction(e -> removeAction(programStack));
     addItem(removeButton, 0);
 
-    hamburgerMenu = new ImageView(new Image(HAMBURGER_MENU_IMAGE));
-    hamburgerMenu.setFitHeight(ITEM_HEIGHT);
-    hamburgerMenu.setFitWidth(ITEM_HEIGHT);
-    addItem(hamburgerMenu, 0);
-    hamburgerMenu.setOnMousePressed(e -> {
-      programStack.startDrag(this);
-    });
+    moveButton = new Button("Move");
+    addItem(moveButton, 0);
+    moveButton.setOnAction(e -> programStack.startMove(this));
 
     RowConstraints rowConstraints = new RowConstraints();
     rowConstraints.setMinHeight(ITEM_HEIGHT);
     this.getRowConstraints().add(rowConstraints);
 
     setIndex(index);
-//    this.setPadding(new Insets(4, 4, 4, 4));
+    this.setPadding(new Insets(0, 2, 0, 0));
   }
 
   public CommandBlock getCommandBlock() {
@@ -117,6 +110,11 @@ public class CommandBlockHolder extends GridPane {
       Label indicator = new Label("" + id);
       lineIndicators.getChildren().add(indicator);
     }
+  }
+
+  public void disableButtons() {
+    moveButton.setDisable(true);
+
   }
 
   protected void initializeDropdowns() {
