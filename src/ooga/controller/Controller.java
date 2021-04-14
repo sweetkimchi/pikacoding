@@ -22,7 +22,7 @@ public class Controller {
         viewController.setModelController(modelController);
         modelController.setViewController(viewController);
 
-        viewController.initializeLevel(1);
+        viewController.loadStartMenu();
     }
 
 }
