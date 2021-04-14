@@ -78,10 +78,15 @@ public class ProgramStack extends VBox {
 
   public void startMove(CommandBlockHolder commandBlockHolder) {
     newIndex = commandBlockHolder.getCommandBlock().getIndex();
+    commandBlockHolder.getStyleClass().add("command-block-selected");
     programBlocks.forEach(other -> {
       other.setButtonsDisabled(true);
       other.setOnMouseEntered(e -> {
+        other.getStyleClass().add("command-block-hovered");
         newIndex = other.getCommandBlock().getIndex();
+      });
+      other.setOnMouseExited(e -> {
+        other.getStyleClass().remove("command-block-hovered");
       });
       other.setOnMouseClicked(e -> {
         moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
@@ -101,6 +106,8 @@ public class ProgramStack extends VBox {
 
   private void resetMouseActions() {
     programBlocks.forEach(commandBlockHolder -> {
+      commandBlockHolder.getStyleClass().remove("command-block-selected");
+      commandBlockHolder.getStyleClass().remove("command-block-hovered");
       commandBlockHolder.setButtonsDisabled(false);
       commandBlockHolder.setOnMouseEntered(e -> {
       });

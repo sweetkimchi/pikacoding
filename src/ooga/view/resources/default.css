@@ -40,6 +40,14 @@
     -fx-background-color: #339933;
 }
 
+.command-block-selected {
+    -fx-background-color: #66a3ff;
+}
+
+.command-block-hovered {
+    -fx-background-color: #66cc66;
+}
+
 .control-panel {
     -fx-padding: 10 10 10 200;
     -fx-background-radius: 10;
