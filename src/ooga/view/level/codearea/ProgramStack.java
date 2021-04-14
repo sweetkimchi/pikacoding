@@ -38,17 +38,27 @@ public class ProgramStack extends VBox {
       parameterOptionsMap.put(parameter, availableCommands.getParameterOptions(command, parameter));
       parameterOptions.add(parameterOptionsMap);
     });
-    CommandBlockHolder commandBlockHolder;
     if (command.equals("jump")) {
-      commandBlockHolder = new JumpCommandBlockHolder(programBlocks.size() + 1,
+      CommandBlockHolder commandBlockHolder = new JumpCommandBlockHolder(programBlocks.size() + 1,
           command, parameterOptions, this);
+      programBlocks.add(commandBlockHolder);
+      this.getChildren().add(commandBlockHolder);
+    }
+    else if (command.equals("if")) {
+      NestedBeginBlockHolder beginCommandBlockHolder = new NestedBeginBlockHolder(programBlocks.size() + 1,
+          command, parameterOptions, this);
+      programBlocks.add(beginCommandBlockHolder);
+      NestedEndBlockHolder endCommandBlockHolder = new NestedEndBlockHolder(programBlocks.size() + 1,
+          command, this);
+      programBlocks.add(endCommandBlockHolder);
+      this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder);
     }
     else {
-      commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
+      CommandBlockHolder commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
           command, parameterOptions, this);
+      programBlocks.add(commandBlockHolder);
+      this.getChildren().add(commandBlockHolder);
     }
-    programBlocks.add(commandBlockHolder);
-    this.getChildren().add(commandBlockHolder);
   }
 
   public List<CommandBlock> getProgram() {
