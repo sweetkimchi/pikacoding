@@ -79,4 +79,6 @@ public interface BackEndExternalAPI {
   void updateBlock(int id, boolean b);
 
   void updateBlockPositions(int id, int xCoord, int yCoord);
+
+  void winLevel();
 }

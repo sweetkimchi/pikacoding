@@ -149,9 +149,8 @@ public class LevelView extends BorderPane {
   }
 
   private void pause() {
-    viewController.winLevel();
-//    System.out.println("pause");
-//    timeline.stop();
+    System.out.println("pause");
+    timeline.stop();
   }
 
   private void play() {
@@ -240,7 +239,11 @@ public class LevelView extends BorderPane {
   }
 
   public void winLevel() {
-    declareEndOfAnimation();
+    try {
+      Thread.sleep(2000);
+    } catch (Exception e) {
+
+    }
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
         e -> screenCreator.initializeLevelView(level + 1)));
     this.setRight(null);
