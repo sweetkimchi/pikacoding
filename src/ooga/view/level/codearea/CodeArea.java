@@ -20,8 +20,8 @@ public class CodeArea extends GridPane {
 
   private static final String CODEAREA_PROPERTIES = "CodeArea";
 
-  private CommandBank commandBank;
-  private ProgramStack programStack;
+  private final CommandBank commandBank;
+  private final ProgramStack programStack;
 
   public CodeArea() {
     commandBank = new CommandBank(this::addCommandBlock);
@@ -37,14 +37,6 @@ public class CodeArea extends GridPane {
         Double.parseDouble(sizeProperties.getString("CodeAreaWidth")) - commandBankWidth;
     commandBank.setPrefWidth(commandBankWidth);
     programStack.setPrefWidth(programWidth);
-
-//    Map<Integer, Integer> lines = new HashMap<>();
-//    lines.put(7, 1);
-//    lines.put(8, 2);
-//    lines.put(9, 2);
-//    Button test = new Button("test");
-//    test.setOnAction(e -> setLineIndicators(lines));
-//    commandBank.getChildren().add(test);
   }
 
   public void setLineIndicators(Map<Integer, Integer> lineNumbers) {

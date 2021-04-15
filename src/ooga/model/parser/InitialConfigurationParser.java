@@ -23,6 +23,7 @@ public class InitialConfigurationParser {
   private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
   private InitialState initialState;
   private GoalState goalState;
+  private String description;
   private AvailableCommands availableCommands;
   private ElementInformationBundle elementInformationBundle;
   private boolean errorOccurred = false;
@@ -48,6 +49,7 @@ public class InitialConfigurationParser {
       parseStartState((HashMap) result.get("startState"), levelInfo);
       parseEndState(Integer.parseInt((String) levelInfo.get("idealNumOfCommands")), (HashMap)
           result.get("endState"));
+      this.description = (String) levelInfo.get("description");
       parseCommands((HashMap) result.get("commands"));
     }
     catch (Exception e) {
@@ -89,6 +91,9 @@ public class InitialConfigurationParser {
 
   private Map<String, List<Integer>> parseAvatarLocations(Map<String, Object> peopleLocations, boolean addToGameGrid)  {
     Map<String, List<Integer>> mapOfPeople = new HashMap<>();
+    if (peopleLocations.containsKey("noLoc")) {
+      return mapOfPeople;
+    }
     for (String s: peopleLocations.keySet())  {
       List<Integer> avatarLocation = (List<Integer>) peopleLocations.get(s);
       mapOfPeople.put(s, avatarLocation);
@@ -96,7 +101,6 @@ public class InitialConfigurationParser {
         this.elementInformationBundle.addGameElement(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
             avatarLocation.get(1)));
       }
-
     }
     return mapOfPeople;
   }
@@ -202,8 +206,12 @@ public class InitialConfigurationParser {
     return this.initialState;
   }
 
+  public String getDescription() {
+    return this.description;
+  }
+
   public AvailableCommands getAvailableCommands()  {
-    return availableCommands;
+    return this.availableCommands;
   }
 
   public GameGridData getGameGridData() {
