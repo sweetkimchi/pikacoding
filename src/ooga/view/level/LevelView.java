@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.GameGridData;
@@ -268,7 +269,7 @@ public class LevelView extends BorderPane {
 
     }
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
-        e -> screenCreator.initializeLevelView(level + 1)));
+        e -> viewController.initializeLevel(level + 1), level == Controller.NUM_LEVELS));
     this.setRight(null);
     this.setBottom(null);
   }

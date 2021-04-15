@@ -8,6 +8,8 @@ import javafx.stage.Stage;
  */
 public class Controller {
 
+    public static final int NUM_LEVELS = 2;
+
     FrontEndExternalAPI viewController;
     BackEndExternalAPI modelController;
     /**
