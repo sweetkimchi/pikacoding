@@ -46,6 +46,7 @@ public class LevelView extends BorderPane {
   private final ControlPanel controlPanel;
   private Label description;
 
+  private int startingApples;
   private int score;
 
   private Timeline timeline;
@@ -152,10 +153,7 @@ public class LevelView extends BorderPane {
     controlPanel.setButtonAction("Button3_Pause", e -> pause());
     controlPanel.setButtonAction("Button4_Step", e -> step());
     this.setTop(menuBar);
-    scoreDisplay = new Label("pples Left for Pikachu: ");
-
-    //TODO: remove after taking the value dynamically from goal state
-    setScore(50);
+    scoreDisplay = new Label("Apples Left for Pikachu: ");
 
     board.getChildren().add(scoreDisplay);
     StackPane.setAlignment(scoreDisplay, Pos.TOP_LEFT);
@@ -207,7 +205,7 @@ public class LevelView extends BorderPane {
     codeArea.setLineIndicators(new HashMap<>());
 
     //TODO: change it so that we take the value dynamically (idaelNumOfCommands)
-    setScore(50);
+    setScore(startingApples);
 
     System.out.println("reset");
   }
@@ -298,4 +296,10 @@ public class LevelView extends BorderPane {
   public void setDescription(String description) {
     this.description.setText(description);
   }
+
+  public void setStartingApples(int apples) {
+    startingApples = apples;
+    setScore(startingApples);
+  }
+
 }

@@ -88,4 +88,6 @@ public interface FrontEndExternalAPI {
   void setBoardNumber(int id, int newDisplayNum);
 
   void setDescription(String description);
+
+  void setStartingApples(int apples);
 }

@@ -59,6 +59,11 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.setDescription(description);
     }
 
+    @Override
+    public void setStartingApples(int apples) {
+        levelView.setStartingApples(apples);
+    }
+
     /**
      * Updates and individual sprite (avatars, block)
      *
