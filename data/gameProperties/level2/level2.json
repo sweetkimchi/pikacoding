@@ -1,0 +1,11 @@
+{
+  "level":2,
+  "numPeople":1,
+  "blocks":["step", "pickUp", "drop"],
+  "startState":"startState.json",
+  "endState":"endState.json",
+  "images":"images.json",
+  "description":"Arrange the blocks in increasing order along the bottom row",
+  "idealNumOfCommands":"100",
+  "grid": "grid.json"
+}
