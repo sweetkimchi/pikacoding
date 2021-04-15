@@ -65,7 +65,10 @@ public class CommandExecutor {
             System.out.println(this.commandBlocks);
 
             if(commandBlock.getType().equals("end if")){
-                endCommandLines.add(commandBlock.getIndex());
+                for(int i = 0; i < elementInformationBundle.getAvatarList().size(); i++){
+
+                    endCommandLines.add(commandBlock.getIndex());
+                }
             }
         }
 
