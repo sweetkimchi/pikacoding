@@ -45,11 +45,11 @@ public class Avatar {
     // TODO: refactor
     if(currentX < nextX) {
       int num = ((i) % 6) + 1;
-      setAvatarImage("AnimatedPikachuRight" + num + ".gif");
+      setAvatarImage("images/AnimatedPikachuRight" + num + ".gif");
       i++;
     }else if(nextX < currentX){
       int num = ((k) % 6) + 1;
-      setAvatarImage("AnimatedPikachuLeft" + num + ".gif");
+      setAvatarImage("images/AnimatedPikachuLeft" + num + ".gif");
       k++;
     }
     else if(nextX == currentX && nextY == currentY){
@@ -59,7 +59,7 @@ public class Avatar {
 
     }else if(nextX == currentX && nextY != currentY){
       int num = ((j) % 10) + 1;
-      setAvatarImage("AnimatedPikachuFDBK" + num + ".gif");
+      setAvatarImage("images/AnimatedPikachuFDBK" + num + ".gif");
       j++;
     }
   }
