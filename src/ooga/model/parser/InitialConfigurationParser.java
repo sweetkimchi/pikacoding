@@ -23,6 +23,7 @@ public class InitialConfigurationParser {
   private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
   private InitialState initialState;
   private GoalState goalState;
+  private String description;
   private AvailableCommands availableCommands;
   private ElementInformationBundle elementInformationBundle;
   private boolean errorOccurred = false;
@@ -48,6 +49,7 @@ public class InitialConfigurationParser {
       parseStartState((HashMap) result.get("startState"), levelInfo);
       parseEndState(Integer.parseInt((String) levelInfo.get("idealNumOfCommands")), (HashMap)
           result.get("endState"));
+      this.description = (String) levelInfo.get("description");
       parseCommands((HashMap) result.get("commands"));
     }
     catch (Exception e) {
@@ -204,8 +206,12 @@ public class InitialConfigurationParser {
     return this.initialState;
   }
 
+  public String getDescription() {
+    return this.description;
+  }
+
   public AvailableCommands getAvailableCommands()  {
-    return availableCommands;
+    return this.availableCommands;
   }
 
   public GameGridData getGameGridData() {

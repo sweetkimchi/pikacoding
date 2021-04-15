@@ -6,11 +6,17 @@ import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.GameGridData;
@@ -34,9 +40,11 @@ public class LevelView extends BorderPane {
   private final FrontEndExternalAPI viewController;
   private final ScreenCreator screenCreator;
   private final MenuBar menuBar;
+  private Label scoreDisplay;
   private final Board board;
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
+  private Label description;
 
   private int score;
 
@@ -107,6 +115,7 @@ public class LevelView extends BorderPane {
 
   private void openPauseMenu() {
     VBox pauseMenu = new VBox();
+    pauseMenu.getStyleClass().add("start-screen");
     pauseMenu.getChildren().add(new Label("Paused"));
     Button resumeButton = new Button("Resume");
     resumeButton.setOnAction(e -> {
@@ -143,9 +152,29 @@ public class LevelView extends BorderPane {
     controlPanel.setButtonAction("Button3_Pause", e -> pause());
     controlPanel.setButtonAction("Button4_Step", e -> step());
     this.setTop(menuBar);
+    scoreDisplay = new Label("Score: ");
+    board.getChildren().add(scoreDisplay);
+    StackPane.setAlignment(scoreDisplay, Pos.TOP_LEFT);
     this.setCenter(board);
-    this.setRight(codeArea);
+    this.setRight(createRight(levelResources));
     this.setBottom(controlPanel);
+  }
+
+  private GridPane createRight(ResourceBundle levelResources) {
+    GridPane right = new GridPane();
+    VBox descriptionBox = new VBox();
+    Label header = new Label("Level " + level);
+    header.getStyleClass().add("title");
+    description = new Label();
+    descriptionBox.getChildren().addAll(header, description);
+    right.add(descriptionBox, 0, 0);
+    right.add(codeArea, 0, 1);
+
+    RowConstraints rowConstraints = new RowConstraints();
+    rowConstraints.setPrefHeight(Double.parseDouble(levelResources.getString("DescriptionHeight")));
+    right.getRowConstraints().add(rowConstraints);
+    right.setPadding(new Insets(8, 8, 8, 8));
+    return right;
   }
 
   private void pause() {
@@ -245,16 +274,21 @@ public class LevelView extends BorderPane {
 
     }
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
-        e -> screenCreator.initializeLevelView(level + 1)));
+        e -> viewController.initializeLevel(level + 1), level == Controller.NUM_LEVELS));
     this.setRight(null);
     this.setBottom(null);
   }
 
   public void setScore(int score) {
+    scoreDisplay.setText("Score: " + score);
     this.score = score;
   }
 
   public void setBoardNumber(int id, int newDisplayNum) {
     board.setBoardNumber(id, newDisplayNum);
+  }
+
+  public void setDescription(String description) {
+    this.description.setText(description);
   }
 }
