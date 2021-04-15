@@ -1,14 +1,9 @@
 package ooga.view.level;
 
 
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 import java.util.ResourceBundle;
-
-import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
@@ -108,11 +103,11 @@ public class Board extends StackPane {
   }
 
   public void updateBlockPositions(int id, int xCoord, int yCoord) {
-    spriteLayer.updateBlockPositions(id,xCoord,yCoord);
+    spriteLayer.updateBlockPositions(id, xCoord, yCoord);
   }
 
   public void updateBlock(int id, boolean b) {
-    spriteLayer.updateBlock(id,b);
+    spriteLayer.updateBlock(id, b);
   }
 
   public void setBoardNumber(int id, int newDisplayNum) {

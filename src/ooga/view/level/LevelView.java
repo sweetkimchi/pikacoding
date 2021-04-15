@@ -7,11 +7,13 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import ooga.controller.Controller;
@@ -38,6 +40,7 @@ public class LevelView extends BorderPane {
   private final FrontEndExternalAPI viewController;
   private final ScreenCreator screenCreator;
   private final MenuBar menuBar;
+  private Label scoreDisplay;
   private final Board board;
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
@@ -149,9 +152,11 @@ public class LevelView extends BorderPane {
     controlPanel.setButtonAction("Button3_Pause", e -> pause());
     controlPanel.setButtonAction("Button4_Step", e -> step());
     this.setTop(menuBar);
+    scoreDisplay = new Label("Score: ");
+    board.getChildren().add(scoreDisplay);
+    StackPane.setAlignment(scoreDisplay, Pos.TOP_LEFT);
     this.setCenter(board);
-    GridPane right = createRight(levelResources);
-    this.setRight(right);
+    this.setRight(createRight(levelResources));
     this.setBottom(controlPanel);
   }
 
@@ -275,6 +280,7 @@ public class LevelView extends BorderPane {
   }
 
   public void setScore(int score) {
+    scoreDisplay.setText("Score: " + score);
     this.score = score;
   }
 
