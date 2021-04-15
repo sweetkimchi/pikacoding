@@ -44,7 +44,7 @@ public class GridTest {
       }
 
       @Override
-      public void parseCommands(List<CommandBlock> commandBlocks, int level) {
+      public void parseCommands(List<CommandBlock> commandBlocks) {
 
       }
 

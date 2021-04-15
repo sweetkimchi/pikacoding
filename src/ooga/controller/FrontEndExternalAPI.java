@@ -46,9 +46,8 @@ public interface FrontEndExternalAPI {
   /**
    * Passes in the commands to be parsed
    * @param commandBlocks List of individual command blocks derived from the blocks in the CodeBuilderArea
-   * @param level
    */
-  public void parseCommands(List<CommandBlock> commandBlocks, int level);
+  public void parseCommands(List<CommandBlock> commandBlocks);
 
   /**
    * Runs the next command in the command queue

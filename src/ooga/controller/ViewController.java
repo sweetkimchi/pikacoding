@@ -149,12 +149,10 @@ public class ViewController implements FrontEndExternalAPI {
      * Passes in the commands to be parsed
      *
      * @param commandBlocks List of individual command blocks derived from the blocks in the
-     *                      CodeBuilderArea
-     * @param level
      */
     @Override
-    public void parseCommands(List<CommandBlock> commandBlocks, int level) {
-        modelController.parseCommands(commandBlocks, level);
+    public void parseCommands(List<CommandBlock> commandBlocks) {
+        modelController.parseCommands(commandBlocks);
     }
 
     /**
