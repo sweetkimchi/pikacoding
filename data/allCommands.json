@@ -1,4 +1,58 @@
 {
+  "drop": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "if": {
+    "parameters": [
+      {
+        "direction": [
+          "up",
+          "up-right",
+          "right",
+          "down-right",
+          "down",
+          "down-left",
+          "left",
+          "up-left",
+          "current"
+        ]
+      },
+      {
+        "comparator": [
+          "equal",
+          "not equal"
+        ]
+      },
+      {
+        "target": [
+          "nothing",
+          "datacube",
+          "hole",
+          "wall"
+        ]
+      }
+    ]
+  },
+  "jump": {
+    "parameters": [
+      {
+        "destination": [
+          "1"
+        ]
+      }
+    ]
+  },
+  "pickUp": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
   "step": {
     "parameters": [
       {
@@ -15,20 +69,21 @@
       }
     ]
   },
-  "pickUp": {
-    "parameters": []
-  },
-  "drop": {
-    "parameters": []
-  },
-  "jump": {
+  "add": {
     "parameters": [
       {
-        "destination": []
+        "noParams": true
       }
     ]
   },
-  "if": {
+  "subtract": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "throw": {
     "parameters": [
       {
         "direction": [
@@ -41,19 +96,14 @@
           "left",
           "up-left"
         ]
-      },
-      {
-        "comparator": [
-          "equal",
-          "not equal"
-        ]
-      },
+      }
+    ]
+  },
+  "nearest": {
+    "parameters": [
       {
         "target": [
-          "nothing",
-          "datacube",
-          "hole",
-          "wall"
+          "datacube"
         ]
       }
     ]

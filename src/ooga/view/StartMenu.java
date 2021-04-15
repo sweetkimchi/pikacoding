@@ -18,7 +18,7 @@ public class StartMenu extends BorderPane {
     this.getStylesheets().add(DEFAULT_CSS);
     VBox center = new VBox();
     center.getStyleClass().add("start-screen");
-    Label title = new Label("Title");
+    Label title = new Label("PikaCoding");
     title.getStyleClass().add("title");
 
     Button startButton = new Button("Start Game");
