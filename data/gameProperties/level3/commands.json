@@ -1,37 +1,8 @@
 {
-  "step": {
-    "parameters": [
-      {
-        "direction": [
-          "up",
-          "up-right",
-          "right",
-          "down-right",
-          "down",
-          "down-left",
-          "left",
-          "up-left"
-        ]
-      }
-    ]
-  },
-  "pickUp": {
-    "parameters": [
-      {
-        "noParams": true
-      }]
-  },
   "drop": {
     "parameters": [
       {
         "noParams": true
-      }
-    ]
-  },
-  "jump": {
-    "parameters": [
-      {
-        "destination": ["1"]
       }
     ]
   },
@@ -46,7 +17,8 @@
           "down",
           "down-left",
           "left",
-          "up-left"
+          "up-left",
+          "current"
         ]
       },
       {
@@ -64,5 +36,86 @@
         ]
       }
     ]
+  },
+  "jump": {
+    "parameters": [
+      {
+        "destination": [
+          "1"
+        ]
+      }
+    ]
+  },
+  "pickUp": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "step": {
+    "parameters": [
+      {
+        "direction": [
+          "up",
+          "up-right",
+          "right",
+          "down-right",
+          "down",
+          "down-left",
+          "left",
+          "up-left"
+        ]
+      }
+    ]
+  },
+  "add": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "subtract": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "throw": {
+    "parameters": [
+      {
+        "direction": [
+          "up",
+          "up-right",
+          "right",
+          "down-right",
+          "down",
+          "down-left",
+          "left",
+          "up-left"
+        ]
+      }
+    ]
+  },
+  "nearest": {
+    "parameters": [
+      {
+        "target": [
+          "nothing",
+          "datacube",
+          "hole",
+          "wall"
+        ]
+      }
+    ]
+  },
+  "multiply": {
+        "parameters": [
+          {
+            "noParams": true
+          }
+        ]
   }
 }
