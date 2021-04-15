@@ -28,6 +28,7 @@ public class GoalState extends BoardState {
     for (BlockData block: currentBlockData) {
       if (super.getAllBlockData().containsKey("" + block.getId())) {
         if (!super.getAllBlockData().get("" + block.getId()).equals(block)) {
+          System.out.println("block " + block.getId() + " not equal!");
           return false;
         }
       }
