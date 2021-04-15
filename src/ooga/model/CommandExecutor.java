@@ -26,7 +26,9 @@ public class CommandExecutor {
     private ClassLoader classLoader;
     private final String COMMAND_CLASSES_PACKAGE = Commands.class.getPackageName();
     private GoalState goalState;
-    private Stack<Integer> endCommandLines;
+    private List<Integer> endCommandLines;
+    private Map<Integer, Integer> idToCommandLines;
+    private Stack<Integer> stackOfIfCommands;
     /**
      * Default constructor
      */
@@ -41,13 +43,16 @@ public class CommandExecutor {
         this.elementInformationBundle.setModelController(modelController);
         this.commandBlocks = new ArrayList<>();
         this.modelController = modelController;
-        endCommandLines = new Stack<>();
+        this.idToCommandLines = new TreeMap<>();
+        endCommandLines = new ArrayList<>();
+        stackOfIfCommands = new Stack<>();
         classLoader = new ClassLoader() {
         };
         mapOfCommandBlocks = new HashMap<>();
         score = 0;
         buildCommandMap(commandBlocks);
         this.elementInformationBundle.setEndCommandLines(endCommandLines);
+        this.elementInformationBundle.setMapOfCommandLines(idToCommandLines);
     }
 
     private void buildCommandMap(List<CommandBlock> commandBlocks) {
@@ -64,15 +69,23 @@ public class CommandExecutor {
             this.commandBlocks.add(newCommand);
             System.out.println(this.commandBlocks);
 
-            if(commandBlock.getType().equals("end if")){
-                for(int i = 0; i < elementInformationBundle.getAvatarList().size(); i++){
+            if(commandBlock.getType().equals("if")){
+                stackOfIfCommands.add(commandBlock.getIndex());
+            }
 
-                    endCommandLines.add(commandBlock.getIndex());
-                }
+            if(commandBlock.getType().equals("end if")){
+                idToCommandLines.put(stackOfIfCommands.pop(), commandBlock.getIndex());
             }
         }
 
+        System.out.println("Pairs: " + idToCommandLines);
+
+
+
+
+
         System.out.println(this.endCommandLines);
+        System.out.println("MAP: " + this.idToCommandLines);
 
 
 
