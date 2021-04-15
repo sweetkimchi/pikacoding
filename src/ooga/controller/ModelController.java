@@ -170,4 +170,9 @@ public class ModelController implements BackEndExternalAPI {
   public void winLevel() {
     viewController.winLevel();
   }
+
+  @Override
+  public void setBoardNumber(int id, int newDisplayNum) {
+    viewController.setBoardNumber(id, newDisplayNum);
+  }
 }

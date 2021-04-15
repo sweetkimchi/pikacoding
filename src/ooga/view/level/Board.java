@@ -114,4 +114,8 @@ public class Board extends StackPane {
   public void updateBlock(int id, boolean b) {
     spriteLayer.updateBlock(id,b);
   }
+
+  public void setBoardNumber(int id, int newDisplayNum) {
+    spriteLayer.setBoardNumber(id, newDisplayNum);
+  }
 }

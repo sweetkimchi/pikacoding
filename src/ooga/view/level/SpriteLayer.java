@@ -156,4 +156,8 @@ public class SpriteLayer extends Pane {
       blocks.get(id).setShiftHeight(0);
     }
   }
+
+  public void setBoardNumber(int id, int newDisplayNum) {
+    blocks.get(id).updateCubeNumber(newDisplayNum);
+  }
 }
