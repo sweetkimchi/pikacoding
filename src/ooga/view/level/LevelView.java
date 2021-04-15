@@ -306,12 +306,14 @@ public class LevelView extends BorderPane {
   }
 
   public void loseLevel() {
+    reset();
     this.setCenter(new LoseScreen(e -> {
+      this.setTop(menuBar);
       this.setCenter(board);
       this.setRight(rightPane);
       this.setBottom(controlPanel);
-      reset();
     }));
+    this.setTop(null);
     this.setRight(null);
     this.setBottom(null);
   }
