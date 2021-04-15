@@ -6,9 +6,12 @@ import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
@@ -37,6 +40,7 @@ public class LevelView extends BorderPane {
   private final Board board;
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
+  private Label description;
 
   private int score;
 
@@ -145,8 +149,26 @@ public class LevelView extends BorderPane {
     controlPanel.setButtonAction("Button4_Step", e -> step());
     this.setTop(menuBar);
     this.setCenter(board);
-    this.setRight(codeArea);
+    GridPane right = createRight(levelResources);
+    this.setRight(right);
     this.setBottom(controlPanel);
+  }
+
+  private GridPane createRight(ResourceBundle levelResources) {
+    GridPane right = new GridPane();
+    VBox descriptionBox = new VBox();
+    Label header = new Label("Level " + level);
+    header.getStyleClass().add("title");
+    description = new Label();
+    descriptionBox.getChildren().addAll(header, description);
+    right.add(descriptionBox, 0, 0);
+    right.add(codeArea, 0, 1);
+
+    RowConstraints rowConstraints = new RowConstraints();
+    rowConstraints.setPrefHeight(Double.parseDouble(levelResources.getString("DescriptionHeight")));
+    right.getRowConstraints().add(rowConstraints);
+    right.setPadding(new Insets(8, 8, 8, 8));
+    return right;
   }
 
   private void pause() {
@@ -260,6 +282,6 @@ public class LevelView extends BorderPane {
   }
 
   public void setDescription(String description) {
-
+    this.description.setText(description);
   }
 }
