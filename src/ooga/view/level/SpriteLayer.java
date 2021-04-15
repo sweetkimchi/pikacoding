@@ -151,7 +151,7 @@ public class SpriteLayer extends Pane {
   public void updateBlock(int id, boolean b) {
     blocks.get(id).setHeldStatus(b);
     if(b){
-      blocks.get(id).setShiftHeight(10);
+      blocks.get(id).setShiftHeight(1);
     }else{
       blocks.get(id).setShiftHeight(0);
     }
