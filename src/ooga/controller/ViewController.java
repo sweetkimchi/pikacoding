@@ -130,6 +130,11 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.updateBlockPositions(id, xCoord,yCoord);
     }
 
+    @Override
+    public void updateBlock(int id, boolean b) {
+        levelView.updateBlock(id, b);
+    }
+
     /**
      * Passes in the commands to be parsed
      *

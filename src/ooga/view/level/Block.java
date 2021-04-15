@@ -21,10 +21,12 @@ public class Block extends StackPane {
   private double currentX;
   private double currentY;
   private Rectangle block;
+  private boolean isHeld;
 
   public Block(int x, int y, double w, double h, SpriteLayer root, String num) {
     initialXCoordinate = x;
     initialYCoordinate = y;
+    isHeld = false;
     width = w;
     height = h;
     padding = PADDING_RATIO * width;
@@ -79,12 +81,16 @@ public class Block extends StackPane {
     block = new Rectangle(width - 2 * padding, height - 2 * padding);
     block.setFill(Color.LIGHTSEAGREEN); // TODO: put in resource file
 
-    block.setX(currentX);
-    block.setY(currentY);
+//    block.setX(currentX);
+//    block.setY(currentY);
     blockText = new Text(number);
     this.getChildren().add(block);
     this.getChildren().add(blockText);
     reset();
     spriteLayer.getChildren().add(this);
+  }
+
+  public void setHeldStatus(boolean status){
+    isHeld = status;
   }
 }

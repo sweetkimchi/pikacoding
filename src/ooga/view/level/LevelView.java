@@ -234,4 +234,8 @@ public class LevelView extends BorderPane {
   public void updateBlockPositions(int id, int xCoord, int yCoord) {
     board.updateBlockPositions(id,xCoord,yCoord);
   }
+
+  public void updateBlock(int id, boolean b) {
+    board.updateBlock(id,b);
+  }
 }

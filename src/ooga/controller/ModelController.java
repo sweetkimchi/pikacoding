@@ -157,6 +157,7 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void updateBlock(int id, boolean b) {
+    viewController.updateBlock(id, b);
     System.out.println("Updating block "+ id + " because now the blockheld is " + b);
   }
 

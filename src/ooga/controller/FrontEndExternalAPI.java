@@ -81,4 +81,6 @@ public interface FrontEndExternalAPI {
   void setLineIndicators(Map<Integer, Integer> lineUpdates);
 
   void updateBlockPositions(int id, int xCoord, int yCoord);
+
+  void updateBlock(int id, boolean b);
 }

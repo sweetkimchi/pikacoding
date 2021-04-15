@@ -147,4 +147,13 @@ public class SpriteLayer extends Pane {
     Block block = blocks.get(id);
     animation.queuePositionUpdates(id, block.getInitialXCoordinate(), block.getInitialYCoordinate(), xCoord,yCoord);
   }
+
+  public void updateBlock(int id, boolean b) {
+    blocks.get(id).setHeldStatus(b);
+    if(b){
+      blocks.get(id).setShiftHeight(10);
+    }else{
+      blocks.get(id).setShiftHeight(0);
+    }
+  }
 }
