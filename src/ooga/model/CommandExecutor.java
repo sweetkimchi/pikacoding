@@ -111,9 +111,11 @@ public class CommandExecutor {
                 System.out.println("SCORE (CommandExecutor): " + score);
                 ended = true;
                 modelController.winLevel();
-            }else if((goalState.getNumOfCommands() - score) == 0){
+            }
+            if((goalState.getNumOfCommands() - score) < 0){
 //                System.out.println("Game still going");
                 System.out.println("SCORE (CommandExecutor): " + score);
+                modelController.updateScore(0);
                 modelController.declareEndOfAnimation();
                 score = 0;
             }
