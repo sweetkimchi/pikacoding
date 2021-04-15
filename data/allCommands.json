@@ -107,5 +107,12 @@
         ]
       }
     ]
-  }
+  },
+  "multiply": {
+      "parameters": [
+        {
+          "noParams": true
+        }
+      ]
+    }
 }

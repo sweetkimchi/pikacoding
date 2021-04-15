@@ -110,5 +110,12 @@
         ]
       }
     ]
+  },
+  "multiply": {
+        "parameters": [
+          {
+            "noParams": true
+          }
+        ]
   }
 }
