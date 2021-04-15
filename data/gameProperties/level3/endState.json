@@ -1,24 +1,32 @@
 {"peopleLocations":{
-  "7":[1,4],
-  "8":[4,4],
-  "9":[6,4]
+  "7":[5,5]
 },
 
   "blocks":{
     "4":{
       "loc":[1,4],
-      "num":4,
-      "pickedUp":"True"
+      "num":1,
+      "pickedUp":"False"
     },
     "5":{
       "loc":[4,4],
-      "num":7,
-      "pickedUp":"True"
+      "num":0,
+      "pickedUp":"False"
     },
     "6":{
-      "loc":[6,4],
-      "num":7,
-      "pickedUp":"True"
+      "loc":[5,4],
+      "num":0,
+      "pickedUp":"False"
+    },
+    "3":{
+      "loc":[2,4],
+      "num":1,
+      "pickedUp":"False"
+    },
+    "2":{
+      "loc":[3,4],
+      "num":0,
+      "pickedUp":"False"
     }
   }
 
