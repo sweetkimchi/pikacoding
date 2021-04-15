@@ -23,6 +23,7 @@ public class ScreenCreator {
 
   private final double width;
   private final double height;
+  private StartMenu startMenu;
 
   /**
    * Default constructor
@@ -51,15 +52,20 @@ public class ScreenCreator {
   }
 
   public void loadStartMenu() {
-    StartMenu startMenu = new StartMenu(e -> loadLevelSelector());
+    startMenu = new StartMenu(e -> loadLevelSelector());
     Scene scene = new Scene(startMenu, width, height);
     stage.setScene(scene);
   }
 
   public void loadLevelSelector() {
     LevelSelector levelSelector = new LevelSelector(level -> viewController.initializeLevel(level));
+    levelSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(levelSelector, width, height);
     stage.setScene(scene);
+  }
+
+  public String getCurrentStyleSheet() {
+    return startMenu.getStyleSheet();
   }
 
   private void initializeStage() {

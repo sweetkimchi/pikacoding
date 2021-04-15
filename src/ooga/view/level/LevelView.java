@@ -62,7 +62,7 @@ public class LevelView extends BorderPane {
     this.viewController = viewController;
     this.screenCreator = screenCreator;
     this.level = level;
-    this.getStylesheets().add(StartMenu.DEFAULT_CSS);
+    this.getStylesheets().add(this.screenCreator.getCurrentStyleSheet());
     menuBar = new MenuBar(e -> openPauseMenu());
     board = new Board();
     codeArea = new CodeArea();
