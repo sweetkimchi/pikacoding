@@ -1,5 +1,5 @@
 {"peopleLocations":{
-  "7":[5,5]
+  "7":[10,4]
 },
 
   "blocks":{
@@ -10,12 +10,12 @@
     },
     "9":{
       "loc":[4,4],
-      "num":0,
+      "num":5,
       "pickedUp":"False"
     },
     "10":{
       "loc":[5,4],
-      "num":0,
+      "num":8,
       "pickedUp":"False"
     },
     "11":{
@@ -25,7 +25,32 @@
     },
     "12":{
       "loc":[3,4],
-      "num":0,
+      "num":3,
+      "pickedUp":"False"
+    },
+    "13":{
+      "loc":[6,4],
+      "num":13,
+      "pickedUp":"False"
+    },
+    "14":{
+      "loc":[7,4],
+      "num":21,
+      "pickedUp":"False"
+    },
+    "15":{
+      "loc":[8,4],
+      "num":34,
+      "pickedUp":"False"
+    },
+    "16":{
+      "loc":[9,4],
+      "num":55,
+      "pickedUp":"False"
+    },
+    "17":{
+      "loc":[10,4],
+      "num":89,
       "pickedUp":"False"
     }
   }

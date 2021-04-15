@@ -27,7 +27,32 @@
       "loc":[3,4],
       "num":0,
       "pickedUp":"False"
-    }
+    },
+    "13":{
+          "loc":[6,4],
+          "num":0,
+          "pickedUp":"False"
+        },
+        "14":{
+          "loc":[7,4],
+          "num":0,
+          "pickedUp":"False"
+        },
+        "15":{
+          "loc":[8,4],
+          "num":0,
+          "pickedUp":"False"
+        },
+        "16":{
+          "loc":[9,4],
+          "num":0,
+          "pickedUp":"False"
+        },
+        "17":{
+          "loc":[10,4],
+          "num":0,
+          "pickedUp":"False"
+        }
   }
 
 }

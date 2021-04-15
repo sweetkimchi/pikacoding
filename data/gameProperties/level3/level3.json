@@ -7,6 +7,6 @@
   "images":"images.json",
   "description":"Using the Add command, write the first 5 Fibonacci numbers and place the datacubes
   in an ascending order along the bottom-most row.",
-  "idealNumOfCommands":"3",
+  "idealNumOfCommands":"500",
   "grid": "grid.json"
 }
