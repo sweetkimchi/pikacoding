@@ -253,4 +253,8 @@ public class LevelView extends BorderPane {
   public void setScore(int score) {
     this.score = score;
   }
+
+  public void setBoardNumber(int id, int newDisplayNum) {
+    board.setBoardNumber(id, newDisplayNum);
+  }
 }

@@ -19,6 +19,7 @@ public class ModelController implements BackEndExternalAPI {
   private CommandExecutor commandExecutor;
   private InitialConfigurationParser initialConfigurationParser;
   private FirebaseService firebaseService;
+  private int level;
 
   /**
    * Default constructor
@@ -49,12 +50,11 @@ public class ModelController implements BackEndExternalAPI {
    *
    * @param commandBlocks List of individual command blocks derived from the blocks in the
    *                      CodeBuilderArea
-   * @param level
    */
   @Override
-  public void parseCommands(List<CommandBlock> commandBlocks, int level) {
+  public void parseCommands(List<CommandBlock> commandBlocks) {
     //TODO: delete after debugging. Initializing level for testing purposes
-    initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService);
+    initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService);
 
     commandExecutor = new CommandExecutor(commandBlocks, this,
         initialConfigurationParser.getInitialState(),
@@ -114,6 +114,7 @@ public class ModelController implements BackEndExternalAPI {
    */
   @Override
   public void initializeLevel(int level) {
+    this.level = level;
     initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService);
     viewController.setBoard(initialConfigurationParser.getGameGridData(),
         initialConfigurationParser.getInitialState());
@@ -170,5 +171,10 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void winLevel() {
     viewController.winLevel();
+  }
+
+  @Override
+  public void setBoardNumber(int id, int newDisplayNum) {
+    viewController.setBoardNumber(id, newDisplayNum);
   }
 }

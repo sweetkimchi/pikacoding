@@ -85,4 +85,6 @@ public interface FrontEndExternalAPI {
   void updateBlockPositions(int id, int xCoord, int yCoord);
 
   void updateBlock(int id, boolean b);
+
+  void setBoardNumber(int id, int newDisplayNum);
 }

@@ -26,6 +26,9 @@ public class CommandExecutor {
     private ClassLoader classLoader;
     private final String COMMAND_CLASSES_PACKAGE = Commands.class.getPackageName();
     private GoalState goalState;
+    private List<Integer> endCommandLines;
+    private Map<Integer, Integer> idToCommandLines;
+    private Stack<Integer> stackOfIfCommands;
     /**
      * Default constructor
      */
@@ -40,11 +43,16 @@ public class CommandExecutor {
         this.elementInformationBundle.setModelController(modelController);
         this.commandBlocks = new ArrayList<>();
         this.modelController = modelController;
+        this.idToCommandLines = new TreeMap<>();
+        endCommandLines = new ArrayList<>();
+        stackOfIfCommands = new Stack<>();
         classLoader = new ClassLoader() {
         };
         mapOfCommandBlocks = new HashMap<>();
         score = 0;
         buildCommandMap(commandBlocks);
+        this.elementInformationBundle.setEndCommandLines(endCommandLines);
+        this.elementInformationBundle.setMapOfCommandLines(idToCommandLines);
     }
 
     private void buildCommandMap(List<CommandBlock> commandBlocks) {
@@ -52,14 +60,36 @@ public class CommandExecutor {
             mapOfCommandBlocks.put(commandBlock.getIndex(), commandBlock);
             Commands newCommand = null;
             try {
-                Class r = classLoader.loadClass(COMMAND_CLASSES_PACKAGE+"."+ commandBlock.getType().substring(0,1).toUpperCase() + commandBlock.getType().substring(1));
+                Class r = classLoader.loadClass(COMMAND_CLASSES_PACKAGE+"."+ commandBlock.getType().replaceAll("\\s", "").substring(0,1).toUpperCase() + commandBlock.getType().replaceAll("\\s", "").substring(1));
                 Object command = r.getDeclaredConstructor(ElementInformationBundle.class, Map.class).newInstance(elementInformationBundle, commandBlock.getParameters());
                 newCommand = (Commands) command;
             }catch (Exception ignored){
                 System.out.println("Failed");
             }
             this.commandBlocks.add(newCommand);
+            System.out.println(this.commandBlocks);
+
+            if(commandBlock.getType().equals("if")){
+                stackOfIfCommands.add(commandBlock.getIndex());
+            }
+
+            if(commandBlock.getType().equals("end if")){
+                idToCommandLines.put(stackOfIfCommands.pop(), commandBlock.getIndex());
+            }
         }
+
+        System.out.println("Pairs: " + idToCommandLines);
+
+
+
+
+
+        System.out.println(this.endCommandLines);
+        System.out.println("MAP: " + this.idToCommandLines);
+
+
+
+
     }
 
     public void runNextCommand() {
@@ -81,7 +111,7 @@ public class CommandExecutor {
                 ended = true;
                 modelController.winLevel();
             }else{
-                System.out.println("Game still going");
+//                System.out.println("Game still going");
             }
         }
 
