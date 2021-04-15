@@ -42,10 +42,12 @@ public class LevelView extends BorderPane {
   private final MenuBar menuBar;
   private Label scoreDisplay;
   private final Board board;
+  private GridPane rightPane;
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
   private Label description;
 
+  private int startingApples;
   private int score;
 
   private Timeline timeline;
@@ -120,7 +122,7 @@ public class LevelView extends BorderPane {
     Button resumeButton = new Button("Resume");
     resumeButton.setOnAction(e -> {
       this.setCenter(board);
-      this.setRight(codeArea);
+      this.setRight(rightPane);
       this.setBottom(controlPanel);
     });
     pauseMenu.getChildren().add(resumeButton);
@@ -152,33 +154,33 @@ public class LevelView extends BorderPane {
     controlPanel.setButtonAction("Button3_Pause", e -> pause());
     controlPanel.setButtonAction("Button4_Step", e -> step());
     this.setTop(menuBar);
-    scoreDisplay = new Label("pples Left for Pikachu: ");
-
-    //TODO: remove after taking the value dynamically from goal state
-    setScore(50);
+    scoreDisplay = new Label("Apples Left for Pikachu: ");
 
     board.getChildren().add(scoreDisplay);
     StackPane.setAlignment(scoreDisplay, Pos.TOP_LEFT);
     this.setCenter(board);
-    this.setRight(createRight(levelResources));
+    createRight(levelResources);
+    this.setRight(rightPane);
     this.setBottom(controlPanel);
   }
 
-  private GridPane createRight(ResourceBundle levelResources) {
-    GridPane right = new GridPane();
+  private void createRight(ResourceBundle levelResources) {
+    rightPane = new GridPane();
     VBox descriptionBox = new VBox();
+    rightPane.setVgap(8);
+    descriptionBox.getStyleClass().add("description-box");
     Label header = new Label("Level " + level);
     header.getStyleClass().add("title");
     description = new Label();
     descriptionBox.getChildren().addAll(header, description);
-    right.add(descriptionBox, 0, 0);
-    right.add(codeArea, 0, 1);
+    rightPane.add(descriptionBox, 0, 0);
+    rightPane.add(codeArea, 0, 1);
 
     RowConstraints rowConstraints = new RowConstraints();
     rowConstraints.setPrefHeight(Double.parseDouble(levelResources.getString("DescriptionHeight")));
-    right.getRowConstraints().add(rowConstraints);
-    right.setPadding(new Insets(8, 8, 8, 8));
-    return right;
+    rowConstraints.setMinHeight(Double.parseDouble(levelResources.getString("DescriptionHeight")));
+    rightPane.getRowConstraints().add(rowConstraints);
+    rightPane.setPadding(new Insets(8, 8, 8, 8));
   }
 
   private void pause() {
@@ -206,8 +208,7 @@ public class LevelView extends BorderPane {
     dummy = 1;
     codeArea.setLineIndicators(new HashMap<>());
 
-    //TODO: change it so that we take the value dynamically (idaelNumOfCommands)
-    setScore(50);
+    setScore(startingApples);
 
     System.out.println("reset");
   }
@@ -245,7 +246,6 @@ public class LevelView extends BorderPane {
   }
 
   private void setAnimationSpeed() {
-    // TODO: remove after debugging
     timeline.setRate(controlPanel.getSliderSpeed());
   }
 
@@ -280,6 +280,7 @@ public class LevelView extends BorderPane {
     } catch (Exception e) {
 
     }
+    this.setTop(null);
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
         e -> viewController.initializeLevel(level + 1), level == Controller.NUM_LEVELS));
     this.setRight(null);
@@ -297,5 +298,23 @@ public class LevelView extends BorderPane {
 
   public void setDescription(String description) {
     this.description.setText(description);
+  }
+
+  public void setStartingApples(int apples) {
+    startingApples = apples;
+    setScore(startingApples);
+  }
+
+  public void loseLevel() {
+    reset();
+    this.setCenter(new LoseScreen(e -> {
+      this.setTop(menuBar);
+      this.setCenter(board);
+      this.setRight(rightPane);
+      this.setBottom(controlPanel);
+    }));
+    this.setTop(null);
+    this.setRight(null);
+    this.setBottom(null);
   }
 }

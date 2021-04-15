@@ -59,6 +59,11 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.setDescription(description);
     }
 
+    @Override
+    public void setStartingApples(int apples) {
+        levelView.setStartingApples(apples);
+    }
+
     /**
      * Updates and individual sprite (avatars, block)
      *
@@ -123,6 +128,11 @@ public class ViewController implements FrontEndExternalAPI {
     @Override
     public void winLevel() {
         levelView.winLevel();
+    }
+
+    @Override
+    public void loseLevel() {
+        levelView.loseLevel();
     }
 
     /**
