@@ -1,11 +1,12 @@
 {
   "level":3,
   "numPeople":3,
-  "blocks":["step", "pickUp", "drop"],
+  "blocks":["step", "pickUp", "drop","add"],
   "startState":"startState.json",
   "endState":"endState.json",
   "images":"images.json",
-  "description":"Tell pikachu to step down one tile, pick up block, and drop it again",
+  "description":"Using the Add command, write the first 5 Fibonacci numbers and place the datacubes
+  in an ascending order along the bottom-most row.",
   "idealNumOfCommands":"3",
   "grid": "grid.json"
 }
