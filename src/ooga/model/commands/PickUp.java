@@ -6,6 +6,7 @@ import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
 import ooga.model.player.Block;
+import ooga.model.player.DataCube;
 
 public class PickUp extends BasicCommands {
 
@@ -39,6 +40,7 @@ public class PickUp extends BasicCommands {
 
       getElementInformationBundle().getModelController().updateBlock(block.getId(), avatar.hasBlock());
       tileToPickUpFrom.removeBlock();
+      avatar.getHeldItem().pickUp(avatar.getId());
     } else {
       //TODO: throw error to handler
       System.out.println("There is no block to be picked up!");

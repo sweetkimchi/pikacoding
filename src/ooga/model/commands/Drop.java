@@ -32,6 +32,7 @@ public class Drop extends BasicCommands {
         //TODO: throw error to handler
         System.out.println("You are not holding a block!");
       }else{
+        block.drop();
         getElementInformationBundle().getModelController().updateBlock(block.getId(),
             avatar.hasBlock());
       }
