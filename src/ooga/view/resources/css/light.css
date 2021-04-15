@@ -1,8 +1,8 @@
 .root {
     -fx-font-size: 10pt;
     -fx-font-family: "Futura";
-    -fx-base: #a6a6a6;
-    -fx-background: #d9d9d9;
+    -fx-base: #dbe9ee;
+    -fx-background: #c0d6df;
 }
 
 .start-screen {
@@ -21,40 +21,41 @@
 }
 
 .state {
-    -fx-stroke: rgb(80, 80, 80);
+    -fx-stroke: #c0d6df;
     -fx-stroke-width: 0.5px;
 }
 
 .state-wall {
-    -fx-fill: brown;
+    -fx-fill: #9b6a6c;
 }
 
 .state-floor {
-    -fx-fill: rgb(200, 200, 200);
+    -fx-fill: #eaeaea;
 }
 
 .state-hole {
-    -fx-fill: black;
+    -fx-fill: #166088;
 }
 
 .menu-bar {
-    -fx-background-color: rgb(100, 100, 100);
+    -fx-background-color: #4a6fa5;
+    -fx-padding: 5.0;
     -fx-alignment: CENTER-LEFT;
 }
 
 .description-box {
-    -fx-background-color: #ffeb99;
+    -fx-background-color: #fbd1a2;
     -fx-padding: 8px 8px 8px 8px;
 }
 
 .command-block-option {
     -fx-font-size: 12pt;
-    -fx-background-color: #339933;
+    -fx-background-color: #88d498;
     -fx-padding: 4 6 4 6;
 }
 
 .command-block-option:hover {
-    -fx-background-color: linear-gradient(#1f7a1f, #339933);
+    -fx-background-color: linear-gradient(#1a936f, #88d498);
 }
 
 .command-index {
@@ -62,7 +63,7 @@
 }
 
 .command-block-holder {
-    -fx-background-color: #339933;
+    -fx-background-color: #88d498;
 }
 
 .command-block-selected {
@@ -93,39 +94,39 @@
 .Button1_Reset {
     -fx-border-radius: 20;
     -fx-background-insets: 1;
-    -fx-background-color: #bd0000;
+    -fx-background-color: #cc444b;
 }
 
 .Button1_Reset:hover {
-    -fx-background-color: linear-gradient(#780000, #d00000);
+    -fx-background-color: linear-gradient(#c5283d, #fe938c);
 }
 
 .Button2_Play {
     -fx-border-radius: 20;
     -fx-background-insets: 1;
-    -fx-background-color: #00b100;
+    -fx-background-color: #88d498;
 }
 
 .Button2_Play:hover {
-    -fx-background-color: linear-gradient(#005f00, #00e000);
+    -fx-background-color: linear-gradient(#1a936f, #88d498);
 }
 
 .Button3_Pause {
     -fx-border-radius: 20;
     -fx-background-insets: 1;
-    -fx-background-color: #00b100;
+    -fx-background-color: #88d498;
 }
 
 .Button3_Pause:hover {
-    -fx-background-color: linear-gradient(#005f00, #00e000);
+    -fx-background-color: linear-gradient(#1a936f, #88d498);
 }
 
 .Button4_Step {
     -fx-border-radius: 20;
     -fx-background-insets: 1;
-    -fx-background-color: #00bc00;
+    -fx-background-color: #88d498;
 }
 
 .Button4_Step:hover {
-    -fx-background-color: linear-gradient(#005f00, #00e000);
+    -fx-background-color: linear-gradient(#1a936f, #88d498);
 }

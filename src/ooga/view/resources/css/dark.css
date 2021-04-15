@@ -1,8 +1,8 @@
 .root {
     -fx-font-size: 10pt;
     -fx-font-family: "Futura";
-    -fx-base: #a6a6a6;
-    -fx-background: #404B51;
+    -fx-base: #87bba2;
+    -fx-background: #364958;
 }
 
 .start-screen {
@@ -38,23 +38,24 @@
 }
 
 .menu-bar {
-    -fx-background-color: rgb(100, 100, 100);
+    -fx-background-color: #26547c;
+    -fx-padding: 5.0;
     -fx-alignment: CENTER-LEFT;
 }
 
 .description-box {
-    -fx-background-color: #ffeb99;
+    -fx-background-color: #3b6064;
     -fx-padding: 8px 8px 8px 8px;
 }
 
 .command-block-option {
     -fx-font-size: 12pt;
-    -fx-background-color: #339933;
+    -fx-background-color: #87bba2;
     -fx-padding: 4 6 4 6;
 }
 
 .command-block-option:hover {
-    -fx-background-color: linear-gradient(#1f7a1f, #339933);
+    -fx-background-color: linear-gradient(#3b6064, #87bba2);
 }
 
 .command-index {
@@ -62,7 +63,7 @@
 }
 
 .command-block-holder {
-    -fx-background-color: #339933;
+    -fx-background-color: #87bba2;
 }
 
 .command-block-selected {
@@ -93,39 +94,39 @@
 .Button1_Reset {
     -fx-border-radius: 20;
     -fx-background-insets: 1;
-    -fx-background-color: #A75A69;
+    -fx-background-color: #c5283d;
 }
 
 .Button1_Reset:hover {
-    -fx-background-color: linear-gradient(#780000, #d00000);
+    -fx-background-color: linear-gradient(#bf0603, #ff3c38);
 }
 
 .Button2_Play {
     -fx-border-radius: 20;
     -fx-background-insets: 1;
-    -fx-background-color: #00b100;
+    -fx-background-color: #87bba2;
 }
 
 .Button2_Play:hover {
-    -fx-background-color: linear-gradient(#005f00, #00e000);
+    -fx-background-color: linear-gradient(#3b6064, #87bba2);
 }
 
 .Button3_Pause {
     -fx-border-radius: 20;
     -fx-background-insets: 1;
-    -fx-background-color: #00b100;
+    -fx-background-color: #87bba2;
 }
 
 .Button3_Pause:hover {
-    -fx-background-color: linear-gradient(#005f00, #00e000);
+    -fx-background-color: linear-gradient(#3b6064, #87bba2);
 }
 
 .Button4_Step {
     -fx-border-radius: 20;
     -fx-background-insets: 1;
-    -fx-background-color: #00bc00;
+    -fx-background-color: #87bba2;
 }
 
 .Button4_Step:hover {
-    -fx-background-color: linear-gradient(#005f00, #00e000);
+    -fx-background-color: linear-gradient(#3b6064, #87bba2);
 }
