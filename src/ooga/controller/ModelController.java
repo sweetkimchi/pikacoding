@@ -49,10 +49,12 @@ public class ModelController implements BackEndExternalAPI {
    *
    * @param commandBlocks List of individual command blocks derived from the blocks in the
    *                      CodeBuilderArea
+   * @param level
    */
   @Override
-  public void parseCommands(List<CommandBlock> commandBlocks) {
+  public void parseCommands(List<CommandBlock> commandBlocks, int level) {
     //TODO: delete after debugging. Initializing level for testing purposes
+    initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService);
 
     commandExecutor = new CommandExecutor(commandBlocks, this,
         initialConfigurationParser.getInitialState(),

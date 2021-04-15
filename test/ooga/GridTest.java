@@ -8,13 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javafx.stage.Stage;
 import javax.lang.model.util.Elements;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.FrontEndExternalAPI;
-import ooga.controller.ModelController;
-import ooga.controller.ViewController;
-import ooga.model.Direction;
 import ooga.model.commands.Add;
 import ooga.model.commands.Drop;
 import ooga.model.commands.PickUp;
@@ -48,7 +44,7 @@ public class GridTest {
       }
 
       @Override
-      public void parseCommands(List<CommandBlock> commandBlocks) {
+      public void parseCommands(List<CommandBlock> commandBlocks, int level) {
 
       }
 

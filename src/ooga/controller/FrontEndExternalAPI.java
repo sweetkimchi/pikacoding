@@ -3,7 +3,6 @@ package ooga.controller;
 import java.util.List;
 import java.util.Map;
 import ooga.model.commands.AvailableCommands;
-import ooga.model.grid.gridData.BoardState;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.AvatarData;
@@ -47,8 +46,9 @@ public interface FrontEndExternalAPI {
   /**
    * Passes in the commands to be parsed
    * @param commandBlocks List of individual command blocks derived from the blocks in the CodeBuilderArea
+   * @param level
    */
-  public void parseCommands(List<CommandBlock> commandBlocks);
+  public void parseCommands(List<CommandBlock> commandBlocks, int level);
 
   /**
    * Runs the next command in the command queue

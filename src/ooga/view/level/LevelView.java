@@ -158,7 +158,7 @@ public class LevelView extends BorderPane {
     step = false;
     if (!codeIsRunning) {
       reset();
-      viewController.parseCommands(codeArea.getProgram());
+      viewController.parseCommands(codeArea.getProgram(), level);
       codeIsRunning = true;
     }
     runSimulation();
@@ -181,7 +181,7 @@ public class LevelView extends BorderPane {
     System.out.println("step");
     if (!codeIsRunning) {
       reset();
-      viewController.parseCommands(codeArea.getProgram());
+      viewController.parseCommands(codeArea.getProgram(), level);
       queueFinished = false;
       codeIsRunning = true;
     }
