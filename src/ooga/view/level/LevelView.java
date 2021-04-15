@@ -174,6 +174,7 @@ public class LevelView extends BorderPane {
 
     RowConstraints rowConstraints = new RowConstraints();
     rowConstraints.setPrefHeight(Double.parseDouble(levelResources.getString("DescriptionHeight")));
+    rowConstraints.setMinHeight(Double.parseDouble(levelResources.getString("DescriptionHeight")));
     right.getRowConstraints().add(rowConstraints);
     right.setPadding(new Insets(8, 8, 8, 8));
     return right;
@@ -204,7 +205,6 @@ public class LevelView extends BorderPane {
     dummy = 1;
     codeArea.setLineIndicators(new HashMap<>());
 
-    //TODO: change it so that we take the value dynamically (idaelNumOfCommands)
     setScore(startingApples);
 
     System.out.println("reset");
@@ -243,7 +243,6 @@ public class LevelView extends BorderPane {
   }
 
   private void setAnimationSpeed() {
-    // TODO: remove after debugging
     timeline.setRate(controlPanel.getSliderSpeed());
   }
 
@@ -302,4 +301,14 @@ public class LevelView extends BorderPane {
     setScore(startingApples);
   }
 
+  public void loseLevel() {
+    this.setCenter(new LoseScreen(e -> {
+      this.setCenter(board);
+      this.setRight(codeArea);
+      this.setBottom(controlPanel);
+      reset();
+    }));
+    this.setRight(null);
+    this.setBottom(null);
+  }
 }

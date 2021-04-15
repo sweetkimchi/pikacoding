@@ -130,6 +130,11 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.winLevel();
     }
 
+    @Override
+    public void loseLevel() {
+        levelView.loseLevel();
+    }
+
     /**
      * sets the line number for the avatar
      *

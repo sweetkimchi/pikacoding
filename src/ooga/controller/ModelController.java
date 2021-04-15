@@ -176,6 +176,11 @@ public class ModelController implements BackEndExternalAPI {
   }
 
   @Override
+  public void loseLevel() {
+    viewController.loseLevel();
+  }
+
+  @Override
   public void setBoardNumber(int id, int newDisplayNum) {
     viewController.setBoardNumber(id, newDisplayNum);
   }

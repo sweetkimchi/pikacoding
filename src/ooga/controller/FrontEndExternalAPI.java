@@ -90,4 +90,6 @@ public interface FrontEndExternalAPI {
   void setDescription(String description);
 
   void setStartingApples(int apples);
+
+  void loseLevel();
 }

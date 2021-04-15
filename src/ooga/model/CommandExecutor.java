@@ -116,7 +116,7 @@ public class CommandExecutor {
 //                System.out.println("Game still going");
                 System.out.println("SCORE (CommandExecutor): " + score);
                 modelController.updateScore(0);
-                modelController.declareEndOfAnimation();
+                modelController.loseLevel();
                 score = 0;
             }
         }
