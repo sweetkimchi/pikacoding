@@ -39,6 +39,8 @@ public class LevelView extends BorderPane {
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
 
+  private int score;
+
   private Timeline timeline;
 
   private boolean codeIsRunning;
@@ -148,8 +150,9 @@ public class LevelView extends BorderPane {
   }
 
   private void pause() {
-    System.out.println("pause");
-    timeline.stop();
+    viewController.winLevel();
+//    System.out.println("pause");
+//    timeline.stop();
   }
 
   private void play() {
@@ -222,7 +225,6 @@ public class LevelView extends BorderPane {
   }
 
   public void declareEndOfAnimation() {
-
     codeIsRunning = false;
     timeline.stop();
   }
@@ -237,5 +239,16 @@ public class LevelView extends BorderPane {
 
   public void updateBlock(int id, boolean b) {
     board.updateBlock(id,b);
+  }
+
+  public void winLevel() {
+    declareEndOfAnimation();
+    this.setCenter(new WinScreen(score));
+    this.setRight(null);
+    this.setBottom(null);
+  }
+
+  public void setScore(int score) {
+    this.score = score;
   }
 }

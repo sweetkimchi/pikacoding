@@ -72,7 +72,4 @@ public class ScreenCreator {
     stage.show();
   }
 
-  public void setScore(int score) {
-//    System.out.println("SCORE (ScreenCreator): " + score);
-  }
 }
