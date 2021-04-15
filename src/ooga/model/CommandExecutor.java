@@ -111,7 +111,7 @@ public class CommandExecutor {
                 ended = true;
                 modelController.winLevel();
             }else{
-                System.out.println("Game still going");
+//                System.out.println("Game still going");
             }
         }
 
