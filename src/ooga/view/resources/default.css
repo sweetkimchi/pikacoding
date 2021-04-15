@@ -36,6 +36,16 @@
     -fx-fill: black;
 }
 
+.menu-bar {
+    -fx-background-color: rgb(100, 100, 100);
+    -fx-alignment: CENTER-LEFT;
+}
+
+.description-box {
+    -fx-background-color: #ffeb99;
+    -fx-padding: 8px 8px 8px 8px;
+}
+
 .command-block-option {
     -fx-font-size: 12pt;
     -fx-background-color: #339933;

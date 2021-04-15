@@ -83,4 +83,6 @@ public interface BackEndExternalAPI {
   void winLevel();
 
   void setBoardNumber(int id, int newDisplayNum);
+
+  void loseLevel();
 }
