@@ -26,8 +26,8 @@ public class GoalState extends BoardState {
     }
     List<BlockData> currentBlockData = currentGrid.getBlockData();
     for (BlockData block: currentBlockData) {
-      if (super.getAllBlockData().containsKey("" + block.getBlockNumber())) {
-        if (!super.getAllBlockData().get("" + block.getBlockNumber()).equals(block)) {
+      if (super.getAllBlockData().containsKey("" + block.getId())) {
+        if (!super.getAllBlockData().get("" + block.getId()).equals(block)) {
           return false;
         }
       }
