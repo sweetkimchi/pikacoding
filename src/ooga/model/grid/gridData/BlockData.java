@@ -13,7 +13,9 @@ public class BlockData {
 
   private boolean pickedUp;
 
-  public BlockData(List<Integer> location, int blockNumber, boolean pickedUp)  {
+  private int id;
+
+  public BlockData(List<Integer> location, int blockNumber, boolean pickedUp, int id)  {
     this.location = location;
     this.blockNumber = blockNumber;
     this.pickedUp = pickedUp;
@@ -24,6 +26,7 @@ public class BlockData {
     location.addAll(List.of(dataCube.getXCoord(), dataCube.getYCoord()));
     blockNumber = dataCube.getDisplayNum();
     pickedUp = dataCube.isHeld();
+    id = dataCube.getId();
     // TODO: do something with the datacube ID num?
   }
 
@@ -37,6 +40,8 @@ public class BlockData {
         this.pickedUp == blockData.pickedUp &&
         this.blockNumber == blockData.blockNumber);
   }
+
+  public int getId()  { return this.id; }
 
   public int getBlockNumber() {
     return blockNumber;
