@@ -54,6 +54,11 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.setAvailableCommands(availableCommands);
     }
 
+    @Override
+    public void setDescription(String description) {
+        levelView.setDescription(description);
+    }
+
     /**
      * Updates and individual sprite (avatars, block)
      *
@@ -149,7 +154,6 @@ public class ViewController implements FrontEndExternalAPI {
      * Passes in the commands to be parsed
      *
      * @param commandBlocks List of individual command blocks derived from the blocks in the
-     *                      CodeBuilderArea
      */
     @Override
     public void parseCommands(List<CommandBlock> commandBlocks) {

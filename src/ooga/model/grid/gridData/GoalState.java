@@ -38,4 +38,8 @@ public class GoalState extends BoardState {
     }
     return true;
   }
+
+  public int getNumOfCommands(){
+    return this.numOfCommands;
+  }
 }

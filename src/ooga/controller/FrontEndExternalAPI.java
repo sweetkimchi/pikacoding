@@ -3,7 +3,6 @@ package ooga.controller;
 import java.util.List;
 import java.util.Map;
 import ooga.model.commands.AvailableCommands;
-import ooga.model.grid.gridData.BoardState;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.AvatarData;
@@ -87,4 +86,6 @@ public interface FrontEndExternalAPI {
   void updateBlock(int id, boolean b);
 
   void setBoardNumber(int id, int newDisplayNum);
+
+  void setDescription(String description);
 }
