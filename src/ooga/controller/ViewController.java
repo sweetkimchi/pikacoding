@@ -54,6 +54,11 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.setAvailableCommands(availableCommands);
     }
 
+    @Override
+    public void setDescription(String description) {
+        levelView.setDescription(description);
+    }
+
     /**
      * Updates and individual sprite (avatars, block)
      *

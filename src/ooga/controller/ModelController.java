@@ -118,6 +118,7 @@ public class ModelController implements BackEndExternalAPI {
     initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService);
     viewController.setBoard(initialConfigurationParser.getGameGridData(),
         initialConfigurationParser.getInitialState());
+    viewController.setDescription(initialConfigurationParser.getDescription());
     viewController.setAvailableCommands(initialConfigurationParser.getAvailableCommands());
   }
 

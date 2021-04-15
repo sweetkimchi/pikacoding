@@ -107,6 +107,7 @@ public class LevelView extends BorderPane {
 
   private void openPauseMenu() {
     VBox pauseMenu = new VBox();
+    pauseMenu.getStyleClass().add("start-screen");
     pauseMenu.getChildren().add(new Label("Paused"));
     Button resumeButton = new Button("Resume");
     resumeButton.setOnAction(e -> {
@@ -256,5 +257,9 @@ public class LevelView extends BorderPane {
 
   public void setBoardNumber(int id, int newDisplayNum) {
     board.setBoardNumber(id, newDisplayNum);
+  }
+
+  public void setDescription(String description) {
+
   }
 }
