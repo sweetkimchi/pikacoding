@@ -6,6 +6,7 @@ import ooga.model.animation.AnimationPane;
 import ooga.model.commands.Commands;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.gridData.BoardState;
+import ooga.model.grid.gridData.GoalState;
 import ooga.model.player.Player;
 import ooga.view.level.codearea.CommandBlock;
 
@@ -24,11 +25,15 @@ public class CommandExecutor {
     private int score;
     private ClassLoader classLoader;
     private final String COMMAND_CLASSES_PACKAGE = Commands.class.getPackageName();
+    private GoalState goalState;
     /**
      * Default constructor
      */
-    public CommandExecutor(List<CommandBlock> commandBlocks, BackEndExternalAPI modelController, BoardState initialState,
-        ElementInformationBundle elementInformationBundle) {
+    public CommandExecutor(List<CommandBlock> commandBlocks, BackEndExternalAPI modelController,
+        BoardState initialState,
+        ElementInformationBundle elementInformationBundle,
+        GoalState goalState) {
+        this.goalState = goalState;
         this.initialState = initialState;
         programCounter = 1;
         this.elementInformationBundle = elementInformationBundle;
@@ -70,6 +75,7 @@ public class CommandExecutor {
                 score++;
                 modelController.updateScore(score);
             }
+            goalState.checkGameEnded();
         }
 
         modelController.setLineIndicators(lineUpdates);

@@ -38,7 +38,6 @@ public class Block extends StackPane {
   }
 
   public void moveBlock(double x, double y) {
-    System.out.println(x);
     this.setTranslateX(x * width + padding);
     currentX = x;
     this.setTranslateY(y * height + padding -  PICKEDUP_SHIFT * height);

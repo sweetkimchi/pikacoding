@@ -57,7 +57,7 @@ public class ModelController implements BackEndExternalAPI {
 
     commandExecutor = new CommandExecutor(commandBlocks, this,
         initialConfigurationParser.getInitialState(),
-        initialConfigurationParser.getGameGrid());
+        initialConfigurationParser.getGameGrid(), initialConfigurationParser.getGoalState());
   }
 
   /**
