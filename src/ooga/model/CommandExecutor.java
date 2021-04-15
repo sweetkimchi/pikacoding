@@ -96,6 +96,7 @@ public class CommandExecutor {
 
         boolean ended = true;
         Map<Integer, Integer> lineUpdates = new HashMap<>();
+        System.out.println("GOAL STATE NUMBER: " + goalState.getNumOfCommands());
 
         for(Player avatar : elementInformationBundle.getAvatarList()){
             if (avatar.getProgramCounter() < commandBlocks.size() + 1){
@@ -103,15 +104,18 @@ public class CommandExecutor {
                 lineUpdates.put(avatar.getId(), avatar.getProgramCounter());
                 commandBlocks.get(avatar.getProgramCounter() - 1).execute(avatar.getId());
                 score++;
-                modelController.updateScore(score);
+                modelController.updateScore(goalState.getNumOfCommands() - score);
             }
             if(goalState.checkGameEnded(elementInformationBundle)){
                 System.out.println("GAME HAS ENDED");
                 System.out.println("SCORE (CommandExecutor): " + score);
                 ended = true;
                 modelController.winLevel();
-            }else{
+            }else if((goalState.getNumOfCommands() - score) == 0){
 //                System.out.println("Game still going");
+                System.out.println("SCORE (CommandExecutor): " + score);
+                modelController.declareEndOfAnimation();
+                score = 0;
             }
         }
 

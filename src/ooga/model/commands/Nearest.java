@@ -14,6 +14,7 @@ public class Nearest extends AICommands{
   @Override
   public void execute(int ID) {
     Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
+
     avatar.setProgramCounter(avatar.getProgramCounter() + 1);
   }
 }
