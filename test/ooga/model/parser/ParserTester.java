@@ -11,11 +11,18 @@ import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.grid.gridData.InitialState;
+import ooga.model.player.Avatar;
+import ooga.model.player.DataCube;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class ParserTester {
 
-  private FirebaseService firebaseService = new FirebaseService();
+  private static FirebaseService firebaseService;
+  @BeforeAll
+  public static void init() {
+    firebaseService = new FirebaseService();
+  }
 
   @Test
   public void checkParseLevel1() {
@@ -45,8 +52,35 @@ public class ParserTester {
 
   @Test
   public void checkParseWrongLevel(){
-
     InitialConfigurationParser tester = new InitialConfigurationParser(0, this.firebaseService);
     assertTrue(tester.getErrorOccurred());
+  }
+
+  @Test
+  public void checkEndStateCorrect()  {
+    InitialConfigurationParser tester = new InitialConfigurationParser(1, this.firebaseService);
+    GoalState parsedGoalState = tester.getGoalState();
+
+    ElementInformationBundle grid = new ElementInformationBundle();
+    grid.setDimensions(12, 8);
+    grid.setStructure(1, 4, Structure.FLOOR);
+    grid.setStructure(4, 4, Structure.FLOOR);
+    grid.setStructure(6, 4, Structure.FLOOR);
+    grid.addGameElement(new Avatar(7, 1, 4));
+    grid.addGameElement(new Avatar(8, 4, 4));
+    grid.addGameElement(new Avatar(9, 6, 4));
+    DataCube four = new DataCube(4, 1, 4, 4);
+    DataCube five = new DataCube(5, 4, 4, 7);
+    DataCube six = new DataCube(6, 6, 4, 7);
+    four.pickUp(7);
+    five.pickUp(8);
+    six.pickUp(9);
+
+    grid.addGameElement(four);
+    grid.addGameElement(five);
+    grid.addGameElement(six);
+
+    assertTrue(parsedGoalState.checkGameEnded(grid));
+
   }
 }

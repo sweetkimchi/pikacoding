@@ -106,4 +106,16 @@ public class Board extends StackPane {
   public boolean updateAnimationForFrontEnd() {
     return spriteLayer.updateAnimationForFrontEnd();
   }
+
+  public void updateBlockPositions(int id, int xCoord, int yCoord) {
+    spriteLayer.updateBlockPositions(id,xCoord,yCoord);
+  }
+
+  public void updateBlock(int id, boolean b) {
+    spriteLayer.updateBlock(id,b);
+  }
+
+  public void setBoardNumber(int id, int newDisplayNum) {
+    spriteLayer.setBoardNumber(id, newDisplayNum);
+  }
 }

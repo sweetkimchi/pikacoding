@@ -30,6 +30,7 @@ public class Subtract extends BasicCommands {
         .getHeldItem() instanceof DataCube avatarCube) {
       int newDisplayNum = avatarCube.getDisplayNum() - tileCube.getDisplayNum();
       avatarCube.setDisplayNum(newDisplayNum);
+      getElementInformationBundle().getModelController().setBoardNumber(avatarCube.getId(),newDisplayNum);
     } else {
       //TODO: throw error to handler
       System.out.println("Cannot subtract blocks!");

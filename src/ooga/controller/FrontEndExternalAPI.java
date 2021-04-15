@@ -74,9 +74,17 @@ public interface FrontEndExternalAPI {
 
   void setScore(int score);
 
+  void winLevel();
+
   /**
    * sets the line number for the avatar
    * @param lineUpdates
    */
   void setLineIndicators(Map<Integer, Integer> lineUpdates);
+
+  void updateBlockPositions(int id, int xCoord, int yCoord);
+
+  void updateBlock(int id, boolean b);
+
+  void setBoardNumber(int id, int newDisplayNum);
 }

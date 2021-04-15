@@ -17,6 +17,7 @@ import ooga.model.player.AvatarData;
 import ooga.model.player.DataCube;
 import ooga.model.player.Element;
 import ooga.model.player.Block;
+import ooga.model.player.ElementData;
 import ooga.model.player.Player;
 
 /**
@@ -28,7 +29,7 @@ public class ElementInformationBundle implements InformationBundle {
   private final List<Player> avatarList;
   private final List<Block> dataCubeList;
   private Map<Integer, Integer> lineUpdates;
-  private AvatarData newUpdate;
+  private ElementData newUpdate;
   private BackEndExternalAPI modelController;
 
   public ElementInformationBundle() {

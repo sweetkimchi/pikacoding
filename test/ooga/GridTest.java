@@ -106,6 +106,26 @@ public class GridTest {
       public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
 
       }
+
+      @Override
+      public void updateBlock(int id, boolean b) {
+
+      }
+
+      @Override
+      public void updateBlockPositions(int id, int xCoord, int yCoord) {
+
+      }
+
+      @Override
+      public void winLevel() {
+
+      }
+
+      @Override
+      public void setBoardNumber(int id, int newDisplayNum) {
+
+      }
     };
     elementInformationBundle.setModelController(modelController);
     avatar = new Avatar(10, 5, 5);

@@ -51,7 +51,6 @@ public class InitialConfigurationParser {
       parseCommands((HashMap) result.get("commands"));
     }
     catch (Exception e) {
-      e.printStackTrace();
       this.errorMessage = "Error parsing level file";
       this.errorOccurred = true;
     }
@@ -110,11 +109,11 @@ public class InitialConfigurationParser {
       List<Integer> blockLoc = (List<Integer>) currentBlock.get("loc");
       BlockData blockData = new BlockData(blockLoc,
           (int) currentBlock.get("num"), Boolean.parseBoolean(
-          (String) currentBlock.get("pickedUp")));
+          (String) currentBlock.get("pickedUp")), Integer.parseInt(s));
       allBlockData.put(s, blockData);
       if (addToGameGrid)  {
         this.elementInformationBundle.addGameElement(new DataCube(Integer.parseInt(s), blockLoc.get(0),
-            blockLoc.get(1), 0));
+            blockLoc.get(1), (int) currentBlock.get("num")));
       }
 
     }

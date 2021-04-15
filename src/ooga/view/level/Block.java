@@ -21,10 +21,12 @@ public class Block extends StackPane {
   private double currentX;
   private double currentY;
   private Rectangle block;
+  private boolean isHeld;
 
   public Block(int x, int y, double w, double h, SpriteLayer root, String num) {
     initialXCoordinate = x;
     initialYCoordinate = y;
+    isHeld = false;
     width = w;
     height = h;
     padding = PADDING_RATIO * width;
@@ -35,11 +37,13 @@ public class Block extends StackPane {
     makeBlock();
   }
 
-  public void moveBlock(int x, int y) {
+  public void moveBlock(double x, double y) {
     this.setTranslateX(x * width + padding);
     currentX = x;
     this.setTranslateY(y * height + padding -  PICKEDUP_SHIFT * height);
     currentY = y;
+//    block.setX(currentX);
+//    block.setY(currentY);
   }
 
   public void setShiftHeight(double percent) {
@@ -52,23 +56,41 @@ public class Block extends StackPane {
    */
   public void updateCubeNumber(int num) {
     this.getChildren().remove(blockText);
-    number = String.valueOf(num);
-    blockText.setText(number);
+    String dummy = String.valueOf(num);
+    blockText.setText(dummy);
     this.getChildren().add(blockText);
   }
 
   public void reset() {
     this.setTranslateX(initialXCoordinate * width + padding);
     this.setTranslateY(initialYCoordinate * height + padding);
+    currentX = initialXCoordinate;
+    currentY = initialYCoordinate;
+    updateCubeNumber(Integer.parseInt(number));
+  }
+
+  public int getInitialXCoordinate(){
+    return (int) currentX;
+  }
+
+  public int getInitialYCoordinate(){
+    return (int) currentY;
   }
 
   private void makeBlock() {
     block = new Rectangle(width - 2 * padding, height - 2 * padding);
     block.setFill(Color.LIGHTSEAGREEN); // TODO: put in resource file
+
+    block.setX(currentX);
+    block.setY(currentY);
     blockText = new Text(number);
     this.getChildren().add(block);
     this.getChildren().add(blockText);
     reset();
     spriteLayer.getChildren().add(this);
+  }
+
+  public void setHeldStatus(boolean status){
+    isHeld = status;
   }
 }
