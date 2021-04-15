@@ -11,7 +11,8 @@
 }
 
 .title {
-    -fx-font-size: 20pt;
+    -fx-font-family: "Rockwell";
+    -fx-font-size: 30pt;
 }
 
 .level-selector {
