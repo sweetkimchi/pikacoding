@@ -28,21 +28,26 @@ public class StartMenu extends BorderPane {
     startButton.setOnAction(startAction);
     center.getChildren().addAll(title, startButton);
 
-    ComboBox<String> chooseStyleSheet = new ComboBox<>();
+    ComboBox<String> chooseStyleSheet = makeComboBox();;
+    center.getChildren().add(chooseStyleSheet);
+    this.setCenter(center);
+  }
+
+  private ComboBox<String> makeComboBox() {
+    ComboBox<String> comboBox = new ComboBox<>();
     ResourceBundle cssPossibilities = ResourceBundle.getBundle(CSS_POSSIBILITIES);
     Object[] keys = cssPossibilities.keySet().toArray();
     List<String> allCSS = new ArrayList<>();
     for (Object o : keys) {
       allCSS.add(cssPossibilities.getString(o.toString()));
     }
-    chooseStyleSheet.getItems().addAll(allCSS);
-    chooseStyleSheet.setValue("default");
-    center.getChildren().add(chooseStyleSheet);
-    chooseStyleSheet.setOnAction(event -> updateStyleSheet(chooseStyleSheet.getValue()));
-    this.setCenter(center);
+    comboBox.getItems().addAll(allCSS);
+    comboBox.setValue("default");
+    comboBox.setOnAction(event -> updateStyleSheet(comboBox.getValue()));
+    return comboBox;
   }
 
-  private void updateStyleSheet(Object value) {
+    private void updateStyleSheet(Object value) {
     this.getStylesheets().remove(CSS + styleSheet);
     styleSheet = value.toString() + ".css";
     this.getStylesheets().add(CSS + styleSheet);
