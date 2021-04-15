@@ -116,6 +116,11 @@ public class GridTest {
       public void updateBlockPositions(int id, int xCoord, int yCoord) {
 
       }
+
+      @Override
+      public void winLevel() {
+
+      }
     };
     elementInformationBundle.setModelController(modelController);
     avatar = new Avatar(10, 5, 5);

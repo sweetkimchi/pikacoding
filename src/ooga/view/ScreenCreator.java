@@ -44,8 +44,8 @@ public class ScreenCreator {
     return levelView;
   }
 
-  public void initializeLevelView() {
-    levelView = new LevelView(this.viewController, this);
+  public void initializeLevelView(int level) {
+    levelView = new LevelView(level, this.viewController, this);
     Scene scene = new Scene(levelView, width, height);
     stage.setScene(scene);
   }
@@ -72,7 +72,4 @@ public class ScreenCreator {
     stage.show();
   }
 
-  public void setScore(int score) {
-//    System.out.println("SCORE (ScreenCreator): " + score);
-  }
 }

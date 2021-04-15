@@ -89,7 +89,19 @@ public class ProgramStack extends VBox {
         other.getStyleClass().remove("command-block-hovered");
       });
       other.setOnMouseClicked(e -> {
-        moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
+        if (commandBlockHolder instanceof NestedBeginBlockHolder) {
+          if (newIndex < ((NestedBeginBlockHolder) commandBlockHolder).getEndCommandBlockHolder().getIndex()) {
+            moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
+          }
+        }
+        else if (commandBlockHolder instanceof NestedEndBlockHolder) {
+          if (newIndex > ((NestedEndBlockHolder) commandBlockHolder).getBeginCommandBlockHolder().getIndex()) {
+            moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
+          }
+        }
+        else {
+          moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);;
+        }
         resetMouseActions();
       });
     });

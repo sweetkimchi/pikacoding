@@ -89,7 +89,7 @@ public class ViewController implements FrontEndExternalAPI {
 
     @Override
     public void initializeLevel(int level) {
-        screenCreator.initializeLevelView();
+        screenCreator.initializeLevelView(level);
         levelView = screenCreator.getLevelView();
         modelController.initializeLevel(level);
     }
@@ -112,7 +112,12 @@ public class ViewController implements FrontEndExternalAPI {
     @Override
     public void setScore(int score) {
         //TODO: edit as you see fit (screenCreator vs levelView)
-        screenCreator.setScore(score);
+        levelView.setScore(score);
+    }
+
+    @Override
+    public void winLevel() {
+        levelView.winLevel();
     }
 
     /**

@@ -79,7 +79,7 @@ public class CommandExecutor {
                 System.out.println("GAME HAS ENDED");
                 System.out.println("SCORE (CommandExecutor): " + score);
                 ended = true;
-                modelController.declareEndOfAnimation();
+                modelController.winLevel();
             }else{
                 System.out.println("Game still going");
             }
