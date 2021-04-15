@@ -89,6 +89,9 @@ public class InitialConfigurationParser {
 
   private Map<String, List<Integer>> parseAvatarLocations(Map<String, Object> peopleLocations, boolean addToGameGrid)  {
     Map<String, List<Integer>> mapOfPeople = new HashMap<>();
+    if (peopleLocations.containsKey("noLoc")) {
+      return mapOfPeople;
+    }
     for (String s: peopleLocations.keySet())  {
       List<Integer> avatarLocation = (List<Integer>) peopleLocations.get(s);
       mapOfPeople.put(s, avatarLocation);
@@ -96,7 +99,6 @@ public class InitialConfigurationParser {
         this.elementInformationBundle.addGameElement(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
             avatarLocation.get(1)));
       }
-
     }
     return mapOfPeople;
   }
