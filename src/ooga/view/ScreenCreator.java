@@ -44,8 +44,8 @@ public class ScreenCreator {
     return levelView;
   }
 
-  public void initializeLevelView() {
-    levelView = new LevelView(this.viewController, this);
+  public void initializeLevelView(int level) {
+    levelView = new LevelView(level, this.viewController, this);
     Scene scene = new Scene(levelView, width, height);
     stage.setScene(scene);
   }

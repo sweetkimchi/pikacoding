@@ -89,7 +89,7 @@ public class ViewController implements FrontEndExternalAPI {
 
     @Override
     public void initializeLevel(int level) {
-        screenCreator.initializeLevelView();
+        screenCreator.initializeLevelView(level);
         levelView = screenCreator.getLevelView();
         modelController.initializeLevel(level);
     }
