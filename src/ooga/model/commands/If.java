@@ -29,12 +29,13 @@ public class If extends ConditionalCommands {
     TileData tileToCheck = getElementInformationBundle().getTileData(newX, newY);
 
     // equals or not equals
-    String condition = getParameters().get("condition");
+    System.out.println(getParameters());
+    String condition = getParameters().get("comparator");
     boolean equalsOrNot = !condition.equals("equal");
 
     // TODO: refactor using reflection
     boolean result;
-    String thingToCheck = getParameters().get("object");
+    String thingToCheck = getParameters().get("target");
     switch (thingToCheck) {
       case "nothing" -> result = (!tileToCheck.hasAvatar() && !tileToCheck.hasBlock()
           && tileToCheck.getStructure() == Structure.FLOOR);
