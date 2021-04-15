@@ -4,10 +4,9 @@ import java.util.Map;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
-import ooga.model.player.Block;
-import ooga.model.player.Player;
+import ooga.model.player.DataCube;
 
-public class Drop extends BasicCommands {
+public class Subtract extends BasicCommands {
 
   /**
    * Default constructor
@@ -15,34 +14,30 @@ public class Drop extends BasicCommands {
    * @param elementInformationBundle
    * @param parameters
    */
-  public Drop(ElementInformationBundle elementInformationBundle,
+  public Subtract(ElementInformationBundle elementInformationBundle,
       Map<String, String> parameters) {
     super(elementInformationBundle, parameters);
   }
 
   @Override
   public void execute(int ID) {
+    //TODO: remove duplication between add/subtract?
     Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
     int currX = avatar.getXCoord();
     int currY = avatar.getYCoord();
     Tile currTile = getElementInformationBundle().getTile(currX,currY);
-    if (currTile.canAddBlock()) {
-      Block block = avatar.drop();
-      if (block == null) {
-        //TODO: throw error to handler
-        System.out.println("You are not holding a block!");
-      }else{
-        block.drop();
-        getElementInformationBundle().getModelController().updateBlock(block.getId(),
-            avatar.hasBlock());
-      }
-      currTile.add(block);
+    if (currTile.getBlock() instanceof DataCube tileCube && avatar
+        .getHeldItem() instanceof DataCube avatarCube) {
+      int newDisplayNum = avatarCube.getDisplayNum() - tileCube.getDisplayNum();
+      avatarCube.setDisplayNum(newDisplayNum);
     } else {
       //TODO: throw error to handler
-      System.out.println("You cannot drop here!");
-
+      System.out.println("Cannot subtract blocks!");
     }
 
     avatar.setProgramCounter(avatar.getProgramCounter() + 1);
+
+    //TODO: send updates to ElementInformationBundle
+
   }
 }

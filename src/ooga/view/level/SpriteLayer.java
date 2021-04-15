@@ -99,9 +99,19 @@ public class SpriteLayer extends Pane {
        // System.out.println("Moving Avatar: " + entry.getValue());
         double nextX = entry.getValue().pop();
         double nextY = entry.getValue().pop();
+        double currentX = 0;
+        double currentY = 0;
+        if(avatars.containsKey(entry.getKey())){
+          currentX = avatars.get(entry.getKey()).getInitialXCoordinate();
+          currentY = avatars.get(entry.getKey()).getInitialYCoordinate();
 
-        double currentX = avatars.get(entry.getKey()).getInitialXCoordinate();
-        double currentY = avatars.get(entry.getKey()).getInitialYCoordinate();
+          avatars.get(entry.getKey()).moveAvatar(nextX, nextY);
+        }else if(blocks.containsKey(entry.getKey())){
+          currentX = blocks.get(entry.getKey()).getInitialXCoordinate();
+          currentY = blocks.get(entry.getKey()).getInitialYCoordinate();
+
+          blocks.get(entry.getKey()).moveBlock(nextX, nextY);
+        }
 
 
 //        System.out.println("CurrentX: " + currentX);
@@ -110,7 +120,6 @@ public class SpriteLayer extends Pane {
 //        System.out.println("NextY: " + nextY);
 
 //        System.out.println();
-        avatars.get(entry.getKey()).moveAvatar(nextX, nextY);
         finished = false;
       }
     }
@@ -131,6 +140,20 @@ public class SpriteLayer extends Pane {
       for(Map.Entry<Integer,Avatar> entry : avatars.entrySet()){
         avatars.get(entry.getKey()).setAvatarImage("PikachuAvatar.gif");
       }
+    }
+  }
+
+  public void updateBlockPositions(int id, int xCoord, int yCoord) {
+    Block block = blocks.get(id);
+    animation.queuePositionUpdates(id, block.getInitialXCoordinate(), block.getInitialYCoordinate(), xCoord,yCoord);
+  }
+
+  public void updateBlock(int id, boolean b) {
+    blocks.get(id).setHeldStatus(b);
+    if(b){
+      blocks.get(id).setShiftHeight(1);
+    }else{
+      blocks.get(id).setShiftHeight(0);
     }
   }
 }

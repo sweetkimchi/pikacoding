@@ -36,6 +36,9 @@ public class BlockData {
       return false;
     }
     BlockData blockData = (BlockData) obj;
+    System.out.println("GOAL STATE BLOCK loc" + this.getLocation() + " pickedUP" + this.pickedUp + "block num" + this.blockNumber);
+    System.out.println("CURRENT STATE BLOCK loc" + blockData.getLocation() + " pickedUP" + blockData.pickedUp + "block num" + blockData.blockNumber);
+
     return (this.location.equals(blockData.location) &&
         this.pickedUp == blockData.pickedUp &&
         this.blockNumber == blockData.blockNumber);

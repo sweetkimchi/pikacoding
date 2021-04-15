@@ -73,6 +73,6 @@ public class ScreenCreator {
   }
 
   public void setScore(int score) {
-    System.out.println("SCORE (ScreenCreator): " + score);
+//    System.out.println("SCORE (ScreenCreator): " + score);
   }
 }

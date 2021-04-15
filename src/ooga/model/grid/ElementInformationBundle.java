@@ -17,6 +17,7 @@ import ooga.model.player.AvatarData;
 import ooga.model.player.DataCube;
 import ooga.model.player.Element;
 import ooga.model.player.Block;
+import ooga.model.player.ElementData;
 import ooga.model.player.Player;
 
 /**
@@ -28,7 +29,7 @@ public class ElementInformationBundle implements InformationBundle {
   private final List<Player> avatarList;
   private final List<Block> dataCubeList;
   private Map<Integer, Integer> lineUpdates;
-  private AvatarData newUpdate;
+  private ElementData newUpdate;
   private BackEndExternalAPI modelController;
 
   public ElementInformationBundle() {
@@ -87,74 +88,6 @@ public class ElementInformationBundle implements InformationBundle {
     if (gameElement instanceof DataCube) {
       dataCubeList.add((DataCube) gameElement);
     }
-  }
-
-  //TODO: Remove
-  /**
-   * Moves the avatar in a cardinal direction.
-   *
-   * @param direction The direction to be moved
-   */
-  public void step(int avatarId, Direction direction) {
-    Element avatar = getAvatarById(avatarId);
-    assert avatar != null;
-    int currX = avatar.getXCoord();
-    int currY = avatar.getYCoord();
-    int newX = currX + direction.getXDel();
-    int newY = currY + direction.getYDel();
-    if (grid[newX][newY].canAddAvatar()) {
-      grid[newX][newY].add(avatar);
-      grid[currX][currY].removeAvatar();
-      avatar.step(direction);
-    } else {
-      //TODO: throw error to handler?
-      System.out.println("The avatar cannot step here!");
-    }
-
-  }
-
-  //TODO: Remove
-  public void pickUp(int avatarId, Direction direction) {
-    Player avatar = getAvatarById(avatarId);
-    assert avatar != null;
-    int currX = avatar.getXCoord();
-    int currY = avatar.getYCoord();
-    int newX = currX + direction.getXDel();
-    int newY = currY + direction.getYDel();
-    if (grid[newX][newY].hasBlock()) {
-      avatar.pickUp(grid[newX][newY].getBlock());
-      grid[currX][currY].removeBlock();
-    } else {
-      //TODO: throw error to handler
-      System.out.println("There is no block to be picked up!");
-    }
-  }
-
-
-  //TODO: Remove
-  /**
-   * Directs the avatar to drop the block it is holding.
-   *
-   * @param avatarId The id of the avatar
-   */
-  public void drop(int avatarId) {
-    Player avatar = getAvatarById(avatarId);
-    assert avatar != null;
-    int currX = avatar.getXCoord();
-    int currY = avatar.getYCoord();
-    if (grid[currX][currY].canAddBlock()) {
-      Block block = avatar.drop();
-      if (block == null) {
-        //TODO: throw error to handler
-        System.out.println("You are not holding a block!");
-      }
-      grid[currX][currY].add(block);
-    } else {
-      //TODO: throw error to handler
-      System.out.println("You cannot drop here!");
-
-    }
-
   }
 
   public Player getAvatarById(int id) {
