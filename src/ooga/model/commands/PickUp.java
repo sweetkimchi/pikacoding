@@ -33,6 +33,11 @@ public class PickUp extends BasicCommands {
     int newY = currY + direction.getYDel();
     Tile tileToPickUpFrom = getElementInformationBundle().getTile(newX,newY);
     if (tileToPickUpFrom.hasBlock()) {
+      Block temp = null;
+      if (avatar.hasBlock()) {
+        temp = avatar.drop();
+        temp.drop();
+      }
       Block block = tileToPickUpFrom.getBlock();
       System.out.println("Pickup " + block.getId());
 
@@ -40,6 +45,8 @@ public class PickUp extends BasicCommands {
 
       getElementInformationBundle().getModelController().updateBlock(block.getId(), avatar.hasBlock());
       tileToPickUpFrom.removeBlock();
+      tileToPickUpFrom.add(temp);
+      if (temp != null) getElementInformationBundle().getModelController().updateBlock(temp.getId(), temp.isHeld());
       avatar.getHeldItem().pickUp(avatar.getId());
     } else {
       //TODO: throw error to handler

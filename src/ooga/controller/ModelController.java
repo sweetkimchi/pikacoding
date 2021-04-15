@@ -53,6 +53,7 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void parseCommands(List<CommandBlock> commandBlocks) {
     //TODO: delete after debugging. Initializing level for testing purposes
+    initialConfigurationParser = new InitialConfigurationParser(1, this.firebaseService);
 
     commandExecutor = new CommandExecutor(commandBlocks, this,
         initialConfigurationParser.getInitialState(),
