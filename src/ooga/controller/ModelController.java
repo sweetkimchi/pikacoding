@@ -164,4 +164,9 @@ public class ModelController implements BackEndExternalAPI {
   public void updateBlockPositions(int id, int xCoord, int yCoord) {
     viewController.updateBlockPositions(id, xCoord, yCoord);
   }
+
+  @Override
+  public void winLevel() {
+    viewController.winLevel();
+  }
 }

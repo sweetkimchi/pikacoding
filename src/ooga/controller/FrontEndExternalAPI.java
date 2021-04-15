@@ -74,6 +74,8 @@ public interface FrontEndExternalAPI {
 
   void setScore(int score);
 
+  void winLevel();
+
   /**
    * sets the line number for the avatar
    * @param lineUpdates

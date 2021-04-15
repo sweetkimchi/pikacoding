@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
-import ooga.model.grid.gridData.BoardState;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.AvatarData;
@@ -22,8 +21,7 @@ import ooga.view.StartMenu;
 import ooga.view.level.codearea.CodeArea;
 
 /**
- * Main view class for levels.
- * Contains all the main level view elements (board, code area, etc.)
+ * Main view class for levels. Contains all the main level view elements (board, code area, etc.)
  *
  * @author David Li
  * @author Ji Yun Hyo
@@ -32,12 +30,15 @@ public class LevelView extends BorderPane {
 
   public static final String LEVEL_PROPERTIES = "Level";
 
+  private final int level;
   private final FrontEndExternalAPI viewController;
   private final ScreenCreator screenCreator;
   private final MenuBar menuBar;
   private final Board board;
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
+
+  private int score;
 
   private Timeline timeline;
 
@@ -49,9 +50,10 @@ public class LevelView extends BorderPane {
   //I'm using this because for some reason, clicking step doesn't play the initial animation (does nothing)
   private double dummy = 1;
 
-  public LevelView(FrontEndExternalAPI viewController, ScreenCreator screenCreator) {
+  public LevelView(int level, FrontEndExternalAPI viewController, ScreenCreator screenCreator) {
     this.viewController = viewController;
     this.screenCreator = screenCreator;
+    this.level = level;
     this.getStylesheets().add(StartMenu.DEFAULT_CSS);
     menuBar = new MenuBar(e -> openPauseMenu());
     board = new Board();
@@ -61,16 +63,15 @@ public class LevelView extends BorderPane {
     queueFinished = true;
     step = false;
 
-
     timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 
       /**
        * if queue is finished run the next command
        * if the que is not finished, it means that the turn is not over yet so execute the animation for the turn
        */
-     // System.out.println("Animation running");
-      if(queueFinished){
-        if(step && dummy != 1){
+      // System.out.println("Animation running");
+      if (queueFinished) {
+        if (step && dummy != 1) {
           timeline.stop();
           step = false;
         }
@@ -78,7 +79,7 @@ public class LevelView extends BorderPane {
         viewController.runNextCommand();
         queueFinished = false;
 
-      }else{
+      } else {
         updateAnimationForFrontEnd();
       }
       setAnimationSpeed();
@@ -185,7 +186,6 @@ public class LevelView extends BorderPane {
       codeIsRunning = true;
     }
 
-
     runSimulation();
 
     step = true;
@@ -193,10 +193,10 @@ public class LevelView extends BorderPane {
      * if queue is finished run the next command
      * if the que is not finished, it means that the turn is not over yet so execute the animation for the turn
      */
-    if(queueFinished){
+    if (queueFinished) {
       viewController.runNextCommand();
       queueFinished = false;
-    }else{
+    } else {
       updateAnimationForFrontEnd();
     }
 
@@ -222,7 +222,6 @@ public class LevelView extends BorderPane {
   }
 
   public void declareEndOfAnimation() {
-
     codeIsRunning = false;
     timeline.stop();
   }
@@ -232,10 +231,26 @@ public class LevelView extends BorderPane {
   }
 
   public void updateBlockPositions(int id, int xCoord, int yCoord) {
-    board.updateBlockPositions(id,xCoord,yCoord);
+    board.updateBlockPositions(id, xCoord, yCoord);
   }
 
   public void updateBlock(int id, boolean b) {
-    board.updateBlock(id,b);
+    board.updateBlock(id, b);
+  }
+
+  public void winLevel() {
+    try {
+      Thread.sleep(2000);
+    } catch (Exception e) {
+
+    }
+    this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
+        e -> screenCreator.initializeLevelView(level + 1)));
+    this.setRight(null);
+    this.setBottom(null);
+  }
+
+  public void setScore(int score) {
+    this.score = score;
   }
 }
