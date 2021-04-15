@@ -3,27 +3,27 @@
 },
 
   "blocks":{
-    "4":{
+    "8":{
       "loc":[1,4],
       "num":1,
       "pickedUp":"False"
     },
-    "5":{
+    "9":{
       "loc":[4,4],
       "num":0,
       "pickedUp":"False"
     },
-    "6":{
+    "10":{
       "loc":[5,4],
       "num":0,
       "pickedUp":"False"
     },
-    "3":{
+    "11":{
       "loc":[2,4],
       "num":1,
       "pickedUp":"False"
     },
-    "2":{
+    "12":{
       "loc":[3,4],
       "num":0,
       "pickedUp":"False"
