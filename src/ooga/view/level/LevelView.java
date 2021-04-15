@@ -42,6 +42,7 @@ public class LevelView extends BorderPane {
   private final MenuBar menuBar;
   private Label scoreDisplay;
   private final Board board;
+  private GridPane rightPane;
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
   private Label description;
@@ -121,7 +122,7 @@ public class LevelView extends BorderPane {
     Button resumeButton = new Button("Resume");
     resumeButton.setOnAction(e -> {
       this.setCenter(board);
-      this.setRight(codeArea);
+      this.setRight(rightPane);
       this.setBottom(controlPanel);
     });
     pauseMenu.getChildren().add(resumeButton);
@@ -158,26 +159,28 @@ public class LevelView extends BorderPane {
     board.getChildren().add(scoreDisplay);
     StackPane.setAlignment(scoreDisplay, Pos.TOP_LEFT);
     this.setCenter(board);
-    this.setRight(createRight(levelResources));
+    createRight(levelResources);
+    this.setRight(rightPane);
     this.setBottom(controlPanel);
   }
 
-  private GridPane createRight(ResourceBundle levelResources) {
-    GridPane right = new GridPane();
+  private void createRight(ResourceBundle levelResources) {
+    rightPane = new GridPane();
     VBox descriptionBox = new VBox();
+    rightPane.setVgap(8);
+    descriptionBox.getStyleClass().add("description-box");
     Label header = new Label("Level " + level);
     header.getStyleClass().add("title");
     description = new Label();
     descriptionBox.getChildren().addAll(header, description);
-    right.add(descriptionBox, 0, 0);
-    right.add(codeArea, 0, 1);
+    rightPane.add(descriptionBox, 0, 0);
+    rightPane.add(codeArea, 0, 1);
 
     RowConstraints rowConstraints = new RowConstraints();
     rowConstraints.setPrefHeight(Double.parseDouble(levelResources.getString("DescriptionHeight")));
     rowConstraints.setMinHeight(Double.parseDouble(levelResources.getString("DescriptionHeight")));
-    right.getRowConstraints().add(rowConstraints);
-    right.setPadding(new Insets(8, 8, 8, 8));
-    return right;
+    rightPane.getRowConstraints().add(rowConstraints);
+    rightPane.setPadding(new Insets(8, 8, 8, 8));
   }
 
   private void pause() {
@@ -277,6 +280,7 @@ public class LevelView extends BorderPane {
     } catch (Exception e) {
 
     }
+    this.setTop(null);
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
         e -> viewController.initializeLevel(level + 1), level == Controller.NUM_LEVELS));
     this.setRight(null);
@@ -304,7 +308,7 @@ public class LevelView extends BorderPane {
   public void loseLevel() {
     this.setCenter(new LoseScreen(e -> {
       this.setCenter(board);
-      this.setRight(codeArea);
+      this.setRight(rightPane);
       this.setBottom(controlPanel);
       reset();
     }));

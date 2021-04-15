@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 public class MenuBar extends HBox {
 
   public MenuBar(EventHandler<ActionEvent> pauseAction) {
+    this.getStyleClass().add("menu-bar");
     Button pauseButton = new Button("Pause");
     pauseButton.setOnAction(pauseAction);
     this.getChildren().add(pauseButton);
