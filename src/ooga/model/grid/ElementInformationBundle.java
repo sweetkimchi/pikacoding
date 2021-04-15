@@ -33,7 +33,8 @@ public class ElementInformationBundle implements InformationBundle {
   private Map<Integer, Integer> lineUpdates;
   private ElementData newUpdate;
   private BackEndExternalAPI modelController;
-  private Stack<Integer> endCommandLines;
+  private List<Integer> endCommandLines;
+  private Map<Integer, Integer> mapOfCommandLines;
 
   public ElementInformationBundle() {
     avatarList = new ArrayList<>();
@@ -131,11 +132,23 @@ public class ElementInformationBundle implements InformationBundle {
     return grid[x][y];
   }
 
-  public void setEndCommandLines(Stack<Integer> endCommandLines) {
+  public void setEndCommandLines(List<Integer> endCommandLines) {
     this.endCommandLines = endCommandLines;
   }
 
-  public Stack<Integer> getEndCommandLines(){
+  public List<Integer> getEndCommandLines(){
     return this.endCommandLines;
+  }
+
+  public Map<Integer,Integer> getMapOfCommendLines() {
+    return this.mapOfCommandLines;
+  }
+
+  public void setMapOfCommandLines(Map<Integer,Integer> mapOfCommandLines){
+    this.mapOfCommandLines = mapOfCommandLines;
+  }
+
+  public Map<Integer,Integer> getMapOfCommandLines(){
+    return this.mapOfCommandLines;
   }
 }
