@@ -75,7 +75,14 @@ public class CommandExecutor {
                 score++;
                 modelController.updateScore(score);
             }
-            goalState.checkGameEnded();
+            if(goalState.checkGameEnded(elementInformationBundle)){
+                System.out.println("GAME HAS ENDED");
+                System.out.println("SCORE (CommandExecutor): " + score);
+                ended = true;
+                modelController.declareEndOfAnimation();
+            }else{
+                System.out.println("Game still going");
+            }
         }
 
         modelController.setLineIndicators(lineUpdates);

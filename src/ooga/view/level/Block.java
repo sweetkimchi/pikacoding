@@ -64,8 +64,8 @@ public class Block extends StackPane {
   public void reset() {
     this.setTranslateX(initialXCoordinate * width + padding);
     this.setTranslateY(initialYCoordinate * height + padding);
-    currentX = initialXCoordinate * width + padding;
-    currentY = initialYCoordinate * height + padding;
+    currentX = initialXCoordinate;
+    currentY = initialYCoordinate;
   }
 
   public int getInitialXCoordinate(){
@@ -80,8 +80,8 @@ public class Block extends StackPane {
     block = new Rectangle(width - 2 * padding, height - 2 * padding);
     block.setFill(Color.LIGHTSEAGREEN); // TODO: put in resource file
 
-//    block.setX(currentX);
-//    block.setY(currentY);
+    block.setX(currentX);
+    block.setY(currentY);
     blockText = new Text(number);
     this.getChildren().add(block);
     this.getChildren().add(blockText);
