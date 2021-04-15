@@ -81,6 +81,17 @@ public class ParserTester {
     grid.addGameElement(six);
 
     assertTrue(parsedGoalState.checkGameEnded(grid));
+  }
 
+  @Test
+  public void checkUploadWrongLevel(){
+    firebaseService.saveGameLevel(-1);
+    assertTrue(firebaseService.getExceptionOccured());
+  }
+
+  @Test
+  public void checkUploadLevel(){
+    firebaseService.saveGameLevel(1);
+    assertFalse(firebaseService.getExceptionOccured());
   }
 }
