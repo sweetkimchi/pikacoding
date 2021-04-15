@@ -46,7 +46,7 @@ public class PickUp extends BasicCommands {
       getElementInformationBundle().getModelController().updateBlock(block.getId(), avatar.hasBlock());
       tileToPickUpFrom.removeBlock();
       tileToPickUpFrom.add(temp);
-      getElementInformationBundle().getModelController().updateBlock(temp.getId(), temp.isHeld());
+      if (temp != null) getElementInformationBundle().getModelController().updateBlock(temp.getId(), temp.isHeld());
       avatar.getHeldItem().pickUp(avatar.getId());
     } else {
       //TODO: throw error to handler
