@@ -13,6 +13,7 @@ public class LevelSelector extends BorderPane {
     VBox levels = new VBox();
     for (int level = 1; level <= Controller.NUM_LEVELS; level++) {
       Button levelButton = new Button("Level " + level);
+      levelButton.setId("load-level-" + level);
       int thisLevel = level;
       levelButton.setOnAction(e -> loadLevelAction.accept(thisLevel));
       levels.getChildren().add(levelButton);

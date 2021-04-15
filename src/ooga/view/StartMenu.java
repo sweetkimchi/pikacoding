@@ -26,6 +26,7 @@ public class StartMenu extends BorderPane {
 
     Button startButton = new Button("Start Game");
     startButton.setOnAction(startAction);
+    startButton.setId("start-button");
     center.getChildren().addAll(title, startButton);
 
     ComboBox<String> chooseStyleSheet = makeComboBox();;
