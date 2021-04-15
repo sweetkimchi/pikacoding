@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
+import java.util.Vector;
 import ooga.controller.BackEndExternalAPI;
 import ooga.model.Direction;
 import ooga.model.InformationBundle;
@@ -31,6 +33,7 @@ public class ElementInformationBundle implements InformationBundle {
   private Map<Integer, Integer> lineUpdates;
   private ElementData newUpdate;
   private BackEndExternalAPI modelController;
+  private Stack<Integer> endCommandLines;
 
   public ElementInformationBundle() {
     avatarList = new ArrayList<>();
@@ -126,5 +129,13 @@ public class ElementInformationBundle implements InformationBundle {
 
   public Tile getTile(int x, int y) {
     return grid[x][y];
+  }
+
+  public void setEndCommandLines(Stack<Integer> endCommandLines) {
+    this.endCommandLines = endCommandLines;
+  }
+
+  public Stack<Integer> getEndCommandLines(){
+    return this.endCommandLines;
   }
 }
