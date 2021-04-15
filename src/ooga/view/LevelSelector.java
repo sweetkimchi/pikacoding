@@ -10,7 +10,6 @@ import ooga.controller.Controller;
 public class LevelSelector extends BorderPane {
 
   public LevelSelector(Consumer<Integer> loadLevelAction) {
-    this.getStylesheets().add(StartMenu.DEFAULT_CSS);
     VBox levels = new VBox();
     for (int level = 1; level <= Controller.NUM_LEVELS; level++) {
       Button levelButton = new Button("Level " + level);
