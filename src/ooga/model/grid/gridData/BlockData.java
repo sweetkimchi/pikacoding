@@ -27,6 +27,16 @@ public class BlockData {
     // TODO: do something with the datacube ID num?
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof BlockData)) {
+      return false;
+    }
+    BlockData blockData = (BlockData) obj;
+    return (this.location.equals(blockData.location) &&
+        this.pickedUp == blockData.pickedUp &&
+        this.blockNumber == blockData.blockNumber);
+  }
 
   public int getBlockNumber() {
     return blockNumber;
