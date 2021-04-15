@@ -56,8 +56,8 @@ public class Block extends StackPane {
    */
   public void updateCubeNumber(int num) {
     this.getChildren().remove(blockText);
-    number = String.valueOf(num);
-    blockText.setText(number);
+    String dummy = String.valueOf(num);
+    blockText.setText(dummy);
     this.getChildren().add(blockText);
   }
 
@@ -66,6 +66,7 @@ public class Block extends StackPane {
     this.setTranslateY(initialYCoordinate * height + padding);
     currentX = initialXCoordinate;
     currentY = initialYCoordinate;
+    updateCubeNumber(Integer.parseInt(number));
   }
 
   public int getInitialXCoordinate(){

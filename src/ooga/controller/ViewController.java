@@ -140,6 +140,11 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.updateBlock(id, b);
     }
 
+    @Override
+    public void setBoardNumber(int id, int newDisplayNum) {
+        levelView.setBoardNumber(id, newDisplayNum);
+    }
+
     /**
      * Passes in the commands to be parsed
      *

@@ -121,6 +121,11 @@ public class GridTest {
       public void winLevel() {
 
       }
+
+      @Override
+      public void setBoardNumber(int id, int newDisplayNum) {
+
+      }
     };
     elementInformationBundle.setModelController(modelController);
     avatar = new Avatar(10, 5, 5);

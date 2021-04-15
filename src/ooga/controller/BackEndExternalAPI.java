@@ -81,4 +81,6 @@ public interface BackEndExternalAPI {
   void updateBlockPositions(int id, int xCoord, int yCoord);
 
   void winLevel();
+
+  void setBoardNumber(int id, int newDisplayNum);
 }
