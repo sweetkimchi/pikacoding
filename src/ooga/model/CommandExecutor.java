@@ -2,7 +2,6 @@ package ooga.model;
 
 import java.util.*;
 import ooga.controller.BackEndExternalAPI;
-import ooga.model.animation.AnimationPane;
 import ooga.model.commands.Commands;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.gridData.BoardState;
@@ -21,7 +20,6 @@ public class CommandExecutor {
     private BackEndExternalAPI modelController;
     private ElementInformationBundle elementInformationBundle;
     private BoardState initialState;
-    private AnimationPane animationPane;
     private int score;
     private ClassLoader classLoader;
     private final String COMMAND_CLASSES_PACKAGE = Commands.class.getPackageName();
