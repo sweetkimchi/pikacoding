@@ -27,7 +27,7 @@ public class FirebaseService {
 
     try{
       FileInputStream serviceAccount =
-          new FileInputStream("data/team-three-ooga-firebase-adminsdk-fgx3y-59d0e7e80b.json");
+          new FileInputStream("data/firebaseKey/key.json");
 
       FirebaseOptions options = new FirebaseOptions.Builder()
           .setCredentials(GoogleCredentials.fromStream(serviceAccount))
