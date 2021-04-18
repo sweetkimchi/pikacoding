@@ -4,7 +4,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javafx.scene.control.Button;
+
 import javafx.scene.layout.Pane;
 import ooga.model.grid.gridData.BlockData;
 import ooga.view.animation.Animation;
@@ -138,7 +138,7 @@ public class SpriteLayer extends Pane {
   public void resetAvatarImages() {
     if(allElementInformation != null){
       for(Map.Entry<Integer,Avatar> entry : avatars.entrySet()){
-        avatars.get(entry.getKey()).setAvatarImage("PikachuAvatar.gif");
+        avatars.get(entry.getKey()).setAvatarImage("images/PikachuAvatar.gif");
       }
     }
   }

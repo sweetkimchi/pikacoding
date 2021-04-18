@@ -120,6 +120,7 @@ public class ModelController implements BackEndExternalAPI {
         initialConfigurationParser.getInitialState());
     viewController.setDescription(initialConfigurationParser.getDescription());
     viewController.setAvailableCommands(initialConfigurationParser.getAvailableCommands());
+    viewController.setStartingApples(initialConfigurationParser.getGoalState().getNumOfCommands());
   }
 
   @Override
@@ -172,6 +173,11 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void winLevel() {
     viewController.winLevel();
+  }
+
+  @Override
+  public void loseLevel() {
+    viewController.loseLevel();
   }
 
   @Override

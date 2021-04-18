@@ -2,11 +2,10 @@ package ooga.view.level;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 
 public class Avatar {
 
-  private static final String avatarImage = "PikachuAvatar.gif"; // TODO: put in resource file or get passed
+  private static final String avatarImage = "images/PikachuAvatar.gif"; // TODO: put in resource file or get passed
   private int initialXCoordinate;
   private int initialYCoordinate;
   private double width;
@@ -27,7 +26,7 @@ public class Avatar {
   }
 
   private void makeAvatar() {
-    avatar = new ImageView(new Image("PikachuAvatar.gif"));
+    avatar = new ImageView(new Image("images/PikachuAvatar.gif"));
     avatar.getStyleClass().add("avatar");
     avatar.setFitWidth(width);
     avatar.setFitHeight(height);
@@ -46,21 +45,21 @@ public class Avatar {
     // TODO: refactor
     if(currentX < nextX) {
       int num = ((i) % 6) + 1;
-      setAvatarImage("AnimatedPikachuRight" + num + ".gif");
+      setAvatarImage("images/AnimatedPikachuRight" + num + ".gif");
       i++;
     }else if(nextX < currentX){
       int num = ((k) % 6) + 1;
-      setAvatarImage("AnimatedPikachuLeft" + num + ".gif");
+      setAvatarImage("images/AnimatedPikachuLeft" + num + ".gif");
       k++;
     }
     else if(nextX == currentX && nextY == currentY){
 
 //      setAvatarImage("AnimatedPikachuFDBK" + num + ".gif");
-      setAvatarImage("PikachuAvatar.gif");
+      setAvatarImage("images/PikachuAvatar.gif");
 
     }else if(nextX == currentX && nextY != currentY){
       int num = ((j) % 10) + 1;
-      setAvatarImage("AnimatedPikachuFDBK" + num + ".gif");
+      setAvatarImage("images/AnimatedPikachuFDBK" + num + ".gif");
       j++;
     }
   }

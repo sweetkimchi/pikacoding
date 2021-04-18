@@ -1,0 +1,11 @@
+{
+  "level":3,
+  "numPeople":1,
+  "blocks":["step", "pickUp", "drop","add"],
+  "startState":"startState.json",
+  "endState":"endState.json",
+  "images":"images.json",
+  "description":"Using the Add command, write the first 10 Fibonacci numbers on the datacubes.",
+  "idealNumOfCommands":"500",
+  "grid": "grid.json"
+}

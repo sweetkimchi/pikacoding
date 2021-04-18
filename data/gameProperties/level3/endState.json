@@ -1,0 +1,58 @@
+{"peopleLocations":{
+  "noLoc":true
+},
+
+  "blocks":{
+    "101":{
+      "loc":[1,4],
+      "num":1,
+      "pickedUp":"False"
+    },
+    "102":{
+      "loc":[4,4],
+      "num":3,
+      "pickedUp":"False"
+    },
+    "103":{
+      "loc":[5,4],
+      "num":5,
+      "pickedUp":"False"
+    },
+    "104":{
+      "loc":[2,4],
+      "num":1,
+      "pickedUp":"False"
+    },
+    "105":{
+      "loc":[3,4],
+      "num":2,
+      "pickedUp":"False"
+    },
+    "106":{
+      "loc":[6,4],
+      "num":8,
+      "pickedUp":"False"
+    },
+    "107":{
+      "loc":[7,4],
+      "num":13,
+      "pickedUp":"False"
+    },
+    "108":{
+      "loc":[8,4],
+      "num":21,
+      "pickedUp":"False"
+    },
+    "109":{
+      "loc":[9,4],
+      "num":34,
+      "pickedUp":"False"
+    },
+    "110":{
+      "loc":[10,4],
+      "num":55,
+      "pickedUp":"False"
+    }
+  }
+
+}

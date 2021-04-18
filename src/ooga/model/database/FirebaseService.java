@@ -22,7 +22,7 @@ public class FirebaseService {
   private FirebaseDatabase db;
   private String rootURLPathForLevel;
   private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
-
+  private boolean exceptionOccured = false;
   public FirebaseService() {
 
     try{
@@ -40,6 +40,7 @@ public class FirebaseService {
     }
     catch (Exception e) {
       e.printStackTrace();
+      exceptionOccured = true;
     }
 
   }
@@ -78,36 +79,46 @@ public class FirebaseService {
       done.await();
     }
     catch (Exception e) {
-
+      exceptionOccured = true;
     }
   }
 
-  public String readDBContentsForLevelInit(int level) throws InterruptedException {
+  public String readDBContentsForLevelInit(int level) {
     DatabaseReference ref = FirebaseDatabase.getInstance()
         .getReference("level_info/level"+level+"/");
     CountDownLatch done = new CountDownLatch(1);
+    try {
+      final String[] json = {""};
+      ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+          Object object = dataSnapshot.getValue(Object.class);
+          json[0] = new Gson().toJson(object);
+          done.countDown();
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+          // Code
+        }
+      });
+      done.await();
+      return json[0];
+    }
+    catch (Exception e) {
+      exceptionOccured = true;
+      return null;
+    }
 
-    final String[] json = {""};
-    ref.addListenerForSingleValueEvent(new ValueEventListener() {
-      @Override
-      public void onDataChange(DataSnapshot dataSnapshot) {
-        Object object = dataSnapshot.getValue(Object.class);
-        json[0] = new Gson().toJson(object);
-        done.countDown();
-      }
-      @Override
-      public void onCancelled(DatabaseError databaseError) {
-        // Code
-      }
-    });
-    done.await();
-    return json[0];
   }
 
 
 
   public FirebaseDatabase getDb() {
     return db;
+  }
+
+  public boolean getExceptionOccured()  {
+    return this.exceptionOccured;
   }
 
 }
