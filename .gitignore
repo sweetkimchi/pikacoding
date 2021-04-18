@@ -13,6 +13,8 @@ bin/
 target
 gen/
 
+data/firebaseKey/
+
 # Built Application Files #
 ###########################
 *.apk
