@@ -1,16 +1,12 @@
 package ooga.model.grid;
 
-import com.google.api.Backend;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
-import java.util.Vector;
 import ooga.controller.BackEndExternalAPI;
-import ooga.model.Direction;
 import ooga.model.InformationBundle;
 import ooga.model.grid.gridData.BlockData;
 import ooga.model.grid.gridData.TileData;
@@ -29,7 +25,7 @@ public class ElementInformationBundle implements InformationBundle {
 
   private Tile[][] grid;
   private final List<Player> avatarList;
-  private final List<Block> dataCubeList;
+  private final List<Block> blockList;
   private Map<Integer, Integer> lineUpdates;
   private ElementData newUpdate;
   private BackEndExternalAPI modelController;
@@ -38,7 +34,7 @@ public class ElementInformationBundle implements InformationBundle {
 
   public ElementInformationBundle() {
     avatarList = new ArrayList<>();
-    dataCubeList = new ArrayList<>();
+    blockList = new ArrayList<>();
     lineUpdates = new HashMap<>();
     newUpdate = new AvatarData();
   }
@@ -57,7 +53,7 @@ public class ElementInformationBundle implements InformationBundle {
 
   public List<BlockData> getBlockData() {
     List<BlockData> ret = new ArrayList<>();
-    for (Block dataCube : dataCubeList) {
+    for (Block dataCube : blockList) {
       ret.add(new BlockData(dataCube));
     }
     return ret;
@@ -81,18 +77,20 @@ public class ElementInformationBundle implements InformationBundle {
     grid[x][y].setStructure(structure);
   }
 
-
-  public void addGameElement(Element gameElement) {
-    int xPos = gameElement.getXCoord();
-    int yPos = gameElement.getYCoord();
-    grid[xPos][yPos].add(gameElement);
-    if (gameElement instanceof Avatar) {
-      avatarList.add((Avatar) gameElement);
-    }
-    if (gameElement instanceof DataCube) {
-      dataCubeList.add((DataCube) gameElement);
-    }
+  public void addAvatar(Avatar avatar) {
+    int xPos = avatar.getXCoord();
+    int yPos = avatar.getYCoord();
+    grid[xPos][yPos].add(avatar);
+    avatarList.add(avatar);
   }
+
+  public void addBlock(Block block) {
+    int xPos = block.getXCoord();
+    int yPos = block.getYCoord();
+    grid[xPos][yPos].add(block);
+    blockList.add(block);
+  }
+
 
   public Player getAvatarById(int id) {
     for (Player avatar : avatarList) {
