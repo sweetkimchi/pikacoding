@@ -50,47 +50,22 @@ public class CommandBlockHolder extends GridPane {
     this.setHgap(4);
     this.columns = 0;
     this.programStack = programStack;
-    lineIndicators = new HBox();
-    StackPane lineIndicatorHolder = new StackPane();
-    Rectangle background = new Rectangle(LINE_INDICATORS_WIDTH, ITEM_HEIGHT + 2 * PADDING);
-    background.setFill(Color.GRAY);
-    lineIndicatorHolder.getChildren().addAll(background, lineIndicators);
-    addItem(lineIndicatorHolder, LINE_INDICATORS_WIDTH);
 
-    indexLabel = new Label();
-    indexLabel.getStyleClass().add("command-index");
-    addItem(indexLabel, INDEX_WIDTH);
-    indexLabel.setAlignment(Pos.CENTER);
-    Label command = new Label(type);
-    command.getStyleClass().add("command-block-name");
-    addItem(command, 0);
-    this.parameterOptions = parameterOptions;
-    Map<String, String> initialParameters = setInitialParameters(parameterOptions);
-    commandBlock = new CommandBlock(index, type, initialParameters);
-    dropdowns = new ArrayList<>();
-    initializeDropdowns();
+    initializeLineIndicators();
+    initializeInfoDisplays(index, type, parameterOptions);
 
     ColumnConstraints columnConstraints = new ColumnConstraints();
     columnConstraints.setHgrow(Priority.ALWAYS);
     this.add(new Label(), columns++, 0);
     this.getColumnConstraints().add(columnConstraints);
 
-    removeButton = new Button("x");
-    removeButton.setId("remove-button-" + index);
-    removeButton.setPrefHeight(ITEM_HEIGHT);
-    removeButton.setOnAction(e -> removeAction(programStack));
-    addItem(removeButton, 0);
-
-    moveButton = new Button("Move");
-    addItem(moveButton, 0);
-    moveButton.setOnAction(e -> programStack.startMove(this));
+    initializeButtons(index, programStack);
 
     RowConstraints rowConstraints = new RowConstraints();
     rowConstraints.setMinHeight(ITEM_HEIGHT);
     this.getRowConstraints().add(rowConstraints);
-
-    setIndex(index);
     this.setPadding(new Insets(0, 2, 0, 0));
+    setIndex(index);
   }
 
   public CommandBlock getCommandBlock() {
@@ -161,7 +136,45 @@ public class CommandBlockHolder extends GridPane {
     return index;
   }
 
-  private Map<String, String> setInitialParameters(List<Map<String, List<String>>> parameterOptions) {
+  private void initializeButtons(int index, ProgramStack programStack) {
+    removeButton = new Button("x");
+    removeButton.setId("remove-button-" + index);
+    removeButton.setPrefHeight(ITEM_HEIGHT);
+    removeButton.setOnAction(e -> removeAction(programStack));
+    addItem(removeButton, 0);
+
+    moveButton = new Button("Move");
+    addItem(moveButton, 0);
+    moveButton.setOnAction(e -> programStack.startMove(this));
+  }
+
+  private void initializeInfoDisplays(int index, String type,
+      List<Map<String, List<String>>> parameterOptions) {
+    indexLabel = new Label();
+    indexLabel.getStyleClass().add("command-index");
+    addItem(indexLabel, INDEX_WIDTH);
+    indexLabel.setAlignment(Pos.CENTER);
+    Label command = new Label(type);
+    command.getStyleClass().add("command-block-name");
+    addItem(command, 0);
+    this.parameterOptions = parameterOptions;
+    Map<String, String> initialParameters = setInitialParameters(parameterOptions);
+    commandBlock = new CommandBlock(index, type, initialParameters);
+    dropdowns = new ArrayList<>();
+    initializeDropdowns();
+  }
+
+  private void initializeLineIndicators() {
+    lineIndicators = new HBox();
+    StackPane lineIndicatorHolder = new StackPane();
+    Rectangle background = new Rectangle(LINE_INDICATORS_WIDTH, ITEM_HEIGHT + 2 * PADDING);
+    background.setFill(Color.GRAY);
+    lineIndicatorHolder.getChildren().addAll(background, lineIndicators);
+    addItem(lineIndicatorHolder, LINE_INDICATORS_WIDTH);
+  }
+
+  private Map<String, String> setInitialParameters(
+      List<Map<String, List<String>>> parameterOptions) {
     Map<String, String> initialParameters = new HashMap<>();
     parameterOptions.forEach(parameterOption -> {
       String parameter = parameterOption.keySet().iterator().next();
