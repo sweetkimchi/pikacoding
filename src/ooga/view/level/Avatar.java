@@ -32,7 +32,7 @@ public class Avatar {
   }
 
   private void makeAvatar() {
-    avatar = new ImageView(new Image(animationImages.getString("defaultImage") + ".gif"));
+    avatar = new ImageView(new Image(animationImages.getString("defaultImage")));
     avatar.getStyleClass().add("avatar");
     avatar.setFitWidth(width);
     avatar.setFitHeight(height);
@@ -53,13 +53,12 @@ public class Avatar {
       int num = ((right) % Integer.parseInt(animationImages.getString("rightTotal"))) + 1;
       setAvatarImage(applyFormat(num, "rightImage"));
       right++;
-    }else if(nextX < currentX){
+    } else if(nextX < currentX){
       int num = ((left) % Integer.parseInt(animationImages.getString("leftTotal"))) + 1;
       setAvatarImage(applyFormat(num, "leftImage"));
       left++;
-    }
-    else if(nextX == currentX && nextY == currentY){
-      setAvatarImage(animationImages.getString("defaultImage") + ".gif");
+    } else if(nextX == currentX && nextY == currentY){
+      setAvatarImage(animationImages.getString("defaultImage"));
 
     } else if(nextX == currentX && nextY != currentY){
       int num = ((fdbk) % Integer.parseInt(animationImages.getString("fdbkTotal"))) + 1;
