@@ -3,7 +3,9 @@ package ooga.view.level;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import ooga.view.ScreenCreator;
+import org.slf4j.helpers.MessageFormatter;
 
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 public class Avatar {
@@ -49,11 +51,11 @@ public class Avatar {
     // TODO: refactor
     if(currentX < nextX) {
       int num = ((right) % Integer.parseInt(animationImages.getString("rightTotal"))) + 1;
-      setAvatarImage(animationImages.getString("rightImage") + num + ".gif");
+      setAvatarImage(applyFormat(num, "rightImage"));
       right++;
     }else if(nextX < currentX){
       int num = ((left) % Integer.parseInt(animationImages.getString("leftTotal"))) + 1;
-      setAvatarImage(animationImages.getString("leftImage") + num + ".gif");
+      setAvatarImage(applyFormat(num, "leftImage"));
       left++;
     }
     else if(nextX == currentX && nextY == currentY){
@@ -61,9 +63,17 @@ public class Avatar {
 
     } else if(nextX == currentX && nextY != currentY){
       int num = ((fdbk) % Integer.parseInt(animationImages.getString("fdbkTotal"))) + 1;
-      setAvatarImage(animationImages.getString("fdbkImage") + num + ".gif");
+      setAvatarImage(applyFormat(num, "fdbkImage"));
       fdbk++;
     }
+  }
+
+  private String applyFormat(int num, String key) {
+    Object[] currNum = new Object[1];
+    MessageFormat formatter = new MessageFormat("");
+    currNum[0] = num;
+    formatter.applyPattern(animationImages.getString(key));
+    return formatter.format(currNum);
   }
 
   public void reset() {
