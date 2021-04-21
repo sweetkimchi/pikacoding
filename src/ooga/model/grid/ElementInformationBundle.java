@@ -138,10 +138,6 @@ public class ElementInformationBundle implements InformationBundle {
     return this.endCommandLines;
   }
 
-  public Map<Integer,Integer> getMapOfCommendLines() {
-    return this.mapOfCommandLines;
-  }
-
   public void setMapOfCommandLines(Map<Integer,Integer> mapOfCommandLines){
     this.mapOfCommandLines = mapOfCommandLines;
   }

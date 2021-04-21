@@ -22,9 +22,7 @@ public abstract class MathematicalCommands extends BasicCommands {
   @Override
   public void execute(int ID) {
     Avatar avatar = getAvatar(ID);
-    int currX = avatar.getXCoord();
-    int currY = avatar.getYCoord();
-    Tile currTile = getElementInformationBundle().getTile(currX,currY);
+    Tile currTile = getCurrTile(ID);
     if (currTile.getBlock() instanceof DataCube tileCube && avatar
         .getHeldItem() instanceof DataCube avatarCube) {
       int newDisplayNum = calculateNewDisplayNum(avatarCube.getDisplayNum(), tileCube.getDisplayNum());
