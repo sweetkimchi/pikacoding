@@ -43,16 +43,16 @@ public class PickUp extends BasicCommands {
 
       avatar.pickUp(block);
 
-      getElementInformationBundle().getModelController().updateBlock(block.getId(), avatar.hasBlock());
+      sendBlockHeldUpdate(block);
       tileToPickUpFrom.removeBlock();
       tileToPickUpFrom.add(temp);
-      if (temp != null) getElementInformationBundle().getModelController().updateBlock(temp.getId(), temp.isHeld());
+      if (temp != null) sendBlockHeldUpdate(temp);
       avatar.getHeldItem().pickUp(avatar.getId());
     } else {
       //TODO: throw error to handler
       System.out.println("There is no block to be picked up!");
     }
-    avatar.setProgramCounter(avatar.getProgramCounter() + 1);
+    incrementProgramCounterByOne(avatar);
 
   }
 }

@@ -33,7 +33,7 @@ public class Add extends BasicCommands {
       System.out.println("Cannot add blocks!");
     }
 
-    avatar.setProgramCounter(avatar.getProgramCounter() + 1);
+    incrementProgramCounterByOne(avatar);
 
     //TODO: send updates to ElementInformationBundle
 

@@ -7,6 +7,7 @@ public abstract class Block implements Element {
 
   private boolean isHeld;
   private static final int EMPTY = -1;
+  private boolean isActive = true;
 
   private int holderId = EMPTY;
     /**
@@ -30,5 +31,15 @@ public abstract class Block implements Element {
 
   public boolean isHeld() {
     return isHeld;
+  }
+
+  @Override
+  public boolean isActive() {
+    return isActive;
+  }
+
+  @Override
+  public void setIsActive(boolean isActive) {
+    this.isActive = isActive;
   }
 }

@@ -36,7 +36,7 @@ public class Subtract extends BasicCommands {
       System.out.println("Cannot subtract blocks!");
     }
 
-    avatar.setProgramCounter(avatar.getProgramCounter() + 1);
+    incrementProgramCounterByOne(avatar);
 
     //TODO: send updates to ElementInformationBundle
 

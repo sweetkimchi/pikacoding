@@ -33,8 +33,7 @@ public class Drop extends BasicCommands {
         System.out.println("You are not holding a block!");
       }else{
         block.drop();
-        getElementInformationBundle().getModelController().updateBlock(block.getId(),
-            avatar.hasBlock());
+        sendBlockHeldUpdate(block);
       }
       currTile.add(block);
     } else {
@@ -43,6 +42,6 @@ public class Drop extends BasicCommands {
 
     }
 
-    avatar.setProgramCounter(avatar.getProgramCounter() + 1);
+    incrementProgramCounterByOne(avatar);
   }
 }

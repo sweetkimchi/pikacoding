@@ -5,9 +5,6 @@ import ooga.model.Direction;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
-import ooga.model.player.Block;
-import ooga.model.player.Element;
-import ooga.model.player.Player;
 
 /**
  * @author Ji Yun Hyo
@@ -46,19 +43,16 @@ public class Step extends BasicCommands {
             if(avatar.hasBlock()){
                 avatar.getHeldItem().setXCoord(newX);
                 avatar.getHeldItem().setYCoord(newY);
-                getElementInformationBundle().getModelController().updateBlockPositions(avatar.getHeldItem().getId(), avatar.getHeldItem().getXCoord(), avatar.getHeldItem().getYCoord());
+                sendBlockPositionUpdate(avatar.getHeldItem());
             }
         } else {
             //TODO: throw error to handler?
             System.out.println("The avatar cannot step here!");
         }
 
+        sendAvatarPositionUpdate(avatar);
 
-
-        getElementInformationBundle().getModelController().updateAvatarPositions(avatar.getId(), avatar.getXCoord(), avatar.getYCoord());
-
-
-        avatar.setProgramCounter(avatar.getProgramCounter() + 1);
+        incrementProgramCounterByOne(avatar);
 
     }
 
