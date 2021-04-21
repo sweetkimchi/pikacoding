@@ -1,42 +1,23 @@
 package ooga.model.commands;
 
 import java.util.Map;
-import javax.xml.crypto.Data;
-import ooga.model.Direction;
 import ooga.model.grid.ElementInformationBundle;
-import ooga.model.grid.Tile;
-import ooga.model.player.Avatar;
-import ooga.model.player.Block;
-import ooga.model.player.DataCube;
 
-public class Add extends BasicCommands {
+public class Add extends MathematicalCommands {
 
-  public Add(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
-    super(elementInformationBundle,parameters);
+  /**
+   * Default constructor
+   *
+   * @param elementInformationBundle
+   * @param parameters
+   */
+  public Add(ElementInformationBundle elementInformationBundle,
+      Map<String, String> parameters) {
+    super(elementInformationBundle, parameters);
   }
 
   @Override
-  public void execute(int ID) {
-    Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
-    int currX = avatar.getXCoord();
-    int currY = avatar.getYCoord();
-    Tile currTile = getElementInformationBundle().getTile(currX,currY);
-    if (currTile.getBlock() instanceof DataCube tileCube && avatar
-        .getHeldItem() instanceof DataCube avatarCube) {
-      int newDisplayNum = avatarCube.getDisplayNum() + tileCube.getDisplayNum();
-      avatarCube.setDisplayNum(newDisplayNum);
-      System.out.println("Newly added NUMBER: " + newDisplayNum);
-
-      getElementInformationBundle().getModelController().setBoardNumber(avatarCube.getId(),newDisplayNum);
-    } else {
-      //TODO: throw error to handler
-      System.out.println("Cannot add blocks!");
-    }
-
-    incrementProgramCounterByOne(avatar);
-
-    //TODO: send updates to ElementInformationBundle
-
-
+  public int calculateNewDisplayNum(int avatarCubeNum, int tileCubeNum) {
+    return avatarCubeNum + tileCubeNum;
   }
 }

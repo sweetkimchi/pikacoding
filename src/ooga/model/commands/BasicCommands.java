@@ -4,6 +4,7 @@ import java.util.*;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.player.Avatar;
 import ooga.model.player.Block;
+import ooga.model.player.DataCube;
 import ooga.model.player.Element;
 
 /**
@@ -32,6 +33,11 @@ public abstract class BasicCommands extends Commands {
 
     public void sendBlockHeldUpdate(Block block) {
         getElementInformationBundle().getModelController().updateBlock(block.getId(), block.isHeld());
+    }
+
+    public void sendDataCubeNumUpdate(DataCube dataCube) {
+        getElementInformationBundle().getModelController().setBoardNumber(dataCube.getId(),
+            dataCube.getDisplayNum());
     }
 
     public void sendElementIsActiveUpdate(Element element) {

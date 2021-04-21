@@ -31,7 +31,7 @@ public class PickUp extends BasicCommands {
     int currY = avatar.getYCoord();
     int newX = currX + direction.getXDel();
     int newY = currY + direction.getYDel();
-    Tile tileToPickUpFrom = getElementInformationBundle().getTile(newX,newY);
+    Tile tileToPickUpFrom = getElementInformationBundle().getTile(newX, newY);
     if (tileToPickUpFrom.hasBlock()) {
       Block temp = null;
       if (avatar.hasBlock()) {
@@ -43,11 +43,13 @@ public class PickUp extends BasicCommands {
 
       avatar.pickUp(block);
 
-      sendBlockHeldUpdate(block);
       tileToPickUpFrom.removeBlock();
       tileToPickUpFrom.add(temp);
-      if (temp != null) sendBlockHeldUpdate(temp);
+      if (temp != null) {
+        sendBlockHeldUpdate(temp);
+      }
       avatar.getHeldItem().pickUp(avatar.getId());
+      sendBlockHeldUpdate(block);
     } else {
       //TODO: throw error to handler
       System.out.println("There is no block to be picked up!");
