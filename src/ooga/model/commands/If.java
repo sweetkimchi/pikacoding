@@ -22,7 +22,7 @@ public class If extends ConditionalCommands {
 
   @Override
   public void execute(int ID) {
-    Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
+    Avatar avatar = getAvatar(ID);
     Direction direction = getDirection(getParameters().get("direction"));
     int newX = avatar.getXCoord() + direction.getXDel();
     int newY = avatar.getYCoord() + direction.getYDel();

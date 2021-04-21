@@ -5,7 +5,6 @@ import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
 import ooga.model.player.Block;
-import ooga.model.player.Player;
 
 public class Drop extends BasicCommands {
 
@@ -22,16 +21,14 @@ public class Drop extends BasicCommands {
 
   @Override
   public void execute(int ID) {
-    Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
-    int currX = avatar.getXCoord();
-    int currY = avatar.getYCoord();
-    Tile currTile = getElementInformationBundle().getTile(currX,currY);
+    Avatar avatar = getAvatar(ID);
+    Tile currTile = getCurrTile(ID);
     if (currTile.canAddBlock()) {
       Block block = avatar.drop();
       if (block == null) {
         //TODO: throw error to handler
         System.out.println("You are not holding a block!");
-      }else{
+      } else {
         block.drop();
         sendBlockHeldUpdate(block);
       }

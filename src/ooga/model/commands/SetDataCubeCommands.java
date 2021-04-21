@@ -20,7 +20,7 @@ public abstract class SetDataCubeCommands extends BasicCommands {
 
   @Override
   public void execute(int ID) {
-    Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
+    Avatar avatar = getAvatar(ID);
     if (avatar.getHeldItem() instanceof DataCube avatarCube) {
       int newDisplayNum = calculateNewDisplayNum(avatarCube.getDisplayNum());
       avatarCube.setDisplayNum(newDisplayNum);

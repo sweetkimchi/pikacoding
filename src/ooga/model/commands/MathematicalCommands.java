@@ -21,7 +21,7 @@ public abstract class MathematicalCommands extends BasicCommands {
 
   @Override
   public void execute(int ID) {
-    Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
+    Avatar avatar = getAvatar(ID);
     int currX = avatar.getXCoord();
     int currY = avatar.getYCoord();
     Tile currTile = getElementInformationBundle().getTile(currX,currY);

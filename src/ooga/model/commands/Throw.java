@@ -22,7 +22,7 @@ public class Throw extends BasicCommands {
 
   @Override
   public void execute(int ID) {
-    Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
+    Avatar avatar = getAvatar(ID);
     Direction direction = getDirection(getParameters().get("direction"));
     int currX = avatar.getXCoord();
     int currY = avatar.getYCoord();

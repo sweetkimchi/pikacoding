@@ -12,48 +12,45 @@ import ooga.model.player.Avatar;
 public class Step extends BasicCommands {
 
 
-    /**
-     * Default constructor
-     */
-    public Step(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
-        super(elementInformationBundle, parameters);
+  /**
+   * Default constructor
+   */
+  public Step(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
+    super(elementInformationBundle, parameters);
+  }
+
+  /**
+   * Executes the command on an Avatar.
+   */
+  @Override
+  public void execute(int ID) {
+    Avatar avatar = getAvatar(ID);
+    Direction direction = getDirection(getParameters().get("direction"));
+    int newX = avatar.getXCoord() + direction.getXDel();
+    int newY = avatar.getYCoord() + direction.getYDel();
+    Tile prevTile = getCurrTile(ID);
+    Tile nextTile = getNextTile(ID, direction);
+    //System.out.println(nextTile.getStructure());
+
+    if (nextTile.canAddAvatar()) {
+      nextTile.add(avatar);
+      prevTile.removeAvatar();
+      avatar.setXCoord(newX);
+      avatar.setYCoord(newY);
+      if (avatar.hasBlock()) {
+        avatar.getHeldItem().setXCoord(newX);
+        avatar.getHeldItem().setYCoord(newY);
+        sendBlockPositionUpdate(avatar.getHeldItem());
+      }
+    } else {
+      //TODO: throw error to handler?
+      System.out.println("The avatar cannot step here!");
     }
 
-    /**
-     * Executes the command on an Avatar.
-     *
-     */
-    @Override
-    public void execute(int ID) {
-        Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
-        Direction direction = getDirection(getParameters().get("direction"));
-        int currX = avatar.getXCoord();
-        int currY = avatar.getYCoord();
-        int newX = currX + direction.getXDel();
-        int newY = currY + direction.getYDel();
-        Tile prevTile = getElementInformationBundle().getTile(currX, currY);
-        Tile nextTile = getElementInformationBundle().getTile(newX, newY);
-        //System.out.println(nextTile.getStructure());
+    sendAvatarPositionUpdate(avatar);
 
-        if (nextTile.canAddAvatar()) {
-            nextTile.add(avatar);
-            prevTile.removeAvatar();
-            avatar.setXCoord(newX);
-            avatar.setYCoord(newY);
-            if(avatar.hasBlock()){
-                avatar.getHeldItem().setXCoord(newX);
-                avatar.getHeldItem().setYCoord(newY);
-                sendBlockPositionUpdate(avatar.getHeldItem());
-            }
-        } else {
-            //TODO: throw error to handler?
-            System.out.println("The avatar cannot step here!");
-        }
+    incrementProgramCounterByOne(avatar);
 
-        sendAvatarPositionUpdate(avatar);
-
-        incrementProgramCounterByOne(avatar);
-
-    }
+  }
 
 }
