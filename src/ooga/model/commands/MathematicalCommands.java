@@ -38,10 +38,6 @@ public abstract class MathematicalCommands extends BasicCommands {
     }
 
     incrementProgramCounterByOne(avatar);
-
-    //TODO: send updates to ElementInformationBundle
-
-
   }
 
   public abstract int calculateNewDisplayNum(int avatarCubeNum, int tileCubeNum);
