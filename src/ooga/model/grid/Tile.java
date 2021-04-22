@@ -19,17 +19,6 @@ public class Tile {
 
   }
 
-  //TODO: implement reflection here? needs better design
-
-  public void add(Element element) {
-    if (element instanceof Avatar) {
-      add((Avatar) element);
-    }
-    if (element instanceof Block) {
-      add((Block) element);
-    }
-  }
-
   public void setStructure(Structure structure) {
     this.structure = structure;
   }

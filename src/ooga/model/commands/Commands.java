@@ -55,4 +55,8 @@ public abstract class Commands implements CommandInterface{
   public Map<String, String> getParameters() {
     return parameters;
   }
+
+  public Avatar getAvatar(int id) {
+    return (Avatar) getElementInformationBundle().getAvatarById(id);
+  }
 }
