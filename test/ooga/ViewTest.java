@@ -5,19 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Field;
-import java.util.Map;
 import javafx.application.Platform;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.view.LevelSelector;
 import ooga.view.ScreenCreator;
-import ooga.view.level.Avatar;
 import ooga.view.level.LevelView;
-import ooga.view.level.SpriteLayer;
-import ooga.view.level.codearea.ProgramStack;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 

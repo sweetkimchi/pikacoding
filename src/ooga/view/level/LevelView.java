@@ -1,11 +1,7 @@
 package ooga.view.level;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,7 +11,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
@@ -23,6 +18,7 @@ import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
 import ooga.view.ScreenCreator;
 import ooga.view.animation.AnimationController;
+import ooga.view.level.board.Board;
 import ooga.view.level.codearea.CodeArea;
 
 /**
@@ -50,10 +46,6 @@ public class LevelView extends BorderPane {
   private int startingApples;
   private int score;
 
-  //TODO: remove after debug
-  //I'm using this because for some reason, clicking step doesn't play the initial animation (does nothing)
-  private double dummy = 1;
-
   public LevelView(int level, FrontEndExternalAPI viewController, ScreenCreator screenCreator) {
     this.viewController = viewController;
     this.screenCreator = screenCreator;
@@ -65,15 +57,74 @@ public class LevelView extends BorderPane {
     controlPanel = new ControlPanel();
 
     initializeViewElements();
-    animationController = new AnimationController(this, viewController, codeArea, board, controlPanel);
+    animationController = new AnimationController(this, viewController, codeArea, board,
+        controlPanel);
+  }
+
+  public void initializeBoard(GameGridData gameGridData, InitialState initialState) {
+    board.initializeBoard(gameGridData, initialState);
   }
 
   public void setAvailableCommands(AvailableCommands availableCommands) {
     codeArea.setAvailableCommands(availableCommands);
   }
 
-  public void initializeBoard(GameGridData gameGridData, InitialState initialState) {
-    board.initializeBoard(gameGridData, initialState);
+  public void setDescription(String description) {
+    this.description.setText(description);
+  }
+
+  public void setStartingApples(int apples) {
+    startingApples = apples;
+    setScore(startingApples);
+  }
+
+  public void updateAvatarPosition(int id, int xCoord, int yCoord) {
+    board.updateAvatarPosition(id, xCoord, yCoord);
+  }
+
+  public void updateBlockPosition(int id, int xCoord, int yCoord) {
+    board.updateBlockPosition(id, xCoord, yCoord);
+  }
+
+  public void updateBlock(int id, boolean b) {
+    board.updateBlock(id, b);
+  }
+
+  public void setBlockNumber(int id, int newDisplayNum) {
+    board.setBlockNumber(id, newDisplayNum);
+  }
+
+  public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
+    codeArea.setLineIndicators(lineUpdates);
+  }
+
+  public void setScore(int score) {
+    scoreDisplay.setText("Apples Left for Pikachu: " + score);
+    this.score = score;
+  }
+
+  public void declareEndOfAnimation() {
+    animationController.declareEndofAnimation();
+  }
+
+  public void winLevel() {
+    try {
+      Thread.sleep(2000);
+    } catch (Exception ignored) {
+    }
+    clearScreen();
+    this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
+        e -> viewController.initializeLevel(level + 1), level == Controller.NUM_LEVELS));
+  }
+
+  public void loseLevel() {
+    animationController.reset();
+    clearScreen();
+    this.setCenter(new LoseScreen(e -> restoreScreen()));
+  }
+
+  public void resetScore() {
+    setScore(startingApples);
   }
 
   private void openPauseMenu() {
@@ -82,9 +133,7 @@ public class LevelView extends BorderPane {
     pauseMenu.getChildren().add(new Label("Paused"));
     Button resumeButton = new Button("Resume");
     resumeButton.setOnAction(e -> {
-      this.setCenter(board);
-      this.setRight(rightPane);
-      this.setBottom(controlPanel);
+      restoreScreen();
     });
     pauseMenu.getChildren().add(resumeButton);
     Button startMenuButton = new Button("Home");
@@ -95,9 +144,8 @@ public class LevelView extends BorderPane {
     levelSelectorButton.setOnAction(e -> screenCreator.loadLevelSelector());
     pauseMenu.getChildren().add(levelSelectorButton);
 
+    clearScreen();
     this.setCenter(pauseMenu);
-    this.setRight(null);
-    this.setBottom(null);
   }
 
   private void initializeViewElements() {
@@ -110,15 +158,11 @@ public class LevelView extends BorderPane {
     controlPanel.setButtonAction("Button2_Play", e -> animationController.play());
     controlPanel.setButtonAction("Button3_Pause", e -> animationController.pause());
     controlPanel.setButtonAction("Button4_Step", e -> animationController.step());
-    this.setTop(menuBar);
     scoreDisplay = new Label("Apples Left for Pikachu: ");
-
     board.getChildren().add(scoreDisplay);
     StackPane.setAlignment(scoreDisplay, Pos.TOP_LEFT);
-    this.setCenter(board);
     createRight(levelResources);
-    this.setRight(rightPane);
-    this.setBottom(controlPanel);
+    restoreScreen();
   }
 
   private void createRight(ResourceBundle levelResources) {
@@ -140,71 +184,18 @@ public class LevelView extends BorderPane {
     rightPane.setPadding(new Insets(8, 8, 8, 8));
   }
 
-  public void updateAvatarPosition(int id, int xCoord, int yCoord) {
-    board.updateAvatarPosition(id, xCoord, yCoord);
+  private void restoreScreen() {
+    this.setTop(menuBar);
+    this.setCenter(board);
+    this.setRight(rightPane);
+    this.setBottom(controlPanel);
   }
 
-  public void declareEndOfAnimation() {
-    animationController.declareEndofAnimation();
-  }
-
-  public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
-    codeArea.setLineIndicators(lineUpdates);
-  }
-
-  public void updateBlockPosition(int id, int xCoord, int yCoord) {
-    board.updateBlockPosition(id, xCoord, yCoord);
-  }
-
-  public void updateBlock(int id, boolean b) {
-    board.updateBlock(id, b);
-  }
-
-  public void winLevel() {
-    try {
-      Thread.sleep(2000);
-    } catch (Exception e) {
-
-    }
+  private void clearScreen() {
     this.setTop(null);
-    this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
-        e -> viewController.initializeLevel(level + 1), level == Controller.NUM_LEVELS));
+    this.setCenter(null);
     this.setRight(null);
     this.setBottom(null);
   }
 
-  public void setScore(int score) {
-    scoreDisplay.setText("Apples Left for Pikachu: " + score);
-    this.score = score;
-  }
-
-  public void setBlockNumber(int id, int newDisplayNum) {
-    board.setBlockNumber(id, newDisplayNum);
-  }
-
-  public void setDescription(String description) {
-    this.description.setText(description);
-  }
-
-  public void setStartingApples(int apples) {
-    startingApples = apples;
-    setScore(startingApples);
-  }
-
-  public void loseLevel() {
-    animationController.reset();
-    this.setCenter(new LoseScreen(e -> {
-      this.setTop(menuBar);
-      this.setCenter(board);
-      this.setRight(rightPane);
-      this.setBottom(controlPanel);
-    }));
-    this.setTop(null);
-    this.setRight(null);
-    this.setBottom(null);
-  }
-
-  public void resetScore() {
-    setScore(startingApples);
-  }
 }
