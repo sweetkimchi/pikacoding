@@ -20,6 +20,7 @@ import ooga.view.ScreenCreator;
 import ooga.view.animation.AnimationController;
 import ooga.view.level.board.Board;
 import ooga.view.level.codearea.CodeArea;
+import ooga.view.level.codearea.ProgramListener;
 
 /**
  * Main view class for levels. Contains all the main level view elements (board, code area, etc.)
@@ -27,7 +28,7 @@ import ooga.view.level.codearea.CodeArea;
  * @author David Li
  * @author Ji Yun Hyo
  */
-public class LevelView extends BorderPane {
+public class LevelView extends BorderPane implements ProgramListener {
 
   public static final String LEVEL_PROPERTIES = "Level";
 
@@ -72,6 +73,11 @@ public class LevelView extends BorderPane {
     board.initializeBoard(gameGridData, initialState);
   }
 
+  @Override
+  public void onProgramUpdate() {
+    System.out.println("program updated");
+  }
+
   private void openPauseMenu() {
     VBox pauseMenu = new VBox();
     pauseMenu.getStyleClass().add("start-screen");
@@ -101,6 +107,7 @@ public class LevelView extends BorderPane {
         .getBundle(ScreenCreator.RESOURCES + LEVEL_PROPERTIES);
     menuBar.setMinHeight(Double.parseDouble(levelResources.getString("MenuBarHeight")));
     codeArea.setMinWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
+    codeArea.addProgramListener(this);
     controlPanel.setMinHeight(Double.parseDouble(levelResources.getString("ControlPanelHeight")));
     controlPanel.setButtonAction("Button1_Reset", e -> animationController.reset());
     controlPanel.setButtonAction("Button2_Play", e -> animationController.play());
