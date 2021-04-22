@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 import ooga.controller.BackEndExternalAPI;
 import ooga.model.Direction;
-import ooga.model.animation.AnimationPane;
 import ooga.model.player.Avatar;
 import ooga.model.player.Element;
 
@@ -22,7 +21,7 @@ public class Animation {
 
 
   private static final String DEFAULT_RESOURCES =
-      AnimationPane.class.getPackageName() + ".resources.";
+      Animation.class.getPackageName() + ".resources.";
   private static final String UPDATE_NEXT_RESOURCE =
       DEFAULT_RESOURCES + "UpdateNextReflectionActions";
   private double INCREMENT_FACTOR = 30;

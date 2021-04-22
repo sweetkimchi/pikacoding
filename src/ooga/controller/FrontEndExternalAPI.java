@@ -3,7 +3,6 @@ package ooga.controller;
 import java.util.List;
 import java.util.Map;
 import ooga.model.commands.AvailableCommands;
-import ooga.model.grid.gridData.BoardState;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.AvatarData;
@@ -74,9 +73,23 @@ public interface FrontEndExternalAPI {
 
   void setScore(int score);
 
+  void winLevel();
+
   /**
    * sets the line number for the avatar
    * @param lineUpdates
    */
   void setLineIndicators(Map<Integer, Integer> lineUpdates);
+
+  void updateBlockPositions(int id, int xCoord, int yCoord);
+
+  void updateBlock(int id, boolean b);
+
+  void setBoardNumber(int id, int newDisplayNum);
+
+  void setDescription(String description);
+
+  void setStartingApples(int apples);
+
+  void loseLevel();
 }

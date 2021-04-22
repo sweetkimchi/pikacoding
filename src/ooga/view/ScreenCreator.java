@@ -14,7 +14,7 @@ import ooga.view.level.LevelView;
  */
 public class ScreenCreator {
 
-  public static final String RESOURCES = ScreenCreator.class.getPackageName() + ".resources.";
+  public static final String RESOURCES = ScreenCreator.class.getPackageName() + ".resources.properties.";
   private static final String WINDOW_PROPERTIES = "Window";
 
   FrontEndExternalAPI viewController;
@@ -23,6 +23,7 @@ public class ScreenCreator {
 
   private final double width;
   private final double height;
+  private StartMenu startMenu;
 
   /**
    * Default constructor
@@ -44,26 +45,31 @@ public class ScreenCreator {
     return levelView;
   }
 
-  public void initializeLevelView() {
-    levelView = new LevelView(this.viewController, this);
+  public void initializeLevelView(int level) {
+    levelView = new LevelView(level, this.viewController, this);
     Scene scene = new Scene(levelView, width, height);
     stage.setScene(scene);
   }
 
   public void loadStartMenu() {
-    StartMenu startMenu = new StartMenu(e -> loadLevelSelector());
+    startMenu = new StartMenu(e -> loadLevelSelector());
     Scene scene = new Scene(startMenu, width, height);
     stage.setScene(scene);
   }
 
   public void loadLevelSelector() {
     LevelSelector levelSelector = new LevelSelector(level -> viewController.initializeLevel(level));
+    levelSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(levelSelector, width, height);
     stage.setScene(scene);
   }
 
+  public String getCurrentStyleSheet() {
+    return startMenu.getStyleSheet();
+  }
+
   private void initializeStage() {
-    ResourceBundle windowResources = ResourceBundle.getBundle(RESOURCES + WINDOW_PROPERTIES);
+    ResourceBundle windowResources = ResourceBundle.getBundle(RESOURCES +  WINDOW_PROPERTIES);
     stage.setTitle(windowResources.getString("Title"));
     int width = Integer.parseInt(windowResources.getString("Width"));
     int height = Integer.parseInt(windowResources.getString("Height"));
@@ -72,7 +78,4 @@ public class ScreenCreator {
     stage.show();
   }
 
-  public void setScore(int score) {
-    System.out.println("SCORE (ScreenCreator): " + score);
-  }
 }

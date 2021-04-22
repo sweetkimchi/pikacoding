@@ -1,7 +1,7 @@
 package ooga;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Field;
@@ -11,7 +11,11 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.Controller;
+import ooga.controller.FrontEndExternalAPI;
+import ooga.view.LevelSelector;
+import ooga.view.ScreenCreator;
 import ooga.view.level.Avatar;
+import ooga.view.level.LevelView;
 import ooga.view.level.SpriteLayer;
 import ooga.view.level.codearea.ProgramStack;
 import org.junit.jupiter.api.Test;
@@ -20,48 +24,30 @@ import org.testfx.framework.junit5.ApplicationTest;
 class ViewTest extends ApplicationTest {
 
   private BackEndExternalAPI modelController;
-  private ProgramStack programStack;
-  private Map<Integer, Avatar> avatars;
+  private FrontEndExternalAPI viewController;
+  private ScreenCreator screenCreator;
 
   @Override
   public void start(Stage stage) throws Exception {
     Controller controller = new Controller(stage);
+    viewController = (FrontEndExternalAPI)  getPrivateField(controller, "viewController");
     modelController = (BackEndExternalAPI)  getPrivateField(controller, "modelController");
-    avatars = (Map<Integer, Avatar>) getPrivateField(lookup("#sprite-layer").queryAs(SpriteLayer.class), "avatars");
-    programStack = lookup("#program-stack").queryAs(ProgramStack.class);
+    screenCreator = (ScreenCreator)  getPrivateField(viewController, "screenCreator");
   }
 
   @Test
-  void testAddCommandBlock() {
-    clickOn(lookup("#drop-option-button").queryButton());
-    Platform.runLater(() -> lookup("#drop-option-button").queryButton().fire());
-    sleep(100);
-    assertEquals("drop", programStack.getProgram().get(0).getType());
+  void testStartGame() {
+    clickButton("start-button");
+    Stage stage = (Stage) getPrivateField(screenCreator, "stage");
+    assertTrue(stage.getScene().getRoot() instanceof LevelSelector);
   }
 
   @Test
-  void testRemoveCommandBlock() {
-    clickOn(lookup("#drop-option-button").queryButton());
-    Platform.runLater(() -> lookup("#drop-option-button").queryButton().fire());
-    sleep(100);
-    assertEquals(1, programStack.getProgram().size());
-    clickOn(lookup("#remove-button-1").queryButton());
-    Platform.runLater(() -> lookup("#remove-button-1").queryButton().fire());
-    sleep(100);
-    assertEquals(0, programStack.getProgram().size());
-  }
-
-  @Test
-  void testAvatarMovement() {
-    ImageView avatarImage = (ImageView) getPrivateField(avatars.get(7), "avatar");
-    double initialY = avatarImage.getY();
-    clickOn(lookup("#step-option-button").queryButton());
-    Platform.runLater(() -> lookup("#step-option-button").queryButton().fire());
-    sleep(100);
-    clickOn(lookup("#Button4_Step-button").queryButton());
-    Platform.runLater(() -> lookup("#Button4_Step-button").queryButton().fire());
-    sleep(1000);
-    assertTrue(initialY > avatarImage.getY());
+  void testLoadLevel() {
+    clickButton("start-button");
+    clickButton("load-level-1");
+    LevelView levelView = screenCreator.getLevelView();
+    assertEquals(1, (int) getPrivateField(levelView, "level"));
   }
 
   private Object getPrivateField(Object object, String field) {
@@ -73,6 +59,12 @@ class ViewTest extends ApplicationTest {
       fail("Can't access field");
       return null;
     }
+  }
+
+  private void clickButton(String button) {
+    clickOn(lookup("#" + button).queryButton());
+    Platform.runLater(() -> lookup("#" + button).queryButton().fire());
+    sleep(100);
   }
 
 }

@@ -1,0 +1,140 @@
+.root {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Futura";
+    -fx-base: #dbe9ee;
+    -fx-background: #c0d6df;
+}
+
+.start-screen {
+    -fx-alignment: CENTER;
+    -fx-spacing: 10.0;
+}
+
+.title {
+    -fx-font-family: "Rockwell";
+    -fx-font-size: 30pt;
+}
+
+.default-button {
+    -fx-text-fill: #000000;
+}
+
+.level-selector {
+    -fx-alignment: CENTER;
+    -fx-spacing: 5.0;
+}
+
+.state {
+    -fx-stroke: #c0d6df;
+    -fx-stroke-width: 0.5px;
+}
+
+.state-wall {
+    -fx-fill: #9b6a6c;
+}
+
+.state-floor {
+    -fx-fill: #eaeaea;
+}
+
+.state-hole {
+    -fx-fill: #166088;
+}
+
+.menu-bar {
+    -fx-background-color: #4a6fa5;
+    -fx-padding: 5.0;
+    -fx-alignment: CENTER-LEFT;
+}
+
+.description-box {
+    -fx-background-color: #fbd1a2;
+    -fx-padding: 8px 8px 8px 8px;
+}
+
+.command-block-option {
+    -fx-font-size: 12pt;
+    -fx-background-color: #88d498;
+    -fx-padding: 4 6 4 6;
+}
+
+.command-block-option:hover {
+    -fx-background-color: linear-gradient(#1a936f, #88d498);
+}
+
+.command-index {
+    -fx-text-fill: #4d4d4d;
+}
+
+.command-block-holder {
+    -fx-background-color: #88d498;
+}
+
+.command-block-selected {
+    -fx-background-color: #66a3ff;
+}
+
+.command-block-hovered {
+    -fx-background-color: #66cc66;
+}
+
+.control-panel {
+    -fx-padding: 10 10 10 200;
+    -fx-background-radius: 10;
+    -fx-background-insets: 5;
+    -fx-background-color: #696969;
+    -fx-alignment: CENTER_LEFT;
+    -fx-hgap: 15.0;
+}
+
+.board {
+    -fx-alignment: CENTER;
+}
+
+.scroll-pane {
+    -fx-background-insets: 0 0 0 0;
+}
+
+.Button1_Reset {
+    -fx-border-radius: 20;
+    -fx-background-insets: 1;
+    -fx-background-color: #cc444b;
+}
+
+.Button1_Reset:hover {
+    -fx-background-color: linear-gradient(#c5283d, #fe938c);
+}
+
+.Button2_Play {
+    -fx-border-radius: 20;
+    -fx-background-insets: 1;
+    -fx-background-color: #88d498;
+}
+
+.Button2_Play:hover {
+    -fx-background-color: linear-gradient(#1a936f, #88d498);
+}
+
+.Button3_Pause {
+    -fx-border-radius: 20;
+    -fx-background-insets: 1;
+    -fx-background-color: #88d498;
+}
+
+.Button3_Pause:hover {
+    -fx-background-color: linear-gradient(#1a936f, #88d498);
+}
+
+.Button4_Step {
+    -fx-border-radius: 20;
+    -fx-background-insets: 1;
+    -fx-background-color: #88d498;
+}
+
+.Button4_Step:hover {
+    -fx-background-color: linear-gradient(#1a936f, #88d498);
+}
+
+.id {
+    -fx-font-size: 5pt;
+}

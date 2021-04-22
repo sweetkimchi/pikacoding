@@ -1,8 +1,9 @@
 package ooga.model.commands;
 
-import java.util.*;
+import java.util.Map;
 import ooga.model.Direction;
-import ooga.model.grid.GameGrid;
+import ooga.model.grid.ElementInformationBundle;
+import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
 
 /**
@@ -10,25 +11,46 @@ import ooga.model.player.Avatar;
  */
 public class Step extends BasicCommands {
 
-    private final GameGrid gameGrid;
-    private final Direction direction;
 
-    /**
-     * Default constructor
-     */
-    public Step(GameGrid gameGrid, Direction direction) {
-        this.gameGrid = gameGrid;
-        this.direction = direction;
+  /**
+   * Default constructor
+   */
+  public Step(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
+    super(elementInformationBundle, parameters);
+  }
+
+  /**
+   * Executes the command on an Avatar.
+   */
+  @Override
+  public void execute(int ID) {
+    Avatar avatar = getAvatar(ID);
+    Direction direction = getDirection(getParameters().get("direction"));
+    int newX = avatar.getXCoord() + direction.getXDel();
+    int newY = avatar.getYCoord() + direction.getYDel();
+    Tile prevTile = getCurrTile(ID);
+    Tile nextTile = getNextTile(ID, direction);
+    //System.out.println(nextTile.getStructure());
+
+    if (nextTile.canAddAvatar()) {
+      nextTile.add(avatar);
+      prevTile.removeAvatar();
+      avatar.setXCoord(newX);
+      avatar.setYCoord(newY);
+      if (avatar.hasBlock()) {
+        avatar.getHeldItem().setXCoord(newX);
+        avatar.getHeldItem().setYCoord(newY);
+        sendBlockPositionUpdate(avatar.getHeldItem());
+      }
+    } else {
+      //TODO: throw error to handler?
+      System.out.println("The avatar cannot step here!");
     }
 
-    /**
-     * Executes the command on an Avatar.
-     *
-     * @param avatar The avatar upon which to execute the command
-     */
-    @Override
-    public void execute(Avatar avatar) {
-        gameGrid.step(avatar.getId(), direction);
+    sendAvatarPositionUpdate(avatar);
 
-    }
+    incrementProgramCounterByOne(avatar);
+
+  }
+
 }

@@ -19,6 +19,7 @@ public class ModelController implements BackEndExternalAPI {
   private CommandExecutor commandExecutor;
   private InitialConfigurationParser initialConfigurationParser;
   private FirebaseService firebaseService;
+  private int level;
 
   /**
    * Default constructor
@@ -53,11 +54,11 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void parseCommands(List<CommandBlock> commandBlocks) {
     //TODO: delete after debugging. Initializing level for testing purposes
-    initialConfigurationParser = new InitialConfigurationParser(1, this.firebaseService);
+    initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService);
 
     commandExecutor = new CommandExecutor(commandBlocks, this,
         initialConfigurationParser.getInitialState(),
-        initialConfigurationParser.getGameGrid());
+        initialConfigurationParser.getGameGrid(), initialConfigurationParser.getGoalState());
   }
 
   /**
@@ -113,10 +114,13 @@ public class ModelController implements BackEndExternalAPI {
    */
   @Override
   public void initializeLevel(int level) {
+    this.level = level;
     initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService);
     viewController.setBoard(initialConfigurationParser.getGameGridData(),
         initialConfigurationParser.getInitialState());
+    viewController.setDescription(initialConfigurationParser.getDescription());
     viewController.setAvailableCommands(initialConfigurationParser.getAvailableCommands());
+    viewController.setStartingApples(initialConfigurationParser.getGoalState().getNumOfCommands());
   }
 
   @Override
@@ -153,5 +157,31 @@ public class ModelController implements BackEndExternalAPI {
   public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
     viewController.setLineIndicators(lineUpdates);
 
+  }
+
+  @Override
+  public void updateBlock(int id, boolean b) {
+    viewController.updateBlock(id, b);
+    System.out.println("Updating block "+ id + " because now the blockheld is " + b);
+  }
+
+  @Override
+  public void updateBlockPositions(int id, int xCoord, int yCoord) {
+    viewController.updateBlockPositions(id, xCoord, yCoord);
+  }
+
+  @Override
+  public void winLevel() {
+    viewController.winLevel();
+  }
+
+  @Override
+  public void loseLevel() {
+    viewController.loseLevel();
+  }
+
+  @Override
+  public void setBoardNumber(int id, int newDisplayNum) {
+    viewController.setBoardNumber(id, newDisplayNum);
   }
 }

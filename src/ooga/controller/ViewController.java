@@ -54,6 +54,16 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.setAvailableCommands(availableCommands);
     }
 
+    @Override
+    public void setDescription(String description) {
+        levelView.setDescription(description);
+    }
+
+    @Override
+    public void setStartingApples(int apples) {
+        levelView.setStartingApples(apples);
+    }
+
     /**
      * Updates and individual sprite (avatars, block)
      *
@@ -89,7 +99,7 @@ public class ViewController implements FrontEndExternalAPI {
 
     @Override
     public void initializeLevel(int level) {
-        screenCreator.initializeLevelView();
+        screenCreator.initializeLevelView(level);
         levelView = screenCreator.getLevelView();
         modelController.initializeLevel(level);
     }
@@ -112,7 +122,17 @@ public class ViewController implements FrontEndExternalAPI {
     @Override
     public void setScore(int score) {
         //TODO: edit as you see fit (screenCreator vs levelView)
-        screenCreator.setScore(score);
+        levelView.setScore(score);
+    }
+
+    @Override
+    public void winLevel() {
+        levelView.winLevel();
+    }
+
+    @Override
+    public void loseLevel() {
+        levelView.loseLevel();
     }
 
     /**
@@ -125,11 +145,25 @@ public class ViewController implements FrontEndExternalAPI {
         levelView.setLineIndicators(lineUpdates);
     }
 
+    @Override
+    public void updateBlockPositions(int id, int xCoord, int yCoord) {
+        levelView.updateBlockPositions(id, xCoord,yCoord);
+    }
+
+    @Override
+    public void updateBlock(int id, boolean b) {
+        levelView.updateBlock(id, b);
+    }
+
+    @Override
+    public void setBoardNumber(int id, int newDisplayNum) {
+        levelView.setBoardNumber(id, newDisplayNum);
+    }
+
     /**
      * Passes in the commands to be parsed
      *
      * @param commandBlocks List of individual command blocks derived from the blocks in the
-     *                      CodeBuilderArea
      */
     @Override
     public void parseCommands(List<CommandBlock> commandBlocks) {

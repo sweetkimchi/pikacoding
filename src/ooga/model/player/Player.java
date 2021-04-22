@@ -20,4 +20,8 @@ public abstract class Player implements Element {
     public int getProgramCounter(){
         return programCounter;
     }
+
+    public abstract Block drop();
+
+    public abstract void pickUp(Block block);
 }

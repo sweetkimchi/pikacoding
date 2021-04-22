@@ -1,5 +1,7 @@
 package ooga.model.player;
 
+import ooga.model.Direction;
+
 /**
  * DataCubes are a type of object that avatars can interact with and manipulate. They contain a
  * display number that can be manipulated.
@@ -13,8 +15,7 @@ public class DataCube extends Block {
     private int yCoord;
     private final int id;
     private int displayNum;
-    private boolean isHeld;
-    private int holderId = EMPTY;
+
 
     /**
      * Default constructor
@@ -24,7 +25,6 @@ public class DataCube extends Block {
         this.yCoord = yCoord;
         this.id = id;
         this.setDisplayNum(displayNum);
-        isHeld = false;
     }
 
     /**
@@ -69,6 +69,12 @@ public class DataCube extends Block {
         this.yCoord = yCoord;
     }
 
+    @Override
+    public void step(Direction direction) {
+
+    }
+
+
     public int getDisplayNum() {
         return displayNum;
     }
@@ -77,17 +83,7 @@ public class DataCube extends Block {
         this.displayNum = displayNum;
     }
 
-    public boolean isHeld() {
-        return isHeld;
-    }
 
-    public void drop() {
-        holderId = EMPTY;
-        isHeld = false;
-    }
 
-    public void pickUp(int id) {
-        holderId = id;
-        isHeld = true;
-    }
+
 }

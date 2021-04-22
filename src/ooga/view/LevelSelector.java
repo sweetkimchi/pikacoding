@@ -5,21 +5,21 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import ooga.controller.Controller;
 
 public class LevelSelector extends BorderPane {
 
-  private static final int NUM_LEVELS = 3;
-
   public LevelSelector(Consumer<Integer> loadLevelAction) {
     VBox levels = new VBox();
-    for (int level = 1; level <= NUM_LEVELS; level++) {
+    for (int level = 1; level <= Controller.NUM_LEVELS; level++) {
       Button levelButton = new Button("Level " + level);
+      levelButton.setId("load-level-" + level);
       int thisLevel = level;
       levelButton.setOnAction(e -> loadLevelAction.accept(thisLevel));
       levels.getChildren().add(levelButton);
     }
+    levels.getStyleClass().add("level-selector");
     this.setCenter(levels);
-    BorderPane.setAlignment(levels, Pos.CENTER);
   }
 
 }

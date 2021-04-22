@@ -15,6 +15,10 @@ public class NestedEndBlockHolder extends CommandBlockHolder {
     this.beginCommandBlockHolder = beginCommandBlockHolder;
   }
 
+  public NestedBeginBlockHolder getBeginCommandBlockHolder() {
+    return beginCommandBlockHolder;
+  }
+
   @Override
   protected void removeAction(ProgramStack programStack) {
     programStack.removeCommandBlock(beginCommandBlockHolder.getIndex());
