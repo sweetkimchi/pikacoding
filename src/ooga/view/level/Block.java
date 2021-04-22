@@ -1,4 +1,4 @@
-package ooga.view.level.board;
+package ooga.view.level;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -10,16 +10,17 @@ public class Block extends StackPane {
   private static final double PADDING_RATIO = 0.25;
   private static final double PICKEDUP_SHIFT = 0.5;
 
-  private final int initialXCoordinate;
-  private final int initialYCoordinate;
-  private final double width;
-  private final double height;
-  private final double padding;
+  private int initialXCoordinate;
+  private int initialYCoordinate;
+  private double width;
+  private double height;
+  private double padding;
   private Text blockText;
-  private final SpriteLayer spriteLayer;
-  private final String defaultNumber;
+  private SpriteLayer spriteLayer;
+  private String number;
   private double currentX;
   private double currentY;
+  private Rectangle block;
   private boolean isHeld;
 
   public Block(int x, int y, double w, double h, SpriteLayer root, String num) {
@@ -30,18 +31,10 @@ public class Block extends StackPane {
     height = h;
     padding = PADDING_RATIO * width;
     spriteLayer = root;
-    defaultNumber = num;
+    number = num;
     currentX = initialXCoordinate;
     currentY = initialYCoordinate;
     makeBlock();
-  }
-
-  public int getInitialXCoordinate() {
-    return (int) currentX;
-  }
-
-  public int getInitialYCoordinate() {
-    return (int) currentY;
   }
 
   public void moveBlock(double x, double y) {
@@ -51,21 +44,18 @@ public class Block extends StackPane {
     if (isHeld) {
       shift = PICKEDUP_SHIFT * height;
     }
-    this.setTranslateY(y * height + padding - shift);
+    this.setTranslateY(y * height + padding -  shift);
     currentY = y;
+//    block.setX(currentX);
+//    block.setY(currentY);
   }
 
   public void setShiftHeight(double percent) {
     this.setTranslateY(currentY * height - height * PICKEDUP_SHIFT * percent + padding);
   }
 
-  public void setHeldStatus(boolean status) {
-    isHeld = status;
-  }
-
   /**
    * Purpose: update number on datacube based on what backend/controller passes.
-   *
    * @param num
    */
   public void updateCubeNumber(int num) {
@@ -80,20 +70,31 @@ public class Block extends StackPane {
     this.setTranslateY(initialYCoordinate * height + padding);
     currentX = initialXCoordinate;
     currentY = initialYCoordinate;
-    updateCubeNumber(Integer.parseInt(defaultNumber));
+    updateCubeNumber(Integer.parseInt(number));
+  }
+
+  public int getInitialXCoordinate(){
+    return (int) currentX;
+  }
+
+  public int getInitialYCoordinate(){
+    return (int) currentY;
   }
 
   private void makeBlock() {
-    Rectangle block = new Rectangle(width - 2 * padding, height - 2 * padding);
+    block = new Rectangle(width - 2 * padding, height - 2 * padding);
     block.setFill(Color.LIGHTSEAGREEN); // TODO: put in resource file
 
     block.setX(currentX);
     block.setY(currentY);
-    blockText = new Text(defaultNumber);
+    blockText = new Text(number);
     this.getChildren().add(block);
     this.getChildren().add(blockText);
     reset();
     spriteLayer.getChildren().add(this);
   }
 
+  public void setHeldStatus(boolean status){
+    isHeld = status;
+  }
 }
