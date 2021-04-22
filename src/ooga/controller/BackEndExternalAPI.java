@@ -73,4 +73,6 @@ public interface BackEndExternalAPI {
   void winLevel();
 
   void loseLevel();
+
+  void updateProgram(List<CommandBlock> program);
 }

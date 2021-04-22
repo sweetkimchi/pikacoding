@@ -135,4 +135,8 @@ public class ModelController implements BackEndExternalAPI {
     viewController.loseLevel();
   }
 
+  @Override
+  public void updateProgram(List<CommandBlock> program) {
+    // TODO: notify database of program update
+  }
 }

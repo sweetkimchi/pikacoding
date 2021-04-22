@@ -75,7 +75,7 @@ public class LevelView extends BorderPane implements ProgramListener {
 
   @Override
   public void onProgramUpdate() {
-    System.out.println("program updated");
+    viewController.updateProgram(codeArea.getProgram());
   }
 
   private void openPauseMenu() {
