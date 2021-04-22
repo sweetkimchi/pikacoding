@@ -1,11 +1,10 @@
 package ooga.view.level;
 
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-public class Block extends StackPane {
+public class ViewBlock extends StackPane {
 
   private static final double PADDING_RATIO = 0.25;
   private static final double PICKEDUP_SHIFT = 0.5;
@@ -23,7 +22,7 @@ public class Block extends StackPane {
   private Rectangle block;
   private boolean isHeld;
 
-  public Block(int x, int y, double w, double h, SpriteLayer root, String num) {
+  public ViewBlock(int x, int y, double w, double h, SpriteLayer root, String num) {
     initialXCoordinate = x;
     initialYCoordinate = y;
     isHeld = false;
@@ -46,8 +45,6 @@ public class Block extends StackPane {
     }
     this.setTranslateY(y * height + padding -  shift);
     currentY = y;
-//    block.setX(currentX);
-//    block.setY(currentY);
   }
 
   public void setShiftHeight(double percent) {

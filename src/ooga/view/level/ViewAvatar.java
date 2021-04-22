@@ -8,10 +8,9 @@ import ooga.view.ScreenCreator;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
-public class Avatar extends StackPane {
+public class ViewAvatar extends StackPane {
   private static final String AVATAR_PROPERTIES = "Avatar";
 
   private int initialXCoordinate;
@@ -31,7 +30,7 @@ public class Avatar extends StackPane {
   private ResourceBundle avatarFinalValues;
   private HashMap<String, Integer> variables;
 
-  public Avatar(int x, int y, double w, double h, int id, SpriteLayer root) {
+  public ViewAvatar(int x, int y, double w, double h, int id, SpriteLayer root) {
     avatarFinalValues = ResourceBundle.getBundle(ScreenCreator.RESOURCES + AVATAR_PROPERTIES);
     initialXCoordinate = x;
     initialYCoordinate = y;
@@ -79,13 +78,13 @@ public class Avatar extends StackPane {
     boolean fdbk =nextX == currentX && nextY != currentY;
 
     // TODO: refactor
-    if(right) {
+    if (right) {
       animationChanges("right", x, y);
-    } else if(left){
+    } else if (left){
       animationChanges("left", x, y);
-    } else if(fdbk){
+    } else if (fdbk){
       animationChanges("fdbk", x, y);
-    } else if(base) {
+    } else if (base) {
       setAvatarImage(animationImages.getString("baseImage"));
       xPadding = Double.parseDouble(avatarFinalValues.getString("xBaseRatio")) * width;
       avatarId.setX(x * width + xPadding);
@@ -94,15 +93,16 @@ public class Avatar extends StackPane {
   }
 
   private void animationChanges(String direction, double x, double y) {
-    int num = ((variables.get(direction + "Num")) % Integer.parseInt(animationImages.getString(direction + "Total"))) + 1;
-    setAvatarImage(applyFormat(num, direction + "Image"));
+    int num = ((variables.get(direction + "Num")) %
+            Integer.parseInt(animationImages.getString(direction + "Total"))) + 1;
+    setAvatarImage(applyResourceFormat(num, direction + "Image"));
     xPadding = Double.parseDouble(avatarFinalValues.getString("x" + direction + "Ratio")) * width;
     avatarId.setX(x * width + xPadding);
     avatarId.setY(y * height + yPadding);
     variables.replace(direction + "Num", (variables.get(direction + "Num") + 1));
   }
 
-  private String applyFormat(int num, String key) {
+  private String applyResourceFormat(int num, String key) {
     Object[] currNum = new Object[1];
     MessageFormat formatter = new MessageFormat("");
     currNum[0] = num;
