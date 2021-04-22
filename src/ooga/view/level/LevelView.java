@@ -1,11 +1,7 @@
 package ooga.view.level;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,7 +11,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
@@ -23,6 +18,7 @@ import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
 import ooga.view.ScreenCreator;
 import ooga.view.animation.AnimationController;
+import ooga.view.level.board.Board;
 import ooga.view.level.codearea.CodeArea;
 
 /**

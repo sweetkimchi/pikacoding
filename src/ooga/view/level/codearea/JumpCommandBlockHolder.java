@@ -44,4 +44,5 @@ public class JumpCommandBlockHolder extends CommandBlockHolder {
     lineSelector.getItems().addAll(options);
     lineSelector.getSelectionModel().selectFirst();
   }
+
 }

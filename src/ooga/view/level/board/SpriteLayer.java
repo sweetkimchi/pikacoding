@@ -1,4 +1,4 @@
-package ooga.view.level;
+package ooga.view.level.board;
 
 import java.util.Deque;
 import java.util.HashMap;
@@ -35,23 +35,6 @@ public class SpriteLayer extends Pane {
     animation = new Animation();
   }
 
-  public void setSizes(double xSize, double ySize) {
-    this.xSize = xSize;
-    this.ySize = ySize;
-  }
-
-  public void resetAvatarLocations() {
-    initialAvatarLocations.forEach((id, location) -> {
-      avatars.get(Integer.parseInt(id)).reset();
-    });
-  }
-
-  public void resetBlockData() {
-    initialBlockData.forEach((id, blockData) -> {
-      blocks.get(Integer.parseInt(id)).reset();
-    });
-  }
-
   public void initializeAvatars(Map<String, List<Integer>> allAvatarLocations) {
     avatars = new HashMap<>();
     initialAvatarLocations = allAvatarLocations;
@@ -72,6 +55,11 @@ public class SpriteLayer extends Pane {
     });
   }
 
+  public void setSizes(double xSize, double ySize) {
+    this.xSize = xSize;
+    this.ySize = ySize;
+  }
+
   /**
    * TODO: refactor this method once a few more commands are added
    * @param id
@@ -84,8 +72,22 @@ public class SpriteLayer extends Pane {
   //  avatars.get(id).moveAvatar(xCoord,yCoord);
   }
 
-  public int getNumberOfAvatars() {
-    return avatars.size();
+  public void updateBlockPosition(int id, int xCoord, int yCoord) {
+    ViewBlock viewBlock = blocks.get(id);
+    animation.queuePositionUpdates(id, viewBlock.getInitialXCoordinate(), viewBlock.getInitialYCoordinate(), xCoord,yCoord);
+  }
+
+  public void updateBlock(int id, boolean b) {
+    blocks.get(id).setHeldStatus(b);
+    if(b){
+      blocks.get(id).setShiftHeight(1);
+    }else{
+      blocks.get(id).setShiftHeight(0);
+    }
+  }
+
+  public void setBlockNumber(int id, int newDisplayNum) {
+    blocks.get(id).updateCubeNumber(newDisplayNum);
   }
 
   public boolean updateAnimationForFrontEnd() {
@@ -131,7 +133,16 @@ public class SpriteLayer extends Pane {
     allElementInformation = new HashMap<>();
   }
 
-  public void resetQueue() {
+  public void resetAvatarLocations() {
+    initialAvatarLocations.forEach((id, location) -> {
+      avatars.get(Integer.parseInt(id)).reset();
+    });
+  }
+
+  public void resetBlockData() {
+    initialBlockData.forEach((id, blockData) -> {
+      blocks.get(Integer.parseInt(id)).reset();
+    });
   }
 
   //TODO: refactor with css
@@ -143,21 +154,4 @@ public class SpriteLayer extends Pane {
     }
   }
 
-  public void updateBlockPosition(int id, int xCoord, int yCoord) {
-    ViewBlock viewBlock = blocks.get(id);
-    animation.queuePositionUpdates(id, viewBlock.getInitialXCoordinate(), viewBlock.getInitialYCoordinate(), xCoord,yCoord);
-  }
-
-  public void updateBlock(int id, boolean b) {
-    blocks.get(id).setHeldStatus(b);
-    if(b){
-      blocks.get(id).setShiftHeight(1);
-    }else{
-      blocks.get(id).setShiftHeight(0);
-    }
-  }
-
-  public void setBlockNumber(int id, int newDisplayNum) {
-    blocks.get(id).updateCubeNumber(newDisplayNum);
-  }
 }

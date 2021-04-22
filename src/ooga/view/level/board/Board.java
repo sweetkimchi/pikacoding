@@ -1,4 +1,4 @@
-package ooga.view.level;
+package ooga.view.level.board;
 
 
 import java.util.Locale;
@@ -35,7 +35,6 @@ public class Board extends StackPane {
   public void reset() {
     spriteLayer.resetAvatarLocations();
     spriteLayer.resetBlockData();
-    spriteLayer.resetQueue();
     spriteLayer.resetAnimationQueue();
     spriteLayer.resetAvatarImages();
   }
@@ -49,6 +48,26 @@ public class Board extends StackPane {
     spriteLayer.setSizes(xSize, ySize);
     spriteLayer.initializeAvatars(initialState.getAllAvatarLocations());
     spriteLayer.initializeBlocks(initialState.getAllBlockData());
+  }
+
+  public void updateAvatarPosition(int id, int xCoord, int yCoord) {
+    spriteLayer.updateAvatarPosition(id, xCoord, yCoord);
+  }
+
+  public boolean updateAnimationForFrontEnd() {
+    return spriteLayer.updateAnimationForFrontEnd();
+  }
+
+  public void updateBlockPosition(int id, int xCoord, int yCoord) {
+    spriteLayer.updateBlockPosition(id, xCoord, yCoord);
+  }
+
+  public void updateBlock(int id, boolean b) {
+    spriteLayer.updateBlock(id, b);
+  }
+
+  public void setBlockNumber(int id, int newDisplayNum) {
+    spriteLayer.setBlockNumber(id, newDisplayNum);
   }
 
   private void setSizing(GameGridData gameGridData) {
@@ -77,27 +96,4 @@ public class Board extends StackPane {
     }
   }
 
-  public void updateAvatarPosition(int id, int xCoord, int yCoord) {
-    spriteLayer.updateAvatarPosition(id, xCoord, yCoord);
-  }
-
-  public int getNumberOfAvatars() {
-    return spriteLayer.getNumberOfAvatars();
-  }
-
-  public boolean updateAnimationForFrontEnd() {
-    return spriteLayer.updateAnimationForFrontEnd();
-  }
-
-  public void updateBlockPosition(int id, int xCoord, int yCoord) {
-    spriteLayer.updateBlockPosition(id, xCoord, yCoord);
-  }
-
-  public void updateBlock(int id, boolean b) {
-    spriteLayer.updateBlock(id, b);
-  }
-
-  public void setBlockNumber(int id, int newDisplayNum) {
-    spriteLayer.setBlockNumber(id, newDisplayNum);
-  }
 }

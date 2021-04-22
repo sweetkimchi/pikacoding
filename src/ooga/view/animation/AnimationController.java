@@ -6,7 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import ooga.controller.FrontEndExternalAPI;
-import ooga.view.level.Board;
+import ooga.view.level.board.Board;
 import ooga.view.level.ControlPanel;
 import ooga.view.level.LevelView;
 import ooga.view.level.codearea.CodeArea;
