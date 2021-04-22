@@ -17,6 +17,7 @@ public class ProgramStack extends VBox {
 
   private List<CommandBlockHolder> programBlocks;
   private AvailableCommands availableCommands;
+  private List<ProgramListener> programListeners;
 
   private int newIndex = 0;
 
@@ -24,6 +25,7 @@ public class ProgramStack extends VBox {
     this.setId("program-stack");
     this.setSpacing(5);
     programBlocks = new ArrayList<>();
+    programListeners = new ArrayList<>();
   }
 
   public void setAvailableCommands(AvailableCommands availableCommands) {
@@ -44,6 +46,7 @@ public class ProgramStack extends VBox {
     } else {
       addStandardCommandBlock(command, parameterOptions);
     }
+    notifyProgramListeners();
   }
 
   public List<CommandBlock> getProgram() {
@@ -58,6 +61,7 @@ public class ProgramStack extends VBox {
     for (int i = index - 1; i < programBlocks.size(); i++) {
       programBlocks.get(i).setIndex(i + 1);
     }
+    notifyProgramListeners();
   }
 
   public void startMove(CommandBlockHolder commandBlockHolder) {
@@ -88,6 +92,10 @@ public class ProgramStack extends VBox {
     for (int i = 0; i < programBlocks.size(); i++) {
       programBlocks.get(i).setLineIndicators(indicators.get(i));
     }
+  }
+
+  public void addProgramListener(ProgramListener programListener) {
+    programListeners.add(programListener);
   }
 
   private void resetMouseActions() {
@@ -123,6 +131,7 @@ public class ProgramStack extends VBox {
       programBlocks.get(i).setIndex(i + 1);
       this.getChildren().add(programBlocks.get(i));
     }
+    notifyProgramListeners();
   }
 
   private void addStandardCommandBlock(String command, List<Map<String, List<String>>> parameterOptions) {
@@ -151,6 +160,10 @@ public class ProgramStack extends VBox {
         command, parameterOptions, this);
     programBlocks.add(commandBlockHolder);
     this.getChildren().add(commandBlockHolder);
+  }
+
+  private void notifyProgramListeners() {
+    programListeners.forEach(ProgramListener::onProgramUpdate);
   }
 
 }

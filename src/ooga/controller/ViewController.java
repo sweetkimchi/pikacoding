@@ -184,4 +184,8 @@ public class ViewController implements FrontEndExternalAPI {
     levelView.loseLevel();
   }
 
+  @Override
+  public void updateProgram(List<CommandBlock> program) {
+    modelController.updateProgram(program);
+  }
 }
