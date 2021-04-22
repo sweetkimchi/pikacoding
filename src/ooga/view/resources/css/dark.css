@@ -1,7 +1,7 @@
 .root {
     -fx-font-size: 10pt;
     -fx-font-family: "Futura";
-    -fx-base: #87bba2;
+    -fx-base: #1a936f;
     -fx-background: #364958;
 }
 
@@ -137,6 +137,10 @@
 }
 
 .default-button {
+    -fx-text-fill: #eef0f2;
+}
+
+.default-button:hover {
     -fx-text-fill: #eef0f2;
 }
 

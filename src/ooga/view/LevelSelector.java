@@ -14,6 +14,7 @@ public class LevelSelector extends BorderPane {
     for (int level = 1; level <= Controller.NUM_LEVELS; level++) {
       Button levelButton = new Button("Level " + level);
       levelButton.setId("load-level-" + level);
+      levelButton.getStyleClass().add("default-button");
       int thisLevel = level;
       levelButton.setOnAction(e -> loadLevelAction.accept(thisLevel));
       levels.getChildren().add(levelButton);

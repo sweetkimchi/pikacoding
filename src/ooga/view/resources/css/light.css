@@ -19,6 +19,10 @@
     -fx-text-fill: #000000;
 }
 
+.default-button:hover {
+    -fx-text-fill: #000000;
+}
+
 .level-selector {
     -fx-alignment: CENTER;
     -fx-spacing: 5.0;
