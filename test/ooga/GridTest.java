@@ -64,7 +64,7 @@ public class GridTest {
       }
 
       @Override
-      public void updateAvatarPositions(int id, int xCoord, int yCoord) {
+      public void updateAvatarPosition(int id, int xCoord, int yCoord) {
 
       }
 
@@ -90,7 +90,7 @@ public class GridTest {
       }
 
       @Override
-      public void updateBlockPositions(int id, int xCoord, int yCoord) {
+      public void updateBlockPosition(int id, int xCoord, int yCoord) {
 
       }
 
@@ -100,7 +100,7 @@ public class GridTest {
       }
 
       @Override
-      public void setBoardNumber(int id, int newDisplayNum) {
+      public void setBlockNumber(int id, int newDisplayNum) {
 
       }
 

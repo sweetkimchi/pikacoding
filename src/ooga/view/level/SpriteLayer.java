@@ -78,7 +78,7 @@ public class SpriteLayer extends Pane {
    * @param xCoord
    * @param yCoord
    */
-  public void updateAvatarPositions(int id, int xCoord, int yCoord) {
+  public void updateAvatarPosition(int id, int xCoord, int yCoord) {
     Avatar avatar = avatars.get(id);
     animation.queuePositionUpdates(id, avatar.getInitialXCoordinate(), avatar.getInitialYCoordinate(), xCoord,yCoord);
   //  avatars.get(id).moveAvatar(xCoord,yCoord);
@@ -143,7 +143,7 @@ public class SpriteLayer extends Pane {
     }
   }
 
-  public void updateBlockPositions(int id, int xCoord, int yCoord) {
+  public void updateBlockPosition(int id, int xCoord, int yCoord) {
     Block block = blocks.get(id);
     animation.queuePositionUpdates(id, block.getInitialXCoordinate(), block.getInitialYCoordinate(), xCoord,yCoord);
   }
@@ -157,7 +157,7 @@ public class SpriteLayer extends Pane {
     }
   }
 
-  public void setBoardNumber(int id, int newDisplayNum) {
+  public void setBlockNumber(int id, int newDisplayNum) {
     blocks.get(id).updateCubeNumber(newDisplayNum);
   }
 }

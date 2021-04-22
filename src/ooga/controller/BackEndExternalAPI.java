@@ -30,8 +30,6 @@ public interface BackEndExternalAPI {
    */
   void initializeLevel(int level);
 
-  void setBoardNumber(int id, int newDisplayNum);
-
   /**
    * Passes in the commands to be parsed
    *
@@ -45,13 +43,13 @@ public interface BackEndExternalAPI {
    */
   void runNextCommand();
 
-  void updateAvatarPositions(int id, int xCoord, int yCoord);
+  void updateAvatarPosition(int id, int xCoord, int yCoord);
 
-  void updateBlockPositions(int id, int xCoord, int yCoord);
+  void updateBlockPosition(int id, int xCoord, int yCoord);
 
   void updateBlock(int id, boolean b);
 
-  void updateFrontEndElements(Map<String, AvatarData> updates);
+  void setBlockNumber(int id, int newDisplayNum);
 
   /**
    * All commands have reached the end and no more to be executed

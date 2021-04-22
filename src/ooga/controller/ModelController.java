@@ -5,7 +5,6 @@ import java.util.Map;
 import ooga.model.CommandExecutor;
 import ooga.model.database.FirebaseService;
 import ooga.model.parser.InitialConfigurationParser;
-import ooga.model.player.AvatarData;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -53,11 +52,6 @@ public class ModelController implements BackEndExternalAPI {
     viewController.setStartingApples(initialConfigurationParser.getGoalState().getNumOfCommands());
   }
 
-  @Override
-  public void setBoardNumber(int id, int newDisplayNum) {
-    viewController.setBoardNumber(id, newDisplayNum);
-  }
-
   /**
    * Passes in the commands to be parsed
    *
@@ -83,13 +77,13 @@ public class ModelController implements BackEndExternalAPI {
   }
 
   @Override
-  public void updateAvatarPositions(int id, int xCoord, int yCoord) {
-    viewController.updateAvatarPositions(id, xCoord, yCoord);
+  public void updateAvatarPosition(int id, int xCoord, int yCoord) {
+    viewController.updateAvatarPosition(id, xCoord, yCoord);
   }
 
   @Override
-  public void updateBlockPositions(int id, int xCoord, int yCoord) {
-    viewController.updateBlockPositions(id, xCoord, yCoord);
+  public void updateBlockPosition(int id, int xCoord, int yCoord) {
+    viewController.updateBlockPosition(id, xCoord, yCoord);
   }
 
   @Override
@@ -99,8 +93,8 @@ public class ModelController implements BackEndExternalAPI {
   }
 
   @Override
-  public void updateFrontEndElements(Map<String, AvatarData> updates) {
-    viewController.updateFrontEndElements(updates);
+  public void setBlockNumber(int id, int newDisplayNum) {
+    viewController.setBlockNumber(id, newDisplayNum);
   }
 
   /**

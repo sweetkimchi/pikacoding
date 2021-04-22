@@ -6,7 +6,6 @@ import javafx.stage.Stage;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
-import ooga.model.player.AvatarData;
 import ooga.view.ScreenCreator;
 import ooga.view.level.LevelView;
 import ooga.view.level.codearea.CommandBlock;
@@ -98,11 +97,6 @@ public class ViewController implements FrontEndExternalAPI {
     levelView.setStartingApples(apples);
   }
 
-  @Override
-  public void setBoardNumber(int id, int newDisplayNum) {
-    levelView.setBoardNumber(id, newDisplayNum);
-  }
-
   /**
    * Sets the description/goal of the level
    * @param description Description of the level
@@ -131,13 +125,13 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   @Override
-  public void updateAvatarPositions(int id, int xCoord, int yCoord) {
-    levelView.updateAvatarPositions(id, xCoord, yCoord);
+  public void updateAvatarPosition(int id, int xCoord, int yCoord) {
+    levelView.updateAvatarPosition(id, xCoord, yCoord);
   }
 
   @Override
-  public void updateBlockPositions(int id, int xCoord, int yCoord) {
-    levelView.updateBlockPositions(id, xCoord, yCoord);
+  public void updateBlockPosition(int id, int xCoord, int yCoord) {
+    levelView.updateBlockPosition(id, xCoord, yCoord);
   }
 
   @Override
@@ -146,8 +140,8 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   @Override
-  public void updateFrontEndElements(Map<String, AvatarData> updates) {
-    levelView.updateFrontEndElements(updates);
+  public void setBlockNumber(int id, int newDisplayNum) {
+    levelView.setBlockNumber(id, newDisplayNum);
   }
 
   @Override

@@ -21,9 +21,7 @@ import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
-import ooga.model.player.AvatarData;
 import ooga.view.ScreenCreator;
-import ooga.view.StartMenu;
 import ooga.view.level.codearea.CodeArea;
 
 /**
@@ -240,12 +238,8 @@ public class LevelView extends BorderPane {
     timeline.setRate(controlPanel.getSliderSpeed());
   }
 
-  public void updateAvatarPositions(int id, int xCoord, int yCoord) {
-    board.updateAvatarPositions(id, xCoord, yCoord);
-  }
-
-  public void updateFrontEndElements(Map<String, AvatarData> updates) {
-    board.updateFrontEndElements(updates);
+  public void updateAvatarPosition(int id, int xCoord, int yCoord) {
+    board.updateAvatarPosition(id, xCoord, yCoord);
   }
 
   public void declareEndOfAnimation() {
@@ -257,8 +251,8 @@ public class LevelView extends BorderPane {
     codeArea.setLineIndicators(lineUpdates);
   }
 
-  public void updateBlockPositions(int id, int xCoord, int yCoord) {
-    board.updateBlockPositions(id, xCoord, yCoord);
+  public void updateBlockPosition(int id, int xCoord, int yCoord) {
+    board.updateBlockPosition(id, xCoord, yCoord);
   }
 
   public void updateBlock(int id, boolean b) {
@@ -283,8 +277,8 @@ public class LevelView extends BorderPane {
     this.score = score;
   }
 
-  public void setBoardNumber(int id, int newDisplayNum) {
-    board.setBoardNumber(id, newDisplayNum);
+  public void setBlockNumber(int id, int newDisplayNum) {
+    board.setBlockNumber(id, newDisplayNum);
   }
 
   public void setDescription(String description) {

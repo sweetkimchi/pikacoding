@@ -59,8 +59,6 @@ public interface FrontEndExternalAPI {
    */
   void setStartingApples(int apples);
 
-  void setBoardNumber(int id, int newDisplayNum);
-
   /**
    * Sets the description/goal of the level
    * @param description Description of the level
@@ -80,13 +78,13 @@ public interface FrontEndExternalAPI {
    */
   void runNextCommand();
 
-  void updateAvatarPositions(int id, int xCoord, int yCoord);
+  void updateAvatarPosition(int id, int xCoord, int yCoord);
 
-  void updateBlockPositions(int id, int xCoord, int yCoord);
+  void updateBlockPosition(int id, int xCoord, int yCoord);
 
   void updateBlock(int id, boolean b);
 
-  void updateFrontEndElements(Map<String, AvatarData> updates);
+  void setBlockNumber(int id, int newDisplayNum);
 
   void declareEndOfAnimation();
 
