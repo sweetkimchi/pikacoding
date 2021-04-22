@@ -58,6 +58,7 @@ class LevelViewTest extends ApplicationTest {
     double initialY = avatarImage.getY();
     clickButton("step-option-button");
     clickButton("Button4_Step-button");
+    sleep(2000);
     assertTrue(initialY > avatarImage.getY());
   }
 
