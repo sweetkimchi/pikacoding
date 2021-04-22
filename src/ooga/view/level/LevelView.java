@@ -98,15 +98,6 @@ public class LevelView extends BorderPane {
     initializeViewElements();
   }
 
-
-  public void setPosition(double x, double y, int id) {
-
-  }
-
-  public void setActiveAvatar(int avatarID) {
-
-  }
-
   public void setAvailableCommands(AvailableCommands availableCommands) {
     codeArea.setAvailableCommands(availableCommands);
   }
