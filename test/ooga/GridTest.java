@@ -70,11 +70,6 @@ public class GridTest {
 
 
       @Override
-      public void updateFrontEndElements(Map<String, AvatarData> updates) {
-
-      }
-
-      @Override
       public void setScore(int score) {
 
       }
