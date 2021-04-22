@@ -10,11 +10,8 @@ import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 public class Avatar extends StackPane {
-  private static final String IMAGE_PROPERTIES = "AnimationImages";
-  private static final double X_FDBK_PADDING_RATIO = 0.5;
-  private static final double X_RIGHT_PADDING_RATIO = 0.65;
-  private static final double X_LEFT_PADDING_RATIO = 0.25;
-  private static final double Y_PADDING_RATIO = 0.80;
+  private static final String AVATAR_PROPERTIES = "Avatar";
+
   private int initialXCoordinate;
   private int initialYCoordinate;
   private double width;
@@ -29,17 +26,20 @@ public class Avatar extends StackPane {
   private Text avatarId;
   private double xPadding;
   private double yPadding;
+  private ResourceBundle avatarFinalValues;
 
   public Avatar(int x, int y, double w, double h, int id, SpriteLayer root) {
+    avatarFinalValues = ResourceBundle.getBundle(ScreenCreator.RESOURCES + AVATAR_PROPERTIES);
     initialXCoordinate = x;
     initialYCoordinate = y;
     width = w;
     height = h;
-    xPadding = X_FDBK_PADDING_RATIO * width;
-    yPadding = Y_PADDING_RATIO * height;
+    xPadding = Double.parseDouble(avatarFinalValues.getString("xFDBKRatio")) * width;
+    yPadding = Double.parseDouble(avatarFinalValues.getString("yRatio")) * height;
     idNum = id;
     spriteLayer = root;
-    animationImages = ResourceBundle.getBundle(ScreenCreator.RESOURCES + IMAGE_PROPERTIES);
+    animationImages = ResourceBundle.getBundle(ScreenCreator.RESOURCES +
+            avatarFinalValues.getString("imageResource"));
     makeAvatar();
   }
 
@@ -66,25 +66,26 @@ public class Avatar extends StackPane {
     if(currentX < nextX) {
       int num = ((right) % Integer.parseInt(animationImages.getString("rightTotal"))) + 1;
       setAvatarImage(applyFormat(num, "rightImage"));
-      xPadding = X_RIGHT_PADDING_RATIO * width;
+      xPadding = Double.parseDouble(avatarFinalValues.getString("xRightRatio")) * width;
       avatarId.setX(x * width + xPadding);
       avatarId.setY(y * height + yPadding);
       right++;
     } else if(nextX < currentX){
       int num = ((left) % Integer.parseInt(animationImages.getString("leftTotal"))) + 1;
       setAvatarImage(applyFormat(num, "leftImage"));
-      xPadding = X_LEFT_PADDING_RATIO * width;
+      xPadding = Double.parseDouble(avatarFinalValues.getString("xLeftRatio")) * width;
       avatarId.setX(x * width + xPadding);
       avatarId.setY(y * height + yPadding);
       left++;
     } else if(nextX == currentX && nextY == currentY){
       setAvatarImage(animationImages.getString("defaultImage"));
+      xPadding = Double.parseDouble(avatarFinalValues.getString("xFDBKRatio")) * width;
       avatarId.setX(x * width + xPadding);
       avatarId.setY(y * height + yPadding);
     } else if(nextX == currentX && nextY != currentY){
       int num = ((fdbk) % Integer.parseInt(animationImages.getString("fdbkTotal"))) + 1;
       setAvatarImage(applyFormat(num, "fdbkImage"));
-      xPadding = X_FDBK_PADDING_RATIO * width;
+      xPadding = Double.parseDouble(avatarFinalValues.getString("xFDBKRatio")) * width;
       avatarId.setX(x * width + xPadding);
       avatarId.setY(y * height + yPadding);
       fdbk++;
