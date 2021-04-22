@@ -54,21 +54,6 @@ public class GridTest {
       }
 
       @Override
-      public List<Elements> getChangedStates() {
-        return null;
-      }
-
-      @Override
-      public void setPosition(double x, double y, int id) {
-
-      }
-
-      @Override
-      public void setBoard(BoardState board) {
-
-      }
-
-      @Override
       public void declareEndOfAnimation() {
 
       }
@@ -83,10 +68,6 @@ public class GridTest {
 
       }
 
-      @Override
-      public void setAvatarIDForUpdate(int id) {
-
-      }
 
       @Override
       public void updateFrontEndElements(Map<String, AvatarData> updates) {
@@ -94,7 +75,7 @@ public class GridTest {
       }
 
       @Override
-      public void updateScore(int score) {
+      public void setScore(int score) {
 
       }
 

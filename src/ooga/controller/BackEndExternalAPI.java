@@ -1,29 +1,42 @@
 
 
 package ooga.controller;
+
 import java.util.List;
 import java.util.Map;
-import javax.lang.model.util.Elements;
-import ooga.model.grid.gridData.BoardState;
 import ooga.model.player.AvatarData;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
  * Facilitates interaction between view and model.
- * @author Ji Yun Hyo
- * Specifically, responsible for receiving unparsed commands and passing them to the model to be parsed and ran.
+ *
+ * @author Ji Yun Hyo Specifically, responsible for receiving unparsed commands and passing them to
+ * the model to be parsed and ran.
  */
 public interface BackEndExternalAPI {
 
   /**
    * sets the view controller to set up the line of communication from/to the backend
+   *
    * @param viewController FrontEndExternalAPI
    */
   void setViewController(FrontEndExternalAPI viewController);
 
   /**
+   * initializes the level
+   *
+   * @param level integer indicating the level
+   * @return BoardState object with level information
+   */
+  void initializeLevel(int level);
+
+  void setBoardNumber(int id, int newDisplayNum);
+
+  /**
    * Passes in the commands to be parsed
-   * @param commandBlocks List of individual command blocks derived from the blocks in the CodeBuilderArea
+   *
+   * @param commandBlocks List of individual command blocks derived from the blocks in the
+   *                      CodeBuilderArea
    */
   void parseCommands(List<CommandBlock> commandBlocks);
 
@@ -32,14 +45,13 @@ public interface BackEndExternalAPI {
    */
   void runNextCommand();
 
-  /**
-   * Gets the list of changed states in order to update the frontend.
-   *
-   * @return The list of changed states in the grid
-   */
-  List<Elements> getChangedStates();
+  void updateAvatarPositions(int id, int xCoord, int yCoord);
 
-  void setBoard(BoardState board);
+  void updateBlockPositions(int id, int xCoord, int yCoord);
+
+  void updateBlock(int id, boolean b);
+
+  void updateFrontEndElements(Map<String, AvatarData> updates);
 
   /**
    * All commands have reached the end and no more to be executed
@@ -47,37 +59,20 @@ public interface BackEndExternalAPI {
   void declareEndOfAnimation();
 
   /**
-   * initializes the level
-   * @param level integer indicating the level
-   * @return BoardState object with level information
-   */
-  void initializeLevel(int level);
-
-  void updateAvatarPositions(int id, int xCoord, int yCoord);
-
-  void setAvatarIDForUpdate(int id);
-
-  void updateFrontEndElements(Map<String, AvatarData> updates);
-
-  /**
-   * updates the score and sends it to the frontend
-   * @param score
-   */
-  void updateScore(int score);
-
-  /**
    * updates the line numbers for the avatars
+   *
    * @param lineUpdates
    */
   void setLineIndicators(Map<Integer, Integer> lineUpdates);
 
-  void updateBlock(int id, boolean b);
-
-  void updateBlockPositions(int id, int xCoord, int yCoord);
+  /**
+   * updates the score and sends it to the frontend
+   *
+   * @param score
+   */
+  void setScore(int score);
 
   void winLevel();
-
-  void setBoardNumber(int id, int newDisplayNum);
 
   void loseLevel();
 }
