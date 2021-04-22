@@ -50,6 +50,7 @@
 
 .command-block-option {
     -fx-font-size: 12pt;
+    -fx-text-fill: #ffffff;
     -fx-background-color: #87bba2;
     -fx-padding: 4 6 4 6;
 }
@@ -129,4 +130,12 @@
 
 .Button4_Step:hover {
     -fx-background-color: linear-gradient(#3b6064, #87bba2);
+}
+
+.id {
+    -fx-font-size: 5pt;
+}
+
+.default-button {
+    -fx-text-fill: #ffffff;
 }

@@ -7,6 +7,8 @@ import javafx.scene.text.Text;
 import ooga.view.ScreenCreator;
 
 import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class Avatar extends StackPane {
@@ -19,14 +21,15 @@ public class Avatar extends StackPane {
   private SpriteLayer spriteLayer;
   private ResourceBundle animationImages;
   private ImageView avatar;
-  private int right = 0;
-  private int left = 0;
-  private int fdbk = 0;
+  private int rightNum = 0;
+  private int leftNum = 0;
+  private int fdbkNum = 0;
   private int idNum;
   private Text avatarId;
   private double xPadding;
   private double yPadding;
   private ResourceBundle avatarFinalValues;
+  private HashMap<String, Integer> variables;
 
   public Avatar(int x, int y, double w, double h, int id, SpriteLayer root) {
     avatarFinalValues = ResourceBundle.getBundle(ScreenCreator.RESOURCES + AVATAR_PROPERTIES);
@@ -34,17 +37,25 @@ public class Avatar extends StackPane {
     initialYCoordinate = y;
     width = w;
     height = h;
-    xPadding = Double.parseDouble(avatarFinalValues.getString("xFDBKRatio")) * width;
+    xPadding = Double.parseDouble(avatarFinalValues.getString("xfdbkRatio")) * width;
     yPadding = Double.parseDouble(avatarFinalValues.getString("yRatio")) * height;
     idNum = id;
     spriteLayer = root;
     animationImages = ResourceBundle.getBundle(ScreenCreator.RESOURCES +
             avatarFinalValues.getString("imageResource"));
+    makeVariableMap();
     makeAvatar();
   }
 
+  private void makeVariableMap() {
+    variables = new HashMap();
+    variables.put("rightNum", rightNum);
+    variables.put("leftNum", leftNum);
+    variables.put("fdbkNum", fdbkNum);
+  }
+
   private void makeAvatar() {
-    avatar = new ImageView(new Image(animationImages.getString("defaultImage")));
+    avatar = new ImageView(new Image(animationImages.getString("baseImage")));
     avatar.setFitWidth(width);
     avatar.setFitHeight(height);
     avatarId = new Text(String.valueOf(idNum));
@@ -62,34 +73,33 @@ public class Avatar extends StackPane {
     avatar.setX(x * width);
     avatar.setY(y * height);
 
+    boolean right = currentX < nextX;
+    boolean left = nextX < currentX;
+    boolean base = nextX == currentX && nextY == currentY;
+    boolean fdbk =nextX == currentX && nextY != currentY;
+
     // TODO: refactor
-    if(currentX < nextX) {
-      int num = ((right) % Integer.parseInt(animationImages.getString("rightTotal"))) + 1;
-      setAvatarImage(applyFormat(num, "rightImage"));
-      xPadding = Double.parseDouble(avatarFinalValues.getString("xRightRatio")) * width;
+    if(right) {
+      animationChanges("right", x, y);
+    } else if(left){
+      animationChanges("left", x, y);
+    } else if(fdbk){
+      animationChanges("fdbk", x, y);
+    } else if(base) {
+      setAvatarImage(animationImages.getString("baseImage"));
+      xPadding = Double.parseDouble(avatarFinalValues.getString("xBaseRatio")) * width;
       avatarId.setX(x * width + xPadding);
       avatarId.setY(y * height + yPadding);
-      right++;
-    } else if(nextX < currentX){
-      int num = ((left) % Integer.parseInt(animationImages.getString("leftTotal"))) + 1;
-      setAvatarImage(applyFormat(num, "leftImage"));
-      xPadding = Double.parseDouble(avatarFinalValues.getString("xLeftRatio")) * width;
-      avatarId.setX(x * width + xPadding);
-      avatarId.setY(y * height + yPadding);
-      left++;
-    } else if(nextX == currentX && nextY == currentY){
-      setAvatarImage(animationImages.getString("defaultImage"));
-      xPadding = Double.parseDouble(avatarFinalValues.getString("xFDBKRatio")) * width;
-      avatarId.setX(x * width + xPadding);
-      avatarId.setY(y * height + yPadding);
-    } else if(nextX == currentX && nextY != currentY){
-      int num = ((fdbk) % Integer.parseInt(animationImages.getString("fdbkTotal"))) + 1;
-      setAvatarImage(applyFormat(num, "fdbkImage"));
-      xPadding = Double.parseDouble(avatarFinalValues.getString("xFDBKRatio")) * width;
-      avatarId.setX(x * width + xPadding);
-      avatarId.setY(y * height + yPadding);
-      fdbk++;
     }
+  }
+
+  private void animationChanges(String direction, double x, double y) {
+    int num = ((variables.get(direction + "Num")) % Integer.parseInt(animationImages.getString(direction + "Total"))) + 1;
+    setAvatarImage(applyFormat(num, direction + "Image"));
+    xPadding = Double.parseDouble(avatarFinalValues.getString("x" + direction + "Ratio")) * width;
+    avatarId.setX(x * width + xPadding);
+    avatarId.setY(y * height + yPadding);
+    variables.replace(direction + "Num", (variables.get(direction + "Num") + 1));
   }
 
   private String applyFormat(int num, String key) {
