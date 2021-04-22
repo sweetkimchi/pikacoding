@@ -56,7 +56,7 @@ public class SpriteLayer extends Pane {
     avatars = new HashMap<>();
     initialAvatarLocations = allAvatarLocations;
     initialAvatarLocations.forEach((id, location) -> {
-      Avatar avatar = new Avatar(location.get(0), location.get(1), xSize, ySize, this);
+      Avatar avatar = new Avatar(location.get(0), location.get(1), xSize, ySize, Integer.parseInt(id), this);
       avatars.put(Integer.parseInt(id), avatar);
     });
   }
