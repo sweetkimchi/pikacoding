@@ -138,3 +138,15 @@
 .default-button {
     -fx-text-fill: #000000;
 }
+
+.default-button:hover {
+    -fx-text-fill: #000000;
+}
+
+.block {
+    -fx-fill: LIGHTSEAGREEN;
+}
+
+.block-text {
+    -fx-fill: #000000;
+}

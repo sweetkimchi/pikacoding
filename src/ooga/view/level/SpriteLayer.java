@@ -20,8 +20,8 @@ public class SpriteLayer extends Pane {
   private int i = 0;
   private int k = 0;
 
-  private Map<Integer, Avatar> avatars;
-  private Map<Integer, Block> blocks;
+  private Map<Integer, ViewAvatar> avatars;
+  private Map<Integer, ViewBlock> blocks;
 
   private Map<String, List<Integer>> initialAvatarLocations;
   private Map<String, BlockData> initialBlockData;
@@ -56,8 +56,8 @@ public class SpriteLayer extends Pane {
     avatars = new HashMap<>();
     initialAvatarLocations = allAvatarLocations;
     initialAvatarLocations.forEach((id, location) -> {
-      Avatar avatar = new Avatar(location.get(0), location.get(1), xSize, ySize, Integer.parseInt(id), this);
-      avatars.put(Integer.parseInt(id), avatar);
+      ViewAvatar viewAvatar = new ViewAvatar(location.get(0), location.get(1), xSize, ySize, Integer.parseInt(id), this);
+      avatars.put(Integer.parseInt(id), viewAvatar);
     });
   }
 
@@ -65,10 +65,10 @@ public class SpriteLayer extends Pane {
     blocks = new HashMap<>();
     initialBlockData = allBlockData;
     initialBlockData.forEach((id, blockData) -> {
-      Block block = new Block(blockData.getLocation().get(0), blockData.getLocation().get(1),
+      ViewBlock viewBlock = new ViewBlock(blockData.getLocation().get(0), blockData.getLocation().get(1),
           xSize,
           ySize, this, "" + blockData.getBlockNumber());
-      blocks.put(Integer.parseInt(id), block);
+      blocks.put(Integer.parseInt(id), viewBlock);
     });
   }
 
@@ -79,8 +79,8 @@ public class SpriteLayer extends Pane {
    * @param yCoord
    */
   public void updateAvatarPosition(int id, int xCoord, int yCoord) {
-    Avatar avatar = avatars.get(id);
-    animation.queuePositionUpdates(id, avatar.getInitialXCoordinate(), avatar.getInitialYCoordinate(), xCoord,yCoord);
+    ViewAvatar viewAvatar = avatars.get(id);
+    animation.queuePositionUpdates(id, viewAvatar.getInitialXCoordinate(), viewAvatar.getInitialYCoordinate(), xCoord,yCoord);
   //  avatars.get(id).moveAvatar(xCoord,yCoord);
   }
 
@@ -137,15 +137,15 @@ public class SpriteLayer extends Pane {
   //TODO: refactor with css
   public void resetAvatarImages() {
     if(allElementInformation != null){
-      for(Map.Entry<Integer,Avatar> entry : avatars.entrySet()){
+      for(Map.Entry<Integer, ViewAvatar> entry : avatars.entrySet()){
         avatars.get(entry.getKey()).setAvatarImage("images/PikachuAvatar.gif");
       }
     }
   }
 
   public void updateBlockPosition(int id, int xCoord, int yCoord) {
-    Block block = blocks.get(id);
-    animation.queuePositionUpdates(id, block.getInitialXCoordinate(), block.getInitialYCoordinate(), xCoord,yCoord);
+    ViewBlock viewBlock = blocks.get(id);
+    animation.queuePositionUpdates(id, viewBlock.getInitialXCoordinate(), viewBlock.getInitialYCoordinate(), xCoord,yCoord);
   }
 
   public void updateBlock(int id, boolean b) {
