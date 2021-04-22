@@ -1,4 +1,4 @@
-package ooga.view.level;
+package ooga.view.level.board;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
@@ -70,6 +70,10 @@ public class ViewBlock extends StackPane {
     updateCubeNumber(Integer.parseInt(number));
   }
 
+  public void setHeldStatus(boolean status){
+    isHeld = status;
+  }
+  
   public int getInitialXCoordinate(){
     return (int) currentX;
   }
@@ -92,7 +96,4 @@ public class ViewBlock extends StackPane {
     spriteLayer.getChildren().add(this);
   }
 
-  public void setHeldStatus(boolean status){
-    isHeld = status;
-  }
 }

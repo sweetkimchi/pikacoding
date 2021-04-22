@@ -1,5 +1,8 @@
 package ooga.view;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -7,10 +10,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 
 public class StartMenu extends BorderPane {
   private static final String CSS = (ScreenCreator.class.getPackageName() + ".resources.").replace(".", "/") + "css/";
@@ -49,7 +48,7 @@ public class StartMenu extends BorderPane {
     return comboBox;
   }
 
-    private void updateStyleSheet(Object value) {
+  private void updateStyleSheet(Object value) {
     this.getStylesheets().remove(CSS + styleSheet);
     styleSheet = value.toString() + ".css";
     this.getStylesheets().add(CSS + styleSheet);

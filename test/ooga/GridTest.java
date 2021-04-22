@@ -54,21 +54,6 @@ public class GridTest {
       }
 
       @Override
-      public List<Elements> getChangedStates() {
-        return null;
-      }
-
-      @Override
-      public void setPosition(double x, double y, int id) {
-
-      }
-
-      @Override
-      public void setBoard(BoardState board) {
-
-      }
-
-      @Override
       public void declareEndOfAnimation() {
 
       }
@@ -79,22 +64,13 @@ public class GridTest {
       }
 
       @Override
-      public void updateAvatarPositions(int id, int xCoord, int yCoord) {
+      public void updateAvatarPosition(int id, int xCoord, int yCoord) {
 
       }
 
-      @Override
-      public void setAvatarIDForUpdate(int id) {
-
-      }
 
       @Override
-      public void updateFrontEndElements(Map<String, AvatarData> updates) {
-
-      }
-
-      @Override
-      public void updateScore(int score) {
+      public void setScore(int score) {
 
       }
 
@@ -109,7 +85,7 @@ public class GridTest {
       }
 
       @Override
-      public void updateBlockPositions(int id, int xCoord, int yCoord) {
+      public void updateBlockPosition(int id, int xCoord, int yCoord) {
 
       }
 
@@ -119,7 +95,7 @@ public class GridTest {
       }
 
       @Override
-      public void setBoardNumber(int id, int newDisplayNum) {
+      public void setBlockNumber(int id, int newDisplayNum) {
 
       }
 

@@ -40,12 +40,12 @@ public abstract class BasicCommands extends Commands {
 
   public void sendAvatarPositionUpdate(Avatar avatar) {
     getElementInformationBundle().getModelController()
-        .updateAvatarPositions(avatar.getId(), avatar.getXCoord(), avatar.getYCoord());
+        .updateAvatarPosition(avatar.getId(), avatar.getXCoord(), avatar.getYCoord());
   }
 
   public void sendBlockPositionUpdate(Block block) {
     getElementInformationBundle().getModelController()
-        .updateBlockPositions(block.getId(), block.getXCoord(), block.getYCoord());
+        .updateBlockPosition(block.getId(), block.getXCoord(), block.getYCoord());
   }
 
   public void sendBlockHeldUpdate(Block block) {
@@ -53,7 +53,7 @@ public abstract class BasicCommands extends Commands {
   }
 
   public void sendDataCubeNumUpdate(DataCube dataCube) {
-    getElementInformationBundle().getModelController().setBoardNumber(dataCube.getId(),
+    getElementInformationBundle().getModelController().setBlockNumber(dataCube.getId(),
         dataCube.getDisplayNum());
   }
 

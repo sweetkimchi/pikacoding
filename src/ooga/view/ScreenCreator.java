@@ -17,8 +17,8 @@ public class ScreenCreator {
   public static final String RESOURCES = ScreenCreator.class.getPackageName() + ".resources.properties.";
   private static final String WINDOW_PROPERTIES = "Window";
 
-  FrontEndExternalAPI viewController;
-  private Stage stage;
+  private final FrontEndExternalAPI viewController;
+  private final Stage stage;
   private LevelView levelView;
 
   private final double width;
@@ -34,45 +34,49 @@ public class ScreenCreator {
     ResourceBundle windowResources = ResourceBundle.getBundle(RESOURCES + WINDOW_PROPERTIES);
     width = Double.parseDouble(windowResources.getString("Width"));
     height = Double.parseDouble(windowResources.getString("Height"));
-
     initializeStage();
-
-    // debug statement
-    System.out.println("Screen launched");
   }
 
   public LevelView getLevelView() {
     return levelView;
   }
 
+  public String getCurrentStyleSheet() {
+    return startMenu.getStyleSheet();
+  }
+
+  /**
+   * Creates a new LevelView and loads it into the stage
+   * @param level Level number
+   */
   public void initializeLevelView(int level) {
-    levelView = new LevelView(level, this.viewController, this);
+    levelView = new LevelView(level, viewController, this);
     Scene scene = new Scene(levelView, width, height);
     stage.setScene(scene);
   }
 
+  /**
+   * Opens up the start menu
+   */
   public void loadStartMenu() {
     startMenu = new StartMenu(e -> loadLevelSelector());
     Scene scene = new Scene(startMenu, width, height);
     stage.setScene(scene);
   }
 
+  /**
+   * Opens up the level selector
+   */
   public void loadLevelSelector() {
-    LevelSelector levelSelector = new LevelSelector(level -> viewController.initializeLevel(level));
+    LevelSelector levelSelector = new LevelSelector(viewController::initializeLevel);
     levelSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(levelSelector, width, height);
     stage.setScene(scene);
   }
 
-  public String getCurrentStyleSheet() {
-    return startMenu.getStyleSheet();
-  }
-
   private void initializeStage() {
     ResourceBundle windowResources = ResourceBundle.getBundle(RESOURCES +  WINDOW_PROPERTIES);
     stage.setTitle(windowResources.getString("Title"));
-    int width = Integer.parseInt(windowResources.getString("Width"));
-    int height = Integer.parseInt(windowResources.getString("Height"));
     stage.setMinWidth(width);
     stage.setMinHeight(height);
     stage.show();

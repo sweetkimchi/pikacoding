@@ -12,9 +12,9 @@ import javafx.stage.Stage;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
-import ooga.view.level.ViewAvatar;
+import ooga.view.level.board.ViewAvatar;
 import ooga.view.level.LevelView;
-import ooga.view.level.SpriteLayer;
+import ooga.view.level.board.SpriteLayer;
 import ooga.view.level.codearea.ProgramStack;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -58,6 +58,7 @@ class LevelViewTest extends ApplicationTest {
     double initialY = avatarImage.getY();
     clickButton("step-option-button");
     clickButton("Button4_Step-button");
+    sleep(2000);
     assertTrue(initialY > avatarImage.getY());
   }
 

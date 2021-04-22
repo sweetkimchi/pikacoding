@@ -33,6 +33,10 @@ public class ControlPanel extends GridPane {
     makeSlider();
   }
 
+  public double getSliderSpeed() {
+    return slider.getValue();
+  }
+
   public void setButtonAction(String buttonName, EventHandler<ActionEvent> eventHandler) {
     buttons.get(buttonName).setOnAction(eventHandler);
   }
@@ -61,7 +65,4 @@ public class ControlPanel extends GridPane {
     return iconView;
   }
 
-  public double getSliderSpeed() {
-    return slider.getValue();
-  }
 }
