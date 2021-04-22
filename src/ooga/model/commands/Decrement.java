@@ -3,7 +3,7 @@ package ooga.model.commands;
 import java.util.Map;
 import ooga.model.grid.ElementInformationBundle;
 
-public class Multiply extends MathematicalCommands {
+public class Decrement extends SetDataCubeCommands {
 
   /**
    * Default constructor
@@ -11,13 +11,13 @@ public class Multiply extends MathematicalCommands {
    * @param elementInformationBundle
    * @param parameters
    */
-  public Multiply(ElementInformationBundle elementInformationBundle,
+  public Decrement(ElementInformationBundle elementInformationBundle,
       Map<String, String> parameters) {
     super(elementInformationBundle, parameters);
   }
 
   @Override
-  public int calculateNewDisplayNum(int avatarCubeNum, int tileCubeNum) {
-    return avatarCubeNum * tileCubeNum;
+  public int calculateNewDisplayNum(int avatarCubeNum) {
+    return avatarCubeNum - 1;
   }
 }

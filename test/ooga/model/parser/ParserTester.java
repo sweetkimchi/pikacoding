@@ -66,9 +66,9 @@ public class ParserTester {
     grid.setStructure(1, 4, Structure.FLOOR);
     grid.setStructure(4, 4, Structure.FLOOR);
     grid.setStructure(6, 4, Structure.FLOOR);
-    grid.addGameElement(new Avatar(7, 1, 4));
-    grid.addGameElement(new Avatar(8, 4, 4));
-    grid.addGameElement(new Avatar(9, 6, 4));
+    grid.addAvatar(new Avatar(7, 1, 4));
+    grid.addAvatar(new Avatar(8, 4, 4));
+    grid.addAvatar(new Avatar(9, 6, 4));
     DataCube four = new DataCube(4, 1, 4, 4);
     DataCube five = new DataCube(5, 4, 4, 7);
     DataCube six = new DataCube(6, 6, 4, 7);
@@ -76,9 +76,9 @@ public class ParserTester {
     five.pickUp(8);
     six.pickUp(9);
 
-    grid.addGameElement(four);
-    grid.addGameElement(five);
-    grid.addGameElement(six);
+    grid.addBlock(four);
+    grid.addBlock(five);
+    grid.addBlock(six);
 
     assertTrue(parsedGoalState.checkGameEnded(grid));
   }

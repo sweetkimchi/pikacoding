@@ -22,7 +22,7 @@ public class Throw extends BasicCommands {
 
   @Override
   public void execute(int ID) {
-    Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
+    Avatar avatar = getAvatar(ID);
     Direction direction = getDirection(getParameters().get("direction"));
     int currX = avatar.getXCoord();
     int currY = avatar.getYCoord();
@@ -57,9 +57,8 @@ public class Throw extends BasicCommands {
         nextTile = getElementInformationBundle().getTile(newX,newY);
       }
       if(block != null){
-        getElementInformationBundle().getModelController().updateBlock(block.getId(), avatar.hasBlock());
-        getElementInformationBundle().getModelController().updateBlockPositions(block.getId(),
-            block.getXCoord(), block.getYCoord());
+        sendBlockHeldUpdate(block);
+        sendBlockPositionUpdate(block);
       }
 
     } else {
@@ -68,7 +67,7 @@ public class Throw extends BasicCommands {
 
     }
 
-    avatar.setProgramCounter(avatar.getProgramCounter() + 1);
+    incrementProgramCounterByOne(avatar);
 
     //TODO: send updates to ElementInformationBundle
 

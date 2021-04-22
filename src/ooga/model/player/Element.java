@@ -36,7 +36,9 @@ public interface Element {
    */
   void setYCoord(int yCoord);
 
+  boolean isActive();
 
+  void setIsActive(boolean isActive);
 
   void step(Direction direction);
 }
