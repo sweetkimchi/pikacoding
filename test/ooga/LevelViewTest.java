@@ -12,8 +12,7 @@ import javafx.stage.Stage;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
-import ooga.view.ScreenCreator;
-import ooga.view.level.Avatar;
+import ooga.view.level.ViewAvatar;
 import ooga.view.level.LevelView;
 import ooga.view.level.SpriteLayer;
 import ooga.view.level.codearea.ProgramStack;
@@ -26,7 +25,7 @@ class LevelViewTest extends ApplicationTest {
   private FrontEndExternalAPI viewController;
   private LevelView levelView;
   private ProgramStack programStack;
-  private Map<Integer, Avatar> avatars;
+  private Map<Integer, ViewAvatar> avatars;
 
   @Override
   public void start(Stage stage) throws Exception {
@@ -35,7 +34,7 @@ class LevelViewTest extends ApplicationTest {
     modelController = (BackEndExternalAPI)  getPrivateField(controller, "modelController");
     viewController.initializeLevel(1);
     levelView = (LevelView)  getPrivateField(viewController, "levelView");
-    avatars = (Map<Integer, Avatar>) getPrivateField(lookup("#sprite-layer").queryAs(SpriteLayer.class), "avatars");
+    avatars = (Map<Integer, ViewAvatar>) getPrivateField(lookup("#sprite-layer").queryAs(SpriteLayer.class), "avatars");
     programStack = lookup("#program-stack").queryAs(ProgramStack.class);
   }
 

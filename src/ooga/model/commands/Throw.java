@@ -32,21 +32,21 @@ public class Throw extends BasicCommands {
     Tile nextTile = getElementInformationBundle().getTile(newX,newY);
     if (!avatar.hasBlock()) {
       //TODO: throw error to handler
-      System.out.println("You are not holding a block!");
+      System.out.println("You are not holding a viewBlock!");
     }
     if (currTile.canAddBlock() || nextTile.canAddBlock() ) {
 
-      Block block = avatar.drop();
-      if(block != null){
+      Block viewBlock = avatar.drop();
+      if(viewBlock != null){
 
-        block.drop();
+        viewBlock.drop();
       }
 
-      while (block != null) {
+      while (viewBlock != null) {
         if (nextTile == null || !nextTile.canAddBlock() || direction == Direction.SELF) {
-          currTile.add(block);
-          block.setXCoord(currX);
-          block.setYCoord(currY);
+          currTile.add(viewBlock);
+          viewBlock.setXCoord(currX);
+          viewBlock.setYCoord(currY);
           break;
         }
         currTile = nextTile;
@@ -56,9 +56,9 @@ public class Throw extends BasicCommands {
         newY += direction.getYDel();
         nextTile = getElementInformationBundle().getTile(newX,newY);
       }
-      if(block != null){
-        sendBlockHeldUpdate(block);
-        sendBlockPositionUpdate(block);
+      if(viewBlock != null){
+        sendBlockHeldUpdate(viewBlock);
+        sendBlockPositionUpdate(viewBlock);
       }
 
     } else {
