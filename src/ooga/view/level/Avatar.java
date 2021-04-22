@@ -11,7 +11,9 @@ import java.util.ResourceBundle;
 
 public class Avatar extends StackPane {
   private static final String IMAGE_PROPERTIES = "AnimationImages";
-  private static final double X_PADDING_RATIO = 0.5;
+  private static final double X_FDBK_PADDING_RATIO = 0.5;
+  private static final double X_RIGHT_PADDING_RATIO = 0.65;
+  private static final double X_LEFT_PADDING_RATIO = 0.25;
   private static final double Y_PADDING_RATIO = 0.80;
   private int initialXCoordinate;
   private int initialYCoordinate;
@@ -33,7 +35,7 @@ public class Avatar extends StackPane {
     initialYCoordinate = y;
     width = w;
     height = h;
-    xPadding = X_PADDING_RATIO * width;
+    xPadding = X_FDBK_PADDING_RATIO * width;
     yPadding = Y_PADDING_RATIO * height;
     idNum = id;
     spriteLayer = root;
@@ -59,24 +61,32 @@ public class Avatar extends StackPane {
     double nextY = y * height;
     avatar.setX(x * width);
     avatar.setY(y * height);
-    avatarId.setX(x * width + xPadding);
-    avatarId.setY(y * height + yPadding);
 
     // TODO: refactor
     if(currentX < nextX) {
       int num = ((right) % Integer.parseInt(animationImages.getString("rightTotal"))) + 1;
       setAvatarImage(applyFormat(num, "rightImage"));
+      xPadding = X_RIGHT_PADDING_RATIO * width;
+      avatarId.setX(x * width + xPadding);
+      avatarId.setY(y * height + yPadding);
       right++;
     } else if(nextX < currentX){
       int num = ((left) % Integer.parseInt(animationImages.getString("leftTotal"))) + 1;
       setAvatarImage(applyFormat(num, "leftImage"));
+      xPadding = X_LEFT_PADDING_RATIO * width;
+      avatarId.setX(x * width + xPadding);
+      avatarId.setY(y * height + yPadding);
       left++;
     } else if(nextX == currentX && nextY == currentY){
       setAvatarImage(animationImages.getString("defaultImage"));
-
+      avatarId.setX(x * width + xPadding);
+      avatarId.setY(y * height + yPadding);
     } else if(nextX == currentX && nextY != currentY){
       int num = ((fdbk) % Integer.parseInt(animationImages.getString("fdbkTotal"))) + 1;
       setAvatarImage(applyFormat(num, "fdbkImage"));
+      xPadding = X_FDBK_PADDING_RATIO * width;
+      avatarId.setX(x * width + xPadding);
+      avatarId.setY(y * height + yPadding);
       fdbk++;
     }
   }
