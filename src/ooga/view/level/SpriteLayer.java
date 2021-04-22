@@ -1,9 +1,10 @@
-package ooga.view.level.board;
+package ooga.view.level;
 
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javafx.scene.layout.Pane;
 import ooga.model.grid.gridData.BlockData;
 import ooga.view.animation.Animation;
@@ -39,12 +40,23 @@ public class SpriteLayer extends Pane {
     this.ySize = ySize;
   }
 
+  public void resetAvatarLocations() {
+    initialAvatarLocations.forEach((id, location) -> {
+      avatars.get(Integer.parseInt(id)).reset();
+    });
+  }
+
+  public void resetBlockData() {
+    initialBlockData.forEach((id, blockData) -> {
+      blocks.get(Integer.parseInt(id)).reset();
+    });
+  }
+
   public void initializeAvatars(Map<String, List<Integer>> allAvatarLocations) {
     avatars = new HashMap<>();
     initialAvatarLocations = allAvatarLocations;
     initialAvatarLocations.forEach((id, location) -> {
-      Avatar avatar = new Avatar(location.get(0), location.get(1), xSize, ySize,
-          Integer.parseInt(id), this);
+      Avatar avatar = new Avatar(location.get(0), location.get(1), xSize, ySize, Integer.parseInt(id), this);
       avatars.put(Integer.parseInt(id), avatar);
     });
   }
@@ -60,74 +72,47 @@ public class SpriteLayer extends Pane {
     });
   }
 
-  public void resetAvatarLocations() {
-    initialAvatarLocations.forEach((id, location) -> {
-      avatars.get(Integer.parseInt(id)).reset();
-    });
-  }
-
-  public void resetBlockData() {
-    initialBlockData.forEach((id, blockData) -> {
-      blocks.get(Integer.parseInt(id)).reset();
-    });
-  }
-
   /**
    * TODO: refactor this method once a few more commands are added
-   *
    * @param id
    * @param xCoord
    * @param yCoord
    */
   public void updateAvatarPosition(int id, int xCoord, int yCoord) {
     Avatar avatar = avatars.get(id);
-    animation
-        .queuePositionUpdates(id, avatar.getInitialXCoordinate(), avatar.getInitialYCoordinate(),
-            xCoord, yCoord);
-    //  avatars.get(id).moveAvatar(xCoord,yCoord);
+    animation.queuePositionUpdates(id, avatar.getInitialXCoordinate(), avatar.getInitialYCoordinate(), xCoord,yCoord);
+  //  avatars.get(id).moveAvatar(xCoord,yCoord);
   }
 
-  public void updateBlockPosition(int id, int xCoord, int yCoord) {
-    Block block = blocks.get(id);
-    animation.queuePositionUpdates(id, block.getInitialXCoordinate(), block.getInitialYCoordinate(),
-        xCoord, yCoord);
-  }
-
-  public void updateBlock(int id, boolean b) {
-    blocks.get(id).setHeldStatus(b);
-    if (b) {
-      blocks.get(id).setShiftHeight(1);
-    } else {
-      blocks.get(id).setShiftHeight(0);
-    }
-  }
-
-  public void setBlockNumber(int id, int newDisplayNum) {
-    blocks.get(id).updateCubeNumber(newDisplayNum);
+  public int getNumberOfAvatars() {
+    return avatars.size();
   }
 
   public boolean updateAnimationForFrontEnd() {
     allElementInformation = animation.getAllElementInformation();
-    //   System.out.println(allElementInformation);
+ //   System.out.println(allElementInformation);
     boolean finished = true;
-    for (Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()) {
-      if (!entry.getValue().isEmpty()) {
-        // System.out.println("Moving Avatar: " + entry.getValue());
+    for(Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()){
+      if(!entry.getValue().isEmpty()){
+
+
+       // System.out.println("Moving Avatar: " + entry.getValue());
         double nextX = entry.getValue().pop();
         double nextY = entry.getValue().pop();
         double currentX = 0;
         double currentY = 0;
-        if (avatars.containsKey(entry.getKey())) {
+        if(avatars.containsKey(entry.getKey())){
           currentX = avatars.get(entry.getKey()).getInitialXCoordinate();
           currentY = avatars.get(entry.getKey()).getInitialYCoordinate();
 
           avatars.get(entry.getKey()).moveAvatar(nextX, nextY);
-        } else if (blocks.containsKey(entry.getKey())) {
+        }else if(blocks.containsKey(entry.getKey())){
           currentX = blocks.get(entry.getKey()).getInitialXCoordinate();
           currentY = blocks.get(entry.getKey()).getInitialYCoordinate();
 
           blocks.get(entry.getKey()).moveBlock(nextX, nextY);
         }
+
 
 //        System.out.println("CurrentX: " + currentX);
 //        System.out.println("CurrentY: " + currentY);
@@ -146,13 +131,33 @@ public class SpriteLayer extends Pane {
     allElementInformation = new HashMap<>();
   }
 
+  public void resetQueue() {
+  }
+
   //TODO: refactor with css
   public void resetAvatarImages() {
-    if (allElementInformation != null) {
-      for (Map.Entry<Integer, Avatar> entry : avatars.entrySet()) {
+    if(allElementInformation != null){
+      for(Map.Entry<Integer,Avatar> entry : avatars.entrySet()){
         avatars.get(entry.getKey()).setAvatarImage("images/PikachuAvatar.gif");
       }
     }
   }
 
+  public void updateBlockPosition(int id, int xCoord, int yCoord) {
+    Block block = blocks.get(id);
+    animation.queuePositionUpdates(id, block.getInitialXCoordinate(), block.getInitialYCoordinate(), xCoord,yCoord);
+  }
+
+  public void updateBlock(int id, boolean b) {
+    blocks.get(id).setHeldStatus(b);
+    if(b){
+      blocks.get(id).setShiftHeight(1);
+    }else{
+      blocks.get(id).setShiftHeight(0);
+    }
+  }
+
+  public void setBlockNumber(int id, int newDisplayNum) {
+    blocks.get(id).updateCubeNumber(newDisplayNum);
+  }
 }

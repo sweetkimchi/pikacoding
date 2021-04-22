@@ -1,4 +1,4 @@
-package ooga.view.level.board;
+package ooga.view.level;
 
 
 import java.util.Locale;
