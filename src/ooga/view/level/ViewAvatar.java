@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class ViewAvatar extends StackPane {
-  private static final String AVATAR_PROPERTIES = "Avatar";
+  private static final String AVATAR_PROPERTIES = "ViewAvatar";
 
   private int initialXCoordinate;
   private int initialYCoordinate;
