@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class StartMenu extends BorderPane {
-  private static final String CSS = ScreenCreator.RESOURCES.replace(".", "/") + "css/";
+  private static final String CSS = (ScreenCreator.class.getPackageName() + ".resources.").replace(".", "/") + "css/";
   private String styleSheet = "default.css";
   private static final String CSS_POSSIBILITIES = ScreenCreator.RESOURCES + "CSSPossibilities";
 
