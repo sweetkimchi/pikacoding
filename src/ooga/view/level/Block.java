@@ -83,11 +83,12 @@ public class Block extends StackPane {
 
   private void makeBlock() {
     block = new Rectangle(width - 2 * padding, height - 2 * padding);
-    block.setFill(Color.LIGHTSEAGREEN); // TODO: put in resource file
+    block.getStyleClass().add("block");
 
     block.setX(currentX);
     block.setY(currentY);
     blockText = new Text(number);
+    blockText.getStyleClass().add("block-text");
     this.getChildren().add(block);
     this.getChildren().add(blockText);
     reset();

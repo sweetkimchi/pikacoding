@@ -50,13 +50,13 @@
 
 .command-block-option {
     -fx-font-size: 12pt;
-    -fx-text-fill: #ffffff;
-    -fx-background-color: #87bba2;
+    -fx-text-fill: #eef0f2;
+    -fx-background-color: #1a936f;
     -fx-padding: 4 6 4 6;
 }
 
 .command-block-option:hover {
-    -fx-background-color: linear-gradient(#3b6064, #87bba2);
+    -fx-background-color: linear-gradient(#3b6064, #1a936f);
 }
 
 .command-index {
@@ -137,5 +137,13 @@
 }
 
 .default-button {
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #eef0f2;
+}
+
+.block {
+    -fx-fill: #031d44;
+}
+
+.block-text {
+    -fx-fill: #eef0f2;
 }
