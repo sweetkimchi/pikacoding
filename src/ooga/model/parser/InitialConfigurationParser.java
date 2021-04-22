@@ -98,7 +98,7 @@ public class InitialConfigurationParser {
       List<Integer> avatarLocation = (List<Integer>) peopleLocations.get(s);
       mapOfPeople.put(s, avatarLocation);
       if (addToGameGrid) {
-        this.elementInformationBundle.addGameElement(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
+        this.elementInformationBundle.addAvatar(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
             avatarLocation.get(1)));
       }
     }
@@ -116,7 +116,7 @@ public class InitialConfigurationParser {
           (String) currentBlock.get("pickedUp")), Integer.parseInt(s));
       allBlockData.put(s, blockData);
       if (addToGameGrid)  {
-        this.elementInformationBundle.addGameElement(new DataCube(Integer.parseInt(s), blockLoc.get(0),
+        this.elementInformationBundle.addBlock(new DataCube(Integer.parseInt(s), blockLoc.get(0),
             blockLoc.get(1), (int) currentBlock.get("num")));
       }
 

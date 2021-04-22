@@ -121,8 +121,8 @@ public class GridTest {
         }
       }
     }
-    elementInformationBundle.addGameElement(avatar);
-    elementInformationBundle.addGameElement(dataCube);
+    elementInformationBundle.addAvatar(avatar);
+    elementInformationBundle.addBlock(dataCube);
   }
 
   @Test
@@ -164,7 +164,7 @@ public class GridTest {
   @Test
   public void avatarAttemptsToStepIntoAnotherAvatar() {
     Avatar newAvatar = new Avatar(15, 6, 6);
-    elementInformationBundle.addGameElement(newAvatar);
+    elementInformationBundle.addAvatar(newAvatar);
     assertTrue(elementInformationBundle.getTileData(5, 5).hasAvatar());
     Map<String, String> parameters = new HashMap<>();
     parameters.put("direction", "down-right");
@@ -213,7 +213,7 @@ public class GridTest {
   @Test
   public void addToDataCubeHeldByAvatar() {
     DataCube dataCube1 = new DataCube(15, 5, 6, 13);
-    elementInformationBundle.addGameElement(dataCube1);
+    elementInformationBundle.addBlock(dataCube1);
     avatarPickUpDataCubeSameTile();
 
     Map<String, String> parameters = new HashMap<>();

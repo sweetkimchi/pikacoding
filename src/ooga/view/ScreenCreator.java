@@ -14,7 +14,7 @@ import ooga.view.level.LevelView;
  */
 public class ScreenCreator {
 
-  public static final String RESOURCES = ScreenCreator.class.getPackageName() + ".resources.";
+  public static final String RESOURCES = ScreenCreator.class.getPackageName() + ".resources.properties.";
   private static final String WINDOW_PROPERTIES = "Window";
 
   private final FrontEndExternalAPI viewController;
@@ -75,7 +75,7 @@ public class ScreenCreator {
   }
 
   private void initializeStage() {
-    ResourceBundle windowResources = ResourceBundle.getBundle(RESOURCES + WINDOW_PROPERTIES);
+    ResourceBundle windowResources = ResourceBundle.getBundle(RESOURCES +  WINDOW_PROPERTIES);
     stage.setTitle(windowResources.getString("Title"));
     stage.setMinWidth(width);
     stage.setMinHeight(height);

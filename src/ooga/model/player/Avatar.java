@@ -11,6 +11,7 @@ public class Avatar extends Player {
     private Block heldItem;
     private int xCoord;
     private int yCoord;
+    private boolean isActive = true;
 
     /**
      * Default constructor
@@ -57,6 +58,16 @@ public class Avatar extends Player {
     @Override
     public void setYCoord(int yCoord) {
         this.yCoord = yCoord;
+    }
+
+    @Override
+    public boolean isActive() {
+        return isActive;
+    }
+
+    @Override
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     /**
