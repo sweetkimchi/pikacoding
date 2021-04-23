@@ -39,8 +39,7 @@ public class CommandBlockHolder extends GridPane {
   private CommandBlock commandBlock;
   private Button moveButton;
   private Button removeButton;
-  private List<ComboBox<String>> dropdowns;
-  private ProgramStack programStack;
+  private Map<String, ComboBox<String>> dropdowns;
 
   private int columns;
 
@@ -49,7 +48,6 @@ public class CommandBlockHolder extends GridPane {
     this.getStyleClass().add("command-block-holder");
     this.setHgap(4);
     this.columns = 0;
-    this.programStack = programStack;
 
     initializeLineIndicators();
     initializeInfoDisplays(index, type, parameterOptions);
@@ -93,7 +91,11 @@ public class CommandBlockHolder extends GridPane {
   public void setButtonsDisabled(boolean disabled) {
     moveButton.setDisable(disabled);
     removeButton.setDisable(disabled);
-    dropdowns.forEach(dropdown -> dropdown.setDisable(disabled));
+    dropdowns.forEach((name, dropdown) -> dropdown.setDisable(disabled));
+  }
+
+  public void selectParameter(String parameter, String option) {
+
   }
 
   protected void initializeDropdowns() {
@@ -107,7 +109,7 @@ public class CommandBlockHolder extends GridPane {
       });
       dropdown.getSelectionModel().selectFirst();
       addItem(dropdown, 120);
-      dropdowns.add(dropdown);
+      dropdowns.put(parameter, dropdown);
     });
   }
 
@@ -115,7 +117,7 @@ public class CommandBlockHolder extends GridPane {
     return parameterOptions;
   }
 
-  protected List<ComboBox<String>> getDropdowns() {
+  protected Map<String, ComboBox<String>> getDropdowns() {
     return dropdowns;
   }
 
@@ -160,7 +162,7 @@ public class CommandBlockHolder extends GridPane {
     this.parameterOptions = parameterOptions;
     Map<String, String> initialParameters = setInitialParameters(parameterOptions);
     commandBlock = new CommandBlock(index, type, initialParameters);
-    dropdowns = new ArrayList<>();
+    dropdowns = new HashMap<>();
     initializeDropdowns();
   }
 

@@ -103,6 +103,11 @@ public class GridTest {
       public void loseLevel() {
 
       }
+
+      @Override
+      public void updateProgram(List<CommandBlock> program) {
+
+      }
     };
     elementInformationBundle.setModelController(modelController);
     avatar = new Avatar(10, 5, 5);

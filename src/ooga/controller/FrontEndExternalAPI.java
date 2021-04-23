@@ -111,5 +111,8 @@ public interface FrontEndExternalAPI {
    */
   void loseLevel();
 
-  void updateProgram(List<CommandBlock> program);
+  void sendProgramUpdates(List<CommandBlock> program);
+
+  void receiveProgramUpdates(List<CommandBlock> program);
+
 }

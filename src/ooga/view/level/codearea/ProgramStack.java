@@ -98,6 +98,12 @@ public class ProgramStack extends VBox {
     programListeners.add(programListener);
   }
 
+  public void receiveProgramUpdates(List<CommandBlock> program) {
+    program.forEach(commandBlock -> {
+      addCommandBlock(commandBlock.getType());
+    });
+  }
+
   private void resetMouseActions() {
     programBlocks.forEach(commandBlockHolder -> {
       commandBlockHolder.getStyleClass().remove("command-block-selected");
