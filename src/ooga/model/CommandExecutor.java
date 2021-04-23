@@ -16,7 +16,6 @@ public class CommandExecutor {
 
     private List<Commands> commandBlocks;
     private Map<Integer, CommandBlock> mapOfCommandBlocks;
-    private int programCounter;
     private BackEndExternalAPI modelController;
     private ElementInformationBundle elementInformationBundle;
     private BoardState initialState;
@@ -36,7 +35,6 @@ public class CommandExecutor {
         GoalState goalState) {
         this.goalState = goalState;
         this.initialState = initialState;
-        programCounter = 1;
         this.elementInformationBundle = elementInformationBundle;
         this.elementInformationBundle.setModelController(modelController);
         this.commandBlocks = new ArrayList<>();
@@ -77,11 +75,6 @@ public class CommandExecutor {
         }
 
         System.out.println("Pairs: " + idToCommandLines);
-
-
-
-
-
         System.out.println(this.endCommandLines);
         System.out.println("MAP: " + this.idToCommandLines);
 
