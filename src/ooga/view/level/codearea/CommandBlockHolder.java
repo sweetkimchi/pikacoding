@@ -95,7 +95,7 @@ public class CommandBlockHolder extends GridPane {
   }
 
   public void selectParameter(String parameter, String option) {
-
+    dropdowns.get(parameter).getSelectionModel().select(option);
   }
 
   protected void initializeDropdowns() {
