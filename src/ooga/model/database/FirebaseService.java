@@ -19,6 +19,10 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import ooga.view.level.codearea.CommandBlock;
 
+/**
+ * @author Billy Luqiu
+ * @author Ji Yun Hyo
+ */
 public class FirebaseService {
 
   private FirebaseDatabase db;
