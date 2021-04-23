@@ -1,8 +1,7 @@
-package ooga.view.level;
+package ooga.view.level.board;
 
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -10,7 +9,6 @@ import javafx.scene.shape.Rectangle;
 import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
-import ooga.model.player.AvatarData;
 import ooga.view.ScreenCreator;
 
 public class Board extends StackPane {
@@ -37,7 +35,6 @@ public class Board extends StackPane {
   public void reset() {
     spriteLayer.resetAvatarLocations();
     spriteLayer.resetBlockData();
-    spriteLayer.resetQueue();
     spriteLayer.resetAnimationQueue();
     spriteLayer.resetAvatarImages();
   }
@@ -51,6 +48,26 @@ public class Board extends StackPane {
     spriteLayer.setSizes(xSize, ySize);
     spriteLayer.initializeAvatars(initialState.getAllAvatarLocations());
     spriteLayer.initializeBlocks(initialState.getAllBlockData());
+  }
+
+  public void updateAvatarPosition(int id, int xCoord, int yCoord) {
+    spriteLayer.updateAvatarPosition(id, xCoord, yCoord);
+  }
+
+  public boolean updateAnimationForFrontEnd() {
+    return spriteLayer.updateAnimationForFrontEnd();
+  }
+
+  public void updateBlockPosition(int id, int xCoord, int yCoord) {
+    spriteLayer.updateBlockPosition(id, xCoord, yCoord);
+  }
+
+  public void updateBlock(int id, boolean b) {
+    spriteLayer.updateBlock(id, b);
+  }
+
+  public void setBlockNumber(int id, int newDisplayNum) {
+    spriteLayer.setBlockNumber(id, newDisplayNum);
   }
 
   private void setSizing(GameGridData gameGridData) {
@@ -79,38 +96,4 @@ public class Board extends StackPane {
     }
   }
 
-  public void updateAvatarPositions(int id, int xCoord, int yCoord) {
-    spriteLayer.updateAvatarPositions(id, xCoord, yCoord);
-  }
-
-  //TODO: refactor (CommandExecuter)
-  public void updateFrontEndElements(Map<String, AvatarData> updates) {
-    for (Map.Entry<String, AvatarData> entry : updates.entrySet()) {
-      System.out.println("Updating: " + entry.getKey());
-      for (Integer value : entry.getValue().getPositionUpdates()) {
-        System.out.println("Values: " + value);
-      }
-
-    }
-  }
-
-  public int getNumberOfAvatars() {
-    return spriteLayer.getNumberOfAvatars();
-  }
-
-  public boolean updateAnimationForFrontEnd() {
-    return spriteLayer.updateAnimationForFrontEnd();
-  }
-
-  public void updateBlockPositions(int id, int xCoord, int yCoord) {
-    spriteLayer.updateBlockPositions(id, xCoord, yCoord);
-  }
-
-  public void updateBlock(int id, boolean b) {
-    spriteLayer.updateBlock(id, b);
-  }
-
-  public void setBoardNumber(int id, int newDisplayNum) {
-    spriteLayer.setBoardNumber(id, newDisplayNum);
-  }
 }

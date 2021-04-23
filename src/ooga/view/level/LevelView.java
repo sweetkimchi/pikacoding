@@ -1,11 +1,7 @@
 package ooga.view.level;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,16 +11,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
-import ooga.model.player.AvatarData;
 import ooga.view.ScreenCreator;
-import ooga.view.StartMenu;
+import ooga.view.animation.AnimationController;
+import ooga.view.level.board.Board;
 import ooga.view.level.codearea.CodeArea;
+import ooga.view.level.codearea.ProgramListener;
 
 /**
  * Main view class for levels. Contains all the main level view elements (board, code area, etc.)
@@ -32,7 +28,7 @@ import ooga.view.level.codearea.CodeArea;
  * @author David Li
  * @author Ji Yun Hyo
  */
-public class LevelView extends BorderPane {
+public class LevelView extends BorderPane implements ProgramListener {
 
   public static final String LEVEL_PROPERTIES = "Level";
 
@@ -42,6 +38,7 @@ public class LevelView extends BorderPane {
   private final MenuBar menuBar;
   private Label scoreDisplay;
   private final Board board;
+  private final AnimationController animationController;
   private GridPane rightPane;
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
@@ -49,12 +46,6 @@ public class LevelView extends BorderPane {
 
   private int startingApples;
   private int score;
-
-  private Timeline timeline;
-
-  private boolean codeIsRunning;
-  private boolean queueFinished;
-  private boolean step;
 
   //TODO: remove after debug
   //I'm using this because for some reason, clicking step doesn't play the initial animation (does nothing)
@@ -69,42 +60,9 @@ public class LevelView extends BorderPane {
     board = new Board();
     codeArea = new CodeArea();
     controlPanel = new ControlPanel();
-    codeIsRunning = false;
-    queueFinished = true;
-    step = false;
 
-    timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-
-      /**
-       * if queue is finished run the next command
-       * if the que is not finished, it means that the turn is not over yet so execute the animation for the turn
-       */
-      // System.out.println("Animation running");
-      if (queueFinished) {
-        if (step && dummy != 1) {
-          timeline.stop();
-          step = false;
-        }
-        dummy++;
-        viewController.runNextCommand();
-        queueFinished = false;
-
-      } else {
-        updateAnimationForFrontEnd();
-      }
-      setAnimationSpeed();
-
-    }));
     initializeViewElements();
-  }
-
-
-  public void setPosition(double x, double y, int id) {
-
-  }
-
-  public void setActiveAvatar(int avatarID) {
-
+    animationController = new AnimationController(this, viewController, codeArea, board, controlPanel);
   }
 
   public void setAvailableCommands(AvailableCommands availableCommands) {
@@ -113,6 +71,11 @@ public class LevelView extends BorderPane {
 
   public void initializeBoard(GameGridData gameGridData, InitialState initialState) {
     board.initializeBoard(gameGridData, initialState);
+  }
+
+  @Override
+  public void onProgramUpdate() {
+    viewController.updateProgram(codeArea.getProgram());
   }
 
   private void openPauseMenu() {
@@ -139,20 +102,17 @@ public class LevelView extends BorderPane {
     this.setBottom(null);
   }
 
-  private void updateAnimationForFrontEnd() {
-    queueFinished = board.updateAnimationForFrontEnd();
-  }
-
   private void initializeViewElements() {
     ResourceBundle levelResources = ResourceBundle
         .getBundle(ScreenCreator.RESOURCES + LEVEL_PROPERTIES);
     menuBar.setMinHeight(Double.parseDouble(levelResources.getString("MenuBarHeight")));
     codeArea.setMinWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
+    codeArea.addProgramListener(this);
     controlPanel.setMinHeight(Double.parseDouble(levelResources.getString("ControlPanelHeight")));
-    controlPanel.setButtonAction("Button1_Reset", e -> reset());
-    controlPanel.setButtonAction("Button2_Play", e -> play());
-    controlPanel.setButtonAction("Button3_Pause", e -> pause());
-    controlPanel.setButtonAction("Button4_Step", e -> step());
+    controlPanel.setButtonAction("Button1_Reset", e -> animationController.reset());
+    controlPanel.setButtonAction("Button2_Play", e -> animationController.play());
+    controlPanel.setButtonAction("Button3_Pause", e -> animationController.pause());
+    controlPanel.setButtonAction("Button4_Step", e -> animationController.step());
     this.setTop(menuBar);
     scoreDisplay = new Label("Apples Left for Pikachu: ");
 
@@ -183,91 +143,20 @@ public class LevelView extends BorderPane {
     rightPane.setPadding(new Insets(8, 8, 8, 8));
   }
 
-  private void pause() {
-    System.out.println("pause");
-    timeline.stop();
-  }
-
-  private void play() {
-    System.out.println("play");
-    step = false;
-    if (!codeIsRunning) {
-      reset();
-      viewController.parseCommands(codeArea.getProgram());
-      codeIsRunning = true;
-    }
-    runSimulation();
-
-
-  }
-
-  private void reset() {
-    codeIsRunning = false;
-    board.reset();
-    timeline.stop();
-    dummy = 1;
-    codeArea.setLineIndicators(new HashMap<>());
-
-    setScore(startingApples);
-
-    System.out.println("reset");
-  }
-
-  private void step() {
-
-    System.out.println("step");
-    if (!codeIsRunning) {
-      reset();
-      viewController.parseCommands(codeArea.getProgram());
-      queueFinished = false;
-      codeIsRunning = true;
-    }
-
-    runSimulation();
-
-    step = true;
-    /**
-     * if queue is finished run the next command
-     * if the que is not finished, it means that the turn is not over yet so execute the animation for the turn
-     */
-    if (queueFinished) {
-      viewController.runNextCommand();
-      queueFinished = false;
-    } else {
-      updateAnimationForFrontEnd();
-    }
-
-  }
-
-  private void runSimulation() {
-    timeline.setCycleCount(Animation.INDEFINITE);
-    timeline.play();
-    timeline.setRate(100);
-  }
-
-  private void setAnimationSpeed() {
-    timeline.setRate(controlPanel.getSliderSpeed());
-  }
-
-  public void updateAvatarPositions(int id, int xCoord, int yCoord) {
-    board.updateAvatarPositions(id, xCoord, yCoord);
-  }
-
-  public void updateFrontEndElements(Map<String, AvatarData> updates) {
-    board.updateFrontEndElements(updates);
+  public void updateAvatarPosition(int id, int xCoord, int yCoord) {
+    board.updateAvatarPosition(id, xCoord, yCoord);
   }
 
   public void declareEndOfAnimation() {
-    codeIsRunning = false;
-    timeline.stop();
+    animationController.declareEndofAnimation();
   }
 
   public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
     codeArea.setLineIndicators(lineUpdates);
   }
 
-  public void updateBlockPositions(int id, int xCoord, int yCoord) {
-    board.updateBlockPositions(id, xCoord, yCoord);
+  public void updateBlockPosition(int id, int xCoord, int yCoord) {
+    board.updateBlockPosition(id, xCoord, yCoord);
   }
 
   public void updateBlock(int id, boolean b) {
@@ -292,8 +181,8 @@ public class LevelView extends BorderPane {
     this.score = score;
   }
 
-  public void setBoardNumber(int id, int newDisplayNum) {
-    board.setBoardNumber(id, newDisplayNum);
+  public void setBlockNumber(int id, int newDisplayNum) {
+    board.setBlockNumber(id, newDisplayNum);
   }
 
   public void setDescription(String description) {
@@ -306,7 +195,7 @@ public class LevelView extends BorderPane {
   }
 
   public void loseLevel() {
-    reset();
+    animationController.reset();
     this.setCenter(new LoseScreen(e -> {
       this.setTop(menuBar);
       this.setCenter(board);
@@ -316,5 +205,9 @@ public class LevelView extends BorderPane {
     this.setTop(null);
     this.setRight(null);
     this.setBottom(null);
+  }
+
+  public void resetScore() {
+    setScore(startingApples);
   }
 }

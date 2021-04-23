@@ -36,7 +36,7 @@ The game will be launched through Main.java which instantiates ViewController an
         * Extended by Human, a character that can be changed by the player
         * Consider having NPC
     * Block
-        * Extended by DataCube, a block that can be picked up by a human and that the human can interact with
+        * Extended by DataCube, a viewBlock that can be picked up by a human and that the human can interact with
     * Data File parser
         * Handles parsing of JSON files
     * API Handler
@@ -45,7 +45,7 @@ The game will be launched through Main.java which instantiates ViewController an
       * Gets data structure from front end
       * runs commands on the avatars/blocks
     * Commands
-      * One Command class for each possible command, performs an action on an avatar or block
+      * One Command class for each possible command, performs an action on an viewAvatar or viewBlock
 
 * View
     - `Level`
@@ -68,8 +68,8 @@ The game will be launched through Main.java which instantiates ViewController an
      - Will have a controller that interfaces with the model and the view.
     - This controller must obtain the state of the grid from the model, and then decide how to act on it to make it show on the view
         - the movement passed up will not require the backend to know the actual location or
-          information about the avatar but rather just the change in location that will be applied
-          to the avatar
+          information about the viewAvatar but rather just the change in location that will be applied
+          to the viewAvatar
         - the controller will then go through these movements and translate them to locations for
           the view to use, and in doing so, check the validity of the moves, throwing exceptions if
           the commands are invalid (i.e. off the grid)
@@ -98,7 +98,7 @@ The game will be launched through Main.java which instantiates ViewController an
 
 ## Example Games
 
-1. A basic game which has only a few commands available to the player. The player can control just one avatar and instruct it to manipulate a datacube as desired in order to fulfill the goal of the puzzle.
+1. A basic game which has only a few commands available to the player. The player can control just one viewAvatar and instruct it to manipulate a datacube as desired in order to fulfill the goal of the puzzle.
 
 2. A more complex game which has many more commands available to the player, allowing for relatively complex logic. The player can control multiple avatars to manipulate many datacubes using one piece of code, run on all avatars simultaneously.
 

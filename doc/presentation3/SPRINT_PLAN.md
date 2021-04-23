@@ -12,7 +12,7 @@
         * Database
             * Store user data on the web (information on what level they're on, what score they get)
             * Sync data with all players
-            * Save previous commands run on the block
+            * Save previous commands run on the viewBlock
         * Some more commands
         * More levels
             * Specific multiplayer-designed levels

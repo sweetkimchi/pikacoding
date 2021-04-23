@@ -1,5 +1,6 @@
 package ooga.view.level.codearea;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,10 @@ public class CodeArea extends GridPane {
   public void setAvailableCommands(AvailableCommands availableCommands) {
     commandBank.addCommands(availableCommands.getCommandNames());
     programStack.setAvailableCommands(availableCommands);
+  }
+
+  public void addProgramListener(ProgramListener programListener) {
+    programStack.addProgramListener(programListener);
   }
 
   private ScrollPane initializeProgramStackHolder() {

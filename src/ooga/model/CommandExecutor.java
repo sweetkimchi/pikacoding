@@ -102,7 +102,7 @@ public class CommandExecutor {
                 lineUpdates.put(avatar.getId(), avatar.getProgramCounter());
                 commandBlocks.get(avatar.getProgramCounter() - 1).execute(avatar.getId());
                 score++;
-                modelController.updateScore(goalState.getNumOfCommands() - score);
+                modelController.setScore(goalState.getNumOfCommands() - score);
             }
             if(goalState.checkGameEnded(elementInformationBundle)){
                 System.out.println("GAME HAS ENDED");
@@ -113,7 +113,7 @@ public class CommandExecutor {
             if((goalState.getNumOfCommands() - score) < 0){
 //                System.out.println("Game still going");
                 System.out.println("SCORE (CommandExecutor): " + score);
-                modelController.updateScore(0);
+                modelController.setScore(0);
                 modelController.loseLevel();
                 score = 0;
             }

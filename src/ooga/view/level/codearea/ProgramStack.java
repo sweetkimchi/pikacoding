@@ -17,6 +17,7 @@ public class ProgramStack extends VBox {
 
   private List<CommandBlockHolder> programBlocks;
   private AvailableCommands availableCommands;
+  private List<ProgramListener> programListeners;
 
   private int newIndex = 0;
 
@@ -24,6 +25,7 @@ public class ProgramStack extends VBox {
     this.setId("program-stack");
     this.setSpacing(5);
     programBlocks = new ArrayList<>();
+    programListeners = new ArrayList<>();
   }
 
   public void setAvailableCommands(AvailableCommands availableCommands) {
@@ -38,28 +40,13 @@ public class ProgramStack extends VBox {
       parameterOptions.add(parameterOptionsMap);
     });
     if (command.equals("jump")) {
-      CommandBlockHolder commandBlockHolder = new JumpCommandBlockHolder(programBlocks.size() + 1,
-          command, parameterOptions, this);
-      programBlocks.add(commandBlockHolder);
-      this.getChildren().add(commandBlockHolder);
+      addJumpCommandBlock(command, parameterOptions);
     } else if (command.equals("if")) {
-      NestedBeginBlockHolder beginCommandBlockHolder = new NestedBeginBlockHolder(
-          programBlocks.size() + 1,
-          command, parameterOptions, this);
-      programBlocks.add(beginCommandBlockHolder);
-      NestedEndBlockHolder endCommandBlockHolder = new NestedEndBlockHolder(
-          programBlocks.size() + 1,
-          command, this);
-      programBlocks.add(endCommandBlockHolder);
-      beginCommandBlockHolder.attachEndHolder(endCommandBlockHolder);
-      endCommandBlockHolder.attachBeginHolder(beginCommandBlockHolder);
-      this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder);
+      addNestedCommandBlocks(command, parameterOptions);
     } else {
-      CommandBlockHolder commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
-          command, parameterOptions, this);
-      programBlocks.add(commandBlockHolder);
-      this.getChildren().add(commandBlockHolder);
+      addStandardCommandBlock(command, parameterOptions);
     }
+    notifyProgramListeners();
   }
 
   public List<CommandBlock> getProgram() {
@@ -74,6 +61,7 @@ public class ProgramStack extends VBox {
     for (int i = index - 1; i < programBlocks.size(); i++) {
       programBlocks.get(i).setIndex(i + 1);
     }
+    notifyProgramListeners();
   }
 
   public void startMove(CommandBlockHolder commandBlockHolder) {
@@ -89,18 +77,8 @@ public class ProgramStack extends VBox {
         other.getStyleClass().remove("command-block-hovered");
       });
       other.setOnMouseClicked(e -> {
-        if (commandBlockHolder instanceof NestedBeginBlockHolder) {
-          if (newIndex < ((NestedBeginBlockHolder) commandBlockHolder).getEndCommandBlockHolder().getIndex()) {
-            moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
-          }
-        }
-        else if (commandBlockHolder instanceof NestedEndBlockHolder) {
-          if (newIndex > ((NestedEndBlockHolder) commandBlockHolder).getBeginCommandBlockHolder().getIndex()) {
-            moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
-          }
-        }
-        else {
-          moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);;
+        if (canBeMoved(commandBlockHolder, newIndex)) {
+          moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
         }
         resetMouseActions();
       });
@@ -116,6 +94,10 @@ public class ProgramStack extends VBox {
     }
   }
 
+  public void addProgramListener(ProgramListener programListener) {
+    programListeners.add(programListener);
+  }
+
   private void resetMouseActions() {
     programBlocks.forEach(commandBlockHolder -> {
       commandBlockHolder.getStyleClass().remove("command-block-selected");
@@ -126,6 +108,16 @@ public class ProgramStack extends VBox {
       commandBlockHolder.setOnMouseClicked(e -> {
       });
     });
+  }
+
+  private boolean canBeMoved(CommandBlockHolder commandBlockHolder, int newIndex) {
+    if (commandBlockHolder instanceof NestedBeginBlockHolder) {
+      return newIndex < ((NestedBeginBlockHolder) commandBlockHolder).getEndCommandBlockHolder().getIndex();
+    }
+    else if (commandBlockHolder instanceof NestedEndBlockHolder) {
+      return newIndex > ((NestedEndBlockHolder) commandBlockHolder).getBeginCommandBlockHolder().getIndex();
+    }
+    return true;
   }
 
   private void moveCommandBlock(int oldIndex, int newIndex) {
@@ -139,6 +131,39 @@ public class ProgramStack extends VBox {
       programBlocks.get(i).setIndex(i + 1);
       this.getChildren().add(programBlocks.get(i));
     }
+    notifyProgramListeners();
+  }
+
+  private void addStandardCommandBlock(String command, List<Map<String, List<String>>> parameterOptions) {
+    CommandBlockHolder commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
+        command, parameterOptions, this);
+    programBlocks.add(commandBlockHolder);
+    this.getChildren().add(commandBlockHolder);
+  }
+
+  private void addNestedCommandBlocks(String command, List<Map<String, List<String>>> parameterOptions) {
+    NestedBeginBlockHolder beginCommandBlockHolder = new NestedBeginBlockHolder(
+        programBlocks.size() + 1,
+        command, parameterOptions, this);
+    programBlocks.add(beginCommandBlockHolder);
+    NestedEndBlockHolder endCommandBlockHolder = new NestedEndBlockHolder(
+        programBlocks.size() + 1,
+        command, this);
+    programBlocks.add(endCommandBlockHolder);
+    beginCommandBlockHolder.attachEndHolder(endCommandBlockHolder);
+    endCommandBlockHolder.attachBeginHolder(beginCommandBlockHolder);
+    this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder);
+  }
+
+  private void addJumpCommandBlock(String command, List<Map<String, List<String>>> parameterOptions) {
+    CommandBlockHolder commandBlockHolder = new JumpCommandBlockHolder(programBlocks.size() + 1,
+        command, parameterOptions, this);
+    programBlocks.add(commandBlockHolder);
+    this.getChildren().add(commandBlockHolder);
+  }
+
+  private void notifyProgramListeners() {
+    programListeners.forEach(ProgramListener::onProgramUpdate);
   }
 
 }

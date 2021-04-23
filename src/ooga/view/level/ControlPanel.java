@@ -14,22 +14,27 @@ import javafx.scene.layout.GridPane;
 import ooga.view.ScreenCreator;
 
 public class ControlPanel extends GridPane {
-
-  private static final String BUTTON_IMAGES = "ControlPanelButtons";
-  private static final int ICON_SIZE = 30; //TODO: put in properties file
+  private static final String CONTROL_PANEL_PROPERTIES = "ControlPanel";
   private Map<String, Button> buttons;
   private ResourceBundle buttonImages;
+  private ResourceBundle controlPanelResources;
   private int col = 0;
   private Slider slider;
 
   public ControlPanel() {
     this.getStyleClass().add("control-panel");
-    buttonImages = ResourceBundle.getBundle(ScreenCreator.RESOURCES + BUTTON_IMAGES);
+    controlPanelResources = ResourceBundle.getBundle(ScreenCreator.RESOURCES + CONTROL_PANEL_PROPERTIES);
+    buttonImages = ResourceBundle.getBundle(ScreenCreator.RESOURCES +
+            controlPanelResources.getString("buttonImages"));
     Object[] buttonNames = buttonImages.keySet().toArray();
     Arrays.sort(buttonNames);
     buttons = new HashMap<>();
     makeButtons(buttonNames);
     makeSlider();
+  }
+
+  public double getSliderSpeed() {
+    return slider.getValue();
   }
 
   public void setButtonAction(String buttonName, EventHandler<ActionEvent> eventHandler) {
@@ -55,12 +60,9 @@ public class ControlPanel extends GridPane {
 
   private ImageView setIcon(String icon) {
     ImageView iconView = new ImageView(new Image(icon));
-    iconView.setFitWidth(ICON_SIZE);
-    iconView.setFitHeight(ICON_SIZE);
+    iconView.setFitWidth(Double.parseDouble(controlPanelResources.getString("iconSize")));
+    iconView.setFitHeight(Double.parseDouble(controlPanelResources.getString("iconSize")));
     return iconView;
   }
 
-  public double getSliderSpeed() {
-    return slider.getValue();
-  }
 }
