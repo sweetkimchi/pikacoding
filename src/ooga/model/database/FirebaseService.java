@@ -145,4 +145,23 @@ public class FirebaseService {
     return this.exceptionOccured;
   }
 
+  /**
+   * updates the commandBlock across all
+   */
+  public void saveMatchInformation(List<CommandBlock> commandBlocks) {
+//    DatabaseReference ref = db.getReference("data");
+//    DatabaseReference levelsRef = ref.child("startState/level"+level);
+//    this.rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + level + "/";
+//    String filePathToLevelInfoFile = this.rootURLPathForLevel + "level" + level + ".json";
+//    String filePathToStartState = rootURLPathForLevel + "startState.json";
+//    String filePathToEndState = rootURLPathForLevel + "endState.json";
+//    String filePathToCommands = rootURLPathForLevel + "commands.json";
+//    String filePathToGridState = rootURLPathForLevel + "grid.json";
+//    String rootDBPath = "level_info/level"+level+"/";
+//    setDatabaseContentsFromFile(rootDBPath+"levelInfo", filePathToLevelInfoFile);
+//    setDatabaseContentsFromFile(rootDBPath+"startState", filePathToStartState);
+//    setDatabaseContentsFromFile(rootDBPath+"endState", filePathToEndState);
+//    setDatabaseContentsFromFile(rootDBPath+"commands", filePathToCommands);
+//    setDatabaseContentsFromFile(rootDBPath+"grid", filePathToGridState);
+  }
 }

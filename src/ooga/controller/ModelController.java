@@ -143,5 +143,7 @@ public class ModelController implements BackEndExternalAPI {
       System.out.print(" " + commandBlock.getType());
     }
     System.out.println();
+
+    firebaseService.saveMatchInformation(program);
   }
 }
