@@ -137,6 +137,9 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void updateProgram(List<CommandBlock> program) {
+
+    int matchID = 1;
+
     // TODO: notify database of program update
     System.out.print("Program received (ModelController): ");
     for(CommandBlock commandBlock : program){
@@ -144,6 +147,6 @@ public class ModelController implements BackEndExternalAPI {
     }
     System.out.println();
 
-    firebaseService.saveMatchInformation(program);
+    firebaseService.saveMatchInformation(matchID, program);
   }
 }
