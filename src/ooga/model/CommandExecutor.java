@@ -65,7 +65,7 @@ public class CommandExecutor {
                 System.out.println("Failed");
             }
             this.commandBlocks.add(newCommand);
-            System.out.println(this.commandBlocks);
+            System.out.println("All commandblocks (CommandExecutor): " + this.commandBlocks);
 
             if(commandBlock.getType().equals("if")){
                 stackOfIfCommands.add(commandBlock.getIndex());
