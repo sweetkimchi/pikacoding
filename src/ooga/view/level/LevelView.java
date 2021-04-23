@@ -1,5 +1,6 @@
 package ooga.view.level;
 
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.geometry.Insets;
@@ -20,6 +21,7 @@ import ooga.view.ScreenCreator;
 import ooga.view.animation.AnimationController;
 import ooga.view.level.board.Board;
 import ooga.view.level.codearea.CodeArea;
+import ooga.view.level.codearea.CommandBlock;
 import ooga.view.level.codearea.ProgramListener;
 
 /**
@@ -75,7 +77,11 @@ public class LevelView extends BorderPane implements ProgramListener {
 
   @Override
   public void onProgramUpdate() {
-    viewController.updateProgram(codeArea.getProgram());
+    viewController.sendProgramUpdates(codeArea.getProgram());
+  }
+
+  public void receiveProgramUpdates(List<CommandBlock> program) {
+    codeArea.receiveProgramUpdates(program);
   }
 
   private void openPauseMenu() {
@@ -210,4 +216,5 @@ public class LevelView extends BorderPane implements ProgramListener {
   public void resetScore() {
     setScore(startingApples);
   }
+
 }

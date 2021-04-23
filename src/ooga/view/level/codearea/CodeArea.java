@@ -57,6 +57,10 @@ public class CodeArea extends GridPane {
     programStack.addProgramListener(programListener);
   }
 
+  public void receiveProgramUpdates(List<CommandBlock> program) {
+    programStack.receiveProgramUpdates(program);
+  }
+
   private ScrollPane initializeProgramStackHolder() {
     ScrollPane programStackHolder = new ScrollPane();
     programStackHolder.setFitToWidth(true);

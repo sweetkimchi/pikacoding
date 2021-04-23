@@ -17,9 +17,6 @@ public class SpriteLayer extends Pane {
   private double xSize;
   private double ySize;
 
-  private int i = 0;
-  private int k = 0;
-
   private Map<Integer, ViewAvatar> avatars;
   private Map<Integer, ViewBlock> blocks;
 
@@ -69,7 +66,6 @@ public class SpriteLayer extends Pane {
   public void updateAvatarPosition(int id, int xCoord, int yCoord) {
     ViewAvatar viewAvatar = avatars.get(id);
     animation.queuePositionUpdates(id, viewAvatar.getInitialXCoordinate(), viewAvatar.getInitialYCoordinate(), xCoord,yCoord);
-  //  avatars.get(id).moveAvatar(xCoord,yCoord);
   }
 
   public void updateBlockPosition(int id, int xCoord, int yCoord) {
@@ -96,9 +92,6 @@ public class SpriteLayer extends Pane {
     boolean finished = true;
     for(Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()){
       if(!entry.getValue().isEmpty()){
-
-
-       // System.out.println("Moving Avatar: " + entry.getValue());
         double nextX = entry.getValue().pop();
         double nextY = entry.getValue().pop();
         double currentX = 0;
@@ -114,14 +107,6 @@ public class SpriteLayer extends Pane {
 
           blocks.get(entry.getKey()).moveBlock(nextX, nextY);
         }
-
-
-//        System.out.println("CurrentX: " + currentX);
-//        System.out.println("CurrentY: " + currentY);
-//        System.out.println("NextX: " + nextX);
-//        System.out.println("NextY: " + nextY);
-
-//        System.out.println();
         finished = false;
       }
     }

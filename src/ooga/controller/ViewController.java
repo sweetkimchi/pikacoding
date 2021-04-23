@@ -185,7 +185,12 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   @Override
-  public void updateProgram(List<CommandBlock> program) {
+  public void sendProgramUpdates(List<CommandBlock> program) {
     modelController.updateProgram(program);
+  }
+
+  @Override
+  public void receiveProgramUpdates(List<CommandBlock> program) {
+    levelView.receiveProgramUpdates(program);
   }
 }
