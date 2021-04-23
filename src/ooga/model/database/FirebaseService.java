@@ -145,4 +145,17 @@ public class FirebaseService {
     return this.exceptionOccured;
   }
 
+  /**
+   * updates the commandBlock across all
+   */
+  public void saveMatchInformation(int matchID, List<CommandBlock> commandBlocks) {
+    String rootDBPath = "match_info/match"+matchID+"/";
+    Map<String, Object> jsonMapOfCodingArea = new HashMap<>();
+    for(CommandBlock commandBlock : commandBlocks){
+      jsonMapOfCodingArea.put(String.valueOf(commandBlock.getIndex()), createJSONForCommandBlock(commandBlock));
+    }
+    Map<String,Object> jsonMap = new HashMap<>();
+    jsonMap.put("codingArea", jsonMapOfCodingArea);
+    setDatabaseContentsWithMap(jsonMap, rootDBPath);
+  }
 }
