@@ -98,6 +98,16 @@ public class ProgramStack extends VBox {
     programListeners.add(programListener);
   }
 
+  public void receiveProgramUpdates(List<CommandBlock> program) {
+    program.forEach(commandBlock -> {
+      addCommandBlock(commandBlock.getType());
+      commandBlock.getParameters().forEach(
+          (parameter, option) -> programBlocks.get(programBlocks.size() - 1)
+              .selectParameter(parameter, option));
+
+    });
+  }
+
   private void resetMouseActions() {
     programBlocks.forEach(commandBlockHolder -> {
       commandBlockHolder.getStyleClass().remove("command-block-selected");
@@ -112,10 +122,11 @@ public class ProgramStack extends VBox {
 
   private boolean canBeMoved(CommandBlockHolder commandBlockHolder, int newIndex) {
     if (commandBlockHolder instanceof NestedBeginBlockHolder) {
-      return newIndex < ((NestedBeginBlockHolder) commandBlockHolder).getEndCommandBlockHolder().getIndex();
-    }
-    else if (commandBlockHolder instanceof NestedEndBlockHolder) {
-      return newIndex > ((NestedEndBlockHolder) commandBlockHolder).getBeginCommandBlockHolder().getIndex();
+      return newIndex < ((NestedBeginBlockHolder) commandBlockHolder).getEndCommandBlockHolder()
+          .getIndex();
+    } else if (commandBlockHolder instanceof NestedEndBlockHolder) {
+      return newIndex > ((NestedEndBlockHolder) commandBlockHolder).getBeginCommandBlockHolder()
+          .getIndex();
     }
     return true;
   }
@@ -134,14 +145,16 @@ public class ProgramStack extends VBox {
     notifyProgramListeners();
   }
 
-  private void addStandardCommandBlock(String command, List<Map<String, List<String>>> parameterOptions) {
+  private void addStandardCommandBlock(String command,
+      List<Map<String, List<String>>> parameterOptions) {
     CommandBlockHolder commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
         command, parameterOptions, this);
     programBlocks.add(commandBlockHolder);
     this.getChildren().add(commandBlockHolder);
   }
 
-  private void addNestedCommandBlocks(String command, List<Map<String, List<String>>> parameterOptions) {
+  private void addNestedCommandBlocks(String command,
+      List<Map<String, List<String>>> parameterOptions) {
     NestedBeginBlockHolder beginCommandBlockHolder = new NestedBeginBlockHolder(
         programBlocks.size() + 1,
         command, parameterOptions, this);
@@ -155,7 +168,8 @@ public class ProgramStack extends VBox {
     this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder);
   }
 
-  private void addJumpCommandBlock(String command, List<Map<String, List<String>>> parameterOptions) {
+  private void addJumpCommandBlock(String command,
+      List<Map<String, List<String>>> parameterOptions) {
     CommandBlockHolder commandBlockHolder = new JumpCommandBlockHolder(programBlocks.size() + 1,
         command, parameterOptions, this);
     programBlocks.add(commandBlockHolder);
