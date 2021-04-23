@@ -102,8 +102,7 @@ public class ProgramStack extends VBox {
     program.forEach(commandBlock -> {
       addCommandBlock(commandBlock.getType());
       commandBlock.getParameters().forEach(
-          (parameter, option) -> programBlocks.get(programBlocks.size() - 1)
-              .selectParameter(parameter, option));
+          (parameter, option) -> programBlocks.get(programBlocks.size() - 1).selectParameter(parameter, option));
 
     });
   }
