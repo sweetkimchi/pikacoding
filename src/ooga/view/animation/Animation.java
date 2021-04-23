@@ -25,7 +25,6 @@ public class Animation {
   private static final String UPDATE_NEXT_RESOURCE =
       DEFAULT_RESOURCES + "UpdateNextReflectionActions";
   private double INCREMENT_FACTOR = 30;
-  private int currentID = 1;
   private static final String PANE_BOX_ID = "AvatarView";
 
   public Animation(){
@@ -59,32 +58,7 @@ public class Animation {
     }
   }
 
-  /**
-   * This is when we actually change the x, y coordinates of the sprite
-   */
-  private void updatePosition() {
-    double nextX = commandsToBeExecuted.pop();
-    double nextY = commandsToBeExecuted.pop();
-
-//    if (nextY < 0 || nextX < 0 || nextY > cols - TURTLE_HEIGHT || nextX > rows - TURTLE_WIDTH) {
-//      Alert error = new Alert(AlertType.ERROR);
-//      error.setContentText(errorLanguageResource.getString("TurtleOutOfBounds"));
-//      nextX = centerX;
-//      nextY = centerY;
-//      error.show();
-//      viewController.processUserCommandInput(cS);
-//    }
-//
-//    if (allTurtleInformation.get(currentID).getPenState() == 1) {
-//      createLine(nextX, nextY, penColor);
-//    }
-//    allTurtleInformation.get(currentID).getTurtle().setX(nextX);
-//    allTurtleInformation.get(currentID).getTurtle().setY(nextY);
-
-    System.out.println("updatePosition called");
-  }
-
-  /**
+   /**
    * This is the method in which we add the incremented x,y positions into the queue for update later
    * @param x
    * @param y
@@ -95,13 +69,11 @@ public class Animation {
   }
 
   private void setID() {
-    currentID = (int) Math.round(commandsToBeExecuted.pop());
   }
 
   //
   public void setActiveAvatar(int avatarID) {
 
-    currentID = avatarID;
     commandsToBeExecuted.add((double) avatarID);
     typeToBeUpdated.add("SetID");
   }
