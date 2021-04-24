@@ -99,7 +99,7 @@
       }
     ]
   },
-  "nearestManhattan": {
+  "nearest": {
     "parameters": [
       {
         "target": [
