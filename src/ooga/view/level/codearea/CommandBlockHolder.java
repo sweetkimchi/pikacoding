@@ -30,6 +30,7 @@ public class CommandBlockHolder extends GridPane {
   private static final double LINE_INDICATORS_WIDTH = 60;
   private static final double INDEX_WIDTH = 20;
   private static final double ITEM_HEIGHT = 30;
+  private static final int MAX_INDICATORS = 3;
   private static final double PADDING = 4;
 
   private final ProgramStack programStack;
@@ -86,8 +87,14 @@ public class CommandBlockHolder extends GridPane {
   public void setLineIndicators(List<Integer> ids) {
     lineIndicators.getChildren().clear();
     for (int id : ids) {
-      Label indicator = new Label("" + id);
-      lineIndicators.getChildren().add(indicator);
+      if (lineIndicators.getChildren().size() < MAX_INDICATORS) {
+        Label indicator = new Label("" + id);
+        lineIndicators.getChildren().add(indicator);
+      }
+      else {
+        lineIndicators.getChildren().add(new Label("..."));
+        break;
+      }
     }
   }
 
@@ -179,6 +186,8 @@ public class CommandBlockHolder extends GridPane {
     StackPane lineIndicatorHolder = new StackPane();
     Rectangle background = new Rectangle(LINE_INDICATORS_WIDTH, ITEM_HEIGHT + 2 * PADDING);
     background.setFill(Color.GRAY);
+    lineIndicators.setAlignment(Pos.CENTER);
+    lineIndicators.setSpacing(4);
     lineIndicatorHolder.getChildren().addAll(background, lineIndicators);
     addItem(lineIndicatorHolder, LINE_INDICATORS_WIDTH);
   }
