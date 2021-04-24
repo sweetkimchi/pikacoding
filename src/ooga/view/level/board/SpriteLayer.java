@@ -58,7 +58,6 @@ public class SpriteLayer extends Pane {
   }
 
   /**
-   * TODO: refactor this method once a few more commands are added
    * @param id
    * @param xCoord
    * @param yCoord
@@ -73,9 +72,9 @@ public class SpriteLayer extends Pane {
     animation.queuePositionUpdates(id, viewBlock.getInitialXCoordinate(), viewBlock.getInitialYCoordinate(), xCoord,yCoord);
   }
 
-  public void updateBlock(int id, boolean b) {
-    blocks.get(id).setHeldStatus(b);
-    if(b){
+  public void updateBlock(int id, boolean isHeld) {
+    blocks.get(id).setHeldStatus(isHeld);
+    if(isHeld){
       blocks.get(id).setShiftHeight(1);
     }else{
       blocks.get(id).setShiftHeight(0);
@@ -88,7 +87,6 @@ public class SpriteLayer extends Pane {
 
   public boolean updateAnimationForFrontEnd() {
     allElementInformation = animation.getAllElementInformation();
- //   System.out.println(allElementInformation);
     boolean finished = true;
     for(Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()){
       if(!entry.getValue().isEmpty()){
