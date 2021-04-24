@@ -145,22 +145,12 @@ public class ModelController implements BackEndExternalAPI {
     int matchID = 1;
 
     // TODO: notify database of program update
-    System.out.print("Program received (ModelController): ");
-    for(CommandBlock commandBlock : program){
-      System.out.print(" " + commandBlock.getType());
-    }
-    System.out.println();
 
     firebaseService.saveMatchInformation(matchID, program);
   }
 
   @Override
   public void receivedProgramUpdate(List<CommandBlock> program) {
-    System.out.print("Program received update from db (ModelController): ");
-    for(CommandBlock commandBlock : program){
-      System.out.print(" " + commandBlock.getType());
-    }
-    System.out.println();
     viewController.receiveProgramUpdates(program);
   }
 }

@@ -37,7 +37,6 @@ public class CodeAreaParser implements DatabaseListener {
         public void onDataChange(DataSnapshot dataSnapshot) {
           Object object = dataSnapshot.getValue(Object.class);
           json[0] = new Gson().toJson(object);
-          System.out.println(json[0]);
           modelController.receivedProgramUpdate(parseJSONIntoBlocks(json[0]));
         }
         @Override
