@@ -1,4 +1,4 @@
-package ooga.model.parser;
+package ooga.model.database.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
