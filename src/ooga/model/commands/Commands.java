@@ -45,6 +45,9 @@ public abstract class Commands implements CommandInterface{
     if(direction.equals("up-left")){
       dummy = Direction.UP_LEFT;
     }
+    if(direction.equals("self")){
+      dummy = Direction.SELF;
+    }
     return dummy;
   }
 

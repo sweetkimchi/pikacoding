@@ -22,7 +22,9 @@ public class ModelController implements BackEndExternalAPI {
    * Default constructor
    */
   public ModelController() {
-    firebaseService = new FirebaseService();
+    //TODO: Change teamID and playerID to things front end creates
+
+    firebaseService = new FirebaseService(0, 0);
   }
 
   /**
@@ -137,6 +139,15 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void updateProgram(List<CommandBlock> program) {
+    int matchID = 1;
+
     // TODO: notify database of program update
+    System.out.print("Program received (ModelController): ");
+    for(CommandBlock commandBlock : program){
+      System.out.print(" " + commandBlock.getType());
+    }
+    System.out.println();
+
+    firebaseService.saveMatchInformation(matchID, program);
   }
 }

@@ -17,9 +17,6 @@ public class SpriteLayer extends Pane {
   private double xSize;
   private double ySize;
 
-  private int i = 0;
-  private int k = 0;
-
   private Map<Integer, ViewAvatar> avatars;
   private Map<Integer, ViewBlock> blocks;
 
@@ -61,7 +58,6 @@ public class SpriteLayer extends Pane {
   }
 
   /**
-   * TODO: refactor this method once a few more commands are added
    * @param id
    * @param xCoord
    * @param yCoord
@@ -69,7 +65,6 @@ public class SpriteLayer extends Pane {
   public void updateAvatarPosition(int id, int xCoord, int yCoord) {
     ViewAvatar viewAvatar = avatars.get(id);
     animation.queuePositionUpdates(id, viewAvatar.getInitialXCoordinate(), viewAvatar.getInitialYCoordinate(), xCoord,yCoord);
-  //  avatars.get(id).moveAvatar(xCoord,yCoord);
   }
 
   public void updateBlockPosition(int id, int xCoord, int yCoord) {
@@ -77,9 +72,9 @@ public class SpriteLayer extends Pane {
     animation.queuePositionUpdates(id, viewBlock.getInitialXCoordinate(), viewBlock.getInitialYCoordinate(), xCoord,yCoord);
   }
 
-  public void updateBlock(int id, boolean b) {
-    blocks.get(id).setHeldStatus(b);
-    if(b){
+  public void updateBlock(int id, boolean isHeld) {
+    blocks.get(id).setHeldStatus(isHeld);
+    if(isHeld){
       blocks.get(id).setShiftHeight(1);
     }else{
       blocks.get(id).setShiftHeight(0);
@@ -92,13 +87,9 @@ public class SpriteLayer extends Pane {
 
   public boolean updateAnimationForFrontEnd() {
     allElementInformation = animation.getAllElementInformation();
- //   System.out.println(allElementInformation);
     boolean finished = true;
     for(Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()){
       if(!entry.getValue().isEmpty()){
-
-
-       // System.out.println("Moving Avatar: " + entry.getValue());
         double nextX = entry.getValue().pop();
         double nextY = entry.getValue().pop();
         double currentX = 0;
@@ -114,14 +105,6 @@ public class SpriteLayer extends Pane {
 
           blocks.get(entry.getKey()).moveBlock(nextX, nextY);
         }
-
-
-//        System.out.println("CurrentX: " + currentX);
-//        System.out.println("CurrentY: " + currentY);
-//        System.out.println("NextX: " + nextX);
-//        System.out.println("NextY: " + nextY);
-
-//        System.out.println();
         finished = false;
       }
     }

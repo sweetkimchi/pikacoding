@@ -69,20 +69,6 @@
       }
     ]
   },
-  "add": {
-    "parameters": [
-      {
-        "noParams": true
-      }
-    ]
-  },
-  "subtract": {
-    "parameters": [
-      {
-        "noParams": true
-      }
-    ]
-  },
   "throw": {
     "parameters": [
       {
@@ -108,11 +94,29 @@
       }
     ]
   },
-  "multiply": {
-        "parameters": [
-          {
-            "noParams": true
-          }
+  "tell": {
+    "parameters": [
+      {
+        "id": [
+          "1"
         ]
+      }
+    ]
+  },
+  "throwOver": {
+    "parameters": [
+      {
+        "direction": [
+          "up",
+          "up-right",
+          "right",
+          "down-right",
+          "down",
+          "down-left",
+          "left",
+          "up-left"
+        ]
+      }
+    ]
   }
 }

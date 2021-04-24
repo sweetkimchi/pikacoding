@@ -99,7 +99,7 @@
       }
     ]
   },
-  "nearest": {
+  "nearestManhattan": {
     "parameters": [
       {
         "target": [
@@ -114,5 +114,51 @@
           "noParams": true
         }
       ]
-    }
+    },
+  "increment": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "decrement": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "setZero": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "tell": {
+    "parameters": [
+      {
+        "id": [
+          "1"
+        ]
+      }
+    ]
+  },
+  "throwOver": {
+    "parameters": [
+      {
+        "direction": [
+          "up",
+          "up-right",
+          "right",
+          "down-right",
+          "down",
+          "down-left",
+          "left",
+          "up-left"
+        ]
+      }
+    ]
+  }
 }
