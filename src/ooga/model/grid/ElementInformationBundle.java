@@ -43,11 +43,11 @@ public class ElementInformationBundle implements InformationBundle {
     return Collections.unmodifiableList(avatarList);
   }
 
-  public void setModelController(BackEndExternalAPI modelController){
+  public void setModelController(BackEndExternalAPI modelController) {
     this.modelController = modelController;
   }
 
-  public BackEndExternalAPI getModelController(){
+  public BackEndExternalAPI getModelController() {
     return modelController;
   }
 
@@ -62,8 +62,8 @@ public class ElementInformationBundle implements InformationBundle {
 
   public void setDimensions(int x, int y) {
     grid = new Tile[x][y];
-    for (int i=0; i<x; i++) {
-      for (int j=0; j<y; j++) {
+    for (int i = 0; i < x; i++) {
+      for (int j = 0; j < y; j++) {
         grid[i][j] = new Tile();
       }
     }
@@ -127,6 +127,9 @@ public class ElementInformationBundle implements InformationBundle {
   }
 
   public Tile getTile(int x, int y) {
+    if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length) {
+      return null;
+    }
     return grid[x][y];
   }
 
@@ -134,15 +137,15 @@ public class ElementInformationBundle implements InformationBundle {
     this.endCommandLines = endCommandLines;
   }
 
-  public List<Integer> getEndCommandLines(){
+  public List<Integer> getEndCommandLines() {
     return this.endCommandLines;
   }
 
-  public void setMapOfCommandLines(Map<Integer,Integer> mapOfCommandLines){
+  public void setMapOfCommandLines(Map<Integer, Integer> mapOfCommandLines) {
     this.mapOfCommandLines = mapOfCommandLines;
   }
 
-  public Map<Integer,Integer> getMapOfCommandLines(){
+  public Map<Integer, Integer> getMapOfCommandLines() {
     return this.mapOfCommandLines;
   }
 }

@@ -1,0 +1,13 @@
+{"peopleLocations":{
+  "noLoc":true
+},
+
+  "blocks":{
+    "101":{
+      "loc":[10,8],
+      "num":1,
+      "pickedUp":"False"
+    }
+  }
+
+}
