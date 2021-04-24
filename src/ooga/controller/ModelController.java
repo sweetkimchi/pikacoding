@@ -22,7 +22,9 @@ public class ModelController implements BackEndExternalAPI {
    * Default constructor
    */
   public ModelController() {
-    firebaseService = new FirebaseService();
+    //TODO: Change teamID and playerID to things front end creates
+
+    firebaseService = new FirebaseService(0, 0);
   }
 
   /**
