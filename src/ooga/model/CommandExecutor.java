@@ -10,7 +10,7 @@ import ooga.model.player.Player;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
- * 
+ * @author Ji Yun Hyo
  */
 public class CommandExecutor {
 
@@ -63,8 +63,6 @@ public class CommandExecutor {
                 System.out.println("Failed");
             }
             this.commandBlocks.add(newCommand);
-            System.out.println("All commandblocks (CommandExecutor): " + this.commandBlocks);
-
             if(commandBlock.getType().equals("if")){
                 stackOfIfCommands.add(commandBlock.getIndex());
             }
@@ -73,52 +71,39 @@ public class CommandExecutor {
                 idToCommandLines.put(stackOfIfCommands.pop(), commandBlock.getIndex());
             }
         }
-
-        System.out.println("Pairs: " + idToCommandLines);
-        System.out.println(this.endCommandLines);
-        System.out.println("MAP: " + this.idToCommandLines);
-
-
-
-
     }
 
     public void runNextCommand() {
-
         boolean ended = true;
         Map<Integer, Integer> lineUpdates = new HashMap<>();
-        System.out.println("GOAL STATE NUMBER: " + goalState.getNumOfCommands());
-
         for(Player avatar : elementInformationBundle.getAvatarList()){
-            if (avatar.getProgramCounter() < commandBlocks.size() + 1){
-                ended = false;
-                lineUpdates.put(avatar.getId(), avatar.getProgramCounter());
-                commandBlocks.get(avatar.getProgramCounter() - 1).execute(avatar.getId());
-                score++;
-                modelController.setScore(goalState.getNumOfCommands() - score);
-            }
-            if(goalState.checkGameEnded(elementInformationBundle)){
-                System.out.println("GAME HAS ENDED");
-                System.out.println("SCORE (CommandExecutor): " + score);
-                ended = true;
-                modelController.winLevel();
-            }
-            if((goalState.getNumOfCommands() - score) < 0){
-//                System.out.println("Game still going");
-                System.out.println("SCORE (CommandExecutor): " + score);
-                modelController.setScore(0);
-                modelController.loseLevel();
-                score = 0;
-            }
+            ended = executeCommandsOnAvatar(ended, lineUpdates, avatar);
         }
-
         modelController.setLineIndicators(lineUpdates);
-
         if(ended){
-            System.out.println("SCORE (CommandExecutor): " + score);
             modelController.declareEndOfAnimation();
             score = 0;
         }
 
+    }
+
+    private boolean executeCommandsOnAvatar(boolean ended, Map<Integer, Integer> lineUpdates, Player avatar) {
+        if (avatar.getProgramCounter() < commandBlocks.size() + 1){
+            ended = false;
+            lineUpdates.put(avatar.getId(), avatar.getProgramCounter());
+            commandBlocks.get(avatar.getProgramCounter() - 1).execute(avatar.getId());
+            score++;
+            modelController.setScore(goalState.getNumOfCommands() - score);
+        }
+        if(goalState.checkGameEnded(elementInformationBundle)){
+            ended = true;
+            modelController.winLevel();
+        }
+        if((goalState.getNumOfCommands() - score) < 0){
+            modelController.setScore(0);
+            modelController.loseLevel();
+            score = 0;
+        }
+        return ended;
     }
 }
