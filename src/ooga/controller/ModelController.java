@@ -139,7 +139,6 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void updateProgram(List<CommandBlock> program) {
-
     int matchID = 1;
 
     // TODO: notify database of program update
