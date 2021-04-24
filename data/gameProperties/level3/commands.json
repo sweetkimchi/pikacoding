@@ -103,10 +103,7 @@
     "parameters": [
       {
         "target": [
-          "nothing",
-          "datacube",
-          "hole",
-          "wall"
+          "datacube"
         ]
       }
     ]
