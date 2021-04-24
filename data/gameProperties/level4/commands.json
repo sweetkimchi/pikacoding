@@ -1,0 +1,148 @@
+{
+  "drop": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "if": {
+    "parameters": [
+      {
+        "direction": [
+          "up",
+          "up-right",
+          "right",
+          "down-right",
+          "down",
+          "down-left",
+          "left",
+          "up-left",
+          "current"
+        ]
+      },
+      {
+        "comparator": [
+          "equal",
+          "not equal"
+        ]
+      },
+      {
+        "target": [
+          "nothing",
+          "datacube",
+          "hole",
+          "wall"
+        ]
+      }
+    ]
+  },
+  "jump": {
+    "parameters": [
+      {
+        "destination": [
+          "1"
+        ]
+      }
+    ]
+  },
+  "pickUp": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "step": {
+    "parameters": [
+      {
+        "direction": [
+          "up",
+          "up-right",
+          "right",
+          "down-right",
+          "down",
+          "down-left",
+          "left",
+          "up-left"
+        ]
+      }
+    ]
+  },
+  "add": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "subtract": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "throw": {
+    "parameters": [
+      {
+        "direction": [
+          "up",
+          "up-right",
+          "right",
+          "down-right",
+          "down",
+          "down-left",
+          "left",
+          "up-left"
+        ]
+      }
+    ]
+  },
+  "nearestManhattan": {
+    "parameters": [
+      {
+        "target": [
+          "datacube"
+        ]
+      }
+    ]
+  },
+  "multiply": {
+      "parameters": [
+        {
+          "noParams": true
+        }
+      ]
+    },
+  "increment": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "decrement": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "setZero": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "tell": {
+    "parameters": [
+      {
+        "id": [
+          "1"
+        ]
+      }
+    ]
+  }
+}
