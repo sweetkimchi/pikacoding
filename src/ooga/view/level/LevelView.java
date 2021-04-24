@@ -49,10 +49,6 @@ public class LevelView extends BorderPane implements ProgramListener {
   private int startingApples;
   private int score;
 
-  //TODO: remove after debug
-  //I'm using this because for some reason, clicking step doesn't play the initial animation (does nothing)
-  private double dummy = 1;
-
   public LevelView(int level, FrontEndExternalAPI viewController, ScreenCreator screenCreator) {
     this.viewController = viewController;
     this.screenCreator = screenCreator;
@@ -62,7 +58,6 @@ public class LevelView extends BorderPane implements ProgramListener {
     board = new Board();
     codeArea = new CodeArea();
     controlPanel = new ControlPanel();
-
     initializeViewElements();
     animationController = new AnimationController(this, viewController, codeArea, board, controlPanel);
   }
@@ -172,7 +167,7 @@ public class LevelView extends BorderPane implements ProgramListener {
   public void winLevel() {
     try {
       Thread.sleep(2000);
-    } catch (Exception e) {
+    } catch (Exception ignored) {
 
     }
     this.setTop(null);
