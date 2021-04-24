@@ -19,13 +19,14 @@ import ooga.view.level.codearea.CommandBlock;
 public class CodeAreaParser implements DatabaseListener {
 
   private BackEndExternalAPI modelController;
-  public CodeAreaParser(ModelController modelController)  {
+  private int matchID;
+  private int teamID;
+  public CodeAreaParser(ModelController modelController, int matchID, int teamID)  {
     this.modelController = modelController;
   }
 
   @Override
   public void codeAreaChanged() {
-    int matchID = 0;
 
     String rootDBPath = "match_info/match"+matchID+"/";
     DatabaseReference ref = FirebaseDatabase.getInstance()
@@ -55,7 +56,7 @@ public class CodeAreaParser implements DatabaseListener {
       List<CommandBlock> ret = new ArrayList<>();
       List result =
           new ObjectMapper().readValue(json, List.class);
-      Map codingArea = (Map) result.get(0);
+      Map codingArea = (Map) result.get(teamID);
       List commands = (List) codingArea.get("codingArea");
       for (int i = 1; i < commands.size(); i++) {
         Map commandBlockParams = (Map) commands.get(i);

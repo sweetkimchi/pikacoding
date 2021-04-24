@@ -24,9 +24,9 @@ public class ModelController implements BackEndExternalAPI {
    */
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
-
+    int matchID = 0;
     firebaseService = new FirebaseService(0, 0);
-    CodeAreaParser codeAreaParser = new CodeAreaParser(this);
+    CodeAreaParser codeAreaParser = new CodeAreaParser(this, matchID, 0);
     codeAreaParser.codeAreaChanged();
   }
 

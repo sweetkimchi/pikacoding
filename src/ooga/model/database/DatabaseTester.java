@@ -12,7 +12,7 @@ public class DatabaseTester {
     //firebaseService.readDBContentsForLevelInit(1);
     //MongoDriver mongoDriver = new MongoDriver();
     //firebaseService.readCodeAreaInformation(0);
-    CodeAreaParser test = new CodeAreaParser(new ModelController());
+    CodeAreaParser test = new CodeAreaParser(new ModelController(), 0, 0);
     test.codeAreaChanged();
 
     while (true)  {
