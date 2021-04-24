@@ -156,6 +156,11 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void receivedProgramUpdate(List<CommandBlock> program) {
+    System.out.print("Program received update from db (ModelController): ");
+    for(CommandBlock commandBlock : program){
+      System.out.print(" " + commandBlock.getType());
+    }
+    System.out.println();
     viewController.receiveProgramUpdates(program);
   }
 }

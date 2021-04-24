@@ -108,6 +108,11 @@ public class GridTest {
       public void updateProgram(List<CommandBlock> program) {
 
       }
+
+      @Override
+      public void receivedProgramUpdate(List<CommandBlock> program) {
+
+      }
     };
     elementInformationBundle.setModelController(modelController);
     avatar = new Avatar(10, 5, 5);
