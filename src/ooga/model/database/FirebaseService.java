@@ -25,8 +25,11 @@ public class FirebaseService {
   private String rootURLPathForLevel;
   private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
   private boolean exceptionOccured = false;
-  public FirebaseService() {
-
+  private int teamID;
+  private int playerID;
+  public FirebaseService(int teamID, int playerID) {
+    this.playerID = playerID;
+    this.teamID = teamID;
     try{
       FileInputStream serviceAccount =
           new FileInputStream("data/firebaseKey/key.json");
@@ -149,7 +152,7 @@ public class FirebaseService {
    * updates the commandBlock across all
    */
   public void saveMatchInformation(int matchID, List<CommandBlock> commandBlocks) {
-    String rootDBPath = "match_info/match"+matchID+"/";
+    String rootDBPath = "match_info/match"+matchID+"/" + this.teamID + "/";
     Map<String, Object> jsonMapOfCodingArea = new HashMap<>();
     for(CommandBlock commandBlock : commandBlocks){
       jsonMapOfCodingArea.put(String.valueOf(commandBlock.getIndex()), createJSONForCommandBlock(commandBlock));
