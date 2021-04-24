@@ -154,6 +154,9 @@ public class FirebaseService {
    * updates the commandBlock across all
    */
   public void saveMatchInformation(int matchID, List<CommandBlock> commandBlocks) {
+    //TESTING CODE
+    matchID = 0;
+
     String rootDBPath = "match_info/match"+matchID+"/" + this.teamID + "/";
     Map<String, Object> jsonMapOfCodingArea = new HashMap<>();
     for(CommandBlock commandBlock : commandBlocks){
@@ -165,6 +168,9 @@ public class FirebaseService {
   }
 
   public List<CommandBlock> readCodeAreaInformation(int matchID)  {
+    //TESTING CODE
+    matchID = 0;
+
     String rootDBPath = "match_info/match"+matchID+"/";
     DatabaseReference ref = FirebaseDatabase.getInstance()
         .getReference(rootDBPath);
