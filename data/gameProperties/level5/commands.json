@@ -69,20 +69,6 @@
       }
     ]
   },
-  "add": {
-    "parameters": [
-      {
-        "noParams": true
-      }
-    ]
-  },
-  "subtract": {
-    "parameters": [
-      {
-        "noParams": true
-      }
-    ]
-  },
   "throw": {
     "parameters": [
       {
@@ -105,34 +91,6 @@
         "target": [
           "datacube"
         ]
-      }
-    ]
-  },
-  "multiply": {
-    "parameters": [
-      {
-        "noParams": true
-      }
-    ]
-  },
-  "increment": {
-    "parameters": [
-      {
-        "noParams": true
-      }
-    ]
-  },
-  "decrement": {
-    "parameters": [
-      {
-        "noParams": true
-      }
-    ]
-  },
-  "setZero": {
-    "parameters": [
-      {
-        "noParams": true
       }
     ]
   },

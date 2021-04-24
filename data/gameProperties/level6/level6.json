@@ -1,0 +1,11 @@
+{
+  "level":6,
+  "numPeople":4,
+  "blocks":["step", "pickUp", "drop","add"],
+  "startState":"startState.json",
+  "endState":"endState.json",
+  "images":"images.json",
+  "description":"Using the If command, have the Pikachu drop the datacubes in a diagonal line. The first three datacubes are provided for convenience.",
+  "idealNumOfCommands":"100",
+  "grid": "grid.json"
+}

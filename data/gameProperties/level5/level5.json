@@ -1,5 +1,5 @@
 {
-  "level":4,
+  "level":5,
   "numPeople":4,
   "blocks":["step", "pickUp", "drop","add"],
   "startState":"startState.json",
