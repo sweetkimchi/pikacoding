@@ -63,13 +63,16 @@ public class CommandExecutor {
                 System.out.println("Failed");
             }
             this.commandBlocks.add(newCommand);
-            if(commandBlock.getType().equals("if")){
-                stackOfIfCommands.add(commandBlock.getIndex());
-            }
+            findEndCommands(commandBlock);
+        }
+    }
 
-            if(commandBlock.getType().equals("end if")){
-                idToCommandLines.put(stackOfIfCommands.pop(), commandBlock.getIndex());
-            }
+    private void findEndCommands(CommandBlock commandBlock) {
+        if(commandBlock.getType().equals("if")){
+            stackOfIfCommands.add(commandBlock.getIndex());
+        }
+        if(commandBlock.getType().equals("end if")){
+            idToCommandLines.put(stackOfIfCommands.pop(), commandBlock.getIndex());
         }
     }
 
