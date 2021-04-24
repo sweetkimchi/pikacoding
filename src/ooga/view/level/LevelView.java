@@ -154,7 +154,7 @@ public class LevelView extends BorderPane implements ProgramListener {
   }
 
   public void declareEndOfAnimation() {
-    animationController.declareEndofAnimation();
+    animationController.declareEndOfAnimation();
   }
 
   public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
@@ -165,8 +165,8 @@ public class LevelView extends BorderPane implements ProgramListener {
     board.updateBlockPosition(id, xCoord, yCoord);
   }
 
-  public void updateBlock(int id, boolean b) {
-    board.updateBlock(id, b);
+  public void updateBlock(int id, boolean isHeld) {
+    board.updateBlock(id, isHeld);
   }
 
   public void winLevel() {

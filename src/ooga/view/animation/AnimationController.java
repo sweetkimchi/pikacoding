@@ -11,6 +11,9 @@ import ooga.view.level.ControlPanel;
 import ooga.view.level.LevelView;
 import ooga.view.level.codearea.CodeArea;
 
+/**
+ * @author Ji Yun Hyo
+ */
 public class AnimationController {
 
   private Timeline timeline;
@@ -90,11 +93,9 @@ public class AnimationController {
 
     levelView.resetScore();
 
-//    System.out.println("reset");
   }
 
   public void step() {
-//    System.out.println("step");
     if (!codeIsRunning) {
       reset();
       viewController.parseCommands(codeArea.getProgram());
@@ -118,7 +119,7 @@ public class AnimationController {
 
   }
 
-  public void declareEndofAnimation() {
+  public void declareEndOfAnimation() {
     codeIsRunning = false;
     timeline.stop();
   }
