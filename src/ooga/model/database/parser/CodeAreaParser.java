@@ -6,10 +6,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
-import java.util.concurrent.CountDownLatch;
+import java.util.List;
+import ooga.controller.BackEndExternalAPI;
+import ooga.controller.ModelController;
 import ooga.model.database.DatabaseListener;
+import ooga.view.level.codearea.CommandBlock;
 
 public class CodeAreaParser implements DatabaseListener {
+
+  private BackEndExternalAPI modelController;
+  public CodeAreaParser(ModelController modelController)  {
+    this.modelController = modelController;
+  }
 
   @Override
   public void codeAreaChanged() {
@@ -19,7 +27,6 @@ public class CodeAreaParser implements DatabaseListener {
     DatabaseReference ref = FirebaseDatabase.getInstance()
         .getReference(rootDBPath);
     try {
-      //CountDownLatch done = new CountDownLatch(1);
       final String[] json = {""};
       ref.addValueEventListener(new ValueEventListener() {
         @Override
@@ -27,18 +34,21 @@ public class CodeAreaParser implements DatabaseListener {
           Object object = dataSnapshot.getValue(Object.class);
           json[0] = new Gson().toJson(object);
           System.out.println(json[0]);
-          //done.countDown();
+          modelController.updateProgram(parseJSONIntoBlocks(json[0]));
         }
-
         @Override
         public void onCancelled(DatabaseError databaseError) {
           System.out.println("The read failed: " + databaseError.getCode());
         }
       });
-      //done.await();
     }
     catch (Exception e) {
 
     }
+  }
+
+  private List<CommandBlock> parseJSONIntoBlocks(String json)  {
+
+    return null;
   }
 }
