@@ -53,7 +53,7 @@ public class NearestManhattan extends AICommands{
     int newBlockX = block.getLocation().get(X);
     int newBlockY = block.getLocation().get(Y);
 
-    Direction direction = getDirection(calculateDirection(newX, newY, newBlockX, newBlockY));
+    Direction direction = getDirection(calculateDirection(ID, newX, newY, newBlockX, newBlockY));
 
     Tile prevTile = getCurrTile(ID);
     Tile nextTile = getNextTile(ID, direction);
@@ -79,14 +79,14 @@ public class NearestManhattan extends AICommands{
     sendAvatarPositionUpdate(avatar);
   }
 
-  private String calculateDirection(int newX, int newY, int newBlockX, int newBlockY) {
-    if(newX < newBlockX){
+  private String calculateDirection(int ID, int newX, int newY, int newBlockX, int newBlockY) {
+    if(newX < newBlockX && getNextTile(ID, getDirection("right")).canAddAvatar()){
       return "right";
-    }else if(newBlockX < newX){
+    }else if(newBlockX < newX && getNextTile(ID, getDirection("left")).canAddAvatar()){
       return "left";
-    } else if(newY < newBlockY){
+    } else if(newY < newBlockY && getNextTile(ID, getDirection("down")).canAddAvatar()){
       return "down";
-    } else if(newY > newBlockY){
+    } else if(newY > newBlockY && getNextTile(ID, getDirection("up")).canAddAvatar()){
       return "up";
     } else{
       return "self";
