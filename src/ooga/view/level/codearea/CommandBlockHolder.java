@@ -32,6 +32,8 @@ public class CommandBlockHolder extends GridPane {
   private static final double ITEM_HEIGHT = 30;
   private static final double PADDING = 4;
 
+  private final ProgramStack programStack;
+
   private int index;
   private List<Map<String, List<String>>> parameterOptions;
   private HBox lineIndicators;
@@ -48,6 +50,7 @@ public class CommandBlockHolder extends GridPane {
     this.getStyleClass().add("command-block-holder");
     this.setHgap(4);
     this.columns = 0;
+    this.programStack = programStack;
 
     initializeLineIndicators();
     initializeInfoDisplays(index, type, parameterOptions);
@@ -57,7 +60,7 @@ public class CommandBlockHolder extends GridPane {
     this.add(new Label(), columns++, 0);
     this.getColumnConstraints().add(columnConstraints);
 
-    initializeButtons(index, programStack);
+    initializeButtons(index);
 
     RowConstraints rowConstraints = new RowConstraints();
     rowConstraints.setMinHeight(ITEM_HEIGHT);
@@ -106,6 +109,7 @@ public class CommandBlockHolder extends GridPane {
       dropdown.getItems().addAll(options);
       dropdown.setOnAction(e -> {
         commandBlock.setParameter(parameter, dropdown.getValue());
+        programStack.notifyProgramListeners();
       });
       dropdown.getSelectionModel().selectFirst();
       addItem(dropdown, 120);
@@ -121,6 +125,10 @@ public class CommandBlockHolder extends GridPane {
     return dropdowns;
   }
 
+  protected ProgramStack getProgramStack() {
+    return programStack;
+  }
+
   protected void addItem(Node node, double width) {
     ColumnConstraints columnConstraints = new ColumnConstraints();
     if (width > 0) {
@@ -130,7 +138,7 @@ public class CommandBlockHolder extends GridPane {
     this.getColumnConstraints().add(columnConstraints);
   }
 
-  protected void removeAction(ProgramStack programStack) {
+  protected void removeAction() {
     programStack.removeCommandBlock(this.index);
   }
 
@@ -138,11 +146,11 @@ public class CommandBlockHolder extends GridPane {
     return index;
   }
 
-  private void initializeButtons(int index, ProgramStack programStack) {
+  private void initializeButtons(int index) {
     removeButton = new Button("x");
     removeButton.setId("remove-button-" + index);
     removeButton.setPrefHeight(ITEM_HEIGHT);
-    removeButton.setOnAction(e -> removeAction(programStack));
+    removeButton.setOnAction(e -> removeAction());
     addItem(removeButton, 0);
 
     moveButton = new Button("Move");
