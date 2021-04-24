@@ -1,6 +1,7 @@
 package ooga.view.level.codearea;
 
 import java.util.Map;
+import javafx.scene.web.HTMLEditorSkin.Command;
 
 /**
  * Contains all of the information for the command of this block.
@@ -40,4 +41,13 @@ public class CommandBlock {
     this.index = index;
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof CommandBlock commandBlock)  {
+      return (this.index == commandBlock.index &&
+          this.type == commandBlock.type &&
+          this.parameters == commandBlock.parameters);
+    }
+    return false;
+  }
 }
