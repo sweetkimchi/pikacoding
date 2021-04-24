@@ -1,12 +1,16 @@
 package ooga.model.database.parser;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.ModelController;
 import ooga.model.database.DatabaseListener;
@@ -48,7 +52,23 @@ public class CodeAreaParser implements DatabaseListener {
   }
 
   private List<CommandBlock> parseJSONIntoBlocks(String json)  {
+    try {
+      List<CommandBlock> ret = new ArrayList<>();
+      List result =
+          new ObjectMapper().readValue(json, List.class);
+      Map codingArea = (Map) result.get(0);
+      List commands = (List) codingArea.get("codingArea");
+      for (int i = 1; i < commands.size(); i++) {
+        Map commandBlockParams = (Map) commands.get(i);
+        ret.add(new CommandBlock((int) commandBlockParams.get("index"),
+            (String) commandBlockParams.get("type"), (Map) commandBlockParams.get("parameters")));
+      }
+      return ret;
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
 
-    return null;
   }
 }
