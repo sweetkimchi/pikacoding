@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import ooga.model.CommandExecutor;
 import ooga.model.database.FirebaseService;
+import ooga.model.database.parser.CodeAreaParser;
 import ooga.model.database.parser.InitialConfigurationParser;
 import ooga.view.level.codearea.CommandBlock;
 
@@ -25,6 +26,9 @@ public class ModelController implements BackEndExternalAPI {
     //TODO: Change teamID and playerID to things front end creates
 
     firebaseService = new FirebaseService(0, 0);
+    CodeAreaParser codeAreaParser = new CodeAreaParser(this);
+    codeAreaParser.codeAreaChanged();
+
   }
 
   /**
