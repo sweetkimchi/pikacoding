@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -59,7 +60,8 @@ public class LevelView extends BorderPane implements ProgramListener {
     codeArea = new CodeArea();
     controlPanel = new ControlPanel();
     initializeViewElements();
-    animationController = new AnimationController(this, viewController, codeArea, board, controlPanel);
+    animationController = new AnimationController(this, viewController, codeArea, board,
+        controlPanel);
   }
 
   public void setAvailableCommands(AvailableCommands availableCommands) {
@@ -107,7 +109,9 @@ public class LevelView extends BorderPane implements ProgramListener {
     ResourceBundle levelResources = ResourceBundle
         .getBundle(ScreenCreator.RESOURCES + LEVEL_PROPERTIES);
     menuBar.setMinHeight(Double.parseDouble(levelResources.getString("MenuBarHeight")));
-    codeArea.setMinWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
+    createRight(levelResources);
+    rightPane.setMinWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
+    rightPane.setMaxWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
     codeArea.addProgramListener(this);
     controlPanel.setMinHeight(Double.parseDouble(levelResources.getString("ControlPanelHeight")));
     controlPanel.setButtonAction("Button1_Reset", e -> animationController.reset());
@@ -120,7 +124,6 @@ public class LevelView extends BorderPane implements ProgramListener {
     board.getChildren().add(scoreDisplay);
     StackPane.setAlignment(scoreDisplay, Pos.TOP_LEFT);
     this.setCenter(board);
-    createRight(levelResources);
     this.setRight(rightPane);
     this.setBottom(controlPanel);
   }
@@ -188,6 +191,7 @@ public class LevelView extends BorderPane implements ProgramListener {
 
   public void setDescription(String description) {
     this.description.setText(description);
+    this.description.setWrapText(true);
   }
 
   public void setStartingApples(int apples) {
