@@ -69,8 +69,6 @@ public class FirebaseService {
     setDatabaseContentsFromFile(rootDBPath+"endState", filePathToEndState);
     setDatabaseContentsFromFile(rootDBPath+"commands", filePathToCommands);
     setDatabaseContentsFromFile(rootDBPath+"grid", filePathToGridState);
-
-
   }
 
 
@@ -161,5 +159,34 @@ public class FirebaseService {
     Map<String,Object> jsonMap = new HashMap<>();
     jsonMap.put("codingArea", jsonMapOfCodingArea);
     setDatabaseContentsWithMap(jsonMap, rootDBPath);
+  }
+
+  public List<CommandBlock> readCodeAreaInformation(int matchID)  {
+    String rootDBPath = "match_info/match"+matchID+"/";
+    DatabaseReference ref = FirebaseDatabase.getInstance()
+        .getReference(rootDBPath);
+    try {
+      CountDownLatch done = new CountDownLatch(1);
+      final String[] json = {""};
+      ref.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+          Object object = dataSnapshot.getValue(Object.class);
+          json[0] = new Gson().toJson(object);
+          System.out.println(json[0]);
+          done.countDown();
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+          System.out.println("The read failed: " + databaseError.getCode());
+        }
+      });
+      done.await();
+    }
+    catch (Exception e) {
+
+    }
+    return null;
   }
 }
