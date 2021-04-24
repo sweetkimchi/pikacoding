@@ -75,4 +75,6 @@ public interface BackEndExternalAPI {
   void loseLevel();
 
   void updateProgram(List<CommandBlock> program);
+
+  void receivedProgramUpdate(List<CommandBlock> program);
 }

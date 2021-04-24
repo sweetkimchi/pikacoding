@@ -28,7 +28,6 @@ public class ModelController implements BackEndExternalAPI {
     firebaseService = new FirebaseService(0, 0);
     CodeAreaParser codeAreaParser = new CodeAreaParser(this);
     codeAreaParser.codeAreaChanged();
-
   }
 
   /**
@@ -153,5 +152,10 @@ public class ModelController implements BackEndExternalAPI {
     System.out.println();
 
     firebaseService.saveMatchInformation(matchID, program);
+  }
+
+  @Override
+  public void receivedProgramUpdate(List<CommandBlock> program) {
+    viewController.receiveProgramUpdates(program);
   }
 }
