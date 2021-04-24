@@ -1,0 +1,11 @@
+{
+  "level":4,
+  "numPeople":4,
+  "blocks":["step", "pickUp", "drop","add"],
+  "startState":"startState.json",
+  "endState":"endState.json",
+  "images":"images.json",
+  "description":"Using the Throw Over command, pass the datacube and have the rightmost Pikachu drop it in the bottom right corner tile.",
+  "idealNumOfCommands":"500",
+  "grid": "grid.json"
+}

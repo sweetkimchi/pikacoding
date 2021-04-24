@@ -33,15 +33,18 @@ public class ThrowOver extends BasicCommands {
     Tile currTile = getElementInformationBundle().getTile(currX, currY);
     Tile nextTile = getElementInformationBundle().getTile(nextX, nextY);
     Tile afterTile = getElementInformationBundle().getTile(afterX, afterY);
+//    System.out.println("curr tile: "+currX+", "+currY);
+//    System.out.println("next tile: "+nextX+", "+nextY);
+//    System.out.println("after tile: "+afterX+", "+afterY);
     if (!avatar.hasBlock()) {
       //TODO: throw error to handler
       System.out.println("You are not holding a block!");
     } else if (afterTile != null && afterTile.canAddBlock()) {
-      transferBlockToTile(avatar, afterTile);
+      transferBlockToTile(avatar, afterTile, afterX, afterY);
     } else if (nextTile != null && nextTile.canAddBlock()) {
-      transferBlockToTile(avatar, nextTile);
+      transferBlockToTile(avatar, nextTile, nextX, nextY);
     } else if (currTile.canAddBlock()) {
-      transferBlockToTile(avatar, currTile);
+      transferBlockToTile(avatar, currTile, currX, currY);
     } else {
       //TODO: throw error to handler
       System.out.println("You cannot throw!");
@@ -50,10 +53,12 @@ public class ThrowOver extends BasicCommands {
     incrementProgramCounterByOne(avatar);
   }
 
-  private void transferBlockToTile(Avatar avatar, Tile afterTile) {
+  private void transferBlockToTile(Avatar avatar, Tile tile, int tileX, int tileY) {
     Block block = avatar.drop();
     block.drop();
-    afterTile.add(block);
+    tile.add(block);
+    block.setXCoord(tileX);
+    block.setYCoord(tileY);
 
     sendBlockHeldUpdate(block);
     sendBlockPositionUpdate(block);
