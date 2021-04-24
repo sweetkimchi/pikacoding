@@ -8,11 +8,11 @@ import ooga.model.grid.gridData.BlockData;
 import ooga.model.player.Avatar;
 import ooga.model.player.Block;
 
-public class Nearest extends AICommands{
+public class NearestManhattan extends AICommands{
 
   private int X = 0;
   private int Y = 1;
-  public Nearest(ElementInformationBundle elementInformationBundle,
+  public NearestManhattan(ElementInformationBundle elementInformationBundle,
       Map<String, String> parameters) {
     super(elementInformationBundle, parameters);
   }
