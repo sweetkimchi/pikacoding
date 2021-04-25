@@ -28,6 +28,7 @@ public class ScreenCreator {
   private StartMenu startMenu;
   private TeamSelector teamSelector;
   private String lang;
+  private int teamNum;
 
   /**
    * Default constructor
@@ -54,6 +55,8 @@ public class ScreenCreator {
    * @param level Level number
    */
   public void initializeMultiLevelView(int level) {
+    teamNum = teamSelector.getTeamNumber();
+    System.out.println(teamNum);
     levelView = new MultiplayerLevelView(level, viewController, this);
     Scene scene = new Scene(levelView, width, height);
     stage.setScene(scene);
@@ -64,6 +67,8 @@ public class ScreenCreator {
    * @param level Level number
    */
   public void initilaizeSingleLevelView(int level) {
+    teamNum = 0;
+    System.out.println(teamNum);
     levelView = new LevelView(level, viewController, this);
     Scene scene = new Scene(levelView, width, height);
     stage.setScene(scene);
@@ -93,9 +98,7 @@ public class ScreenCreator {
     stage.setScene(scene);
   }
 
-  public int getTeam() {
-    return teamSelector.getTeamNumber();
-  }
+  public int getTeam() { return teamNum; }
 
   /**
    * Opens up the level selector
