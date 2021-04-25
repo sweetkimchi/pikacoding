@@ -24,7 +24,6 @@ public class Nearest extends AICommands{
     int minDistance = 10000;
     int xAvatar = avatar.getXCoord();
     int yAvatar = avatar.getYCoord();
-    int closestID = -1;
     BlockData closestBlockData = null;
     for(BlockData blockData : getElementInformationBundle().getBlockData()){
       int xBlock = blockData.getLocation().get(X);
@@ -72,20 +71,6 @@ public class Nearest extends AICommands{
       avatar.getHeldItem().setXCoord(newX);
       avatar.getHeldItem().setYCoord(newY);
       sendBlockPositionUpdate(avatar.getHeldItem());
-    }
-  }
-
-  private String calculateDirection(int ID, int newX, int newY, int newBlockX, int newBlockY) {
-    if(newX < newBlockX && getNextTile(ID, getDirection("right")).canAddAvatar()){
-      return "right";
-    }else if(newBlockX < newX && getNextTile(ID, getDirection("left")).canAddAvatar()){
-      return "left";
-    } else if(newY < newBlockY && getNextTile(ID, getDirection("down")).canAddAvatar()){
-      return "down";
-    } else if(newY > newBlockY && getNextTile(ID, getDirection("up")).canAddAvatar()){
-      return "up";
-    } else{
-      return "self";
     }
   }
 }
