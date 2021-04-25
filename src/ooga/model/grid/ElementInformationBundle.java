@@ -7,12 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ooga.controller.BackEndExternalAPI;
-import ooga.model.InformationBundle;
 import ooga.model.grid.gridData.BlockData;
 import ooga.model.grid.gridData.TileData;
 import ooga.model.player.Avatar;
 import ooga.model.player.AvatarData;
-import ooga.model.player.DataCube;
 import ooga.model.player.Element;
 import ooga.model.player.Block;
 import ooga.model.player.ElementData;
@@ -135,10 +133,6 @@ public class ElementInformationBundle implements InformationBundle {
 
   public void setEndCommandLines(List<Integer> endCommandLines) {
     this.endCommandLines = endCommandLines;
-  }
-
-  public List<Integer> getEndCommandLines() {
-    return this.endCommandLines;
   }
 
   public void setMapOfCommandLines(Map<Integer, Integer> mapOfCommandLines) {
