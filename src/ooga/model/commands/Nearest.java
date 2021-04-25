@@ -24,7 +24,6 @@ public class Nearest extends AICommands{
     int minDistance = 10000;
     int xAvatar = avatar.getXCoord();
     int yAvatar = avatar.getYCoord();
-    int closestID = -1;
     BlockData closestBlockData = null;
     for(BlockData blockData : getElementInformationBundle().getBlockData()){
       int xBlock = blockData.getLocation().get(X);
@@ -32,7 +31,6 @@ public class Nearest extends AICommands{
       int manhattanDistance = Math.abs(xAvatar - xBlock) + Math.abs(yAvatar - yBlock);
       if(manhattanDistance < minDistance){
         minDistance = manhattanDistance;
-        closestID = blockData.getId();
         closestBlockData = blockData;
       }
     }
