@@ -1,0 +1,33 @@
+{"peopleLocations":{
+  "7":[2,2]
+},
+
+  "blocks":{
+    "101":{
+      "loc":[3,3],
+      "num":6,
+      "pickedUp":"False"
+    },
+    "102":{
+      "loc":[3,4],
+      "num":7,
+      "pickedUp":"False"
+    },
+    "103":{
+      "loc":[3,5],
+      "num":8,
+      "pickedUp":"False"
+    },
+    "104":{
+      "loc":[3,6],
+      "num":9,
+      "pickedUp":"False"
+    },
+    "105":{
+      "loc":[3,8],
+      "num":11,
+      "pickedUp":"False"
+    }
+  }
+
+}
