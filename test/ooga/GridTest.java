@@ -14,6 +14,7 @@ import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.Add;
 import ooga.model.commands.Decrement;
 import ooga.model.commands.Drop;
+import ooga.model.commands.Increment;
 import ooga.model.commands.Jump;
 import ooga.model.commands.Multiply;
 import ooga.model.commands.Nearest;
@@ -347,6 +348,23 @@ public class GridTest {
 
     assertEquals(finalPC, 4);
 
+  }
+
+  @Test
+  public void testIncrement(){
+    DataCube dataCube1 = new DataCube(15, 5, 6, 13);
+    elementInformationBundle.addBlock(dataCube1);
+    avatarPickUpDataCubeSameTile();
+
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "down");
+    Step step = new Step(elementInformationBundle, parameters);
+    step.execute(10);
+
+    Increment add = new Increment(elementInformationBundle, new HashMap<>());
+    add.execute(10);
+
+    assertEquals(20, dataCube.getDisplayNum());
   }
 
 }
