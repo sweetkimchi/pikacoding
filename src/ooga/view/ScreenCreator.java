@@ -28,6 +28,7 @@ public class ScreenCreator {
   private final double height;
   private StartMenu startMenu;
   private TeamSelector teamSelector;
+  private String lang;
 
   /**
    * Default constructor

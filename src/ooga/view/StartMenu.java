@@ -20,6 +20,7 @@ public class StartMenu extends BorderPane {
   private static final String LANGUAGE_POSSIBILITIES = ScreenCreator.RESOURCES + "LanguagePossibilities";
   private static final String START_MENU_STRINGS = ScreenCreator.RESOURCES + "StartMenu";
   private ResourceBundle startMenuResources;
+  private String language = "English";
 
   public StartMenu(EventHandler<ActionEvent> startAction) {
     this.getStylesheets().add(CSS + styleSheet);
@@ -70,7 +71,7 @@ public class StartMenu extends BorderPane {
 
   // TODO: write code to support changing languages
   private void updateLanguage(String lang) {
-
+    language = lang;
   }
 
   private void updateStyleSheet(String css) {
@@ -82,5 +83,7 @@ public class StartMenu extends BorderPane {
   public String getStyleSheet() {
     return CSS + styleSheet;
   }
+
+  public String getLanguage() { return language; }
 
 }
