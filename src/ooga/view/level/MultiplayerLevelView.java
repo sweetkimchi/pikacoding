@@ -50,6 +50,9 @@ public class MultiplayerLevelView extends LevelView {
 
   private void indicateLevelFinished() {
     //TODO: tell database that this team is done
+    clearScreen();
+    Label waitingLabel = new Label("Waiting for other players to finish...");
+    this.setCenter(waitingLabel);
   }
 
 }

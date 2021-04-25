@@ -7,7 +7,7 @@ import javafx.stage.Stage;
  */
 public class Controller {
 
-  public static final int NUM_LEVELS = 6;
+  public static final int NUM_LEVELS = 7;
 
   FrontEndExternalAPI viewController;
   BackEndExternalAPI modelController;
