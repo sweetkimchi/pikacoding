@@ -16,6 +16,7 @@ import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
 import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
+import ooga.model.player.Block;
 import ooga.model.player.DataCube;
 import ooga.view.level.codearea.CommandBlock;
 import org.junit.jupiter.api.BeforeEach;
@@ -150,5 +151,15 @@ public class InformationBundleTests {
     assertEquals(Structure.FLOOR, elementInformationBundle.getStructure(1,1));
     assertEquals(Structure.WALL, elementInformationBundle.getStructure(2,2));
     assertEquals(Structure.HOLE, elementInformationBundle.getStructure(3,3));
+  }
+
+  @Test
+  public void testAddBlock(){
+    Block block = new DataCube(1, 2, 2, 7);
+    elementInformationBundle.setDimensions(10,20);
+    elementInformationBundle.setStructure(2,2, Structure.FLOOR);
+    elementInformationBundle.addBlock(block);
+    Block block2 = elementInformationBundle.getTile(2,2).getBlock();
+    assertEquals(block, block2);
   }
 }
