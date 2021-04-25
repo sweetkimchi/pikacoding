@@ -1,5 +1,6 @@
 package ooga.controller;
 
+import com.google.common.base.Stopwatch;
 import java.util.List;
 import java.util.Map;
 import ooga.model.commands.AvailableCommands;
@@ -54,6 +55,14 @@ public interface FrontEndExternalAPI {
   void setAvailableCommands(AvailableCommands availableCommands);
 
   /**
+   * Sets the available commands of the other player with their parameters and parameter options
+   *
+   * @param availableCommands Map from command names to a list of parameters that map to a list of
+   *                          the parameter options.
+   */
+  void setAvailableCommandsOtherPlayer(AvailableCommands availableCommands);
+
+  /**
    * Sets the number of starting apples for the level
    * @param apples Number of apples
    */
@@ -86,7 +95,7 @@ public interface FrontEndExternalAPI {
 
   void setBlockNumber(int id, int newDisplayNum);
 
-  void declareEndOfAnimation();
+  void declareEndOfRun();
 
   /**
    * Sets the line numbers for the avatars
@@ -104,7 +113,7 @@ public interface FrontEndExternalAPI {
   /**
    * Notifies the view that the player has won
    */
-  void winLevel();
+  void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken);
 
   /**
    * Notifies the view that the player has lost
@@ -115,4 +124,9 @@ public interface FrontEndExternalAPI {
 
   void receiveProgramUpdates(List<CommandBlock> program);
 
+  void checkTimeLeftOrNot();
+
+  void timedOut();
+
+  void updateTime(int timeLeft);
 }

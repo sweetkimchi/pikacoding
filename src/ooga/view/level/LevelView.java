@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -81,15 +80,13 @@ public class LevelView extends BorderPane implements ProgramListener {
     codeArea.receiveProgramUpdates(program);
   }
 
-  private void openPauseMenu() {
+  protected void openPauseMenu() {
     VBox pauseMenu = new VBox();
     pauseMenu.getStyleClass().add("start-screen");
     pauseMenu.getChildren().add(new Label("Paused"));
     Button resumeButton = new Button("Resume");
     resumeButton.setOnAction(e -> {
-      this.setCenter(board);
-      this.setRight(rightPane);
-      this.setBottom(controlPanel);
+      restoreScreen();
     });
     pauseMenu.getChildren().add(resumeButton);
     Button startMenuButton = new Button("Home");
@@ -100,9 +97,20 @@ public class LevelView extends BorderPane implements ProgramListener {
     levelSelectorButton.setOnAction(e -> screenCreator.loadLevelSelector());
     pauseMenu.getChildren().add(levelSelectorButton);
 
+    clearScreen();
     this.setCenter(pauseMenu);
-    this.setRight(null);
-    this.setBottom(null);
+  }
+
+  protected CodeArea getCodeArea() {
+    return codeArea;
+  }
+
+  protected ScreenCreator getScreenCreator() {
+    return screenCreator;
+  }
+
+  protected AnimationController getAnimationController() {
+    return animationController;
   }
 
   private void initializeViewElements() {
@@ -151,8 +159,8 @@ public class LevelView extends BorderPane implements ProgramListener {
     board.updateAvatarPosition(id, xCoord, yCoord);
   }
 
-  public void declareEndOfAnimation() {
-    animationController.declareEndOfAnimation();
+  public void declareEndOfRun() {
+    animationController.declareEndOfRun();
   }
 
   public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
@@ -167,17 +175,17 @@ public class LevelView extends BorderPane implements ProgramListener {
     board.updateBlock(id, isHeld);
   }
 
-  public void winLevel() {
+  public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
     try {
       Thread.sleep(2000);
     } catch (Exception ignored) {
 
     }
-    this.setTop(null);
+    clearScreen();
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
         e -> viewController.initializeLevel(level + 1), level == Controller.NUM_LEVELS));
-    this.setRight(null);
-    this.setBottom(null);
+
+    System.out.println("TOTAL SCORE: " + (executionScore + bonusFromNumberOfCommands + bonusFromTimeTaken));
   }
 
   public void setScore(int score) {
@@ -201,19 +209,45 @@ public class LevelView extends BorderPane implements ProgramListener {
 
   public void loseLevel() {
     animationController.reset();
+    clearScreen();
     this.setCenter(new LoseScreen(e -> {
-      this.setTop(menuBar);
-      this.setCenter(board);
-      this.setRight(rightPane);
-      this.setBottom(controlPanel);
+      restoreScreen();
     }));
-    this.setTop(null);
-    this.setRight(null);
-    this.setBottom(null);
   }
 
   public void resetScore() {
     setScore(startingApples);
+  }
+
+  /**
+   * TODO: add logic for time out
+   * This method gets called when the team has run out of time
+   */
+  public void timedOut() {
+    System.out.println("TIMED OUT!! STOPPING ANIMATION!");
+    animationController.stopAnimation();
+  }
+
+  /**
+   * Animation calls a method in ViewController which in turn checks with the backend and returns time left
+   * @param timeLeft
+   */
+  public void updateTime(int timeLeft) {
+    System.out.println("TIME LEFT: " + timeLeft);
+  }
+
+  protected void clearScreen() {
+    this.setTop(null);
+    this.setCenter(null);
+    this.setRight(null);
+    this.setBottom(null);
+  }
+
+  protected void restoreScreen() {
+    this.setTop(menuBar);
+    this.setCenter(codeArea);
+    this.setRight(rightPane);
+    this.setBottom(controlPanel);
   }
 
 }

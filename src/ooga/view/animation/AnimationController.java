@@ -21,6 +21,7 @@ public class AnimationController {
   private boolean queueFinished;
   private boolean step;
   private double isInitialStep;
+  private boolean isPaused;
 
   private final LevelView levelView;
   private final FrontEndExternalAPI viewController;
@@ -36,60 +37,67 @@ public class AnimationController {
     this.board = board;
     this.controlPanel = controlPanel;
     this.isInitialStep = 1;
+    isPaused = true;
     codeIsRunning = false;
     queueFinished = true;
     step = false;
     initializeAnimationTimeline();
+    runSimulation();
   }
 
   private void initializeAnimationTimeline() {
     timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-      if (queueFinished) {
-        if (step && isInitialStep != 1) {
-          timeline.stop();
-          step = false;
+      if(!isPaused){
+        if (queueFinished) {
+          if (step && isInitialStep != 1) {
+            isPaused = true;
+            step = false;
+          }
+          isInitialStep++;
+          viewController.runNextCommand();
+          queueFinished = false;
+        } else {
+          updateAnimationForFrontEnd();
         }
-        isInitialStep++;
-        viewController.runNextCommand();
-        queueFinished = false;
-      } else {
-        updateAnimationForFrontEnd();
+        setAnimationSpeed();
       }
-      setAnimationSpeed();
+      viewController.checkTimeLeftOrNot();
     }));
   }
 
   public void pause() {
-    timeline.stop();
+    isPaused = true;
   }
 
   public void play() {
+    timeline.play();
     step = false;
     if (!codeIsRunning) {
       reset();
+      isPaused = false;
       viewController.parseCommands(codeArea.getProgram());
       codeIsRunning = true;
     }
-    runSimulation();
   }
 
   public void reset() {
     codeIsRunning = false;
     board.reset();
-    timeline.stop();
+    isPaused = true;
     isInitialStep = 1;
     codeArea.setLineIndicators(new HashMap<>());
     levelView.resetScore();
   }
 
   public void step() {
+    isPaused = false;
     if (!codeIsRunning) {
       reset();
+      isPaused = false;
       viewController.parseCommands(codeArea.getProgram());
       queueFinished = false;
       codeIsRunning = true;
     }
-    runSimulation();
     step = true;
     if (queueFinished) {
       viewController.runNextCommand();
@@ -99,12 +107,13 @@ public class AnimationController {
     }
   }
 
-  public void declareEndOfAnimation() {
+  public void declareEndOfRun() {
     codeIsRunning = false;
-    timeline.stop();
+    isPaused = true;
   }
 
   private void runSimulation() {
+    isPaused = false;
     timeline.setCycleCount(Animation.INDEFINITE);
     timeline.play();
     timeline.setRate(100);
@@ -118,4 +127,8 @@ public class AnimationController {
     queueFinished = board.updateAnimationForFrontEnd();
   }
 
+  public void stopAnimation() {
+    isPaused = true;
+    timeline.stop();
+  }
 }
