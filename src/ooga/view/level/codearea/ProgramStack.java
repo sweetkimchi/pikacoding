@@ -38,16 +38,20 @@ public class ProgramStack extends VBox {
   }
 
   public void addCommandBlock(String command) {
+//    System.out.println(programBlocks.size());
     if (availableCommands.getCommandNames().contains(command)) {
       createAndAddCommandBlock(availableCommands, command, false);
     } else if (availableCommandsOtherPlayer.getCommandNames().contains(command)) {
       createAndAddCommandBlock(availableCommandsOtherPlayer, command, true);
     }
-    programBlocks.forEach(commandBlockHolder -> {
+//    System.out.println(programBlocks.size());
+    for (int i = 0; i < programBlocks.size(); i++) {
+      CommandBlockHolder commandBlockHolder = programBlocks.get(i);
       if (commandBlockHolder instanceof JumpCommandBlockHolder) {
         ((JumpCommandBlockHolder) commandBlockHolder).updateDropdown(programBlocks.size());
       }
-    });
+    }
+//    System.out.println(programBlocks.size());
   }
 
   public List<CommandBlock> getProgram() {
@@ -62,11 +66,12 @@ public class ProgramStack extends VBox {
     for (int i = index - 1; i < programBlocks.size(); i++) {
       programBlocks.get(i).setIndex(i + 1);
     }
-    programBlocks.forEach(commandBlockHolder -> {
+    for (int i = 0; i < programBlocks.size(); i++) {
+      CommandBlockHolder commandBlockHolder = programBlocks.get(i);
       if (commandBlockHolder instanceof JumpCommandBlockHolder) {
         ((JumpCommandBlockHolder) commandBlockHolder).updateDropdown(programBlocks.size());
       }
-    });
+    }
   }
 
   public void startMove(CommandBlockHolder commandBlockHolder) {
@@ -109,12 +114,16 @@ public class ProgramStack extends VBox {
   }
 
   public void receiveProgramUpdates(List<CommandBlock> program) {
+    System.out.println(program.size());
+    programBlocks.clear();
+    this.getChildren().clear();
     program.forEach(commandBlock -> {
       addCommandBlock(commandBlock.getType());
       commandBlock.getParameters().forEach(
           (parameter, option) -> programBlocks.get(programBlocks.size() - 1)
               .selectParameter(parameter, option));
     });
+    System.out.println(programBlocks.size());
   }
 
   private void createAndAddCommandBlock(AvailableCommands availableCommands, String command,
