@@ -2,10 +2,13 @@
   "level":1,
   "numPeople":3,
   "blocks":["step", "pickUp", "drop"],
+  "blocks-p1":["step"],
+  "blocks-p2":["pickUp", "drop"],
   "startState":"startState.json",
   "endState":"endState.json",
   "images":"images.json",
-  "description":"Tell pikachu to step down one tile and pick up the block.",
+  "description":"Tell all Pikachu to step down one tile and pick up the block.",
   "idealNumOfCommands":"50",
+  "timeLimit":"100",
   "grid": "grid.json"
 }

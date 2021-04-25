@@ -1,8 +1,12 @@
-{"peopleLocations":{
-  "7":[1,5],
-  "8":[5,4],
-  "9":[7,4]
-},
+{
+  "idealLines": 5,
+  "idealTime": 30,
+
+  "peopleLocations":{
+    "7":[1,5],
+    "8":[5,4],
+    "9":[7,4]
+  },
 
   "blocks":{
     "4":{
