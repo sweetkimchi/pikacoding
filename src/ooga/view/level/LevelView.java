@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -151,8 +150,8 @@ public class LevelView extends BorderPane implements ProgramListener {
     board.updateAvatarPosition(id, xCoord, yCoord);
   }
 
-  public void declareEndOfAnimation() {
-    animationController.declareEndOfAnimation();
+  public void declareEndOfRun() {
+    animationController.declareEndOfRun();
   }
 
   public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
@@ -167,7 +166,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     board.updateBlock(id, isHeld);
   }
 
-  public void winLevel() {
+  public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
     try {
       Thread.sleep(2000);
     } catch (Exception ignored) {
@@ -178,6 +177,8 @@ public class LevelView extends BorderPane implements ProgramListener {
         e -> viewController.initializeLevel(level + 1), level == Controller.NUM_LEVELS));
     this.setRight(null);
     this.setBottom(null);
+
+    System.out.println("TOTAL SCORE: " + (executionScore + bonusFromNumberOfCommands + bonusFromTimeTaken));
   }
 
   public void setScore(int score) {
@@ -216,4 +217,20 @@ public class LevelView extends BorderPane implements ProgramListener {
     setScore(startingApples);
   }
 
+  /**
+   * TODO: add logic for time out
+   * This method gets called when the team has run out of time
+   */
+  public void timedOut() {
+    System.out.println("TIMED OUT!! STOPPING ANIMATION!");
+    animationController.stopAnimation();
+  }
+
+  /**
+   * Animation calls a method in ViewController which in turn checks with the backend and returns time left
+   * @param timeLeft
+   */
+  public void updateTime(int timeLeft) {
+    System.out.println("TIME LEFT: " + timeLeft);
+  }
 }
