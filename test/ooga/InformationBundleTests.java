@@ -13,6 +13,7 @@ import ooga.controller.FrontEndExternalAPI;
 import ooga.model.CommandExecutor;
 import ooga.model.Executor;
 import ooga.model.grid.ElementInformationBundle;
+import ooga.model.grid.Structure;
 import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
 import ooga.model.player.DataCube;
@@ -142,6 +143,12 @@ public class InformationBundleTests {
 
   @Test
   public void testSetStructure(){
-
+    elementInformationBundle.setDimensions(10,20);
+    elementInformationBundle.setStructure(1,1, Structure.FLOOR);
+    elementInformationBundle.setStructure(2,2, Structure.WALL);
+    elementInformationBundle.setStructure(3,3, Structure.HOLE);
+    assertEquals(Structure.FLOOR, elementInformationBundle.getStructure(1,1));
+    assertEquals(Structure.WALL, elementInformationBundle.getStructure(2,2));
+    assertEquals(Structure.HOLE, elementInformationBundle.getStructure(3,3));
   }
 }
