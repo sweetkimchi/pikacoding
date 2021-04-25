@@ -6,11 +6,17 @@ import ooga.model.grid.ElementInformationBundle;
 
 public class GoalState extends BoardState {
   private int numOfCommands;
+  private int idealTime;
+  private int idealLines;
   public GoalState(
       Map<String, List<Integer>> allAvatarLocations,
-      Map<String, BlockData> allBlockData, int numOfCommands) {
+      Map<String, BlockData> allBlockData, int numOfCommands,
+      int idealTime,
+      int idealLines) {
     super(allAvatarLocations, allBlockData);
     this.numOfCommands = numOfCommands;
+    this.idealLines = idealLines;
+    this.idealTime = idealTime;
   }
 
 
@@ -37,6 +43,14 @@ public class GoalState extends BoardState {
       }
     }
     return true;
+  }
+
+  public int getIdealTime() {
+    return idealTime;
+  }
+
+  public int getIdealLines() {
+    return idealLines;
   }
 
   public int getNumOfCommands(){

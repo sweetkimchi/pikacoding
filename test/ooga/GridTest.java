@@ -123,6 +123,11 @@ public class GridTest {
       public void updateTime(int timeLeft) {
 
       }
+
+      @Override
+      public void receivedProgramUpdate(List<CommandBlock> program) {
+
+      }
     };
     elementInformationBundle.setModelController(modelController);
     avatar = new Avatar(10, 5, 5);

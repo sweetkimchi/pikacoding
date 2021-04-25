@@ -82,6 +82,7 @@ public class FirebaseService {
           , new TypeToken<HashMap<String, Object>>() {}.getType());
     }
     catch (Exception e) {
+      exceptionOccured = true;
       return;
     }
     setDatabaseContentsWithMap(jsonMap, pathInDB);
@@ -167,35 +168,4 @@ public class FirebaseService {
     setDatabaseContentsWithMap(jsonMap, rootDBPath);
   }
 
-  public List<CommandBlock> readCodeAreaInformation(int matchID)  {
-    //TESTING CODE
-    matchID = 0;
-
-    String rootDBPath = "match_info/match"+matchID+"/";
-    DatabaseReference ref = FirebaseDatabase.getInstance()
-        .getReference(rootDBPath);
-    try {
-      CountDownLatch done = new CountDownLatch(1);
-      final String[] json = {""};
-      ref.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-          Object object = dataSnapshot.getValue(Object.class);
-          json[0] = new Gson().toJson(object);
-          System.out.println(json[0]);
-          done.countDown();
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-          System.out.println("The read failed: " + databaseError.getCode());
-        }
-      });
-      done.await();
-    }
-    catch (Exception e) {
-
-    }
-    return null;
-  }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import ooga.model.CommandExecutor;
 import ooga.model.database.FirebaseService;
+import ooga.model.database.parser.CodeAreaParser;
 import ooga.model.database.parser.InitialConfigurationParser;
 import ooga.view.level.codearea.CommandBlock;
 import com.google.common.base.Stopwatch;
@@ -19,6 +20,7 @@ public class ModelController implements BackEndExternalAPI {
   private CommandExecutor commandExecutor;
   private InitialConfigurationParser initialConfigurationParser;
   private FirebaseService firebaseService;
+  private CodeAreaParser codeAreaParser;
   private int level;
   private Stopwatch stopwatch;
 
@@ -27,8 +29,11 @@ public class ModelController implements BackEndExternalAPI {
    */
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
-
+    int matchID = 0;
     firebaseService = new FirebaseService(0, 0);
+    CodeAreaParser codeAreaParser = new CodeAreaParser(this, matchID, 0);
+    codeAreaParser.codeAreaChanged();
+    this.codeAreaParser = codeAreaParser;
   }
 
   /**
@@ -50,7 +55,7 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void initializeLevel(int level) {
     this.level = level;
-    initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService);
+    initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService, 0);
 
     stopwatch = Stopwatch.createStarted();
     viewController.setBoard(initialConfigurationParser.getGameGridData(),
@@ -74,7 +79,7 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void parseCommands(List<CommandBlock> commandBlocks) {
     //TODO: delete after debugging. Initializing level for testing purposes
-    initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService);
+    //initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService);
 
     commandExecutor = new CommandExecutor(commandBlocks, this,
         initialConfigurationParser.getInitialState(),
@@ -153,12 +158,7 @@ public class ModelController implements BackEndExternalAPI {
     int matchID = 1;
 
     // TODO: notify database of program update
-    System.out.print("Program received (ModelController): ");
-    for(CommandBlock commandBlock : program){
-      System.out.print(" " + commandBlock.getType());
-    }
-    System.out.println();
-
+    this.codeAreaParser.setLastCommandBlockForCurrentComputer(program);
     firebaseService.saveMatchInformation(matchID, program);
   }
 
@@ -176,5 +176,13 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void updateTime(int timeLeft) {
     viewController.updateTime(timeLeft);
+  }
+
+  @Override
+  public void receivedProgramUpdate(List<CommandBlock> program) {
+    System.out.println(program);
+    if (program != null)  {
+      viewController.receiveProgramUpdates(program);
+    }
   }
 }

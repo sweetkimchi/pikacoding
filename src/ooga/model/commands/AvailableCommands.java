@@ -12,10 +12,21 @@ public final class AvailableCommands {
   private final Map<String, List<Map<String, List<String>>>> commandsMap;
   private final Map<String, Map<String, Integer>> parametersIndex;
 
-  public AvailableCommands(Map<String, List<Map<String, List<String>>>> commandsMap) {
-    this.commandsMap = commandsMap;
+  public AvailableCommands(Map<String, List<Map<String, List<String>>>> commandsMap,
+      List<String> commandsAvailable) {
+    this.commandsMap = new HashMap<>();
+    cleanCommandsMap(commandsMap, commandsAvailable);
     parametersIndex = new HashMap<>();
     initializeParametersIndex();
+  }
+
+  private void cleanCommandsMap(Map<String, List<Map<String, List<String>>>> prevMap,
+      List<String> commandsAvailable) {
+    for (String command: prevMap.keySet())  {
+      if (commandsAvailable.contains(command)) {
+        this.commandsMap.put(command, prevMap.get(command));
+      }
+    }
   }
 
   public Set<String> getCommandNames() {

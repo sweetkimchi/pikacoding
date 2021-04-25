@@ -82,4 +82,6 @@ public interface BackEndExternalAPI {
   void timedOut();
 
   void updateTime(int timeLeft);
+
+  void receivedProgramUpdate(List<CommandBlock> program);
 }

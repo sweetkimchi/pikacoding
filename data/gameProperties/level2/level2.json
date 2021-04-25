@@ -1,11 +1,14 @@
 {
   "level":2,
   "numPeople":1,
-  "blocks":["step", "pickUp", "drop"],
+  "blocks":["step", "pickUp", "drop", "jump", "if"],
+  "blocks-p1":["step", "if"],
+  "blocks-p2":["pickUp", "drop", "jump"],
   "startState":"startState.json",
   "endState":"endState.json",
   "images":"images.json",
-  "description":"Arrange the blocks in increasing order along the bottom row",
+  "description":"Arrange the blocks in increasing order along the bottom row.",
   "idealNumOfCommands":"100",
+  "timeLimit":"250",
   "grid": "grid.json"
 }
