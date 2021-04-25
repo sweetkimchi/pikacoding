@@ -151,8 +151,8 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   @Override
-  public void declareEndOfAnimation() {
-    levelView.declareEndOfAnimation();
+  public void declareEndOfRun() {
+    levelView.declareEndOfRun();
   }
 
   /**
@@ -178,8 +178,8 @@ public class ViewController implements FrontEndExternalAPI {
    * Notifies the view that the player has won
    */
   @Override
-  public void winLevel() {
-    levelView.winLevel();
+  public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
+    levelView.winLevel(executionScore, bonusFromNumberOfCommands, bonusFromTimeTaken);
   }
 
   /**
@@ -198,5 +198,20 @@ public class ViewController implements FrontEndExternalAPI {
   @Override
   public void receiveProgramUpdates(List<CommandBlock> program) {
     levelView.receiveProgramUpdates(program);
+  }
+
+  @Override
+  public void checkTimeLeftOrNot() {
+    modelController.checkTimeLeftOrNot();
+  }
+
+  @Override
+  public void timedOut() {
+    levelView.timedOut();
+  }
+
+  @Override
+  public void updateTime(int timeLeft) {
+    levelView.updateTime(timeLeft);
   }
 }

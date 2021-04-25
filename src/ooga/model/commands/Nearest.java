@@ -36,33 +36,20 @@ public class Nearest extends AICommands{
         closestBlockData = blockData;
       }
     }
-
     stepTowardsClosestAvailableTile(ID, closestBlockData);
-
-    System.out.println("Parameter: " + getParameters().get("target"));
-    System.out.println("Nearest: " + closestID);
-
     avatar.setProgramCounter(avatar.getProgramCounter() + 1);
   }
 
   private void stepTowardsClosestAvailableTile(int ID, BlockData block) {
     Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
-
-    int newX = avatar.getXCoord();
-    int newY = avatar.getYCoord();
-    int newBlockX = block.getLocation().get(X);
-    int newBlockY = block.getLocation().get(Y);
-
-    Direction direction = getDirection(calculateDirection(ID, newX, newY, newBlockX, newBlockY));
-
+    Direction direction = getDirection(calculateDirection(ID, avatar.getXCoord(), avatar.getYCoord(), block.getLocation().get(X), block.getLocation().get(Y)));
     Tile prevTile = getCurrTile(ID);
     Tile nextTile = getNextTile(ID, direction);
-    //System.out.println(nextTile.getStructure());
-
-    newX = avatar.getXCoord() + direction.getXDel();
-    newY = avatar.getYCoord() + direction.getYDel();
-
-    if (nextTile.canAddAvatar()) {
+    int newX = avatar.getXCoord() + direction.getXDel();
+    int newY = avatar.getYCoord() + direction.getYDel();
+    if (!nextTile.canAddAvatar()) {
+      System.out.println("The avatar cannot step here!");
+    } else {
       nextTile.add(avatar);
       prevTile.removeAvatar();
       avatar.setXCoord(newX);
@@ -72,9 +59,6 @@ public class Nearest extends AICommands{
         avatar.getHeldItem().setYCoord(newY);
         sendBlockPositionUpdate(avatar.getHeldItem());
       }
-    } else {
-      //TODO: throw error to handler?
-      System.out.println("The avatar cannot step here!");
     }
     sendAvatarPositionUpdate(avatar);
   }
