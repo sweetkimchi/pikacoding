@@ -113,7 +113,11 @@ public class LevelView extends BorderPane implements ProgramListener {
     return animationController;
   }
 
-  private void initializeViewElements() {
+  protected Board getBoard() {
+    return board;
+  }
+
+  protected void initializeViewElements() {
     ResourceBundle levelResources = ResourceBundle
         .getBundle(ScreenCreator.RESOURCES + LEVEL_PROPERTIES);
     menuBar.setMinHeight(Double.parseDouble(levelResources.getString("MenuBarHeight")));
@@ -245,7 +249,7 @@ public class LevelView extends BorderPane implements ProgramListener {
 
   protected void restoreScreen() {
     this.setTop(menuBar);
-    this.setCenter(codeArea);
+    this.setCenter(board);
     this.setRight(rightPane);
     this.setBottom(controlPanel);
   }

@@ -9,6 +9,8 @@ import ooga.view.ScreenCreator;
 
 public class MultiplayerLevelView extends LevelView {
 
+  private Label timerDisplay;
+
   public MultiplayerLevelView(int level, FrontEndExternalAPI viewController,
       ScreenCreator screenCreator) {
     super(level, viewController, screenCreator);
@@ -32,6 +34,12 @@ public class MultiplayerLevelView extends LevelView {
           getAnimationController().reset();
           restoreScreen();
         }, e -> indicateLevelFinished()));
+  }
+
+  @Override
+  protected void initializeViewElements() {
+    super.initializeViewElements();
+
   }
 
   @Override

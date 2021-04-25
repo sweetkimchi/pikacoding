@@ -74,6 +74,7 @@ public class ProgramStack extends VBox {
       other.setOnMouseClicked(e -> {
         if (canBeMoved(commandBlockHolder, newIndex)) {
           moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
+          notifyProgramListeners();
         }
         resetMouseActions();
       });
