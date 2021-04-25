@@ -2,6 +2,8 @@
   "level":1,
   "numPeople":3,
   "blocks":["step", "pickUp", "drop"],
+  "player1Blocks": ["step"],
+  "player2Blocks": ["pickUp", "drop"],
   "startState":"startState.json",
   "endState":"endState.json",
   "images":"images.json",
