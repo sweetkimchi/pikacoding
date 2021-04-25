@@ -79,14 +79,14 @@ public class ScreenCreator {
   }
 
   public void loadGameTypeSelector() {
-    GameTypeSelector gameTypeSelector = new GameTypeSelector(e -> loadLevelSelector(), e -> teamSelector());
+    GameTypeSelector gameTypeSelector = new GameTypeSelector(e -> loadLevelSelector(), e -> loadTeamSelector());
     gameTypeSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(gameTypeSelector, width, height);
     stage.setScene(scene);
   }
 
   // TODO: right now pulls up level selection; level selection should be random
-  public void teamSelector() {
+  public void loadTeamSelector() {
     teamSelector = new TeamSelector(viewController::initializeMultiLevel);
     teamSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(teamSelector, width, height);
