@@ -43,6 +43,11 @@ public class ProgramStack extends VBox {
     } else if (availableCommandsOtherPlayer.getCommandNames().contains(command)) {
       createAndAddCommandBlock(availableCommandsOtherPlayer, command, true);
     }
+    programBlocks.forEach(commandBlockHolder -> {
+      if (commandBlockHolder instanceof JumpCommandBlockHolder) {
+        ((JumpCommandBlockHolder) commandBlockHolder).updateDropdown(programBlocks.size());
+      }
+    });
   }
 
   public List<CommandBlock> getProgram() {
@@ -57,6 +62,11 @@ public class ProgramStack extends VBox {
     for (int i = index - 1; i < programBlocks.size(); i++) {
       programBlocks.get(i).setIndex(i + 1);
     }
+    programBlocks.forEach(commandBlockHolder -> {
+      if (commandBlockHolder instanceof JumpCommandBlockHolder) {
+        ((JumpCommandBlockHolder) commandBlockHolder).updateDropdown(programBlocks.size());
+      }
+    });
   }
 
   public void startMove(CommandBlockHolder commandBlockHolder) {
@@ -74,6 +84,7 @@ public class ProgramStack extends VBox {
       other.setOnMouseClicked(e -> {
         if (canBeMoved(commandBlockHolder, newIndex)) {
           moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
+          notifyProgramListeners();
         }
         resetMouseActions();
       });
