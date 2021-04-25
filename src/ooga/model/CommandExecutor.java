@@ -1,32 +1,33 @@
 package ooga.model;
 
-import java.util.*;
-import javafx.scene.paint.Stop;
+import com.google.common.base.Stopwatch;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 import ooga.controller.BackEndExternalAPI;
 import ooga.model.commands.Commands;
 import ooga.model.grid.ElementInformationBundle;
-import ooga.model.grid.gridData.BoardState;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.Player;
 import ooga.view.level.codearea.CommandBlock;
-import com.google.common.base.Stopwatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Ji Yun Hyo
  */
-public class CommandExecutor {
+public class CommandExecutor implements  Executor{
 
     private List<Commands> commandBlocks;
     private Map<Integer, CommandBlock> mapOfCommandBlocks;
     private BackEndExternalAPI modelController;
     private ElementInformationBundle elementInformationBundle;
-    private BoardState initialState;
     private int score;
     private int idealTime;
     private int idealLines;
-    private int SCORING_FACTOR = 10;
     private ClassLoader classLoader;
     private final String COMMAND_CLASSES_PACKAGE = Commands.class.getPackageName();
     private GoalState goalState;
@@ -43,27 +44,35 @@ public class CommandExecutor {
         InitialState initialState,
         ElementInformationBundle elementInformationBundle,
         GoalState goalState, Stopwatch stopwatch) {
+        initializeVariables(modelController, initialState, elementInformationBundle, goalState, stopwatch);
+        initializeDataStructures();
+        buildCommandMap(commandBlocks);
+        this.elementInformationBundle.setEndCommandLines(endCommandLines);
+        this.elementInformationBundle.setMapOfCommandLines(idToCommandLines);
+    }
+
+    private void initializeVariables(BackEndExternalAPI modelController, InitialState initialState,
+        ElementInformationBundle elementInformationBundle, GoalState goalState,
+        Stopwatch stopwatch) {
         this.goalState = goalState;
-        this.initialState = initialState;
         this.elementInformationBundle = elementInformationBundle;
         this.elementInformationBundle.setModelController(modelController);
-        this.commandBlocks = new ArrayList<>();
         this.modelController = modelController;
-        this.idToCommandLines = new TreeMap<>();
         this.stopwatch = stopwatch;
         this.idealTime = goalState.getIdealTime();
         this.idealLines = goalState.getIdealLines();
         this.timeLimit = initialState.getTimeLimit();
+        this.score = 0;
+    }
 
-        endCommandLines = new ArrayList<>();
-        stackOfIfCommands = new Stack<>();
-        classLoader = new ClassLoader() {
+    private void initializeDataStructures() {
+        this.commandBlocks = new ArrayList<>();
+        this.idToCommandLines = new TreeMap<>();
+        this.endCommandLines = new ArrayList<>();
+        this.stackOfIfCommands = new Stack<>();
+        this.classLoader = new ClassLoader() {
         };
-        mapOfCommandBlocks = new HashMap<>();
-        score = 0;
-        buildCommandMap(commandBlocks);
-        this.elementInformationBundle.setEndCommandLines(endCommandLines);
-        this.elementInformationBundle.setMapOfCommandLines(idToCommandLines);
+        this.mapOfCommandBlocks = new HashMap<>();
     }
 
     private void buildCommandMap(List<CommandBlock> commandBlocks) {
@@ -131,6 +140,7 @@ public class CommandExecutor {
     private List<Integer> calculateFinalScores(int idealLines, int idealTime) {
         List<Integer> scores = new ArrayList<>();
         timeLeft = (int) (timeLimit - stopwatch.elapsed(TimeUnit.SECONDS));
+        int SCORING_FACTOR = 10;
         scores.add((idealLines - commandBlocks.size()) * SCORING_FACTOR);
         scores.add((timeLeft/60) * SCORING_FACTOR);
 
