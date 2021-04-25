@@ -187,7 +187,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     }
     clearScreen();
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
-        e -> viewController.initializeMultiLevel(level + 1), level == Controller.NUM_LEVELS));
+        e -> viewController.initializeSingleLevel(level + 1), level == Controller.NUM_LEVELS));
   }
 
   public void setScore(int score) {

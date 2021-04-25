@@ -139,4 +139,6 @@ public interface FrontEndExternalAPI {
   void updateTime(int timeLeft);
 
   void setTeamNum(int teamNum);
+
+  void loadMultiLevel();
 }

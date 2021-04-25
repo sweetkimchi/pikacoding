@@ -153,7 +153,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           try {
             List playerIDs =
                 new ObjectMapper().readValue(json[0], List.class);
-            //System.out.println("player IDs" + playerIDs);
+            System.out.println("player IDs" + playerIDs);
             if (playerIDs.size() == 2)  {
               teamAllHere();
             }

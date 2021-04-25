@@ -1,8 +1,10 @@
 package ooga.view;
 
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.view.level.LevelView;
 import ooga.view.level.MultiplayerLevelView;
@@ -102,6 +104,12 @@ public class ScreenCreator {
     levelSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(levelSelector, width, height);
     stage.setScene(scene);
+  }
+
+  public void loadMultiLevel() {
+    Random r = new Random();
+    int level = r.nextInt(Controller.NUM_LEVELS) + 1;
+    viewController.initializeMultiLevel(level);
   }
 
   private void initializeStage() {

@@ -64,16 +64,6 @@ public class TeamSelector extends BorderPane {
     Label waitingMessage = new Label(teamSelectorResources.getString("waitingMessage"));
     tBox.getChildren().addAll(teamMessage, waitingMessage);
     tBox.getStyleClass().add("instruction-box");
-
-    // TODO: REMOVE LATER WHEN YOU FIGURE OUT HOW TO SYNC THE LEVELS
-    Button start = new Button("Start");
-    tBox.getChildren().add(start);
-    start.setOnAction(handler -> {
-      tBox.getChildren().remove(waitingMessage);
-      Random r = new Random();
-      int level = r.nextInt(Controller.NUM_LEVELS) + 1;
-      levelAction.accept(level);
-    });
     this.setCenter(tBox);
   }
 

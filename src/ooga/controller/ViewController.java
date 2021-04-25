@@ -231,4 +231,7 @@ public class ViewController implements FrontEndExternalAPI {
 
   @Override
   public void setTeamNum(int teamNum) { modelController.setTeamNumber(teamNum); }
+
+  @Override
+  public void loadMultiLevel() { screenCreator.loadMultiLevel(); }
 }
