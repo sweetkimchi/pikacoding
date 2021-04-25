@@ -13,6 +13,7 @@ import ooga.controller.BackEndExternalAPI;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.Add;
 import ooga.model.commands.Drop;
+import ooga.model.commands.Nearest;
 import ooga.model.commands.PickUp;
 import ooga.model.commands.Step;
 import ooga.model.commands.Subtract;
@@ -281,6 +282,15 @@ public class GridTest {
     throwCommand.execute(10);
     assertEquals(2, dataCube.getXCoord());
     assertEquals(8, dataCube.getYCoord());
+  }
+
+  @Test
+  public void testNearest(){
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("target", "datacube");
+    Nearest nearest = new Nearest(elementInformationBundle, parameters);
+    nearest.execute(10);
+    assertEquals(5, avatar.getXCoord());
   }
 
 }
