@@ -22,7 +22,6 @@ public class PlayerInitialization {
     rootDBPath = "match_info/match"+matchID+"/team"+teamID+"/";
     if (teamID == 0)  {
       this.playerID = 0;
-      resetSinglePlayer();
     }
     else  {
       checkGameStatus();
@@ -95,20 +94,6 @@ public class PlayerInitialization {
       }
     }
     catch(Exception e)  {
-      e.printStackTrace();
-    }
-  }
-
-  private void resetSinglePlayer()  {
-    try{
-      CountDownLatch done = new CountDownLatch(1);
-      DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference(rootDBPath);
-      dataRef.setValue(null, (databaseError, databaseReference) -> {
-        done.countDown();
-      });
-      done.await();
-    }
-    catch (Exception e) {
       e.printStackTrace();
     }
   }

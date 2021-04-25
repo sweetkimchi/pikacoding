@@ -17,6 +17,7 @@ import com.google.common.base.Stopwatch;
  */
 public class ModelController implements BackEndExternalAPI {
 
+  public static final int SINGLE_PLAYER = 0;
   private FrontEndExternalAPI viewController;
   private Executor commandExecutor;
   private InitialConfigurationParser initialConfigurationParser;
@@ -34,7 +35,7 @@ public class ModelController implements BackEndExternalAPI {
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
     matchID = 1102;
-    firebaseService = new FirebaseService();
+    //firebaseService = new FirebaseService();
 
   }
 
@@ -72,7 +73,7 @@ public class ModelController implements BackEndExternalAPI {
         initialConfigurationParser.getGameGrid(), initialConfigurationParser.getGoalState(),stopwatch);
 
 
-    concreteDatabaseListener.codeAreaChanged();
+    if (this.teamID != SINGLE_PLAYER) {concreteDatabaseListener.codeAreaChanged();}
   }
 
   /**
@@ -162,8 +163,10 @@ public class ModelController implements BackEndExternalAPI {
   public void updateProgram(List<CommandBlock> program) {
     // TODO: notify database of program update
     System.out.println(program);
-    this.concreteDatabaseListener.setLastCommandBlockForCurrentComputer(program);
-    firebaseService.saveMatchInformation(matchID, teamID, program);
+    if (this.teamID != SINGLE_PLAYER) {
+      this.concreteDatabaseListener.setLastCommandBlockForCurrentComputer(program);
+      firebaseService.saveMatchInformation(matchID, teamID, program);
+    }
   }
 
   @Override
@@ -192,13 +195,18 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void setTeamNumber(int teamNum) {
-    System.out.println("here");
+    System.out.println("here" + teamNum);
     this.teamID = teamNum;
-    PlayerInitialization playerInitialization = new PlayerInitialization(this.matchID, this.teamID);
-    this.playerID = playerInitialization.getPlayerID();
-    ConcreteDatabaseListener concreteDatabaseListener = new ConcreteDatabaseListener(this, matchID, this.teamID);
-    concreteDatabaseListener.checkLevelStarted();
-    this.concreteDatabaseListener = concreteDatabaseListener;
+    if (teamNum == SINGLE_PLAYER) {
+      PlayerInitialization playerInitialization = new PlayerInitialization(this.matchID, this.teamID);
+      this.playerID = playerInitialization.getPlayerID();
+    }
+    else  {
+      this.firebaseService = new FirebaseService();
+      concreteDatabaseListener = new ConcreteDatabaseListener(this, matchID, this.teamID);
+      concreteDatabaseListener.checkLevelStarted();
+      this.concreteDatabaseListener = concreteDatabaseListener;
+    }
   }
 
   @Override
