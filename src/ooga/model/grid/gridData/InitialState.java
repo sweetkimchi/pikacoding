@@ -14,17 +14,19 @@ public  class InitialState extends BoardState {
   private String description;
   private int numPeople;
   private int level;
+  private int timeLimit;
 
   public InitialState(Map<String, List<Integer>> allAvatarLocations,
       Map<String, BlockData> allBlockData, List<String> commandsAvailable,
       Map<String, String> imageLocations, String description,
-      int numPeople, int level) {
+      int numPeople, int level, int timeLimit) {
     super(allAvatarLocations, allBlockData);
     this.commandsAvailable = commandsAvailable;
     this.imageLocations = imageLocations;
     this.description = description;
     this.numPeople = numPeople;
     this.level = level;
+    this.timeLimit = timeLimit;
 
   }
 
@@ -47,6 +49,10 @@ public  class InitialState extends BoardState {
 
   public int getLevel() {
     return level;
+  }
+
+  public int getTimeLimit() {
+    return timeLimit;
   }
 
 }

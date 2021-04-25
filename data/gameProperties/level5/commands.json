@@ -94,15 +94,6 @@
       }
     ]
   },
-  "tell": {
-    "parameters": [
-      {
-        "id": [
-          "1"
-        ]
-      }
-    ]
-  },
   "throwOver": {
     "parameters": [
       {

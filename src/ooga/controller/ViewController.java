@@ -8,6 +8,7 @@ import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
 import ooga.view.ScreenCreator;
 import ooga.view.level.LevelView;
+import ooga.view.level.MultiplayerLevelView;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -18,6 +19,7 @@ import ooga.view.level.codearea.CommandBlock;
  *
  * @author Ji Yun Hyo
  * @author David Li
+ * @author Kathleen Chen
  */
 public class ViewController implements FrontEndExternalAPI {
 
@@ -88,6 +90,11 @@ public class ViewController implements FrontEndExternalAPI {
     levelView.setAvailableCommands(availableCommands);
   }
 
+  @Override
+  public void setAvailableCommandsOtherPlayer(AvailableCommands availableCommands) {
+    ((MultiplayerLevelView) levelView).setAvailableCommandsOtherPlayer(availableCommands);
+  }
+
   /**
    * Sets the number of starting apples for the level
    * @param apples Number of apples
@@ -145,8 +152,8 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   @Override
-  public void declareEndOfAnimation() {
-    levelView.declareEndOfAnimation();
+  public void declareEndOfRun() {
+    levelView.declareEndOfRun();
   }
 
   /**
@@ -172,8 +179,8 @@ public class ViewController implements FrontEndExternalAPI {
    * Notifies the view that the player has won
    */
   @Override
-  public void winLevel() {
-    levelView.winLevel();
+  public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
+    levelView.winLevel(executionScore, bonusFromNumberOfCommands, bonusFromTimeTaken);
   }
 
   /**
@@ -193,4 +200,22 @@ public class ViewController implements FrontEndExternalAPI {
   public void receiveProgramUpdates(List<CommandBlock> program) {
     levelView.receiveProgramUpdates(program);
   }
+
+  @Override
+  public void checkTimeLeftOrNot() {
+    modelController.checkTimeLeftOrNot();
+  }
+
+  @Override
+  public void timedOut() {
+    levelView.timedOut();
+  }
+
+  @Override
+  public void updateTime(int timeLeft) {
+    levelView.updateTime(timeLeft);
+  }
+
+  @Override
+  public void getTeamNumber() { modelController.getTeamNumber(screenCreator.getTeam()); }
 }

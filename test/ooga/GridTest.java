@@ -54,7 +54,7 @@ public class GridTest {
       }
 
       @Override
-      public void declareEndOfAnimation() {
+      public void declareEndOfRun() {
 
       }
 
@@ -90,7 +90,7 @@ public class GridTest {
       }
 
       @Override
-      public void winLevel() {
+      public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
 
       }
 
@@ -106,6 +106,31 @@ public class GridTest {
 
       @Override
       public void updateProgram(List<CommandBlock> program) {
+
+      }
+
+      @Override
+      public void checkTimeLeftOrNot() {
+
+      }
+
+      @Override
+      public void timedOut() {
+
+      }
+
+      @Override
+      public void updateTime(int timeLeft) {
+
+      }
+
+      @Override
+      public void receivedProgramUpdate(List<CommandBlock> program) {
+
+      }
+
+      @Override
+      public void getTeamNumber(int teamNum) {
 
       }
     };

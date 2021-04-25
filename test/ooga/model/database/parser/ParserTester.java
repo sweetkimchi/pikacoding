@@ -1,4 +1,4 @@
-package ooga.model.parser;
+package ooga.model.database.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import ooga.model.commands.AvailableCommands;
 import ooga.model.database.FirebaseService;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
@@ -26,7 +28,7 @@ public class ParserTester {
 
   @Test
   public void checkParseLevel1() {
-    InitialConfigurationParser tester = new InitialConfigurationParser(1, firebaseService);
+    InitialConfigurationParser tester = new InitialConfigurationParser(1, firebaseService, 0);
     GoalState goalState = tester.getGoalState();
     InitialState initialState = tester.getInitialState();
     System.out.println(tester.getErrorMessage());
@@ -41,7 +43,7 @@ public class ParserTester {
   @Test
   public void checkGameGridParseLevel1()  {
 
-    InitialConfigurationParser tester = new InitialConfigurationParser(1, this.firebaseService);
+    InitialConfigurationParser tester = new InitialConfigurationParser(1, this.firebaseService, 0);
     ElementInformationBundle elementInformationBundle = tester.getGameGrid();
 
     assertEquals(Structure.HOLE, elementInformationBundle.getStructure(4, 1));
@@ -51,14 +53,24 @@ public class ParserTester {
   }
 
   @Test
+  public void checkCommandsParseLevel1MultiPlayer()  {
+    InitialConfigurationParser tester = new InitialConfigurationParser(1, this.firebaseService, 1);
+    AvailableCommands availableCommands1 = tester.getAvailableCommands();
+    AvailableCommands availableCommands2 = tester.getAvailableCommandsOtherPlayer();
+    assertEquals(new HashSet<String>(Arrays.asList("step")), availableCommands1.getCommandNames());
+    assertEquals(new HashSet<String>(Arrays.asList("pickUp", "drop")), availableCommands2.getCommandNames());
+
+  }
+
+  @Test
   public void checkParseWrongLevel(){
-    InitialConfigurationParser tester = new InitialConfigurationParser(0, this.firebaseService);
+    InitialConfigurationParser tester = new InitialConfigurationParser(0, this.firebaseService, 0);
     assertTrue(tester.getErrorOccurred());
   }
 
   @Test
   public void checkEndStateCorrect()  {
-    InitialConfigurationParser tester = new InitialConfigurationParser(1, this.firebaseService);
+    InitialConfigurationParser tester = new InitialConfigurationParser(1, this.firebaseService, 0);
     GoalState parsedGoalState = tester.getGoalState();
 
     ElementInformationBundle grid = new ElementInformationBundle();
@@ -81,6 +93,8 @@ public class ParserTester {
     grid.addBlock(six);
 
     assertTrue(parsedGoalState.checkGameEnded(grid));
+    assertEquals(parsedGoalState.getIdealLines(), 3);
+    assertEquals(parsedGoalState.getIdealTime(), 10);
   }
 
   @Test

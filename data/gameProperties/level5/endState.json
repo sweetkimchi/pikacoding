@@ -1,6 +1,10 @@
-{"peopleLocations":{
-  "noLoc":true
-},
+{
+  "idealLines": 12,
+  "idealTime": 120,
+
+  "peopleLocations":{
+    "noLoc":true
+  },
 
   "blocks":{
     "101":{

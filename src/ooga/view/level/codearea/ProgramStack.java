@@ -17,6 +17,7 @@ public class ProgramStack extends VBox {
 
   private List<CommandBlockHolder> programBlocks;
   private AvailableCommands availableCommands;
+  private AvailableCommands availableCommandsOtherPlayer;
   private List<ProgramListener> programListeners;
 
   private int newIndex = 0;
@@ -32,21 +33,25 @@ public class ProgramStack extends VBox {
     this.availableCommands = availableCommands;
   }
 
+  public void setAvailableCommandsOtherPlayer(AvailableCommands availableCommands) {
+    this.availableCommandsOtherPlayer = availableCommands;
+  }
+
   public void addCommandBlock(String command) {
-    List<Map<String, List<String>>> parameterOptions = new ArrayList<>();
-    availableCommands.getParameters(command).forEach(parameter -> {
-      Map<String, List<String>> parameterOptionsMap = new HashMap<>();
-      parameterOptionsMap.put(parameter, availableCommands.getParameterOptions(command, parameter));
-      parameterOptions.add(parameterOptionsMap);
-    });
-    if (command.equals("jump")) {
-      addJumpCommandBlock(command, parameterOptions);
-    } else if (command.equals("if")) {
-      addNestedCommandBlocks(command, parameterOptions);
-    } else {
-      addStandardCommandBlock(command, parameterOptions);
+//    System.out.println(programBlocks.size());
+    if (availableCommands.getCommandNames().contains(command)) {
+      createAndAddCommandBlock(availableCommands, command, false);
+    } else if (availableCommandsOtherPlayer.getCommandNames().contains(command)) {
+      createAndAddCommandBlock(availableCommandsOtherPlayer, command, true);
     }
-    notifyProgramListeners();
+//    System.out.println(programBlocks.size());
+    for (int i = 0; i < programBlocks.size(); i++) {
+      CommandBlockHolder commandBlockHolder = programBlocks.get(i);
+      if (commandBlockHolder instanceof JumpCommandBlockHolder) {
+        ((JumpCommandBlockHolder) commandBlockHolder).updateDropdown(programBlocks.size());
+      }
+    }
+//    System.out.println(programBlocks.size());
   }
 
   public List<CommandBlock> getProgram() {
@@ -61,7 +66,12 @@ public class ProgramStack extends VBox {
     for (int i = index - 1; i < programBlocks.size(); i++) {
       programBlocks.get(i).setIndex(i + 1);
     }
-    notifyProgramListeners();
+    for (int i = 0; i < programBlocks.size(); i++) {
+      CommandBlockHolder commandBlockHolder = programBlocks.get(i);
+      if (commandBlockHolder instanceof JumpCommandBlockHolder) {
+        ((JumpCommandBlockHolder) commandBlockHolder).updateDropdown(programBlocks.size());
+      }
+    }
   }
 
   public void startMove(CommandBlockHolder commandBlockHolder) {
@@ -79,6 +89,7 @@ public class ProgramStack extends VBox {
       other.setOnMouseClicked(e -> {
         if (canBeMoved(commandBlockHolder, newIndex)) {
           moveCommandBlock(commandBlockHolder.getCommandBlock().getIndex(), newIndex);
+          notifyProgramListeners();
         }
         resetMouseActions();
       });
@@ -98,13 +109,39 @@ public class ProgramStack extends VBox {
     programListeners.add(programListener);
   }
 
+  public void notifyProgramListeners() {
+    programListeners.forEach(ProgramListener::onProgramUpdate);
+  }
+
   public void receiveProgramUpdates(List<CommandBlock> program) {
+    System.out.println(program.size());
+    programBlocks.clear();
+    this.getChildren().clear();
     program.forEach(commandBlock -> {
       addCommandBlock(commandBlock.getType());
       commandBlock.getParameters().forEach(
-          (parameter, option) -> programBlocks.get(programBlocks.size() - 1).selectParameter(parameter, option));
-
+          (parameter, option) -> programBlocks.get(programBlocks.size() - 1)
+              .selectParameter(parameter, option));
     });
+    System.out.println(programBlocks.size());
+  }
+
+  private void createAndAddCommandBlock(AvailableCommands availableCommands, String command,
+      boolean isMultiplayer) {
+    List<Map<String, List<String>>> parameterOptions = new ArrayList<>();
+    availableCommands.getParameters(command).forEach(parameter -> {
+      Map<String, List<String>> parameterOptionsMap = new HashMap<>();
+      parameterOptionsMap
+          .put(parameter, availableCommands.getParameterOptions(command, parameter));
+      parameterOptions.add(parameterOptionsMap);
+    });
+    if (command.equals("jump")) {
+      addJumpCommandBlock(command, parameterOptions, isMultiplayer);
+    } else if (command.equals("if")) {
+      addNestedCommandBlocks(command, parameterOptions, isMultiplayer);
+    } else {
+      addStandardCommandBlock(command, parameterOptions, isMultiplayer);
+    }
   }
 
   private void resetMouseActions() {
@@ -141,19 +178,21 @@ public class ProgramStack extends VBox {
       programBlocks.get(i).setIndex(i + 1);
       this.getChildren().add(programBlocks.get(i));
     }
-    notifyProgramListeners();
   }
 
   private void addStandardCommandBlock(String command,
-      List<Map<String, List<String>>> parameterOptions) {
+      List<Map<String, List<String>>> parameterOptions, boolean isMultiplayer) {
     CommandBlockHolder commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
         command, parameterOptions, this);
+    if (isMultiplayer) {
+      commandBlockHolder.setOtherPlayer();
+    }
     programBlocks.add(commandBlockHolder);
     this.getChildren().add(commandBlockHolder);
   }
 
   private void addNestedCommandBlocks(String command,
-      List<Map<String, List<String>>> parameterOptions) {
+      List<Map<String, List<String>>> parameterOptions, boolean isMultiplayer) {
     NestedBeginBlockHolder beginCommandBlockHolder = new NestedBeginBlockHolder(
         programBlocks.size() + 1,
         command, parameterOptions, this);
@@ -164,19 +203,22 @@ public class ProgramStack extends VBox {
     programBlocks.add(endCommandBlockHolder);
     beginCommandBlockHolder.attachEndHolder(endCommandBlockHolder);
     endCommandBlockHolder.attachBeginHolder(beginCommandBlockHolder);
+    if (isMultiplayer) {
+      beginCommandBlockHolder.setOtherPlayer();
+      endCommandBlockHolder.setOtherPlayer();
+    }
     this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder);
   }
 
   private void addJumpCommandBlock(String command,
-      List<Map<String, List<String>>> parameterOptions) {
+      List<Map<String, List<String>>> parameterOptions, boolean isMultiplayer) {
     CommandBlockHolder commandBlockHolder = new JumpCommandBlockHolder(programBlocks.size() + 1,
         command, parameterOptions, this);
+    if (isMultiplayer) {
+      commandBlockHolder.setOtherPlayer();
+    }
     programBlocks.add(commandBlockHolder);
     this.getChildren().add(commandBlockHolder);
-  }
-
-  private void notifyProgramListeners() {
-    programListeners.forEach(ProgramListener::onProgramUpdate);
   }
 
 }

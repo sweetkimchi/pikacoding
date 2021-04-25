@@ -1,7 +1,5 @@
 package ooga.model.player;
 
-import ooga.model.Direction;
-
 /**
  * 
  */
@@ -11,7 +9,6 @@ public class Avatar extends Player {
     private Block heldItem;
     private int xCoord;
     private int yCoord;
-    private boolean isActive = true;
 
     /**
      * Default constructor
@@ -58,38 +55,6 @@ public class Avatar extends Player {
     @Override
     public void setYCoord(int yCoord) {
         this.yCoord = yCoord;
-    }
-
-    @Override
-    public boolean isActive() {
-        return isActive;
-    }
-
-    @Override
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
-
-    /**
-     * Moves the avatar in a cardinal direction.
-     *
-     * @param direction The direction to be moved
-     */
-    public void step(Direction direction) {
-        int xPrev = xCoord;
-        int yPrev = yCoord;
-        setXCoord(xPrev + direction.getXDel());
-        setYCoord(yPrev + direction.getYDel());
-        moveHeldItemLocation();
-
-        //    System.out.printf("Moving avatar %d from (%d, %d) in the direction %s to new location (%d, %d)\n", id, xPrev, yPrev, direction, xCoord, yCoord);
-    }
-
-    private void moveHeldItemLocation() {
-        if (heldItem != null) {
-            heldItem.setXCoord(getXCoord());
-            heldItem.setYCoord(getYCoord());
-        }
     }
 
     /**

@@ -1,11 +1,9 @@
 package ooga.view.level.codearea;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import ooga.model.commands.AvailableCommands;
@@ -27,8 +25,9 @@ public class CodeArea extends GridPane {
   public CodeArea() {
     commandBank = new CommandBank(this::addCommandBlock);
     programStack = new ProgramStack();
-    ScrollPane programStackHolder = initializeProgramStackHolder();
-    this.add(commandBank, 0, 0);
+    ScrollPane commandBankHolder = generateScrollPane(commandBank);
+    ScrollPane programStackHolder = generateScrollPane(programStack);
+    this.add(commandBankHolder, 0, 0);
     this.add(programStackHolder, 1, 0);
     ResourceBundle sizeProperties = ResourceBundle
         .getBundle(ScreenCreator.RESOURCES + CODEAREA_PROPERTIES);
@@ -38,6 +37,7 @@ public class CodeArea extends GridPane {
         Double.parseDouble(sizeProperties.getString("CodeAreaWidth")) - commandBankWidth;
     commandBank.setPrefWidth(commandBankWidth);
     programStack.setPrefWidth(programWidth);
+    this.setHgap(8);
   }
 
   public void setLineIndicators(Map<Integer, Integer> lineNumbers) {
@@ -53,6 +53,11 @@ public class CodeArea extends GridPane {
     programStack.setAvailableCommands(availableCommands);
   }
 
+  public void setAvailableCommandsOtherPlayer(AvailableCommands availableCommands) {
+    commandBank.addCommandsOtherPlayer(availableCommands.getCommandNames());
+    programStack.setAvailableCommandsOtherPlayer(availableCommands);
+  }
+
   public void addProgramListener(ProgramListener programListener) {
     programStack.addProgramListener(programListener);
   }
@@ -61,17 +66,18 @@ public class CodeArea extends GridPane {
     programStack.receiveProgramUpdates(program);
   }
 
-  private ScrollPane initializeProgramStackHolder() {
+  private ScrollPane generateScrollPane(Node node) {
     ScrollPane programStackHolder = new ScrollPane();
     programStackHolder.setFitToWidth(true);
     programStackHolder.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     programStackHolder.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-    programStackHolder.setContent(programStack);
+    programStackHolder.setContent(node);
     return programStackHolder;
   }
 
   private void addCommandBlock(String command) {
     programStack.addCommandBlock(command);
+    programStack.notifyProgramListeners();
   }
 
 }

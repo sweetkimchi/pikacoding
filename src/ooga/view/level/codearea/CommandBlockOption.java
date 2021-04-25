@@ -2,6 +2,7 @@ package ooga.view.level.codearea;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
 /**
@@ -16,6 +17,7 @@ public class CommandBlockOption extends Button {
     this.getStyleClass().add("command-block-option");
     this.setText(command);
     this.setOnAction(eventHandler);
+    this.setMaxWidth(Double.MAX_VALUE);
   }
 
 }

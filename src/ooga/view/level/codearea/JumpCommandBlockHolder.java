@@ -16,33 +16,28 @@ public class JumpCommandBlockHolder extends CommandBlockHolder {
     super(index, type, parameterOptions, programStack);
   }
 
-  @Override
-  public void setIndex(int index) {
-    super.setIndex(index);
-    updateDropdown();
+  public void updateDropdown(int lines) {
+    lineSelector.getItems().clear();
+    List<String> options = new ArrayList<>();
+    for (int i = 1; i <= lines; i++) {
+      options.add(Integer.toString(i));
+    }
+    lineSelector.getItems().addAll(options);
+//    lineSelector.getSelectionModel().selectFirst();
   }
 
   @Override
   protected void initializeDropdowns() {
     String parameter = getParameterOptions().get(0).keySet().iterator().next();
     lineSelector = new ComboBox<>();
-    updateDropdown();
     lineSelector.setOnAction(e -> {
       getCommandBlock().setParameter(parameter, lineSelector.getValue());
+      getProgramStack().notifyProgramListeners();
     });
     lineSelector.getSelectionModel().selectFirst();
     getDropdowns().put(parameter, lineSelector);
     addItem(lineSelector, 120);
   }
 
-  private void updateDropdown() {
-    lineSelector.getItems().clear();
-    List<String> options = new ArrayList<>();
-    for (int i = 1; i <= getCommandBlock().getIndex(); i++) {
-      options.add(Integer.toString(i));
-    }
-    lineSelector.getItems().addAll(options);
-    lineSelector.getSelectionModel().selectFirst();
-  }
 
 }

@@ -10,6 +10,16 @@
     -fx-spacing: 10.0;
 }
 
+.type-screen {
+    -fx-alignment: CENTER;
+    -fx-spacing: 80.0;
+}
+
+.instruction-box {
+    -fx-alignment: CENTER;
+    -fx-spacing: 50.0;
+}
+
 .title {
     -fx-font-family: "Rockwell";
     -fx-font-size: 30pt;
@@ -17,7 +27,7 @@
 
 .level-selector {
     -fx-alignment: CENTER;
-    -fx-spacing: 5.0;
+    -fx-spacing: 10.0;
 }
 
 .state {
@@ -56,6 +66,14 @@
 
 .command-block-option:hover {
     -fx-background-color: linear-gradient(#1f7a1f, #339933);
+}
+
+.command-block-option-disabled {
+    -fx-background-color: #cc0000;
+}
+
+.command-block-option-disabled:hover {
+    -fx-background-color: #cc0000;
 }
 
 .command-index {
@@ -149,4 +167,8 @@
 
 .block-text {
     -fx-fill: #000000;
+}
+
+.team-message {
+    -fx-font-size: 25pt;
 }

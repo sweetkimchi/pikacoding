@@ -59,7 +59,8 @@ public class LevelView extends BorderPane implements ProgramListener {
     codeArea = new CodeArea();
     controlPanel = new ControlPanel();
     initializeViewElements();
-    animationController = new AnimationController(this, viewController, codeArea, board, controlPanel);
+    animationController = new AnimationController(this, viewController, codeArea, board,
+        controlPanel);
   }
 
   public void setAvailableCommands(AvailableCommands availableCommands) {
@@ -79,15 +80,13 @@ public class LevelView extends BorderPane implements ProgramListener {
     codeArea.receiveProgramUpdates(program);
   }
 
-  private void openPauseMenu() {
+  protected void openPauseMenu() {
     VBox pauseMenu = new VBox();
     pauseMenu.getStyleClass().add("start-screen");
     pauseMenu.getChildren().add(new Label("Paused"));
     Button resumeButton = new Button("Resume");
     resumeButton.setOnAction(e -> {
-      this.setCenter(board);
-      this.setRight(rightPane);
-      this.setBottom(controlPanel);
+      restoreScreen();
     });
     pauseMenu.getChildren().add(resumeButton);
     Button startMenuButton = new Button("Home");
@@ -98,16 +97,33 @@ public class LevelView extends BorderPane implements ProgramListener {
     levelSelectorButton.setOnAction(e -> screenCreator.loadLevelSelector());
     pauseMenu.getChildren().add(levelSelectorButton);
 
+    clearScreen();
     this.setCenter(pauseMenu);
-    this.setRight(null);
-    this.setBottom(null);
   }
 
-  private void initializeViewElements() {
+  protected CodeArea getCodeArea() {
+    return codeArea;
+  }
+
+  protected ScreenCreator getScreenCreator() {
+    return screenCreator;
+  }
+
+  protected AnimationController getAnimationController() {
+    return animationController;
+  }
+
+  protected Board getBoard() {
+    return board;
+  }
+
+  protected void initializeViewElements() {
     ResourceBundle levelResources = ResourceBundle
         .getBundle(ScreenCreator.RESOURCES + LEVEL_PROPERTIES);
     menuBar.setMinHeight(Double.parseDouble(levelResources.getString("MenuBarHeight")));
-    codeArea.setMinWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
+    createRight(levelResources);
+    rightPane.setMinWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
+    rightPane.setMaxWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
     codeArea.addProgramListener(this);
     controlPanel.setMinHeight(Double.parseDouble(levelResources.getString("ControlPanelHeight")));
     controlPanel.setButtonAction("Button1_Reset", e -> animationController.reset());
@@ -120,7 +136,6 @@ public class LevelView extends BorderPane implements ProgramListener {
     board.getChildren().add(scoreDisplay);
     StackPane.setAlignment(scoreDisplay, Pos.TOP_LEFT);
     this.setCenter(board);
-    createRight(levelResources);
     this.setRight(rightPane);
     this.setBottom(controlPanel);
   }
@@ -148,8 +163,8 @@ public class LevelView extends BorderPane implements ProgramListener {
     board.updateAvatarPosition(id, xCoord, yCoord);
   }
 
-  public void declareEndOfAnimation() {
-    animationController.declareEndOfAnimation();
+  public void declareEndOfRun() {
+    animationController.declareEndOfRun();
   }
 
   public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
@@ -164,17 +179,15 @@ public class LevelView extends BorderPane implements ProgramListener {
     board.updateBlock(id, isHeld);
   }
 
-  public void winLevel() {
+  public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
     try {
       Thread.sleep(2000);
     } catch (Exception ignored) {
 
     }
-    this.setTop(null);
+    clearScreen();
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
         e -> viewController.initializeLevel(level + 1), level == Controller.NUM_LEVELS));
-    this.setRight(null);
-    this.setBottom(null);
   }
 
   public void setScore(int score) {
@@ -188,6 +201,7 @@ public class LevelView extends BorderPane implements ProgramListener {
 
   public void setDescription(String description) {
     this.description.setText(description);
+    this.description.setWrapText(true);
   }
 
   public void setStartingApples(int apples) {
@@ -197,19 +211,45 @@ public class LevelView extends BorderPane implements ProgramListener {
 
   public void loseLevel() {
     animationController.reset();
+    clearScreen();
     this.setCenter(new LoseScreen(e -> {
-      this.setTop(menuBar);
-      this.setCenter(board);
-      this.setRight(rightPane);
-      this.setBottom(controlPanel);
+      restoreScreen();
     }));
-    this.setTop(null);
-    this.setRight(null);
-    this.setBottom(null);
   }
 
   public void resetScore() {
     setScore(startingApples);
+  }
+
+  /**
+   * TODO: add logic for time out This method gets called when the team has run out of time
+   */
+  public void timedOut() {
+    System.out.println("TIMED OUT!! STOPPING ANIMATION!");
+    animationController.stopAnimation();
+  }
+
+  /**
+   * Animation calls a method in ViewController which in turn checks with the backend and returns
+   * time left
+   *
+   * @param timeLeft
+   */
+  public void updateTime(int timeLeft) {
+  }
+
+  protected void clearScreen() {
+    this.setTop(null);
+    this.setCenter(null);
+    this.setRight(null);
+    this.setBottom(null);
+  }
+
+  protected void restoreScreen() {
+    this.setTop(menuBar);
+    this.setCenter(board);
+    this.setRight(rightPane);
+    this.setBottom(controlPanel);
   }
 
 }
