@@ -16,8 +16,10 @@ import ooga.model.player.Player;
 public interface InformationBundle {
 
   /**
-   *
-   * @return
+   * Purpose: returns the list of avatars so that CommandExecutor can execute each of the commands on each of the
+   * avatars
+   * Assumptions: list of Avatars is properly constructed in the initial parser for the level
+   * @return the list of Avatars
    */
   List<Player> getAvatarList();
   void setModelController(BackEndExternalAPI modelController);

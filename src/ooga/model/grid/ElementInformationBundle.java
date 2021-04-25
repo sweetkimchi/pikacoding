@@ -37,6 +37,12 @@ public class ElementInformationBundle implements InformationBundle {
     newUpdate = new AvatarData();
   }
 
+  /**
+   * Purpose: returns the list of avatars so that CommandExecutor can execute each of the commands on each of the
+   * avatars
+   * Assumptions: list of Avatars is properly constructed in the initial parser for the level
+   * @return the list of Avatars
+   */
   public List<Player> getAvatarList() {
     return Collections.unmodifiableList(avatarList);
   }
