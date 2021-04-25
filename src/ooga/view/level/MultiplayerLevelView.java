@@ -19,7 +19,7 @@ public class MultiplayerLevelView extends LevelView {
   }
 
   @Override
-  public void winLevel() {
+  public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
     try {
       Thread.sleep(2000);
     } catch (Exception ignored) {
