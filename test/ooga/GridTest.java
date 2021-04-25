@@ -14,6 +14,7 @@ import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.Add;
 import ooga.model.commands.Decrement;
 import ooga.model.commands.Drop;
+import ooga.model.commands.Jump;
 import ooga.model.commands.Multiply;
 import ooga.model.commands.Nearest;
 import ooga.model.commands.PickUp;
@@ -327,6 +328,25 @@ public class GridTest {
     add.execute(10);
 
     assertEquals(18, dataCube.getDisplayNum());
+  }
+
+  @Test
+  public void testJump(){
+    int initialPC = avatar.getProgramCounter();
+    DataCube dataCube1 = new DataCube(15, 5, 6, 13);
+    elementInformationBundle.addBlock(dataCube1);
+    avatarPickUpDataCubeSameTile();
+
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("destination", "4");
+
+    Jump jump = new Jump(elementInformationBundle, parameters);
+    jump.execute(10);
+
+    int finalPC = avatar.getProgramCounter();
+
+    assertEquals(finalPC, 4);
+
   }
 
 }
