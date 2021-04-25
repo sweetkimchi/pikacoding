@@ -10,6 +10,16 @@
     -fx-spacing: 10.0;
 }
 
+.type-screen {
+    -fx-alignment: CENTER;
+    -fx-spacing: 30.0;
+}
+
+.instruction-box {
+    -fx-alignment: CENTER;
+    -fx-spacing: 20.0;
+}
+
 .title {
     -fx-font-family: "Rockwell";
     -fx-font-size: 30pt;

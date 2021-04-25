@@ -59,9 +59,20 @@ public class ScreenCreator {
    * Opens up the start menu
    */
   public void loadStartMenu() {
-    startMenu = new StartMenu(e -> loadLevelSelector());
+    startMenu = new StartMenu(e -> loadGameTypeSelector());
     Scene scene = new Scene(startMenu, width, height);
     stage.setScene(scene);
+  }
+
+  public void loadGameTypeSelector() {
+    GameTypeSelector gameTypeSelector = new GameTypeSelector(e -> loadLevelSelector(), e -> teamSelector());
+    gameTypeSelector.getStylesheets().add(startMenu.getStyleSheet());
+    Scene scene = new Scene(gameTypeSelector, width, height);
+    stage.setScene(scene);
+  }
+
+  public void teamSelector() {
+
   }
 
   /**
