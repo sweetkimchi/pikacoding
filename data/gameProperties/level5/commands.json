@@ -85,20 +85,11 @@
       }
     ]
   },
-  "nearestManhattan": {
+  "nearest": {
     "parameters": [
       {
         "target": [
           "datacube"
-        ]
-      }
-    ]
-  },
-  "tell": {
-    "parameters": [
-      {
-        "id": [
-          "1"
         ]
       }
     ]
