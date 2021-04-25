@@ -1,6 +1,7 @@
 package ooga.model;
 
 import java.util.*;
+import javafx.scene.paint.Stop;
 import ooga.controller.BackEndExternalAPI;
 import ooga.model.commands.Commands;
 import ooga.model.grid.ElementInformationBundle;
@@ -8,9 +9,11 @@ import ooga.model.grid.gridData.BoardState;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.player.Player;
 import ooga.view.level.codearea.CommandBlock;
+import com.google.common.base.Stopwatch;
+import java.util.concurrent.TimeUnit;
 
 /**
- * 
+ * @author Ji Yun Hyo
  */
 public class CommandExecutor {
 
@@ -20,19 +23,24 @@ public class CommandExecutor {
     private ElementInformationBundle elementInformationBundle;
     private BoardState initialState;
     private int score;
+    private int idealTime = 500;
+    private int idealLines = 20;
+    private int SCORING_FACTOR = 100;
     private ClassLoader classLoader;
     private final String COMMAND_CLASSES_PACKAGE = Commands.class.getPackageName();
     private GoalState goalState;
     private List<Integer> endCommandLines;
     private Map<Integer, Integer> idToCommandLines;
     private Stack<Integer> stackOfIfCommands;
+    private Stopwatch stopwatch;
+    private int timeLeft;
     /**
      * Default constructor
      */
     public CommandExecutor(List<CommandBlock> commandBlocks, BackEndExternalAPI modelController,
         BoardState initialState,
         ElementInformationBundle elementInformationBundle,
-        GoalState goalState) {
+        GoalState goalState, Stopwatch stopwatch) {
         this.goalState = goalState;
         this.initialState = initialState;
         this.elementInformationBundle = elementInformationBundle;
@@ -40,6 +48,11 @@ public class CommandExecutor {
         this.commandBlocks = new ArrayList<>();
         this.modelController = modelController;
         this.idToCommandLines = new TreeMap<>();
+        this.stopwatch = stopwatch;
+        //TODO: remove comment after getIdealTime is implemented
+     // this.idealTime = goalState.getIdealTime();
+     //   this.idealLines = goalState.getIdealLines();
+
         endCommandLines = new ArrayList<>();
         stackOfIfCommands = new Stack<>();
         classLoader = new ClassLoader() {
@@ -63,62 +76,76 @@ public class CommandExecutor {
                 System.out.println("Failed");
             }
             this.commandBlocks.add(newCommand);
-            System.out.println("All commandblocks (CommandExecutor): " + this.commandBlocks);
-
-            if(commandBlock.getType().equals("if")){
-                stackOfIfCommands.add(commandBlock.getIndex());
-            }
-
-            if(commandBlock.getType().equals("end if")){
-                idToCommandLines.put(stackOfIfCommands.pop(), commandBlock.getIndex());
-            }
+            findEndCommands(commandBlock);
         }
+    }
 
-        System.out.println("Pairs: " + idToCommandLines);
-        System.out.println(this.endCommandLines);
-        System.out.println("MAP: " + this.idToCommandLines);
-
-
-
-
+    private void findEndCommands(CommandBlock commandBlock) {
+        if(commandBlock.getType().equals("if")){
+            stackOfIfCommands.add(commandBlock.getIndex());
+        }
+        if(commandBlock.getType().equals("end if")){
+            idToCommandLines.put(stackOfIfCommands.pop(), commandBlock.getIndex());
+        }
     }
 
     public void runNextCommand() {
-
-        boolean ended = true;
+        boolean allCommandsFinishedExecuting = true;
         Map<Integer, Integer> lineUpdates = new HashMap<>();
-        System.out.println("GOAL STATE NUMBER: " + goalState.getNumOfCommands());
-
         for(Player avatar : elementInformationBundle.getAvatarList()){
-            if (avatar.getProgramCounter() < commandBlocks.size() + 1){
-                ended = false;
-                lineUpdates.put(avatar.getId(), avatar.getProgramCounter());
-                commandBlocks.get(avatar.getProgramCounter() - 1).execute(avatar.getId());
-                score++;
-                modelController.setScore(goalState.getNumOfCommands() - score);
-            }
-            if(goalState.checkGameEnded(elementInformationBundle)){
-                System.out.println("GAME HAS ENDED");
-                System.out.println("SCORE (CommandExecutor): " + score);
-                ended = true;
-                modelController.winLevel();
-            }
-            if((goalState.getNumOfCommands() - score) < 0){
-//                System.out.println("Game still going");
-                System.out.println("SCORE (CommandExecutor): " + score);
-                modelController.setScore(0);
-                modelController.loseLevel();
-                score = 0;
-            }
+            allCommandsFinishedExecuting = executeCommandsOnAvatar(allCommandsFinishedExecuting, lineUpdates, avatar);
         }
-
         modelController.setLineIndicators(lineUpdates);
+        if(allCommandsFinishedExecuting){
+            modelController.declareEndOfRun();
+            score = 0;
+        }
+        checkTimeLeftOrNot();
 
-        if(ended){
-            System.out.println("SCORE (CommandExecutor): " + score);
-            modelController.declareEndOfAnimation();
+    }
+
+    private boolean executeCommandsOnAvatar(boolean ended, Map<Integer, Integer> lineUpdates, Player avatar) {
+        if (avatar.getProgramCounter() < commandBlocks.size() + 1){
+            ended = false;
+            lineUpdates.put(avatar.getId(), avatar.getProgramCounter());
+            commandBlocks.get(avatar.getProgramCounter() - 1).execute(avatar.getId());
+            score++;
+            modelController.setScore(goalState.getNumOfCommands() - score);
+//            timeLeft = (int) (idealTime - stopwatch.elapsed(TimeUnit.SECONDS));
+//            System.out.println("TIME LEFT: " + timeLeft);
+        }
+        if(goalState.checkGameEnded(elementInformationBundle)){
+            ended = true;
+            List<Integer> scores = calculateFinalScores(idealLines, idealTime);
+            modelController.winLevel(score, scores.get(0), scores.get(1));
+        }
+        if((goalState.getNumOfCommands() - score) < 0){
+            modelController.setScore(0);
+            modelController.loseLevel();
             score = 0;
         }
 
+        return ended;
+    }
+
+    private List<Integer> calculateFinalScores(int idealLines, int idealTime) {
+        List<Integer> scores = new ArrayList<>();
+        timeLeft = (int) (idealTime - stopwatch.elapsed(TimeUnit.SECONDS));
+        scores.add((idealLines - commandBlocks.size()) * SCORING_FACTOR);
+        scores.add((timeLeft/60) * SCORING_FACTOR);
+
+        System.out.println("TOTAL SCORE: " + (score+scores.get(0)+scores.get(1)));
+        return scores;
+    }
+
+    public void checkTimeLeftOrNot() {
+        timeLeft = (int) (idealTime - stopwatch.elapsed(TimeUnit.SECONDS));
+        if(timeLeft <= 0){
+            modelController.updateTime(0);
+            modelController.timedOut();
+        }else{
+            modelController.updateTime(timeLeft);
+        }
+//        System.out.println("TIME LEFT: " + timeLeft);
     }
 }

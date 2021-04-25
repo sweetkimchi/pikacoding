@@ -1,5 +1,6 @@
 package ooga.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import ooga.model.CommandExecutor;
@@ -7,6 +8,8 @@ import ooga.model.database.FirebaseService;
 import ooga.model.database.parser.CodeAreaParser;
 import ooga.model.database.parser.InitialConfigurationParser;
 import ooga.view.level.codearea.CommandBlock;
+import com.google.common.base.Stopwatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -19,13 +22,14 @@ public class ModelController implements BackEndExternalAPI {
   private FirebaseService firebaseService;
   private CodeAreaParser codeAreaParser;
   private int level;
+  private Stopwatch stopwatch;
 
   /**
    * Default constructor
    */
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
-    int matchID = 0;
+    int matchID = 100;
     firebaseService = new FirebaseService(0, 0);
     CodeAreaParser codeAreaParser = new CodeAreaParser(this, matchID, 0);
     codeAreaParser.codeAreaChanged();
@@ -51,12 +55,19 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void initializeLevel(int level) {
     this.level = level;
-    initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService);
+    initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService, 0);
+
+    stopwatch = Stopwatch.createStarted();
     viewController.setBoard(initialConfigurationParser.getGameGridData(),
         initialConfigurationParser.getInitialState());
     viewController.setDescription(initialConfigurationParser.getDescription());
     viewController.setAvailableCommands(initialConfigurationParser.getAvailableCommands());
     viewController.setStartingApples(initialConfigurationParser.getGoalState().getNumOfCommands());
+    //TODO: delete after debugging. Initializing level for testing purposes
+
+    commandExecutor = new CommandExecutor(new ArrayList<>(), this,
+        initialConfigurationParser.getInitialState(),
+        initialConfigurationParser.getGameGrid(), initialConfigurationParser.getGoalState(),stopwatch);
   }
 
   /**
@@ -68,11 +79,11 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void parseCommands(List<CommandBlock> commandBlocks) {
     //TODO: delete after debugging. Initializing level for testing purposes
-    initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService);
+    initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService, 0);
 
     commandExecutor = new CommandExecutor(commandBlocks, this,
         initialConfigurationParser.getInitialState(),
-        initialConfigurationParser.getGameGrid(), initialConfigurationParser.getGoalState());
+        initialConfigurationParser.getGameGrid(), initialConfigurationParser.getGoalState(),stopwatch);
   }
 
   /**
@@ -108,8 +119,8 @@ public class ModelController implements BackEndExternalAPI {
    * All commands have reached the end and no more to be executed
    */
   @Override
-  public void declareEndOfAnimation() {
-    viewController.declareEndOfAnimation();
+  public void declareEndOfRun() {
+    viewController.declareEndOfRun();
   }
 
   /**
@@ -133,8 +144,8 @@ public class ModelController implements BackEndExternalAPI {
   }
 
   @Override
-  public void winLevel() {
-    viewController.winLevel();
+  public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
+    viewController.winLevel(executionScore, bonusFromNumberOfCommands, bonusFromTimeTaken);
   }
 
   @Override
@@ -144,11 +155,27 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void updateProgram(List<CommandBlock> program) {
-    int matchID = 1;
+    int matchID = 100;
 
     // TODO: notify database of program update
     this.codeAreaParser.setLastCommandBlockForCurrentComputer(program);
     firebaseService.saveMatchInformation(matchID, program);
+  }
+
+  @Override
+  public void checkTimeLeftOrNot() {
+    commandExecutor.checkTimeLeftOrNot();
+
+  }
+
+  @Override
+  public void timedOut() {
+    viewController.timedOut();
+  }
+
+  @Override
+  public void updateTime(int timeLeft) {
+    viewController.updateTime(timeLeft);
   }
 
   @Override
