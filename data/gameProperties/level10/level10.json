@@ -7,7 +7,7 @@
   "startState":"startState.json",
   "endState":"endState.json",
   "images":"images.json",
-  "description":"Using Nearest, Jump, and If, make the pikachu travel to the closes block and pick it up.",
+  "description":"Using Nearest, Jump, and If, make the pikachu travel to the closest block and pick it up.",
   "idealNumOfCommands":"250",
   "timeLimit":"350",
   "grid": "grid.json"
