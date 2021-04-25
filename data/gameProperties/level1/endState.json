@@ -20,9 +20,6 @@
       "num":7,
       "pickedUp":"True"
     }
-  },
-
-  "idealTime" : 1000,
-  "idealLines" : 3
+  }
 
 }
