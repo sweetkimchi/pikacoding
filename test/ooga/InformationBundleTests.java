@@ -2,6 +2,7 @@ package ooga;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,13 +13,14 @@ import ooga.controller.FrontEndExternalAPI;
 import ooga.model.CommandExecutor;
 import ooga.model.Executor;
 import ooga.model.grid.ElementInformationBundle;
+import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
 import ooga.model.player.DataCube;
 import ooga.view.level.codearea.CommandBlock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CommandExecutorTests {
+public class InformationBundleTests {
 
   private ElementInformationBundle elementInformationBundle;
   private Avatar avatar;
@@ -29,6 +31,7 @@ public class CommandExecutorTests {
   @BeforeEach
   public void setup(){
 //    commandExecutor = new CommandExecutor();
+    elementInformationBundle = new ElementInformationBundle();
     modelController = new BackEndExternalAPI() {
       @Override
       public void setViewController(FrontEndExternalAPI viewController) {
@@ -129,7 +132,16 @@ public class CommandExecutorTests {
   }
 
   @Test
-  public void checkScore(){
+  public void testSetDimensions(){
+    elementInformationBundle.setDimensions(10,20);
+    Tile tile = elementInformationBundle.getTile(9,19);
+    Tile tile2 = elementInformationBundle.getTile(10,20);
+    assertNotNull(tile);
+    assertNull(tile2);
+  }
+
+  @Test
+  public void testSetStructure(){
 
   }
 }
