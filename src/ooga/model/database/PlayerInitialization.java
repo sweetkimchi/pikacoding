@@ -7,7 +7,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
-import io.opencensus.stats.Aggregation.Count;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +26,6 @@ public class PlayerInitialization {
     }
     else  {
       checkGameStatus();
-      System.out.println("finished parsing");
     }
   }
 
@@ -42,12 +40,9 @@ public class PlayerInitialization {
         public void onDataChange(DataSnapshot dataSnapshot) {
           Object object = dataSnapshot.getValue(Object.class);
           if (object == null) {
-            System.out.println("HERE");
             setUpNewLevel(done);
           }
           else  {
-            System.out.println("Here2");
-            System.out.println(json[0]);
             json[0] = new Gson().toJson(object);
             attemptToAddPlayerToLevel(json[0], done);
           }
@@ -77,7 +72,6 @@ public class PlayerInitialization {
       DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference(rootDBPath);
       dataRef.setValue(players, (databaseError, databaseReference) -> {
         done.countDown();
-        System.out.println("here");
       });
     }
     catch (Exception e) {
@@ -86,7 +80,6 @@ public class PlayerInitialization {
   }
 
   private void attemptToAddPlayerToLevel(String json, CountDownLatch done)  {
-    System.out.println(json);
     try{
       List<Integer> playerIDs = (List) ((Map)new ObjectMapper().readValue(json, Map.class)).get("playerIDs");
       if (playerIDs.size() != 1) {

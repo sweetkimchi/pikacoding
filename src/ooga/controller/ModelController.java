@@ -11,7 +11,6 @@ import ooga.model.database.parser.ConcreteDatabaseListener;
 import ooga.model.database.parser.InitialConfigurationParser;
 import ooga.view.level.codearea.CommandBlock;
 import com.google.common.base.Stopwatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -22,7 +21,7 @@ public class ModelController implements BackEndExternalAPI {
   private Executor commandExecutor;
   private InitialConfigurationParser initialConfigurationParser;
   private FirebaseService firebaseService;
-  private ConcreteDatabaseListener codeAreaParser;
+  private ConcreteDatabaseListener concreteDatabaseListener;
   private int level;
   private int matchID;
   private int teamID;
@@ -36,9 +35,7 @@ public class ModelController implements BackEndExternalAPI {
     //TODO: Change teamID and playerID to things front end creates
     matchID = 12346;
     firebaseService = new FirebaseService();
-    ConcreteDatabaseListener codeAreaParser = new ConcreteDatabaseListener(this, matchID, 0);
-    codeAreaParser.codeAreaChanged();
-    this.codeAreaParser = codeAreaParser;
+
   }
 
   /**
@@ -162,7 +159,7 @@ public class ModelController implements BackEndExternalAPI {
   public void updateProgram(List<CommandBlock> program) {
     // TODO: notify database of program update
     System.out.println(program);
-    this.codeAreaParser.setLastCommandBlockForCurrentComputer(program);
+    this.concreteDatabaseListener.setLastCommandBlockForCurrentComputer(program);
     firebaseService.saveMatchInformation(matchID, teamID, program);
   }
 
@@ -196,6 +193,10 @@ public class ModelController implements BackEndExternalAPI {
     this.teamID = teamNum;
     PlayerInitialization playerInitialization = new PlayerInitialization(this.matchID, this.teamID);
     this.playerID = playerInitialization.getPlayerID();
+    ConcreteDatabaseListener concreteDatabaseListener = new ConcreteDatabaseListener(this, matchID, this.teamID);
+    concreteDatabaseListener.checkLevelStarted();
+    concreteDatabaseListener.codeAreaChanged();
+    this.concreteDatabaseListener = concreteDatabaseListener;
   }
 
 }
