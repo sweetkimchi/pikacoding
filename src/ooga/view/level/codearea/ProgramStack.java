@@ -98,12 +98,16 @@ public class ProgramStack extends VBox {
     programListeners.add(programListener);
   }
 
+  public void notifyProgramListeners() {
+    programListeners.forEach(ProgramListener::onProgramUpdate);
+  }
+
   public void receiveProgramUpdates(List<CommandBlock> program) {
     program.forEach(commandBlock -> {
       addCommandBlock(commandBlock.getType());
       commandBlock.getParameters().forEach(
-          (parameter, option) -> programBlocks.get(programBlocks.size() - 1).selectParameter(parameter, option));
-
+          (parameter, option) -> programBlocks.get(programBlocks.size() - 1)
+              .selectParameter(parameter, option));
     });
   }
 
@@ -173,10 +177,6 @@ public class ProgramStack extends VBox {
         command, parameterOptions, this);
     programBlocks.add(commandBlockHolder);
     this.getChildren().add(commandBlockHolder);
-  }
-
-  private void notifyProgramListeners() {
-    programListeners.forEach(ProgramListener::onProgramUpdate);
   }
 
 }

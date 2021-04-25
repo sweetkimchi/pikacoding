@@ -16,7 +16,7 @@ public class CommandBank extends VBox {
 
   public CommandBank(Consumer<String> clickOptionAction) {
     this.setId("CommandBank");
-    this.setSpacing(4);
+    this.setSpacing(6);
     this.clickOptionAction = clickOptionAction;
   }
 

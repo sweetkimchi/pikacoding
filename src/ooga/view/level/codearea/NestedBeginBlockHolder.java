@@ -22,8 +22,8 @@ public class NestedBeginBlockHolder extends CommandBlockHolder {
   }
 
   @Override
-  protected void removeAction(ProgramStack programStack) {
-    programStack.removeCommandBlock(endCommandBlockHolder.getIndex());
-    programStack.removeCommandBlock(getIndex());
+  protected void removeAction() {
+    getProgramStack().removeCommandBlock(endCommandBlockHolder.getIndex());
+    getProgramStack().removeCommandBlock(getIndex());
   }
 }

@@ -30,7 +30,10 @@ public class CommandBlockHolder extends GridPane {
   private static final double LINE_INDICATORS_WIDTH = 60;
   private static final double INDEX_WIDTH = 20;
   private static final double ITEM_HEIGHT = 30;
+  private static final int MAX_INDICATORS = 3;
   private static final double PADDING = 4;
+
+  private final ProgramStack programStack;
 
   private int index;
   private List<Map<String, List<String>>> parameterOptions;
@@ -48,6 +51,7 @@ public class CommandBlockHolder extends GridPane {
     this.getStyleClass().add("command-block-holder");
     this.setHgap(4);
     this.columns = 0;
+    this.programStack = programStack;
 
     initializeLineIndicators();
     initializeInfoDisplays(index, type, parameterOptions);
@@ -57,7 +61,7 @@ public class CommandBlockHolder extends GridPane {
     this.add(new Label(), columns++, 0);
     this.getColumnConstraints().add(columnConstraints);
 
-    initializeButtons(index, programStack);
+    initializeButtons(index);
 
     RowConstraints rowConstraints = new RowConstraints();
     rowConstraints.setMinHeight(ITEM_HEIGHT);
@@ -83,8 +87,14 @@ public class CommandBlockHolder extends GridPane {
   public void setLineIndicators(List<Integer> ids) {
     lineIndicators.getChildren().clear();
     for (int id : ids) {
-      Label indicator = new Label("" + id);
-      lineIndicators.getChildren().add(indicator);
+      if (lineIndicators.getChildren().size() < MAX_INDICATORS) {
+        Label indicator = new Label("" + id);
+        lineIndicators.getChildren().add(indicator);
+      }
+      else {
+        lineIndicators.getChildren().add(new Label("..."));
+        break;
+      }
     }
   }
 
@@ -106,6 +116,7 @@ public class CommandBlockHolder extends GridPane {
       dropdown.getItems().addAll(options);
       dropdown.setOnAction(e -> {
         commandBlock.setParameter(parameter, dropdown.getValue());
+        programStack.notifyProgramListeners();
       });
       dropdown.getSelectionModel().selectFirst();
       addItem(dropdown, 120);
@@ -121,6 +132,10 @@ public class CommandBlockHolder extends GridPane {
     return dropdowns;
   }
 
+  protected ProgramStack getProgramStack() {
+    return programStack;
+  }
+
   protected void addItem(Node node, double width) {
     ColumnConstraints columnConstraints = new ColumnConstraints();
     if (width > 0) {
@@ -130,7 +145,7 @@ public class CommandBlockHolder extends GridPane {
     this.getColumnConstraints().add(columnConstraints);
   }
 
-  protected void removeAction(ProgramStack programStack) {
+  protected void removeAction() {
     programStack.removeCommandBlock(this.index);
   }
 
@@ -138,11 +153,11 @@ public class CommandBlockHolder extends GridPane {
     return index;
   }
 
-  private void initializeButtons(int index, ProgramStack programStack) {
+  private void initializeButtons(int index) {
     removeButton = new Button("x");
     removeButton.setId("remove-button-" + index);
     removeButton.setPrefHeight(ITEM_HEIGHT);
-    removeButton.setOnAction(e -> removeAction(programStack));
+    removeButton.setOnAction(e -> removeAction());
     addItem(removeButton, 0);
 
     moveButton = new Button("Move");
@@ -171,6 +186,8 @@ public class CommandBlockHolder extends GridPane {
     StackPane lineIndicatorHolder = new StackPane();
     Rectangle background = new Rectangle(LINE_INDICATORS_WIDTH, ITEM_HEIGHT + 2 * PADDING);
     background.setFill(Color.GRAY);
+    lineIndicators.setAlignment(Pos.CENTER);
+    lineIndicators.setSpacing(4);
     lineIndicatorHolder.getChildren().addAll(background, lineIndicators);
     addItem(lineIndicatorHolder, LINE_INDICATORS_WIDTH);
   }
