@@ -46,7 +46,6 @@ public class ProgramStack extends VBox {
     } else {
       addStandardCommandBlock(command, parameterOptions);
     }
-    notifyProgramListeners();
   }
 
   public List<CommandBlock> getProgram() {
@@ -61,7 +60,6 @@ public class ProgramStack extends VBox {
     for (int i = index - 1; i < programBlocks.size(); i++) {
       programBlocks.get(i).setIndex(i + 1);
     }
-    notifyProgramListeners();
   }
 
   public void startMove(CommandBlockHolder commandBlockHolder) {
@@ -145,7 +143,6 @@ public class ProgramStack extends VBox {
       programBlocks.get(i).setIndex(i + 1);
       this.getChildren().add(programBlocks.get(i));
     }
-    notifyProgramListeners();
   }
 
   private void addStandardCommandBlock(String command,

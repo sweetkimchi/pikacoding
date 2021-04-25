@@ -147,6 +147,7 @@ public class CommandBlockHolder extends GridPane {
 
   protected void removeAction() {
     programStack.removeCommandBlock(this.index);
+    programStack.notifyProgramListeners();
   }
 
   protected int getIndex() {
