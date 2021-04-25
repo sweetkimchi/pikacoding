@@ -143,8 +143,6 @@ public class CommandExecutor implements  Executor{
         int SCORING_FACTOR = 10;
         scores.add((idealLines - commandBlocks.size()) * SCORING_FACTOR);
         scores.add((timeLeft/60) * SCORING_FACTOR);
-
-        System.out.println("TOTAL SCORE: " + (score+scores.get(0)+scores.get(1)));
         return scores;
     }
 
@@ -156,6 +154,5 @@ public class CommandExecutor implements  Executor{
         }else{
             modelController.updateTime(timeLeft);
         }
-//        System.out.println("TIME LEFT: " + timeLeft);
     }
 }
