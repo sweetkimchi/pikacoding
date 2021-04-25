@@ -8,22 +8,36 @@ import ooga.model.player.Avatar;
 /**
  * @author Ji Yun Hyo
  */
-public abstract class Commands implements CommandInterface{
+public abstract class Commands implements CommandInterface {
 
   private ElementInformationBundle elementInformationBundle;
-  private Map<String,String> parameters;
-  public Commands(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
+  private Map<String, String> parameters;
+
+  public Commands(ElementInformationBundle elementInformationBundle,
+      Map<String, String> parameters) {
     this.elementInformationBundle = elementInformationBundle;
     this.parameters = parameters;
   }
 
+  /**
+   * The execution behavior of the command on an Avatar given by an ID. The specific implementation
+   * is to be overridden by the subclasses.
+   *
+   * @param ID The ID of the avatar to be commanded
+   */
   public abstract void execute(int ID);
 
-  Direction getDirection(String direction) {
+  /**
+   * Generates a Direction object from the input string given by parameters of the command.
+   *
+   * @param direction The direction string
+   * @return The Direction object corresponding to the input string
+   */
+  protected Direction getDirection(String direction) {
     return Direction.valueOf(parseDirection(direction));
   }
 
-  protected String parseDirection(String direction){
+  private String parseDirection(String direction) {
     String parsedDirection = direction.toUpperCase();
     parsedDirection = parsedDirection.replaceAll("-", "_");
     return parsedDirection;

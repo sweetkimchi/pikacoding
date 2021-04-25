@@ -19,6 +19,12 @@ public abstract class MathematicalCommands extends BasicCommands {
     super(elementInformationBundle, parameters);
   }
 
+  /**
+   * The execution behavior of the command on an Avatar given by an ID. The specific implementation
+   * is to be overridden by the subclasses.
+   *
+   * @param ID The ID of the avatar to be commanded
+   */
   @Override
   public void execute(int ID) {
     Avatar avatar = getAvatar(ID);
@@ -31,12 +37,20 @@ public abstract class MathematicalCommands extends BasicCommands {
 
       sendDataCubeNumUpdate(avatarCube);
     } else {
-      //TODO: throw error to handler, change message to be specific for operation?
-      System.out.println("Cannot add blocks!");
+      //if desired, handle error if the blocks are not present and cannot complete operation
+      //System.out.println("Cannot compute blocks!");
     }
 
     incrementProgramCounterByOne(avatar);
   }
 
+  /**
+   * The formula for calculating the new display number of the dataCube held by the avatar. The
+   * implementation and formula of the new display number is to be handled by subclasses.
+   *
+   * @param avatarCubeNum The current number of the cube held by the avatar
+   * @param tileCubeNum The current number of the cube on the tile
+   * @return The new number to be set to the avatar cube
+   */
   public abstract int calculateNewDisplayNum(int avatarCubeNum, int tileCubeNum);
 }

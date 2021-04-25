@@ -57,8 +57,4 @@ public abstract class BasicCommands extends Commands {
         dataCube.getDisplayNum());
   }
 
-  public void sendElementIsActiveUpdate(Element element) {
-    // TODO: tell front end that the element is inactive (i.e. fell in a hole)
-  }
-
 }

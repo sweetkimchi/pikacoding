@@ -20,7 +20,10 @@ public class Step extends BasicCommands {
   }
 
   /**
-   * Executes the command on an Avatar.
+   * The execution behavior of the command on an Avatar given by an ID. The specific implementation
+   * is to be overridden by the subclasses.
+   *
+   * @param ID The ID of the avatar to be commanded
    */
   @Override
   public void execute(int ID) {
@@ -41,8 +44,8 @@ public class Step extends BasicCommands {
         sendBlockPositionUpdate(avatar.getHeldItem());
       }
     } else {
-      //TODO: throw error to handler?
-      System.out.println("The avatar cannot step here!");
+      //if desired, handle error for when the avatar tries to step in a disallowed tile
+      //System.out.println("The avatar cannot step here!");
     }
 
     sendAvatarPositionUpdate(avatar);
