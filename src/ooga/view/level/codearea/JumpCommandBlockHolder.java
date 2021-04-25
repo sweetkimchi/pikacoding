@@ -35,8 +35,8 @@ public class JumpCommandBlockHolder extends CommandBlockHolder {
 
   @Override
   protected void initializeDropdowns() {
-    getCommandBlock().setParameter(parameter, "1");
     parameter = getParameterOptions().get(0).keySet().iterator().next();
+    getCommandBlock().setParameter(parameter, "1");
     lineSelector = new ComboBox<>();
     updateDropdown();
     lineSelector.setOnAction(e -> {

@@ -122,17 +122,17 @@ public class ProgramStack extends VBox {
   }
 
   public void receiveProgramUpdates(List<CommandBlock> program) {
-    boolean noChange = true;
-    for (int i = 0; i < program.size(); i++) {
-      if (program.get(i) != getProgram().get(i)) {
-        System.out.println(program.get(i).getType() + program.get(i).getParameters() + " " + getProgram().get(i).getParameters());
-        noChange = false;
-        break;
-      }
-    }
-    if (noChange) {
-      return;
-    }
+//    boolean noChange = true;
+//    for (int i = 0; i < program.size(); i++) {
+//      if (program.get(i) != getProgram().get(i)) {
+//        System.out.println(program.get(i).getType() + program.get(i).getParameters() + " " + getProgram().get(i).getParameters());
+//        noChange = false;
+//        break;
+//      }
+//    }
+//    if (noChange) {
+//      return;
+//    }
     System.out.println(program.size() + " " + getProgram().size());
 //    List<CommandBlock> programCopy = new ArrayList<>();
 //    for (CommandBlock commandBlock : program) {
