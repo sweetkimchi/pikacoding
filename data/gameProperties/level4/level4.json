@@ -1,11 +1,14 @@
 {
   "level":4,
   "numPeople":3,
-  "blocks":["step", "pickUp", "drop"],
+  "blocks":["step", "pickUp", "drop", "jump", "if", "nearest"],
+  "blocks-p1":["step", "if", "jump"],
+  "blocks-p2":["pickUp", "drop", "nearest"],
   "startState":"startState.json",
   "endState":"endState.json",
   "images":"images.json",
   "description":"Use Nearest command to move Pikachus to the nearest block and pick up the block.",
   "idealNumOfCommands":"150",
+  "timeLimit":"200",
   "grid": "grid.json"
 }
