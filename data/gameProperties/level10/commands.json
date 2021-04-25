@@ -1,0 +1,81 @@
+{
+  "drop": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "if": {
+    "parameters": [
+      {
+        "direction": [
+          "up",
+          "up-right",
+          "right",
+          "down-right",
+          "down",
+          "down-left",
+          "left",
+          "up-left",
+          "current"
+        ]
+      },
+      {
+        "comparator": [
+          "equal",
+          "not equal"
+        ]
+      },
+      {
+        "target": [
+          "nothing",
+          "datacube",
+          "hole",
+          "wall"
+        ]
+      }
+    ]
+  },
+  "jump": {
+    "parameters": [
+      {
+        "destination": [
+          "1"
+        ]
+      }
+    ]
+  },
+  "pickUp": {
+    "parameters": [
+      {
+        "noParams": true
+      }
+    ]
+  },
+  "step": {
+    "parameters": [
+      {
+        "direction": [
+          "up",
+          "up-right",
+          "right",
+          "down-right",
+          "down",
+          "down-left",
+          "left",
+          "up-left"
+        ]
+      }
+    ]
+  },
+  "nearest": {
+      "parameters": [
+        {
+          "target": [
+            "datacube"
+          ]
+        }
+      ]
+    }
+}

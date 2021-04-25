@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import io.opencensus.stats.Aggregation.Count;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -106,11 +107,21 @@ public class PlayerInitialization {
   }
 
   private void resetSinglePlayer()  {
-
+    try{
+      CountDownLatch done = new CountDownLatch(1);
+      DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference(rootDBPath);
+      dataRef.setValue(null, (databaseError, databaseReference) -> {
+        done.countDown();
+      });
+      done.await();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public boolean getErrorOccurred()  {
-    return false;
+    return this.errorOccured;
   }
 
   public int getPlayerID()  {

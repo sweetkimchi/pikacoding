@@ -1,0 +1,17 @@
+{
+  "idealLines": 7,
+  "idealTime": 30,
+
+  "peopleLocations":{
+    "noLoc":true
+  },
+
+  "blocks":{
+    "101":{
+      "loc":[4,8],
+      "num":6,
+      "pickedUp":"True"
+    }
+  }
+
+}

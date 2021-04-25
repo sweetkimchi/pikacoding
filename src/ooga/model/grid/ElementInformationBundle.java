@@ -7,12 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ooga.controller.BackEndExternalAPI;
-import ooga.model.InformationBundle;
 import ooga.model.grid.gridData.BlockData;
 import ooga.model.grid.gridData.TileData;
 import ooga.model.player.Avatar;
 import ooga.model.player.AvatarData;
-import ooga.model.player.DataCube;
 import ooga.model.player.Element;
 import ooga.model.player.Block;
 import ooga.model.player.ElementData;
@@ -39,18 +37,39 @@ public class ElementInformationBundle implements InformationBundle {
     newUpdate = new AvatarData();
   }
 
+  /**
+   * Purpose: returns the list of avatars so that CommandExecutor can execute each of the commands on each of the
+   * avatars
+   * Assumptions: list of Avatars is properly constructed in the initial parser for the level
+   * @return the list of Avatars
+   */
   public List<Player> getAvatarList() {
     return Collections.unmodifiableList(avatarList);
   }
 
+  /**
+   * Purpose: passes in the model controller which handles the communication between frontend and backend
+   * @param modelController an implementation of BackEndExternalAPI
+   */
   public void setModelController(BackEndExternalAPI modelController) {
     this.modelController = modelController;
   }
 
+  /**
+   * Purpose: returns the model controller instance so that eah class can notify the frontend of any updates
+   * Assumption: modelController is not null
+   * @return modelController object
+   */
   public BackEndExternalAPI getModelController() {
     return modelController;
   }
 
+  /**
+   * Purpose: returns the list of blockdata
+   * Assumption: block data is appropriately constructed in InitialParser
+   * Exception: null exception if there are no blocks
+   * @return list of blocks
+   */
   public List<BlockData> getBlockData() {
     List<BlockData> ret = new ArrayList<>();
     for (Block dataCube : blockList) {
@@ -59,7 +78,11 @@ public class ElementInformationBundle implements InformationBundle {
     return ret;
   }
 
-
+  /**
+   * Sets the dimensions of the grid according to the template
+   * @param x row size
+   * @param y col size
+   */
   public void setDimensions(int x, int y) {
     grid = new Tile[x][y];
     for (int i = 0; i < x; i++) {
@@ -69,14 +92,31 @@ public class ElementInformationBundle implements InformationBundle {
     }
   }
 
+  /**
+   * Returns the structure at the location
+   * @param x x coordinate on the grid
+   * @param y y coordinate on the grid
+   * @return the structure at the grid location
+   */
   public Structure getStructure(int x, int y) {
     return grid[x][y].getStructure();
   }
 
+  /**
+   * Purpose: sets the structure at a specific location (e.g. wall, floor, etc)
+   * Assumption: x and y are valid locations within the grid
+   * @param x x coordinate on the grid
+   * @param y y coordinate on the grid
+   * @param structure structure to be added to the location
+   */
   public void setStructure(int x, int y, Structure structure) {
     grid[x][y].setStructure(structure);
   }
 
+  /**
+   * Purpose: adds avatar to the location during initializtion of the level
+   * @param avatar Avatar to be added to the tile
+   */
   public void addAvatar(Avatar avatar) {
     int xPos = avatar.getXCoord();
     int yPos = avatar.getYCoord();
@@ -84,6 +124,10 @@ public class ElementInformationBundle implements InformationBundle {
     avatarList.add(avatar);
   }
 
+  /**
+   * Purpose: adds a block at the designated location during initialization of the level
+   * @param block block to be added to the location
+   */
   public void addBlock(Block block) {
     int xPos = block.getXCoord();
     int yPos = block.getYCoord();
@@ -91,7 +135,11 @@ public class ElementInformationBundle implements InformationBundle {
     blockList.add(block);
   }
 
-
+  /**
+   * Retrieves the avatar object by its ID
+   * @param id ID of the avatar
+   * @return Avatar object
+   */
   public Player getAvatarById(int id) {
     for (Player avatar : avatarList) {
       if (avatar.getId() == id) {
@@ -103,7 +151,7 @@ public class ElementInformationBundle implements InformationBundle {
 
   /**
    * Returns a collection of the IDs of all the current avatars.
-   *
+   * Assumptions: list of avatars is not null
    * @return A collection of integers containing IDs
    */
   public Collection<Integer> getAvatarIds() {
@@ -126,6 +174,12 @@ public class ElementInformationBundle implements InformationBundle {
     return new TileData(grid[x][y]);
   }
 
+  /**
+   * Returns the specific tile at the coordinate
+   * @param x The x-coordinate of the tile
+   * @param y The y-coordinate of the tile
+   * @return tile object
+   */
   public Tile getTile(int x, int y) {
     if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length) {
       return null;
@@ -133,18 +187,27 @@ public class ElementInformationBundle implements InformationBundle {
     return grid[x][y];
   }
 
+  /**
+   * Purpose: keeps track of if/endif pair so that commands can jump to the designated program counter
+   * Assumption: if/endif exists
+   * @param endCommandLines list of endCommands
+   */
   public void setEndCommandLines(List<Integer> endCommandLines) {
     this.endCommandLines = endCommandLines;
   }
 
-  public List<Integer> getEndCommandLines() {
-    return this.endCommandLines;
-  }
-
+  /**
+   * Purpose: keep track of all commands associated with each of the command lines
+   * @param mapOfCommandLines map containing line number and the command at the line
+   */
   public void setMapOfCommandLines(Map<Integer, Integer> mapOfCommandLines) {
     this.mapOfCommandLines = mapOfCommandLines;
   }
 
+  /**
+   * Purpose: returns the map of command lines so that CommandExecutor can execute commands
+   * @return map of commandlines
+   */
   public Map<Integer, Integer> getMapOfCommandLines() {
     return this.mapOfCommandLines;
   }

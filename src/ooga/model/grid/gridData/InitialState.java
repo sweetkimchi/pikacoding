@@ -19,7 +19,7 @@ public  class InitialState extends BoardState {
   public InitialState(Map<String, List<Integer>> allAvatarLocations,
       Map<String, BlockData> allBlockData, List<String> commandsAvailable,
       Map<String, String> imageLocations, String description,
-      int numPeople, int level, int timeLimit) {
+      int numPeople, int level, int timeLimit, int playerID) {
     super(allAvatarLocations, allBlockData);
     this.commandsAvailable = commandsAvailable;
     this.imageLocations = imageLocations;
@@ -27,6 +27,9 @@ public  class InitialState extends BoardState {
     this.numPeople = numPeople;
     this.level = level;
     this.timeLimit = timeLimit;
+    if (playerID == 0)  {
+      this.timeLimit = Integer.MAX_VALUE;
+    }
 
   }
 
