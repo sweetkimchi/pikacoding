@@ -1,4 +1,4 @@
-package ooga.model.parser;
+package ooga.model.database.parser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;

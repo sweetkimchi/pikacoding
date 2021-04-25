@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Map;
 import ooga.model.CommandExecutor;
 import ooga.model.database.FirebaseService;
-import ooga.model.parser.InitialConfigurationParser;
+import ooga.model.database.parser.CodeAreaParser;
+import ooga.model.database.parser.InitialConfigurationParser;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -16,6 +17,7 @@ public class ModelController implements BackEndExternalAPI {
   private CommandExecutor commandExecutor;
   private InitialConfigurationParser initialConfigurationParser;
   private FirebaseService firebaseService;
+  private CodeAreaParser codeAreaParser;
   private int level;
 
   /**
@@ -23,8 +25,11 @@ public class ModelController implements BackEndExternalAPI {
    */
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
-
+    int matchID = 0;
     firebaseService = new FirebaseService(0, 0);
+    CodeAreaParser codeAreaParser = new CodeAreaParser(this, matchID, 0);
+    codeAreaParser.codeAreaChanged();
+    this.codeAreaParser = codeAreaParser;
   }
 
   /**
@@ -142,12 +147,15 @@ public class ModelController implements BackEndExternalAPI {
     int matchID = 1;
 
     // TODO: notify database of program update
-    System.out.print("Program received (ModelController): ");
-    for(CommandBlock commandBlock : program){
-      System.out.print(" " + commandBlock.getType());
-    }
-    System.out.println();
-
+    this.codeAreaParser.setLastCommandBlockForCurrentComputer(program);
     firebaseService.saveMatchInformation(matchID, program);
+  }
+
+  @Override
+  public void receivedProgramUpdate(List<CommandBlock> program) {
+    System.out.println(program);
+    if (program != null)  {
+      viewController.receiveProgramUpdates(program);
+    }
   }
 }

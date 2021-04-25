@@ -19,6 +19,10 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import ooga.view.level.codearea.CommandBlock;
 
+/**
+ * @author Billy Luqiu
+ * @author Ji Yun Hyo
+ */
 public class FirebaseService {
 
   private FirebaseDatabase db;
@@ -68,8 +72,6 @@ public class FirebaseService {
     setDatabaseContentsFromFile(rootDBPath+"endState", filePathToEndState);
     setDatabaseContentsFromFile(rootDBPath+"commands", filePathToCommands);
     setDatabaseContentsFromFile(rootDBPath+"grid", filePathToGridState);
-
-
   }
 
 
@@ -152,6 +154,9 @@ public class FirebaseService {
    * updates the commandBlock across all
    */
   public void saveMatchInformation(int matchID, List<CommandBlock> commandBlocks) {
+    //TESTING CODE
+    matchID = 0;
+
     String rootDBPath = "match_info/match"+matchID+"/" + this.teamID + "/";
     Map<String, Object> jsonMapOfCodingArea = new HashMap<>();
     for(CommandBlock commandBlock : commandBlocks){
@@ -161,4 +166,5 @@ public class FirebaseService {
     jsonMap.put("codingArea", jsonMapOfCodingArea);
     setDatabaseContentsWithMap(jsonMap, rootDBPath);
   }
+
 }
