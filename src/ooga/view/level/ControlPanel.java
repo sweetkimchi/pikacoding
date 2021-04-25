@@ -52,7 +52,7 @@ public class ControlPanel extends GridPane {
       buttons.put(o.toString(), button);
       button.setGraphic(setIcon(buttonImages.getString(o.toString())));
       button.getStyleClass().add(o.toString());
-      button.setId(o.toString() + "-button");
+      button.setId(ScreenCreator.idsForTests.getString(o.toString()));
       this.add(button, col, 0);
       col++;
     }

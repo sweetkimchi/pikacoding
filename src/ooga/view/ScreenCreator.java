@@ -16,6 +16,8 @@ public class ScreenCreator {
 
   public static final String RESOURCES = ScreenCreator.class.getPackageName() + ".resources.properties.";
   private static final String WINDOW_PROPERTIES = "Window";
+  private static final String IDS_FOR_TESTING = RESOURCES + "IdsForTesting";
+  public static final ResourceBundle idsForTests = ResourceBundle.getBundle(IDS_FOR_TESTING);
 
   private final FrontEndExternalAPI viewController;
   private final Stage stage;
