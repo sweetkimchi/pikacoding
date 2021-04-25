@@ -100,6 +100,7 @@ public class ScreenCreator {
    * Opens up the level selector
    */
   public void loadLevelSelector() {
+    setTeamNum(0);
     LevelSelector levelSelector = new LevelSelector(viewController::initializeSingleLevel);
     levelSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(levelSelector, width, height);
