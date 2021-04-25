@@ -80,15 +80,13 @@ public class LevelView extends BorderPane implements ProgramListener {
     codeArea.receiveProgramUpdates(program);
   }
 
-  private void openPauseMenu() {
+  protected void openPauseMenu() {
     VBox pauseMenu = new VBox();
     pauseMenu.getStyleClass().add("start-screen");
     pauseMenu.getChildren().add(new Label("Paused"));
     Button resumeButton = new Button("Resume");
     resumeButton.setOnAction(e -> {
-      this.setCenter(board);
-      this.setRight(rightPane);
-      this.setBottom(controlPanel);
+      restoreScreen();
     });
     pauseMenu.getChildren().add(resumeButton);
     Button startMenuButton = new Button("Home");
@@ -99,9 +97,20 @@ public class LevelView extends BorderPane implements ProgramListener {
     levelSelectorButton.setOnAction(e -> screenCreator.loadLevelSelector());
     pauseMenu.getChildren().add(levelSelectorButton);
 
+    clearScreen();
     this.setCenter(pauseMenu);
-    this.setRight(null);
-    this.setBottom(null);
+  }
+
+  protected CodeArea getCodeArea() {
+    return codeArea;
+  }
+
+  protected ScreenCreator getScreenCreator() {
+    return screenCreator;
+  }
+
+  protected AnimationController getAnimationController() {
+    return animationController;
   }
 
   private void initializeViewElements() {
@@ -172,11 +181,9 @@ public class LevelView extends BorderPane implements ProgramListener {
     } catch (Exception ignored) {
 
     }
-    this.setTop(null);
+    clearScreen();
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
         e -> viewController.initializeLevel(level + 1), level == Controller.NUM_LEVELS));
-    this.setRight(null);
-    this.setBottom(null);
 
     System.out.println("TOTAL SCORE: " + (executionScore + bonusFromNumberOfCommands + bonusFromTimeTaken));
   }
@@ -202,15 +209,10 @@ public class LevelView extends BorderPane implements ProgramListener {
 
   public void loseLevel() {
     animationController.reset();
+    clearScreen();
     this.setCenter(new LoseScreen(e -> {
-      this.setTop(menuBar);
-      this.setCenter(board);
-      this.setRight(rightPane);
-      this.setBottom(controlPanel);
+      restoreScreen();
     }));
-    this.setTop(null);
-    this.setRight(null);
-    this.setBottom(null);
   }
 
   public void resetScore() {
@@ -233,4 +235,19 @@ public class LevelView extends BorderPane implements ProgramListener {
   public void updateTime(int timeLeft) {
     System.out.println("TIME LEFT: " + timeLeft);
   }
+
+  protected void clearScreen() {
+    this.setTop(null);
+    this.setCenter(null);
+    this.setRight(null);
+    this.setBottom(null);
+  }
+
+  protected void restoreScreen() {
+    this.setTop(menuBar);
+    this.setCenter(board);
+    this.setRight(rightPane);
+    this.setBottom(controlPanel);
+  }
+
 }

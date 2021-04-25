@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.grid.gridData.BoardState;
 import ooga.view.level.LevelView;
+import ooga.view.level.MultiplayerLevelView;
 
 /**
  * Responsible for setting up the JavaFX stage and creating the primary views.
@@ -50,7 +51,7 @@ public class ScreenCreator {
    * @param level Level number
    */
   public void initializeLevelView(int level) {
-    levelView = new LevelView(level, viewController, this);
+    levelView = new MultiplayerLevelView(level, viewController, this);
     Scene scene = new Scene(levelView, width, height);
     stage.setScene(scene);
   }

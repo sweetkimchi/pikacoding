@@ -68,6 +68,14 @@
     -fx-background-color: linear-gradient(#1f7a1f, #339933);
 }
 
+.command-block-option-disabled {
+    -fx-background-color: #cc0000;
+}
+
+.command-block-option-disabled:hover {
+    -fx-background-color: #cc0000;
+}
+
 .command-index {
     -fx-text-fill: #4d4d4d;
 }

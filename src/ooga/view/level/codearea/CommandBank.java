@@ -29,4 +29,12 @@ public class CommandBank extends VBox {
     });
   }
 
+  public void addCommandsOtherPlayer(Set<String> commands) {
+    commands.forEach(command -> {
+      CommandBlockOption option = new CommandBlockOption(command,
+          e -> {});
+      option.getStyleClass().add("command-block-option-disabled");
+      this.getChildren().add(option);
+    });
+  }
 }
