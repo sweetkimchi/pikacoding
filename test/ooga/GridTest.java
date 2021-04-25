@@ -14,6 +14,7 @@ import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.Add;
 import ooga.model.commands.Decrement;
 import ooga.model.commands.Drop;
+import ooga.model.commands.If;
 import ooga.model.commands.Increment;
 import ooga.model.commands.Jump;
 import ooga.model.commands.Multiply;
@@ -383,6 +384,25 @@ public class GridTest {
     add.execute(10);
 
     assertEquals(0, dataCube.getDisplayNum());
+  }
+
+  @Test
+  public void testIf(){
+    assertTrue(elementInformationBundle.getTileData(5, 5).hasAvatar());
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "right");
+    Step step = new Step(elementInformationBundle, parameters);
+    step.execute(10);
+
+    If ifCommand = new If(elementInformationBundle, parameters);
+    parameters.put("comparator", "equals");
+    parameters.put("target", "wall");
+    ifCommand.execute(10);
+
+    assertTrue(elementInformationBundle.getTileData(6, 5).hasAvatar());
+    assertFalse(elementInformationBundle.getTileData(5, 5).hasAvatar());
+    assertEquals(6, avatar.getXCoord());
+    assertEquals(5, avatar.getYCoord());
   }
 
 }
