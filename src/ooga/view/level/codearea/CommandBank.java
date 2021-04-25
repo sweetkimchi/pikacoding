@@ -33,7 +33,7 @@ public class CommandBank extends VBox {
     commands.forEach(command -> {
       CommandBlockOption option = new CommandBlockOption(command,
           e -> {});
-      option.getStyleClass().add("command-option-disabled");
+      option.getStyleClass().add("command-block-option-disabled");
       this.getChildren().add(option);
     });
   }
