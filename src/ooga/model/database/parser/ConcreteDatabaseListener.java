@@ -17,14 +17,16 @@ import ooga.controller.ModelController;
 import ooga.model.database.DatabaseListener;
 import ooga.view.level.codearea.CommandBlock;
 
-public class CodeAreaParser implements DatabaseListener {
+public class ConcreteDatabaseListener implements DatabaseListener {
 
   private BackEndExternalAPI modelController;
   private int matchID;
   private int teamID;
   private List<CommandBlock> lastCommandBlockForCurrentComputer;
-  public CodeAreaParser(ModelController modelController, int matchID, int teamID)  {
+  public ConcreteDatabaseListener(ModelController modelController, int matchID, int teamID)  {
     this.modelController = modelController;
+    this.matchID = matchID;
+    this.teamID = teamID;
     lastCommandBlockForCurrentComputer = new ArrayList<>();
   }
 
@@ -37,7 +39,7 @@ public class CodeAreaParser implements DatabaseListener {
   @Override
   public void codeAreaChanged() {
 
-    String rootDBPath = "match_info/match"+matchID+"/";
+    String rootDBPath = "match_info/match"+matchID+"/"+teamID+"/codingArea/";
     DatabaseReference ref = FirebaseDatabase.getInstance()
         .getReference(rootDBPath);
     try {
@@ -47,6 +49,7 @@ public class CodeAreaParser implements DatabaseListener {
         public void onDataChange(DataSnapshot dataSnapshot) {
           Object object = dataSnapshot.getValue(Object.class);
           json[0] = new Gson().toJson(object);
+          System.out.println(json[0]);
           modelController.receivedProgramUpdate(parseJSONIntoBlocks(json[0]));
         }
         @Override
@@ -60,14 +63,22 @@ public class CodeAreaParser implements DatabaseListener {
     }
   }
 
+  @Override
+  public void checkLevelEnded() {
+
+  }
+
+  @Override
+  public void checkLevelStarted() {
+
+  }
+
   private List<CommandBlock> parseJSONIntoBlocks(String json)  {
     try {
       List<CommandBlock> ret = new ArrayList<>();
-      List result =
+      List commands =
           new ObjectMapper().readValue(json, List.class);
-      if (result == null) return null;
-      Map codingArea = (Map) result.get(teamID);
-      List commands = (List) codingArea.get("codingArea");
+      if (commands == null) return null;
       for (int i = 1; i < commands.size(); i++) {
         Map commandBlockParams = (Map) commands.get(i);
         ret.add(new CommandBlock((int) commandBlockParams.get("index"),
