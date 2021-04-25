@@ -7,7 +7,7 @@ package ooga.model;
  * @author Harrison Huang
  */
 public enum Direction {
-  SELF(0,0),
+  CURRENT(0,0),
   UP(0,-1),
   DOWN(0,1),
   LEFT(-1,0),

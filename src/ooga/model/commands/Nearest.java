@@ -46,7 +46,7 @@ public class Nearest extends AICommands{
     int newX = avatar.getXCoord();
     int newY = avatar.getYCoord();
     Tile prevTile = getCurrTile(ID);
-    Tile nextTile = getNextTile(ID, Direction.SELF);
+    Tile nextTile = getNextTile(ID, Direction.CURRENT);
     for(Direction direction : Direction.values()){
       int dummyX = avatar.getXCoord() + direction.getXDel();
       int dummyY = avatar.getYCoord() + direction.getYDel();
