@@ -24,6 +24,7 @@ public class Nearest extends AICommands{
     int minDistance = 10000;
     int xAvatar = avatar.getXCoord();
     int yAvatar = avatar.getYCoord();
+    int closestID = -1;
     BlockData closestBlockData = null;
     for(BlockData blockData : getElementInformationBundle().getBlockData()){
       int xBlock = blockData.getLocation().get(X);
@@ -40,12 +41,24 @@ public class Nearest extends AICommands{
 
   private void stepTowardsClosestAvailableTile(int ID, BlockData block) {
     Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
-    Direction direction = getDirection(calculateDirection(ID, avatar.getXCoord(), avatar.getYCoord(), block.getLocation().get(X), block.getLocation().get(Y)));
+    int xBlock = block.getLocation().get(X);
+    int yBlock = block.getLocation().get(Y);
+    int initialManhattanDistance = Math.abs(avatar.getXCoord() - xBlock) + Math.abs(avatar.getYCoord() - yBlock);
+    int newX = avatar.getXCoord();
+    int newY = avatar.getYCoord();
     Tile prevTile = getCurrTile(ID);
-    Tile nextTile = getNextTile(ID, direction);
-    int newX = avatar.getXCoord() + direction.getXDel();
-    int newY = avatar.getYCoord() + direction.getYDel();
-
+    Tile nextTile = getNextTile(ID, Direction.SELF);
+    for(Direction direction : Direction.values()){
+      int dummyX = avatar.getXCoord() + direction.getXDel();
+      int dummyY = avatar.getYCoord() + direction.getYDel();
+      int manhattanDistance = Math.abs(dummyX - xBlock) + Math.abs(dummyY - yBlock);
+      if(manhattanDistance < initialManhattanDistance && getNextTile(ID, direction).canAddAvatar()){
+       initialManhattanDistance = manhattanDistance;
+       newX = dummyX;
+       newY = dummyY;
+       nextTile = getNextTile(ID, direction);
+      }
+    }
     moveAvatar(avatar, prevTile, nextTile, newX, newY);
     sendAvatarPositionUpdate(avatar);
   }
