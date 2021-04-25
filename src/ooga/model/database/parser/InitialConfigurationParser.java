@@ -25,6 +25,7 @@ public class InitialConfigurationParser {
   private GoalState goalState;
   private String description;
   private AvailableCommands availableCommands;
+  private AvailableCommands availableCommandsOtherPlayer;
   private ElementInformationBundle elementInformationBundle;
   private boolean errorOccurred = false;
   private String errorMessage = "";
@@ -52,12 +53,32 @@ public class InitialConfigurationParser {
       parseEndState(Integer.parseInt((String) levelInfo.get("idealNumOfCommands")), (HashMap)
           result.get("endState"));
       this.description = (String) levelInfo.get("description");
-      parseCommands((HashMap) result.get("commands"));
+      parseCommands((HashMap) result.get("commands"), blocksForCurrentPlayer(levelInfo),
+          blocksForOtherPlayer(levelInfo));
     }
     catch (Exception e) {
       this.errorMessage = "Error parsing level file";
       this.errorOccurred = true;
     }
+  }
+  private List<String> blocksForCurrentPlayer(HashMap<String, Object> levelInfo) {
+    var result = switch (this.playerID) {
+      case 0 -> (List<String>) levelInfo.get("blocks");
+      case 1 -> (List<String>) levelInfo.get("blocks-p1");
+      case 2 -> (List<String>) levelInfo.get("blocks-p2");
+      default -> null;
+    };
+    return result;
+  }
+
+  private List<String> blocksForOtherPlayer(HashMap<String, Object> levelInfo)  {
+    var result = switch (this.playerID) {
+      case 0 -> null;
+      case 1 -> (List<String>) levelInfo.get("blocks-p2");
+      case 2 -> (List<String>) levelInfo.get("blocks-p1");
+      default -> null;
+    };
+    return result;
   }
 
   private void parseStartState(HashMap startState, HashMap initial) {
@@ -143,7 +164,8 @@ public class InitialConfigurationParser {
 //    }
 //  }
 
-  private void parseCommands(HashMap<String, Object> commands)  {
+  private void parseCommands(HashMap<String, Object> commands, List<String> commandsForCurrentPlayer,
+      List<String> comamndsForOtherPlayer)  {
     try {
       Map<String, List<Map<String, List<String>>>> commandsMap = new HashMap<>();
       for (String command: commands.keySet()) {
@@ -158,7 +180,10 @@ public class InitialConfigurationParser {
         }
         commandsMap.put(command, params);
       }
-      availableCommands = new AvailableCommands(commandsMap);
+      availableCommands = new AvailableCommands(commandsMap, commandsForCurrentPlayer);
+      if (comamndsForOtherPlayer != null) {
+        availableCommandsOtherPlayer = new AvailableCommands(commandsMap, comamndsForOtherPlayer);
+      }
     }
     catch (Exception e) {
       this.errorMessage = "Error parsing commands";
@@ -217,6 +242,10 @@ public class InitialConfigurationParser {
 
   public AvailableCommands getAvailableCommands()  {
     return this.availableCommands;
+  }
+
+  public AvailableCommands getAvailableCommandsOtherPlayer()  {
+    return this.availableCommandsOtherPlayer;
   }
 
   public GameGridData getGameGridData() {
