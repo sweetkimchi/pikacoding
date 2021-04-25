@@ -177,6 +177,8 @@ public class LevelView extends BorderPane implements ProgramListener {
         e -> viewController.initializeLevel(level + 1), level == Controller.NUM_LEVELS));
     this.setRight(null);
     this.setBottom(null);
+
+    System.out.println("TOTAL SCORE: " + (executionScore + bonusFromNumberOfCommands + bonusFromTimeTaken));
   }
 
   public void setScore(int score) {

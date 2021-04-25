@@ -23,7 +23,7 @@ public class CommandExecutor {
     private ElementInformationBundle elementInformationBundle;
     private BoardState initialState;
     private int score;
-    private int idealTime = 10;
+    private int idealTime = 500;
     private int idealLines = 20;
     private int SCORING_FACTOR = 100;
     private ClassLoader classLoader;
