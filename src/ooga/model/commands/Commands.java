@@ -20,35 +20,13 @@ public abstract class Commands implements CommandInterface{
   public abstract void execute(int ID);
 
   Direction getDirection(String direction) {
-    Direction dummy = Direction.SELF;
-    if(direction.equals("up")){
-      dummy = Direction.UP;
-    }
-    if(direction.equals("up-right")){
-      dummy = Direction.UP_RIGHT;
-    }
-    if(direction.equals("right")){
-      dummy = Direction.RIGHT;
-    }
-    if(direction.equals("down-right")){
-      dummy = Direction.DOWN_RIGHT;
-    }
-    if(direction.equals("down")){
-      dummy = Direction.DOWN;
-    }
-    if(direction.equals("down-left")){
-      dummy = Direction.DOWN_LEFT;
-    }
-    if(direction.equals("left")){
-      dummy = Direction.LEFT;
-    }
-    if(direction.equals("up-left")){
-      dummy = Direction.UP_LEFT;
-    }
-    if(direction.equals("self")){
-      dummy = Direction.SELF;
-    }
-    return dummy;
+    return Direction.valueOf(parseDirection(direction));
+  }
+
+  protected String parseDirection(String direction){
+    String parsedDirection = direction.toUpperCase();
+    parsedDirection = parsedDirection.replaceAll("-", "_");
+    return parsedDirection;
   }
 
   public ElementInformationBundle getElementInformationBundle() {

@@ -47,20 +47,21 @@ public class Nearest extends AICommands{
     Tile nextTile = getNextTile(ID, direction);
     int newX = avatar.getXCoord() + direction.getXDel();
     int newY = avatar.getYCoord() + direction.getYDel();
-    if (!nextTile.canAddAvatar()) {
-      System.out.println("The avatar cannot step here!");
-    } else {
-      nextTile.add(avatar);
-      prevTile.removeAvatar();
-      avatar.setXCoord(newX);
-      avatar.setYCoord(newY);
-      if (avatar.hasBlock()) {
-        avatar.getHeldItem().setXCoord(newX);
-        avatar.getHeldItem().setYCoord(newY);
-        sendBlockPositionUpdate(avatar.getHeldItem());
-      }
-    }
+
+    moveAvatar(avatar, prevTile, nextTile, newX, newY);
     sendAvatarPositionUpdate(avatar);
+  }
+
+  private void moveAvatar(Avatar avatar, Tile prevTile, Tile nextTile, int newX, int newY) {
+    nextTile.add(avatar);
+    prevTile.removeAvatar();
+    avatar.setXCoord(newX);
+    avatar.setYCoord(newY);
+    if (avatar.hasBlock()) {
+      avatar.getHeldItem().setXCoord(newX);
+      avatar.getHeldItem().setYCoord(newY);
+      sendBlockPositionUpdate(avatar.getHeldItem());
+    }
   }
 
   private String calculateDirection(int ID, int newX, int newY, int newBlockX, int newBlockY) {
