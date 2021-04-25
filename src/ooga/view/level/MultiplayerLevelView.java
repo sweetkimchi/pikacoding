@@ -31,16 +31,18 @@ public class MultiplayerLevelView extends LevelView {
     }
     clearScreen();
     // TODO: pass in scores
-    this.setCenter(new MultiplayerWinScreen(0, e -> getScreenCreator().loadStartMenu(),
+    MultiplayerWinScreen multiplayerWinScreen = new MultiplayerWinScreen(
+        e -> getScreenCreator().loadStartMenu(),
         e -> {
           getAnimationController().reset();
           restoreScreen();
-        }, e -> indicateLevelFinished()));
+        }, e -> indicateLevelFinished());
+    multiplayerWinScreen.setScores(executionScore, bonusFromNumberOfCommands, bonusFromTimeTaken);
+    this.setCenter(multiplayerWinScreen);
   }
 
   @Override
   public void updateTime(int timeLeft) {
-    System.out.println(timeLeft);
     String minutes = "" + timeLeft / 60;
     String seconds = "" + timeLeft % 60;
     if (timeLeft % 60 < 10) {

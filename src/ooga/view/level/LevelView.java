@@ -188,8 +188,6 @@ public class LevelView extends BorderPane implements ProgramListener {
     clearScreen();
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
         e -> viewController.initializeLevel(level + 1), level == Controller.NUM_LEVELS));
-
-    System.out.println("TOTAL SCORE: " + (executionScore + bonusFromNumberOfCommands + bonusFromTimeTaken));
   }
 
   public void setScore(int score) {
@@ -224,8 +222,7 @@ public class LevelView extends BorderPane implements ProgramListener {
   }
 
   /**
-   * TODO: add logic for time out
-   * This method gets called when the team has run out of time
+   * TODO: add logic for time out This method gets called when the team has run out of time
    */
   public void timedOut() {
     System.out.println("TIMED OUT!! STOPPING ANIMATION!");
@@ -233,7 +230,9 @@ public class LevelView extends BorderPane implements ProgramListener {
   }
 
   /**
-   * Animation calls a method in ViewController which in turn checks with the backend and returns time left
+   * Animation calls a method in ViewController which in turn checks with the backend and returns
+   * time left
+   *
    * @param timeLeft
    */
   public void updateTime(int timeLeft) {
