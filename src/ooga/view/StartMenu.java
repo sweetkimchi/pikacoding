@@ -26,10 +26,10 @@ public class StartMenu extends BorderPane {
     startMenuResources = ResourceBundle.getBundle(START_MENU_STRINGS);
     VBox center = new VBox();
     center.getStyleClass().add("start-screen");
-    Label title = new Label("PikaCoding");
+    Label title = new Label(startMenuResources.getString("title"));
     title.getStyleClass().add("title");
 
-    Button startButton = new Button("Start Game");
+    Button startButton = new Button(startMenuResources.getString("startButton"));
     startButton.setOnAction(startAction);
     startButton.setId(ScreenCreator.idsForTests.getString("startButton"));
     startButton.getStyleClass().add("default-button");
