@@ -14,6 +14,7 @@ import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.Add;
 import ooga.model.commands.Decrement;
 import ooga.model.commands.Drop;
+import ooga.model.commands.Endif;
 import ooga.model.commands.If;
 import ooga.model.commands.Increment;
 import ooga.model.commands.Jump;
@@ -429,6 +430,21 @@ public class GridTest {
     Tell tell = new Tell(elementInformationBundle, parameters);
     parameters.put("id", "10");
     tell.execute(10);
+
+    assertEquals(3, avatar.getProgramCounter());
+  }
+
+  @Test
+  public void testEndif(){
+    assertTrue(elementInformationBundle.getTileData(5, 5).hasAvatar());
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "right");
+    Step step = new Step(elementInformationBundle, parameters);
+    step.execute(10);
+
+    Endif endif = new Endif(elementInformationBundle, parameters);
+    parameters.put("id", "10");
+    endif.execute(10);
 
     assertEquals(3, avatar.getProgramCounter());
   }
