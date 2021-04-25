@@ -45,8 +45,8 @@ public class CommandBlock {
   public boolean equals(Object obj) {
     if (obj instanceof CommandBlock commandBlock)  {
       return (this.index == commandBlock.index &&
-          this.type == commandBlock.type &&
-          this.parameters == commandBlock.parameters);
+          this.type.equals(commandBlock.type) &&
+          this.parameters.equals(commandBlock.parameters));
     }
     return false;
   }
