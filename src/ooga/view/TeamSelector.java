@@ -31,9 +31,11 @@ public class TeamSelector extends BorderPane {
     teamButtons.getStyleClass().add("type-screen");
 
     Button team1 = new Button(teamSelectorResources.getString("team1"));
+    team1.setId(ScreenCreator.idsForTests.getString("team1"));
     team1.getStyleClass().add("default-button");
     team1.setOnAction(e -> determineTeam(1));
     Button team2 = new Button(teamSelectorResources.getString("team2"));
+    team2.setId(ScreenCreator.idsForTests.getString("team2"));
     team2.getStyleClass().add("default-button");
     team2.setOnAction(e -> determineTeam(2));
     teamButtons.getChildren().addAll(team1, team2);

@@ -20,10 +20,12 @@ public class GameTypeSelector extends BorderPane {
     gameType.getStyleClass().add("type-screen");
 
     Button singlePlayer = new Button(gameTypeResources.getString("singlePlayer"));
+    singlePlayer.setId(ScreenCreator.idsForTests.getString("singlePlayer"));
     singlePlayer.getStyleClass().add("default-button");
     singlePlayer.setOnAction(singleAction);
 
     Button multiPlayer = new Button(gameTypeResources.getString("multiPlayer"));
+    multiPlayer.setId(ScreenCreator.idsForTests.getString("multiPlayer"));
     multiPlayer.getStyleClass().add("default-button");
     multiPlayer.setOnAction(multiAction);
 

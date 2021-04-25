@@ -11,8 +11,10 @@ import javafx.stage.Stage;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
+import ooga.view.GameTypeSelector;
 import ooga.view.LevelSelector;
 import ooga.view.ScreenCreator;
+import ooga.view.TeamSelector;
 import ooga.view.level.LevelView;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -35,15 +37,38 @@ class ViewTest extends ApplicationTest {
   void testStartGame() {
     clickButton("start-button");
     Stage stage = (Stage) getPrivateField(screenCreator, "stage");
-    assertTrue(stage.getScene().getRoot() instanceof LevelSelector);
+    assertTrue(stage.getScene().getRoot() instanceof GameTypeSelector);
   }
 
   @Test
   void testLoadLevel() {
     clickButton("start-button");
+    clickButton("single-player-button");
     clickButton("load-level-1");
     LevelView levelView = screenCreator.getLevelView();
     assertEquals(1, (int) getPrivateField(levelView, "level"));
+  }
+
+  @Test
+  void testLoadMulti() {
+    clickButton("start-button");
+    clickButton("multiplayer-button");
+    Stage stage = (Stage) getPrivateField(screenCreator, "stage");
+    assertTrue(stage.getScene().getRoot() instanceof TeamSelector);
+  }
+
+  @Test
+  void successfulSinglePlayerButtonCreation() {
+    clickButton("start-button");
+    assertTrue(lookup("#single-player-button").query() != null);
+  }
+
+  @Test
+  void determineCorrectTeam() {
+    clickButton("start-button");
+    clickButton("multiplayer-button");
+    clickButton("team1-button");
+    assertTrue(screenCreator.getTeam() == 1);
   }
 
   private Object getPrivateField(Object object, String field) {
@@ -59,8 +84,8 @@ class ViewTest extends ApplicationTest {
 
   private void clickButton(String button) {
     clickOn(lookup("#" + button).queryButton());
-    Platform.runLater(() -> lookup("#" + button).queryButton().fire());
-    sleep(100);
+    //Platform.runLater(() -> lookup("#" + button).queryButton().fire());
+    //sleep(100);
   }
 
 }
