@@ -57,8 +57,7 @@ public class ThrowOver extends BasicCommands {
     Block block = avatar.drop();
     block.drop();
     tile.add(block);
-    block.setXCoord(tileX);
-    block.setYCoord(tileY);
+    block.setXY(tileX, tileY);
 
     sendBlockHeldUpdate(block);
     sendBlockPositionUpdate(block);

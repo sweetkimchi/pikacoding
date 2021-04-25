@@ -6,26 +6,25 @@ package ooga.model.player;
 public abstract class Block implements Element {
 
   private boolean isHeld;
-  private static final int EMPTY = -1;
-  private boolean isActive = true;
 
-  private int holderId = EMPTY;
-    /**
-     * Default constructor
-     */
-    public Block() {
-      isHeld = false;
-    }
-
-  public abstract int getDisplayNum();
-
-  public void drop() {
-    holderId = EMPTY;
+  /**
+   * Default constructor
+   */
+  public Block() {
     isHeld = false;
   }
 
-  public void pickUp(int id) {
-    holderId = id;
+  /**
+   * Gets the number associated with the
+   * @return
+   */
+  public abstract int getDisplayNum();
+
+  public void drop() {
+    isHeld = false;
+  }
+
+  public void pickUp() {
     isHeld = true;
   }
 

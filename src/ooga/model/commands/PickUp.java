@@ -1,7 +1,6 @@
 package ooga.model.commands;
 
 import java.util.Map;
-import ooga.model.Direction;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
@@ -40,7 +39,7 @@ public class PickUp extends BasicCommands {
       if (temp != null) {
         sendBlockHeldUpdate(temp);
       }
-      avatar.getHeldItem().pickUp(avatar.getId());
+      avatar.getHeldItem().pickUp();
       sendBlockHeldUpdate(block);
     } else {
       //TODO: throw error to handler

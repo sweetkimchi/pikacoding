@@ -35,11 +35,9 @@ public class Step extends BasicCommands {
     if (nextTile.canAddAvatar()) {
       nextTile.add(avatar);
       prevTile.removeAvatar();
-      avatar.setXCoord(newX);
-      avatar.setYCoord(newY);
+      avatar.setXY(newX, newY);
       if (avatar.hasBlock()) {
-        avatar.getHeldItem().setXCoord(newX);
-        avatar.getHeldItem().setYCoord(newY);
+        avatar.getHeldItem().setXY(newX, newY);
         sendBlockPositionUpdate(avatar.getHeldItem());
       }
     } else {

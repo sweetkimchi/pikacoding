@@ -84,9 +84,9 @@ public class ParserTester {
     DataCube four = new DataCube(4, 1, 4, 4);
     DataCube five = new DataCube(5, 4, 4, 7);
     DataCube six = new DataCube(6, 6, 4, 7);
-    four.pickUp(7);
-    five.pickUp(8);
-    six.pickUp(9);
+    four.pickUp();
+    five.pickUp();
+    six.pickUp();
 
     grid.addBlock(four);
     grid.addBlock(five);

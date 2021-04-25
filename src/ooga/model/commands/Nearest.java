@@ -65,11 +65,9 @@ public class Nearest extends AICommands{
   private void moveAvatar(Avatar avatar, Tile prevTile, Tile nextTile, int newX, int newY) {
     nextTile.add(avatar);
     prevTile.removeAvatar();
-    avatar.setXCoord(newX);
-    avatar.setYCoord(newY);
+    avatar.setXY(newX, newY);
     if (avatar.hasBlock()) {
-      avatar.getHeldItem().setXCoord(newX);
-      avatar.getHeldItem().setYCoord(newY);
+      avatar.getHeldItem().setXY(newX, newY);
       sendBlockPositionUpdate(avatar.getHeldItem());
     }
   }

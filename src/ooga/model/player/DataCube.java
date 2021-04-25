@@ -8,7 +8,6 @@ package ooga.model.player;
  */
 public class DataCube extends Block {
 
-    private static final int EMPTY = -1;
     private int xCoord;
     private int yCoord;
     private final int id;
@@ -36,7 +35,9 @@ public class DataCube extends Block {
     }
 
     /**
-     * @return xCoordinate of the Element
+     * Getter for the x-coordinate of the Element.
+     *
+     * @return The x-coordinate of the Element
      */
     @Override
     public int getXCoord() {
@@ -44,7 +45,9 @@ public class DataCube extends Block {
     }
 
     /**
-     * @return yCoordinate of the Element
+     * Getter for the y-coordinate of the Element.
+     *
+     * @return The y-coordinate of the Element
      */
     @Override
     public int getYCoord() {
@@ -52,23 +55,19 @@ public class DataCube extends Block {
     }
 
     /**
-     * update the xCoordinate
+     * Updates the X and Y coordinates of the Element.
+     *
+     * @param xCoord The new x-coordinate
+     * @param yCoord The new y-coordinate
      */
     @Override
-    public void setXCoord(int xCoord) {
+    public void setXY(int xCoord, int yCoord) {
         this.xCoord = xCoord;
-    }
-
-    /**
-     * update the yCoordinate
-     */
-    @Override
-    public void setYCoord(int yCoord) {
         this.yCoord = yCoord;
     }
 
 
-  public int getDisplayNum() {
+    public int getDisplayNum() {
         return displayNum;
     }
 

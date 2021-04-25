@@ -220,7 +220,7 @@ public class GridTest {
 
   @Test
   public void avatarCantPickUp() {
-    avatar.setXCoord(avatar.getXCoord() + 1);
+    avatar.setXY(avatar.getXCoord() + 1, avatar.getYCoord());
     Map<String, String> parameters = new HashMap<>();
     parameters.put("direction", "self");
     PickUp pickUp = new PickUp(elementInformationBundle, parameters);

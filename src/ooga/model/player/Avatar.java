@@ -42,18 +42,14 @@ public class Avatar extends Player {
     }
 
     /**
-     * update the xCoordinate
+     * Updates the X and Y coordinates of the Element.
+     *
+     * @param xCoord The new x-coordinate
+     * @param yCoord The new y-coordinate
      */
     @Override
-    public void setXCoord(int xCoord) {
+    public void setXY(int xCoord, int yCoord) {
         this.xCoord = xCoord;
-    }
-
-    /**
-     * update the yCoordinate
-     */
-    @Override
-    public void setYCoord(int yCoord) {
         this.yCoord = yCoord;
     }
 
