@@ -106,6 +106,8 @@ public class CommandBlockHolder extends GridPane {
   }
 
   public void selectParameter(String parameter, String option) {
+//    System.out.println(parameter + " " + commandBlock.getType());
+//    System.out.println(dropdowns.keySet());
     dropdowns.get(parameter).getSelectionModel().select(option);
   }
 
@@ -129,6 +131,7 @@ public class CommandBlockHolder extends GridPane {
       addItem(dropdown, 120);
       dropdowns.put(parameter, dropdown);
     });
+//    System.out.println(dropdowns.keySet());
   }
 
   protected List<Map<String, List<String>>> getParameterOptions() {
