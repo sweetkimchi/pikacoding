@@ -29,6 +29,7 @@ public class JumpCommandBlockHolder extends CommandBlockHolder {
     updateDropdown();
     lineSelector.setOnAction(e -> {
       getCommandBlock().setParameter(parameter, lineSelector.getValue());
+      getProgramStack().notifyProgramListeners();
     });
     lineSelector.getSelectionModel().selectFirst();
     getDropdowns().put(parameter, lineSelector);

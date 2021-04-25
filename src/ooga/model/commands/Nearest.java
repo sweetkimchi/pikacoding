@@ -24,7 +24,6 @@ public class Nearest extends AICommands{
     int minDistance = 10000;
     int xAvatar = avatar.getXCoord();
     int yAvatar = avatar.getYCoord();
-    int closestID = -1;
     BlockData closestBlockData = null;
     for(BlockData blockData : getElementInformationBundle().getBlockData()){
       int xBlock = blockData.getLocation().get(X);
@@ -32,51 +31,35 @@ public class Nearest extends AICommands{
       int manhattanDistance = Math.abs(xAvatar - xBlock) + Math.abs(yAvatar - yBlock);
       if(manhattanDistance < minDistance){
         minDistance = manhattanDistance;
-        closestID = blockData.getId();
         closestBlockData = blockData;
       }
     }
-
     stepTowardsClosestAvailableTile(ID, closestBlockData);
-
-    System.out.println("Parameter: " + getParameters().get("target"));
-    System.out.println("Nearest: " + closestID);
-
     avatar.setProgramCounter(avatar.getProgramCounter() + 1);
   }
 
   private void stepTowardsClosestAvailableTile(int ID, BlockData block) {
     Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
-
-    int newX = avatar.getXCoord();
-    int newY = avatar.getYCoord();
-    int newBlockX = block.getLocation().get(X);
-    int newBlockY = block.getLocation().get(Y);
-
-    Direction direction = getDirection(calculateDirection(ID, newX, newY, newBlockX, newBlockY));
-
+    Direction direction = getDirection(calculateDirection(ID, avatar.getXCoord(), avatar.getYCoord(), block.getLocation().get(X), block.getLocation().get(Y)));
     Tile prevTile = getCurrTile(ID);
     Tile nextTile = getNextTile(ID, direction);
-    //System.out.println(nextTile.getStructure());
+    int newX = avatar.getXCoord() + direction.getXDel();
+    int newY = avatar.getYCoord() + direction.getYDel();
 
-    newX = avatar.getXCoord() + direction.getXDel();
-    newY = avatar.getYCoord() + direction.getYDel();
-
-    if (nextTile.canAddAvatar()) {
-      nextTile.add(avatar);
-      prevTile.removeAvatar();
-      avatar.setXCoord(newX);
-      avatar.setYCoord(newY);
-      if (avatar.hasBlock()) {
-        avatar.getHeldItem().setXCoord(newX);
-        avatar.getHeldItem().setYCoord(newY);
-        sendBlockPositionUpdate(avatar.getHeldItem());
-      }
-    } else {
-      //TODO: throw error to handler?
-      System.out.println("The avatar cannot step here!");
-    }
+    moveAvatar(avatar, prevTile, nextTile, newX, newY);
     sendAvatarPositionUpdate(avatar);
+  }
+
+  private void moveAvatar(Avatar avatar, Tile prevTile, Tile nextTile, int newX, int newY) {
+    nextTile.add(avatar);
+    prevTile.removeAvatar();
+    avatar.setXCoord(newX);
+    avatar.setYCoord(newY);
+    if (avatar.hasBlock()) {
+      avatar.getHeldItem().setXCoord(newX);
+      avatar.getHeldItem().setYCoord(newY);
+      sendBlockPositionUpdate(avatar.getHeldItem());
+    }
   }
 
   private String calculateDirection(int ID, int newX, int newY, int newBlockX, int newBlockY) {
