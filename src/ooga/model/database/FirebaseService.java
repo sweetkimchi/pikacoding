@@ -155,9 +155,6 @@ public class FirebaseService {
    * updates the commandBlock across all
    */
   public void saveMatchInformation(int matchID, List<CommandBlock> commandBlocks) {
-    //TESTING CODE
-    matchID = 0;
-
     String rootDBPath = "match_info/match"+matchID+"/team" + this.teamID + "/";
     Map<String, Object> jsonMapOfCodingArea = new HashMap<>();
     for(CommandBlock commandBlock : commandBlocks){

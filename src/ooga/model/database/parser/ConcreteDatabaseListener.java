@@ -49,7 +49,6 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         public void onDataChange(DataSnapshot dataSnapshot) {
           Object object = dataSnapshot.getValue(Object.class);
           json[0] = new Gson().toJson(object);
-          System.out.println(json[0]);
           modelController.receivedProgramUpdate(parseJSONIntoBlocks(json[0]));
         }
         @Override
@@ -76,8 +75,15 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   private List<CommandBlock> parseJSONIntoBlocks(String json)  {
     try {
       List<CommandBlock> ret = new ArrayList<>();
-      List commands =
-          new ObjectMapper().readValue(json, List.class);
+      List commands;
+      try {
+        commands =
+            new ObjectMapper().readValue(json, List.class);
+      }
+      catch (Exception e)  {
+        return null;
+      }
+      System.out.println("new PARSED COMMANDS" + commands);
       if (commands == null) return null;
       for (int i = 1; i < commands.size(); i++) {
         Map commandBlockParams = (Map) commands.get(i);

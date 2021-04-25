@@ -19,13 +19,14 @@ public class ModelController implements BackEndExternalAPI {
   private FirebaseService firebaseService;
   private ConcreteDatabaseListener codeAreaParser;
   private int level;
+  private int matchID;
 
   /**
    * Default constructor
    */
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
-    int matchID = 0;
+    matchID = 1010101;
     firebaseService = new FirebaseService(0, 0);
     ConcreteDatabaseListener codeAreaParser = new ConcreteDatabaseListener(this, matchID, 0);
     codeAreaParser.codeAreaChanged();
@@ -144,7 +145,6 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void updateProgram(List<CommandBlock> program) {
-    int matchID = 1;
 
     // TODO: notify database of program update
     this.codeAreaParser.setLastCommandBlockForCurrentComputer(program);
