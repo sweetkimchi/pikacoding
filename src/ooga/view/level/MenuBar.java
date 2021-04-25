@@ -16,7 +16,7 @@ public class MenuBar extends HBox {
     this.getStyleClass().add("menu-bar");
     Button pauseButton = new Button(menuStrings.getString("pause"));
     pauseButton.getStyleClass().add("default-button");
-    pauseButton.setId("pause-button");
+    pauseButton.setId(ScreenCreator.idsForTests.getString("pauseButton"));
     pauseButton.setOnAction(pauseAction);
     this.getChildren().add(pauseButton);
   }

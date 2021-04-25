@@ -3,7 +3,7 @@ package ooga.view;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
-import javafx.geometry.Pos;
+
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -16,8 +16,8 @@ public class LevelSelector extends BorderPane {
     VBox levels = new VBox();
     ResourceBundle levelResources = ResourceBundle.getBundle(ScreenCreator.RESOURCES + WinScreen.SCREEN_MESSAGES);
     for (int level = 1; level <= Controller.NUM_LEVELS; level++) {
-      Button levelButton = new Button(getLevel(level, levelResources.getString("level")));
-      levelButton.setId("load-level-" + level);
+      Button levelButton = new Button(applyResourceFormatting(level, levelResources.getString("level")));
+      levelButton.setId(applyResourceFormatting(level, ScreenCreator.idsForTests.getString("levelButton")));
       levelButton.getStyleClass().add("default-button");
       int thisLevel = level;
       levelButton.setOnAction(e -> loadLevelAction.accept(thisLevel));
@@ -27,12 +27,12 @@ public class LevelSelector extends BorderPane {
     this.setCenter(levels);
   }
 
-  private String getLevel(int l, String key) {
-    Object[] level = new Object[1];
+  private String applyResourceFormatting(int num, String key) {
+    Object[] var = new Object[1];
     MessageFormat formatter = new MessageFormat("");
-    level[0] = l;
+    var[0] = num;
     formatter.applyPattern(key);
-    return formatter.format(level);
+    return formatter.format(var);
   }
 
 }

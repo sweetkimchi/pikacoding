@@ -25,7 +25,7 @@ public class StartMenu extends BorderPane {
 
     Button startButton = new Button("Start Game");
     startButton.setOnAction(startAction);
-    startButton.setId("start-button");
+    startButton.setId(ScreenCreator.idsForTests.getString("startButton"));
     startButton.getStyleClass().add("default-button");
     center.getChildren().addAll(title, startButton);
 
@@ -35,17 +35,18 @@ public class StartMenu extends BorderPane {
   }
 
   private ComboBox<String> makeComboBox() {
-    ComboBox<String> comboBox = new ComboBox<>();
+    ComboBox<String> cssComboBox = new ComboBox<>();
+    cssComboBox.setId(ScreenCreator.idsForTests.getString("cssComboBox"));
     ResourceBundle cssPossibilities = ResourceBundle.getBundle(CSS_POSSIBILITIES);
     Object[] keys = cssPossibilities.keySet().toArray();
     List<String> allCSS = new ArrayList<>();
     for (Object o : keys) {
       allCSS.add(cssPossibilities.getString(o.toString()));
     }
-    comboBox.getItems().addAll(allCSS);
-    comboBox.setValue("default");
-    comboBox.setOnAction(event -> updateStyleSheet(comboBox.getValue()));
-    return comboBox;
+    cssComboBox.getItems().addAll(allCSS);
+    cssComboBox.setValue("default");
+    cssComboBox.setOnAction(event -> updateStyleSheet(cssComboBox.getValue()));
+    return cssComboBox;
   }
 
   private void updateStyleSheet(Object value) {

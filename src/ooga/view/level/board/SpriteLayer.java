@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javafx.scene.layout.Pane;
 import ooga.model.grid.gridData.BlockData;
+import ooga.view.ScreenCreator;
 import ooga.view.animation.Animation;
 
 /**
@@ -26,7 +27,7 @@ public class SpriteLayer extends Pane {
   private Map<Integer, Deque<Double>> allElementInformation;
 
   public SpriteLayer(double width, double height) {
-    this.setId("sprite-layer");
+    this.setId(ScreenCreator.idsForTests.getString("spriteLayer"));
     this.setMinSize(width, height);
     this.setMaxSize(width, height);
     animation = new Animation();
