@@ -77,6 +77,7 @@ public class CodeArea extends GridPane {
 
   private void addCommandBlock(String command) {
     programStack.addCommandBlock(command);
+    programStack.notifyProgramListeners();
   }
 
 }

@@ -10,11 +10,13 @@ import javafx.scene.layout.VBox;
 import ooga.view.ScreenCreator;
 
 public class MultiplayerWinScreen extends VBox {
+
   public static final String SCREEN_MESSAGES = "ScreenStrings";
 
   private ResourceBundle winMessages;
+  private Label scoreMessage;
 
-  public MultiplayerWinScreen(int score, EventHandler<ActionEvent> homeAction,
+  public MultiplayerWinScreen(EventHandler<ActionEvent> homeAction,
       EventHandler<ActionEvent> goBackAction, EventHandler<ActionEvent> finishedAction) {
     winMessages = ResourceBundle.getBundle(ScreenCreator.RESOURCES + SCREEN_MESSAGES);
     this.getStyleClass().add("start-screen");
@@ -22,7 +24,7 @@ public class MultiplayerWinScreen extends VBox {
     winMessage.getStyleClass().add("title");
     this.getChildren().add(winMessage);
 
-    Label scoreMessage = new Label(getScore(score, "winScore"));
+    scoreMessage = new Label();
     this.getChildren().add(scoreMessage);
 
     Button goBackButton = new Button(winMessages.getString("goBack"));
@@ -36,6 +38,14 @@ public class MultiplayerWinScreen extends VBox {
     Button homeButton = new Button(winMessages.getString("home"));
     homeButton.setOnAction(homeAction);
     this.getChildren().add(homeButton);
+  }
+
+  public void setScores(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
+    scoreMessage.setText(
+        getScore(executionScore, "executionScore") + "\n" + getScore(bonusFromNumberOfCommands,
+            "commandsBonus") + "\n" + getScore(bonusFromTimeTaken, "timeBonus") + "\n" +
+            getScore(executionScore + bonusFromNumberOfCommands + bonusFromNumberOfCommands,
+                "totalScore"));
   }
 
   private String getScore(int score, String key) {

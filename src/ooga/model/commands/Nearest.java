@@ -24,7 +24,6 @@ public class Nearest extends AICommands{
     int minDistance = 10000;
     int xAvatar = avatar.getXCoord();
     int yAvatar = avatar.getYCoord();
-    int closestID = -1;
     BlockData closestBlockData = null;
     for(BlockData blockData : getElementInformationBundle().getBlockData()){
       int xBlock = blockData.getLocation().get(X);
@@ -32,7 +31,6 @@ public class Nearest extends AICommands{
       int manhattanDistance = Math.abs(xAvatar - xBlock) + Math.abs(yAvatar - yBlock);
       if(manhattanDistance < minDistance){
         minDistance = manhattanDistance;
-        closestID = blockData.getId();
         closestBlockData = blockData;
       }
     }
@@ -42,38 +40,37 @@ public class Nearest extends AICommands{
 
   private void stepTowardsClosestAvailableTile(int ID, BlockData block) {
     Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
-    Direction direction = getDirection(calculateDirection(ID, avatar.getXCoord(), avatar.getYCoord(), block.getLocation().get(X), block.getLocation().get(Y)));
+    int xBlock = block.getLocation().get(X);
+    int yBlock = block.getLocation().get(Y);
+    int initialManhattanDistance = Math.abs(avatar.getXCoord() - xBlock) + Math.abs(avatar.getYCoord() - yBlock);
+    int newX = avatar.getXCoord();
+    int newY = avatar.getYCoord();
     Tile prevTile = getCurrTile(ID);
-    Tile nextTile = getNextTile(ID, direction);
-    int newX = avatar.getXCoord() + direction.getXDel();
-    int newY = avatar.getYCoord() + direction.getYDel();
-    if (!nextTile.canAddAvatar()) {
-      System.out.println("The avatar cannot step here!");
-    } else {
-      nextTile.add(avatar);
-      prevTile.removeAvatar();
-      avatar.setXCoord(newX);
-      avatar.setYCoord(newY);
-      if (avatar.hasBlock()) {
-        avatar.getHeldItem().setXCoord(newX);
-        avatar.getHeldItem().setYCoord(newY);
-        sendBlockPositionUpdate(avatar.getHeldItem());
+    Tile nextTile = getNextTile(ID, Direction.CURRENT);
+    for(Direction direction : Direction.values()){
+      int dummyX = avatar.getXCoord() + direction.getXDel();
+      int dummyY = avatar.getYCoord() + direction.getYDel();
+      int manhattanDistance = Math.abs(dummyX - xBlock) + Math.abs(dummyY - yBlock);
+      if(manhattanDistance < initialManhattanDistance && getNextTile(ID, direction).canAddAvatar()){
+       initialManhattanDistance = manhattanDistance;
+       newX = dummyX;
+       newY = dummyY;
+       nextTile = getNextTile(ID, direction);
       }
     }
+    moveAvatar(avatar, prevTile, nextTile, newX, newY);
     sendAvatarPositionUpdate(avatar);
   }
 
-  private String calculateDirection(int ID, int newX, int newY, int newBlockX, int newBlockY) {
-    if(newX < newBlockX && getNextTile(ID, getDirection("right")).canAddAvatar()){
-      return "right";
-    }else if(newBlockX < newX && getNextTile(ID, getDirection("left")).canAddAvatar()){
-      return "left";
-    } else if(newY < newBlockY && getNextTile(ID, getDirection("down")).canAddAvatar()){
-      return "down";
-    } else if(newY > newBlockY && getNextTile(ID, getDirection("up")).canAddAvatar()){
-      return "up";
-    } else{
-      return "self";
+  private void moveAvatar(Avatar avatar, Tile prevTile, Tile nextTile, int newX, int newY) {
+    nextTile.add(avatar);
+    prevTile.removeAvatar();
+    avatar.setXCoord(newX);
+    avatar.setYCoord(newY);
+    if (avatar.hasBlock()) {
+      avatar.getHeldItem().setXCoord(newX);
+      avatar.getHeldItem().setYCoord(newY);
+      sendBlockPositionUpdate(avatar.getHeldItem());
     }
   }
 }
