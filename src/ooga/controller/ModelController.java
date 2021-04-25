@@ -158,6 +158,7 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void updateProgram(List<CommandBlock> program) {
     // TODO: notify database of program update
+    System.out.println(program);
     this.codeAreaParser.setLastCommandBlockForCurrentComputer(program);
     firebaseService.saveMatchInformation(matchID, program);
   }
@@ -180,7 +181,6 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void receivedProgramUpdate(List<CommandBlock> program) {
-    System.out.println(program);
     if (program != null)  {
       viewController.receiveProgramUpdates(program);
     }
