@@ -16,6 +16,7 @@ import ooga.view.LevelSelector;
 import ooga.view.ScreenCreator;
 import ooga.view.TeamSelector;
 import ooga.view.level.LevelView;
+import ooga.view.level.LoseScreen;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 

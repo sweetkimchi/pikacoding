@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
+import ooga.view.level.LoseScreen;
 import ooga.view.level.board.ViewAvatar;
 import ooga.view.level.LevelView;
 import ooga.view.level.board.SpriteLayer;
@@ -61,6 +62,25 @@ class LevelViewTest extends ApplicationTest {
     sleep(2000);
     assertTrue(initialY > avatarImage.getY());
   }
+
+  @Test
+  void testLoseScreen() {
+    for(int i: new int[20]) {
+      clickButton("step-option-button");
+    }
+    clickButton("Button2_Play-button");
+    sleep(24000);
+    assertTrue(lookup("#try-again-button").query() != null);
+  }
+
+//  @Test
+//  void testWinScreen() {
+//    clickButton("step-option-button");
+//    clickButton("pickUp-option-button");
+//    clickButton("Button2_Play-button");
+//    sleep(1000);
+//    assertTrue(lookup("#home").query() != null);
+//  }
 
   @Test
   void testPauseButton() {
