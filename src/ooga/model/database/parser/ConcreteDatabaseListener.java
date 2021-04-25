@@ -7,11 +7,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javafx.scene.web.HTMLEditorSkin.Command;
+import java.util.concurrent.CountDownLatch;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.ModelController;
 import ooga.model.database.DatabaseListener;
@@ -22,6 +22,9 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   private BackEndExternalAPI modelController;
   private int matchID;
   private int teamID;
+  private boolean currentTeamStarted = false;
+  private boolean otherTeamStarted = false;
+
   private List<CommandBlock> lastCommandBlockForCurrentComputer;
   public ConcreteDatabaseListener(ModelController modelController, int matchID, int teamID)  {
     this.modelController = modelController;
@@ -69,7 +72,95 @@ public class ConcreteDatabaseListener implements DatabaseListener {
 
   @Override
   public void checkLevelStarted() {
+    this.checkOtherTeamAllPresent();
+    String rootDBPath = "match_info/match"+matchID+"/team"+teamID+"/playerIDs/";
+    DatabaseReference ref = FirebaseDatabase.getInstance()
+        .getReference(rootDBPath);
+    try {
+      final String[] json = {""};
+      final boolean[] allPlayersPresent = {false};
+      var listener = ref.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+          Object object = dataSnapshot.getValue(Object.class);
+          json[0] = new Gson().toJson(object);
+          try {
+            List playerIDs =
+                new ObjectMapper().readValue(json[0], List.class);
+            System.out.println(playerIDs);
+            if (playerIDs.size() == 2)  {
+              teamAllHere();
+            }
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+          System.out.println("The read failed: " + databaseError.getCode());
+        }
+      });
+    }
+    catch (Exception e) {
+    }
+  }
 
+  private void checkOtherTeamAllPresent()  {
+    String rootDBPath;
+    int otherTeam = 0;
+    if (teamID == 1)  {
+      rootDBPath = "match_info/match"+matchID+"/team"+2+"/playerIDs/";
+      otherTeam = 2;
+    }
+    else  {
+      rootDBPath = "match_info/match"+matchID+"/team"+1+"/playerIDs/";
+      otherTeam = 1;
+    }
+    DatabaseReference ref = FirebaseDatabase.getInstance()
+        .getReference(rootDBPath);
+    try {
+      final String[] json = {""};
+      final boolean[] allPlayersPresent = {false};
+      var listener = ref.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+          Object object = dataSnapshot.getValue(Object.class);
+          json[0] = new Gson().toJson(object);
+          try {
+            List playerIDs =
+                new ObjectMapper().readValue(json[0], List.class);
+            System.out.println(playerIDs);
+            if (playerIDs.size() == 2)  {
+              otherTeamAllHere();
+            }
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+          System.out.println("The read failed: " + databaseError.getCode());
+        }
+      });
+    }
+    catch (Exception e) {
+    }
+  }
+
+  private void teamAllHere()  {
+    this.currentTeamStarted = true;
+    checkBothTeamsHere();
+  }
+
+  private void otherTeamAllHere() {
+    this.otherTeamStarted = true;
+    checkBothTeamsHere();
+  }
+
+  private void checkBothTeamsHere() {
+    if (this.otherTeamStarted && this.currentTeamStarted) {
+      System.out.println("both teams are here lol");
+    }
   }
 
   private List<CommandBlock> parseJSONIntoBlocks(String json)  {
