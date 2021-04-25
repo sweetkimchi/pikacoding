@@ -1,0 +1,14 @@
+{
+  "level":10,
+  "numPeople":1,
+  "blocks":["step", "pickUp", "drop", "if", "jump", "throw", "throwOver"],
+  "blocks-p1":["step", "if", "jump"],
+  "blocks-p2":["pickUp", "drop", "throw", "throwOver"],
+  "startState":"startState.json",
+  "endState":"endState.json",
+  "images":"images.json",
+  "description":"Using Nearest, Jump, and If, make the pikachu travel to the closes block and pick it up.",
+  "idealNumOfCommands":"250",
+  "timeLimit":"350",
+  "grid": "grid.json"
+}

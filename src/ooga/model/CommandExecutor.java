@@ -34,6 +34,7 @@ public class CommandExecutor {
     private Stack<Integer> stackOfIfCommands;
     private Stopwatch stopwatch;
     private int timeLeft;
+    private int timeLimit;
     /**
      * Default constructor
      */
@@ -51,6 +52,7 @@ public class CommandExecutor {
         this.stopwatch = stopwatch;
         this.idealTime = goalState.getIdealTime();
         this.idealLines = goalState.getIdealLines();
+        this.timeLimit = initialState.getTimeLimit();
 
         endCommandLines = new ArrayList<>();
         stackOfIfCommands = new Stack<>();
