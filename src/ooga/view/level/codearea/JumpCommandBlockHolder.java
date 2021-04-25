@@ -23,7 +23,7 @@ public class JumpCommandBlockHolder extends CommandBlockHolder {
       options.add(Integer.toString(i));
     }
     lineSelector.getItems().addAll(options);
-    lineSelector.getSelectionModel().selectFirst();
+//    lineSelector.getSelectionModel().selectFirst();
   }
 
   @Override
