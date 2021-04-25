@@ -24,6 +24,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   private int teamID;
   private boolean currentTeamStarted = false;
   private boolean otherTeamStarted = false;
+  private boolean levelEndedForCurrentTeam = false;
 
   private List<CommandBlock> lastCommandBlockForCurrentComputer;
   public ConcreteDatabaseListener(ModelController modelController, int matchID, int teamID)  {
@@ -66,13 +67,78 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   }
 
   @Override
-  public void checkLevelEnded() {
+  public void checkLevelEndedForCurrentTeam() {
+    String rootDBPath = "match_info/match"+matchID+"/team"+teamID+"/gameEnded/";
+    DatabaseReference ref = FirebaseDatabase.getInstance()
+        .getReference(rootDBPath);
+    try {
+      final String[] json = {""};
+      ref.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+          Object object = dataSnapshot.getValue(Object.class);
+          json[0] = new Gson().toJson(object);
+          if (!json[0].equals("null"))  {
+            declareLevelEndedForCurrentTeam();
+          }
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+          System.out.println("The read failed: " + databaseError.getCode());
+        }
+      });
+    }
+    catch (Exception e) {
 
+    }
+  }
+
+  private void declareLevelEndedForCurrentTeam()  {
+    System.out.println("level ended for current team!!!! ");
+    this.levelEndedForCurrentTeam = true;
+  }
+
+  @Override
+  public void checkLevelEndedForBothTeams() {
+    int otherTeamID = getOtherTeamID();
+    String rootDBPath = "match_info/match"+matchID+"/team"+otherTeamID+"/gameEnded/";
+    DatabaseReference ref = FirebaseDatabase.getInstance()
+        .getReference(rootDBPath);
+    try {
+      final String[] json = {""};
+      ref.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+          Object object = dataSnapshot.getValue(Object.class);
+          json[0] = new Gson().toJson(object);
+          if (!json[0].equals("null"))  {
+            declareLevelEndedForOtherTeam();
+          }
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+          System.out.println("The read failed: " + databaseError.getCode());
+        }
+      });
+    }
+    catch (Exception e) {
+
+    }
+  }
+
+  private void declareLevelEndedForOtherTeam() {
+    if (this.levelEndedForCurrentTeam)  {
+      System.out.println("level ended for both teams!!!!!!!");
+    }
   }
 
   @Override
   public void checkLevelStarted() {
     this.checkOtherTeamAllPresent();
+    checkCurrentTeamAllPresent();
+  }
+
+  private void checkCurrentTeamAllPresent() {
     String rootDBPath = "match_info/match"+matchID+"/team"+teamID+"/playerIDs/";
     DatabaseReference ref = FirebaseDatabase.getInstance()
         .getReference(rootDBPath);
@@ -87,7 +153,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           try {
             List playerIDs =
                 new ObjectMapper().readValue(json[0], List.class);
-            System.out.println(playerIDs);
+            //System.out.println(playerIDs);
             if (playerIDs.size() == 2)  {
               teamAllHere();
             }
@@ -106,16 +172,9 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   }
 
   private void checkOtherTeamAllPresent()  {
-    String rootDBPath;
-    int otherTeam = 0;
-    if (teamID == 1)  {
-      rootDBPath = "match_info/match"+matchID+"/team"+2+"/playerIDs/";
-      otherTeam = 2;
-    }
-    else  {
-      rootDBPath = "match_info/match"+matchID+"/team"+1+"/playerIDs/";
-      otherTeam = 1;
-    }
+
+    int otherTeam = getOtherTeamID();
+    String rootDBPath = "match_info/match"+matchID+"/team"+otherTeam+"/playerIDs/";
     DatabaseReference ref = FirebaseDatabase.getInstance()
         .getReference(rootDBPath);
     try {
@@ -129,7 +188,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           try {
             List playerIDs =
                 new ObjectMapper().readValue(json[0], List.class);
-            System.out.println(playerIDs);
+            //System.out.println(playerIDs);
             if (playerIDs.size() == 2)  {
               otherTeamAllHere();
             }
@@ -145,6 +204,17 @@ public class ConcreteDatabaseListener implements DatabaseListener {
     }
     catch (Exception e) {
     }
+  }
+
+  private int getOtherTeamID() {
+    int otherTeam = 0;
+    if (teamID == 1)  {
+      otherTeam = 2;
+    }
+    else  {
+      otherTeam = 1;
+    }
+    return otherTeam;
   }
 
   private void teamAllHere()  {
@@ -174,7 +244,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       catch (Exception e)  {
         return null;
       }
-      System.out.println("new PARSED COMMANDS" + commands);
+      //System.out.println("new PARSED COMMANDS" + commands);
       if (commands == null) return null;
       for (int i = 1; i < commands.size(); i++) {
         Map commandBlockParams = (Map) commands.get(i);

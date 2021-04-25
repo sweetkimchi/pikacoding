@@ -8,7 +8,7 @@ public class DatabaseTester {
 
   public static void main(String[] args) throws IOException, InterruptedException {
 
-    //FirebaseService firebaseService = new FirebaseService(0, 0);
+    //FirebaseService firebaseService = new FirebaseService(1, 1);
     //firebaseService.saveGameLevel(1);
     //firebaseService.readDBContentsForLevelInit(1);
     //MongoDriver mongoDriver = new MongoDriver();
@@ -19,9 +19,11 @@ public class DatabaseTester {
 //    while (true)  {
 //
 //    }
-    test.checkLevelStarted();
-    //PlayerInitialization test2 = new PlayerInitialization(0, 2);
-
+    //test.checkLevelStarted();
+    //PlayerInitialization test2 = new PlayerInitialization(0, 1);
+    test.checkLevelEndedForCurrentTeam();
+    test.checkLevelEndedForBothTeams();
+    //firebaseService.declareEndOfGame(0, 100);
     while (true)  {
 
     }

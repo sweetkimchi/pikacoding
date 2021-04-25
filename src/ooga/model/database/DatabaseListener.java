@@ -4,7 +4,9 @@ public interface DatabaseListener {
 
   void codeAreaChanged();
 
-  void checkLevelEnded();
+  void checkLevelEndedForCurrentTeam();
+
+  void checkLevelEndedForBothTeams();
 
   void checkLevelStarted();
 
