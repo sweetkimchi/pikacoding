@@ -37,7 +37,7 @@ public abstract class MathematicalCommands extends BasicCommands {
 
       sendDataCubeNumUpdate(avatarCube);
     } else {
-      //if desired, handle error if the blocks are not present and cannot complete operation
+      //if desired, handle error if the datacubes are not present and cannot complete operation
       //System.out.println("Cannot compute blocks!");
     }
 

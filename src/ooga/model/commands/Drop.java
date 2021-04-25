@@ -26,17 +26,16 @@ public class Drop extends BasicCommands {
     if (currTile.canAddBlock()) {
       Block block = avatar.drop();
       if (block == null) {
-        //TODO: throw error to handler
-        System.out.println("You are not holding a block!");
+        //if desired, handle error if the avatar is not holding a block
+        //System.out.println("You are not holding a block!");
       } else {
         block.drop();
         sendBlockHeldUpdate(block);
       }
       currTile.add(block);
     } else {
-      //TODO: throw error to handler
-      System.out.println("You cannot drop here!");
-
+      //if desired, handle error if the avatar cannot drop the block
+      //System.out.println("You cannot drop here!");
     }
 
     incrementProgramCounterByOne(avatar);

@@ -32,8 +32,8 @@ public abstract class SetDataCubeCommands extends BasicCommands {
       avatarCube.setDisplayNum(newDisplayNum);
       sendDataCubeNumUpdate(avatarCube);
     } else {
-      //TODO: throw error to handler, change message to be specific for operation?
-      System.out.println("Avatar is not holding a datacube!");
+      //if desired, handle error if the avatar is not holding a datacube
+      //System.out.println("Avatar is not holding a datacube!");
     }
     incrementProgramCounterByOne(avatar);
   }

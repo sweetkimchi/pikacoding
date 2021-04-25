@@ -49,7 +49,6 @@ public class If extends ConditionalCommands {
       avatar.setProgramCounter(avatar.getProgramCounter() + 1);
     }
     else {
-      // TODO: find next line after end if and set PC to that
       if(!getElementInformationBundle().getMapOfCommandLines().isEmpty()){
          avatar.setProgramCounter(getElementInformationBundle().getMapOfCommandLines().get(avatar.getProgramCounter()));
       }
