@@ -47,14 +47,29 @@ public class ElementInformationBundle implements InformationBundle {
     return Collections.unmodifiableList(avatarList);
   }
 
+  /**
+   * Purpose: passes in the model controller which handles the communication between frontend and backend
+   * @param modelController an implementation of BackEndExternalAPI
+   */
   public void setModelController(BackEndExternalAPI modelController) {
     this.modelController = modelController;
   }
 
+  /**
+   * Purpose: returns the model controller instance so that eah class can notify the frontend of any updates
+   * Assumption: modelController is not null
+   * @return modelController object
+   */
   public BackEndExternalAPI getModelController() {
     return modelController;
   }
 
+  /**
+   * Purpose: returns the list of blockdata
+   * Assumption: block data is appropriately constructed in InitialParser
+   * Exception: null exception if there are no blocks
+   * @return list of blocks
+   */
   public List<BlockData> getBlockData() {
     List<BlockData> ret = new ArrayList<>();
     for (Block dataCube : blockList) {

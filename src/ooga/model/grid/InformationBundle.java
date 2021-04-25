@@ -22,8 +22,29 @@ public interface InformationBundle {
    * @return the list of Avatars
    */
   List<Player> getAvatarList();
+
+  /**
+   * Purpose: passes in the model controller which handles the communication between frontend and backend
+   * Assumption: modelController is not null
+   * @param modelController an implementation of BackEndExternalAPI
+   */
   void setModelController(BackEndExternalAPI modelController);
+
+  /**
+   * Purpose: returns the model controller instance so that eah class can notify the frontend of any updates
+   * Assumption: modelController is not null
+   * Exceptions: sometimes the modelController may be null if any of its commands are called before the level view
+   * is initialized
+   * @return modelController object
+   */
   BackEndExternalAPI getModelController();
+
+  /**
+   * Purpose: returns the list of blockdata
+   * Assumption: block data is appropriately constructed in InitialParser
+   * Exception: null exception if there are no blocks
+   * @return list of blocks
+   */
   List<BlockData> getBlockData();
   void setDimensions(int x, int y);
   Structure getStructure(int x, int y);
