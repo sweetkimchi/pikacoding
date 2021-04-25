@@ -24,6 +24,7 @@ import ooga.model.commands.SetZero;
 import ooga.model.commands.Step;
 import ooga.model.commands.Subtract;
 import ooga.model.commands.Throw;
+import ooga.model.commands.ThrowOver;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.BoardState;
@@ -403,6 +404,17 @@ public class GridTest {
     assertFalse(elementInformationBundle.getTileData(5, 5).hasAvatar());
     assertEquals(6, avatar.getXCoord());
     assertEquals(5, avatar.getYCoord());
+  }
+
+  @Test
+  public void testThrowOver(){
+    avatarPickUpDataCubeSameTile();
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "right");
+    ThrowOver throwCommand = new ThrowOver(elementInformationBundle, parameters);
+    throwCommand.execute(10);
+    assertEquals(7, dataCube.getXCoord());
+    assertEquals(5, dataCube.getYCoord());
   }
 
 }
