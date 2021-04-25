@@ -2,7 +2,7 @@ package ooga.model.player;
 
 /**
  * The Avatar is a type of Player directed by the player of the game able to pick up and drop
- * blocks.
+ * blocks. The Avatar can only hold one block at a time.
  *
  * @author Harrison Huang
  */
@@ -68,10 +68,11 @@ public class Avatar extends Player {
   /**
    * Directs the avatar to pick up a block.
    *
-   * @param toPickUp The block to pick up
+   * @param block The block to pick up
    */
-  public void pickUp(Block toPickUp) {
-    heldItem = toPickUp;
+  @Override
+  public void pickUp(Block block) {
+    heldItem = block;
   }
 
   /**
@@ -79,6 +80,7 @@ public class Avatar extends Player {
    *
    * @return The block that was dropped
    */
+  @Override
   public Block drop() {
     Block ret = heldItem;
     heldItem = null;
