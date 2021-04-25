@@ -24,6 +24,7 @@ public class ModelController implements BackEndExternalAPI {
   private ConcreteDatabaseListener codeAreaParser;
   private int level;
   private int matchID;
+  private int teamID;
   private Stopwatch stopwatch;
 
   /**
@@ -32,7 +33,7 @@ public class ModelController implements BackEndExternalAPI {
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
     matchID = 12345;
-    firebaseService = new FirebaseService(0, 0);
+
     ConcreteDatabaseListener codeAreaParser = new ConcreteDatabaseListener(this, matchID, 0);
     codeAreaParser.codeAreaChanged();
     this.codeAreaParser = codeAreaParser;
@@ -187,5 +188,10 @@ public class ModelController implements BackEndExternalAPI {
   }
 
   @Override
-  public void getTeamNumber(int teamNum) { }
+  public void setTeamNumber(int teamNum) {
+    this.teamID = teamNum;
+    firebaseService = new FirebaseService(teamID, 0);
+
+  }
+
 }
