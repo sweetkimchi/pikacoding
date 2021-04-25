@@ -32,7 +32,7 @@ class LevelViewTest extends ApplicationTest {
     Controller controller = new Controller(stage);
     viewController = (FrontEndExternalAPI)  getPrivateField(controller, "viewController");
     modelController = (BackEndExternalAPI)  getPrivateField(controller, "modelController");
-    viewController.initializeLevel(1);
+    viewController.initializeSingleLevel(1);
     levelView = (LevelView)  getPrivateField(viewController, "levelView");
     avatars = (Map<Integer, ViewAvatar>) getPrivateField(lookup("#sprite-layer").queryAs(SpriteLayer.class), "avatars");
     programStack = lookup("#program-stack").queryAs(ProgramStack.class);
@@ -81,8 +81,8 @@ class LevelViewTest extends ApplicationTest {
 
   private void clickButton(String button) {
     clickOn(lookup("#" + button).queryButton());
-    Platform.runLater(() -> lookup("#" + button).queryButton().fire());
-    sleep(100);
+    //Platform.runLater(() -> lookup("#" + button).queryButton().fire());
+    //sleep(100);
   }
 
 }

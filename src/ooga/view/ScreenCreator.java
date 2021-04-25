@@ -4,7 +4,6 @@ import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ooga.controller.FrontEndExternalAPI;
-import ooga.model.grid.gridData.BoardState;
 import ooga.view.level.LevelView;
 import ooga.view.level.MultiplayerLevelView;
 
@@ -54,8 +53,18 @@ public class ScreenCreator {
    * Creates a new LevelView and loads it into the stage
    * @param level Level number
    */
-  public void initializeLevelView(int level) {
+  public void initializeMultiLevelView(int level) {
     levelView = new MultiplayerLevelView(level, viewController, this);
+    Scene scene = new Scene(levelView, width, height);
+    stage.setScene(scene);
+  }
+
+  /**
+   * Creates a new LevelView and loads it into the stage
+   * @param level Level number
+   */
+  public void initilaizeSingleLevelView(int level) {
+    levelView = new LevelView(level, viewController, this);
     Scene scene = new Scene(levelView, width, height);
     stage.setScene(scene);
   }
@@ -78,7 +87,7 @@ public class ScreenCreator {
 
   // TODO: right now pulls up level selection; level selection should be random
   public void teamSelector() {
-    teamSelector = new TeamSelector(viewController::initializeLevel);
+    teamSelector = new TeamSelector(viewController::initializeMultiLevel);
     teamSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(teamSelector, width, height);
     stage.setScene(scene);
@@ -92,7 +101,7 @@ public class ScreenCreator {
    * Opens up the level selector
    */
   public void loadLevelSelector() {
-    LevelSelector levelSelector = new LevelSelector(viewController::initializeLevel);
+    LevelSelector levelSelector = new LevelSelector(viewController::initializeSingleLevel);
     levelSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(levelSelector, width, height);
     stage.setScene(scene);
