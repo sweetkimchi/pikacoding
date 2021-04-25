@@ -29,7 +29,7 @@ public class ModelController implements BackEndExternalAPI {
    */
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
-    int matchID = 0;
+    int matchID = 100;
     firebaseService = new FirebaseService(0, 0);
     CodeAreaParser codeAreaParser = new CodeAreaParser(this, matchID, 0);
     codeAreaParser.codeAreaChanged();
@@ -79,7 +79,7 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void parseCommands(List<CommandBlock> commandBlocks) {
     //TODO: delete after debugging. Initializing level for testing purposes
-    //initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService);
+    initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService, 0);
 
     commandExecutor = new CommandExecutor(commandBlocks, this,
         initialConfigurationParser.getInitialState(),
@@ -155,7 +155,7 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void updateProgram(List<CommandBlock> program) {
-    int matchID = 1;
+    int matchID = 100;
 
     // TODO: notify database of program update
     this.codeAreaParser.setLastCommandBlockForCurrentComputer(program);
