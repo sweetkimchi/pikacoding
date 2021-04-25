@@ -14,21 +14,18 @@ public final class AvailableCommands {
 
   public AvailableCommands(Map<String, List<Map<String, List<String>>>> commandsMap,
       List<String> commandsAvailable) {
-    cleanCommandsMap(commandsAvailable);
-    this.commandsMap = commandsMap;
+    this.commandsMap = new HashMap<>();
+    cleanCommandsMap(commandsMap, commandsAvailable);
     parametersIndex = new HashMap<>();
     initializeParametersIndex();
   }
 
-  private void cleanCommandsMap(List<String> commandsAvailable) {
-    List<String> commandsToRemove = new ArrayList<>();
-    for (String command: commandsMap.keySet())  {
-      if (!commandsAvailable.contains(command)) {
-        commandsToRemove.add(command);
+  private void cleanCommandsMap(Map<String, List<Map<String, List<String>>>> prevMap,
+      List<String> commandsAvailable) {
+    for (String command: prevMap.keySet())  {
+      if (commandsAvailable.contains(command)) {
+        this.commandsMap.put(command, prevMap.get(command));
       }
-    }
-    for (String commandtoRemove: commandsToRemove)  {
-      this.commandsMap.remove(commandtoRemove);
     }
   }
 

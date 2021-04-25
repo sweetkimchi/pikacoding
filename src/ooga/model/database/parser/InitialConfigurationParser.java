@@ -91,7 +91,7 @@ public class InitialConfigurationParser {
           (String) initial.get("description"),
           (int) initial.get("numPeople"),
           (int) initial.get("level"),
-          (int) initial.get("timeLimit"));
+          Integer.parseInt((String) initial.get("timeLimit")));
     } catch (Exception e) {
       e.printStackTrace();
       this.errorMessage = "Error parsing start state";
@@ -186,6 +186,7 @@ public class InitialConfigurationParser {
       }
     }
     catch (Exception e) {
+      e.printStackTrace();
       this.errorMessage = "Error parsing commands";
       this.errorOccurred = true;
     }
