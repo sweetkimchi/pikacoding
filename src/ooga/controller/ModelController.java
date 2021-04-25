@@ -17,6 +17,7 @@ public class ModelController implements BackEndExternalAPI {
   private CommandExecutor commandExecutor;
   private InitialConfigurationParser initialConfigurationParser;
   private FirebaseService firebaseService;
+  private CodeAreaParser codeAreaParser;
   private int level;
 
   /**
@@ -28,6 +29,7 @@ public class ModelController implements BackEndExternalAPI {
     firebaseService = new FirebaseService(0, 0);
     CodeAreaParser codeAreaParser = new CodeAreaParser(this, matchID, 0);
     codeAreaParser.codeAreaChanged();
+    this.codeAreaParser = codeAreaParser;
   }
 
   /**
@@ -145,12 +147,15 @@ public class ModelController implements BackEndExternalAPI {
     int matchID = 1;
 
     // TODO: notify database of program update
-
+    this.codeAreaParser.setLastCommandBlockForCurrentComputer(program);
     firebaseService.saveMatchInformation(matchID, program);
   }
 
   @Override
   public void receivedProgramUpdate(List<CommandBlock> program) {
-    viewController.receiveProgramUpdates(program);
+    System.out.println(program);
+    if (program != null)  {
+      viewController.receiveProgramUpdates(program);
+    }
   }
 }

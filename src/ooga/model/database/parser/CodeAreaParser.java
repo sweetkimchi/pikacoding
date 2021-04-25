@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.web.HTMLEditorSkin.Command;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.ModelController;
 import ooga.model.database.DatabaseListener;
@@ -21,8 +22,16 @@ public class CodeAreaParser implements DatabaseListener {
   private BackEndExternalAPI modelController;
   private int matchID;
   private int teamID;
+  private List<CommandBlock> lastCommandBlockForCurrentComputer;
   public CodeAreaParser(ModelController modelController, int matchID, int teamID)  {
     this.modelController = modelController;
+    lastCommandBlockForCurrentComputer = new ArrayList<>();
+  }
+
+
+  public void setLastCommandBlockForCurrentComputer(
+      List<CommandBlock> lastCommandBlockForCurrentComputer) {
+    this.lastCommandBlockForCurrentComputer = lastCommandBlockForCurrentComputer;
   }
 
   @Override
@@ -56,6 +65,7 @@ public class CodeAreaParser implements DatabaseListener {
       List<CommandBlock> ret = new ArrayList<>();
       List result =
           new ObjectMapper().readValue(json, List.class);
+      if (result == null) return null;
       Map codingArea = (Map) result.get(teamID);
       List commands = (List) codingArea.get("codingArea");
       for (int i = 1; i < commands.size(); i++) {
@@ -63,6 +73,15 @@ public class CodeAreaParser implements DatabaseListener {
         ret.add(new CommandBlock((int) commandBlockParams.get("index"),
             (String) commandBlockParams.get("type"), (Map) commandBlockParams.get("parameters")));
       }
+      if (ret.size() == this.lastCommandBlockForCurrentComputer.size()) {
+        for (int i = 0; i < ret.size(); i++)  {
+          if (!ret.get(i).equals(this.lastCommandBlockForCurrentComputer.get(i)))  {
+            return ret;
+          }
+        }
+        return null;
+      }
+
       return ret;
     }
     catch (Exception e) {
