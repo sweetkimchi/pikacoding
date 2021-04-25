@@ -26,7 +26,7 @@ public class ParserTester {
 
   @Test
   public void checkParseLevel1() {
-    InitialConfigurationParser tester = new InitialConfigurationParser(1, firebaseService);
+    InitialConfigurationParser tester = new InitialConfigurationParser(1, firebaseService, 0);
     GoalState goalState = tester.getGoalState();
     InitialState initialState = tester.getInitialState();
     System.out.println(tester.getErrorMessage());
@@ -41,7 +41,7 @@ public class ParserTester {
   @Test
   public void checkGameGridParseLevel1()  {
 
-    InitialConfigurationParser tester = new InitialConfigurationParser(1, this.firebaseService);
+    InitialConfigurationParser tester = new InitialConfigurationParser(1, this.firebaseService, 0);
     ElementInformationBundle elementInformationBundle = tester.getGameGrid();
 
     assertEquals(Structure.HOLE, elementInformationBundle.getStructure(4, 1));
@@ -52,13 +52,13 @@ public class ParserTester {
 
   @Test
   public void checkParseWrongLevel(){
-    InitialConfigurationParser tester = new InitialConfigurationParser(0, this.firebaseService);
+    InitialConfigurationParser tester = new InitialConfigurationParser(0, this.firebaseService, 0);
     assertTrue(tester.getErrorOccurred());
   }
 
   @Test
   public void checkEndStateCorrect()  {
-    InitialConfigurationParser tester = new InitialConfigurationParser(1, this.firebaseService);
+    InitialConfigurationParser tester = new InitialConfigurationParser(1, this.firebaseService, 0);
     GoalState parsedGoalState = tester.getGoalState();
 
     ElementInformationBundle grid = new ElementInformationBundle();

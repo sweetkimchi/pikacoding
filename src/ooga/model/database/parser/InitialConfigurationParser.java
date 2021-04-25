@@ -30,8 +30,10 @@ public class InitialConfigurationParser {
   private String errorMessage = "";
   private GameGridData gameGridData;
   private FirebaseService firebaseService;
+  private int playerID;
 
-  public InitialConfigurationParser(int level, FirebaseService firebaseService)  {
+  public InitialConfigurationParser(int level, FirebaseService firebaseService, int playerID)  {
+    this.playerID = playerID;
     this.level = level;
     this.firebaseService = firebaseService;
     this.rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + this.level + "/";

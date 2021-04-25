@@ -6,7 +6,7 @@ public class Tester {
 
 
   public static void main(String[] args)  {
-    InitialConfigurationParser x = new InitialConfigurationParser(1, new FirebaseService(0, 0));
+    InitialConfigurationParser x = new InitialConfigurationParser(1, new FirebaseService(0, 0), 0);
     x.getInitialState();
   }
 }
