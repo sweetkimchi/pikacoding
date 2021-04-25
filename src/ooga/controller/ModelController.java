@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import ooga.model.CommandExecutor;
 import ooga.model.database.FirebaseService;
-import ooga.model.database.parser.CodeAreaParser;
+import ooga.model.database.parser.ConcreteDatabaseListener;
 import ooga.model.database.parser.InitialConfigurationParser;
 import ooga.view.level.codearea.CommandBlock;
 import com.google.common.base.Stopwatch;
@@ -20,8 +20,9 @@ public class ModelController implements BackEndExternalAPI {
   private CommandExecutor commandExecutor;
   private InitialConfigurationParser initialConfigurationParser;
   private FirebaseService firebaseService;
-  private CodeAreaParser codeAreaParser;
+  private ConcreteDatabaseListener codeAreaParser;
   private int level;
+  private int matchID;
   private Stopwatch stopwatch;
 
   /**
@@ -29,9 +30,9 @@ public class ModelController implements BackEndExternalAPI {
    */
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
-    int matchID = 100;
+    matchID = 1010101;
     firebaseService = new FirebaseService(0, 0);
-    CodeAreaParser codeAreaParser = new CodeAreaParser(this, matchID, 0);
+    ConcreteDatabaseListener codeAreaParser = new ConcreteDatabaseListener(this, matchID, 0);
     codeAreaParser.codeAreaChanged();
     this.codeAreaParser = codeAreaParser;
   }
@@ -155,8 +156,6 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void updateProgram(List<CommandBlock> program) {
-    int matchID = 100;
-
     // TODO: notify database of program update
     this.codeAreaParser.setLastCommandBlockForCurrentComputer(program);
     firebaseService.saveMatchInformation(matchID, program);
