@@ -23,6 +23,7 @@ import ooga.model.commands.PickUp;
 import ooga.model.commands.SetZero;
 import ooga.model.commands.Step;
 import ooga.model.commands.Subtract;
+import ooga.model.commands.Tell;
 import ooga.model.commands.Throw;
 import ooga.model.commands.ThrowOver;
 import ooga.model.grid.ElementInformationBundle;
@@ -415,6 +416,21 @@ public class GridTest {
     throwCommand.execute(10);
     assertEquals(7, dataCube.getXCoord());
     assertEquals(5, dataCube.getYCoord());
+  }
+
+  @Test
+  public void testTell(){
+    assertTrue(elementInformationBundle.getTileData(5, 5).hasAvatar());
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "right");
+    Step step = new Step(elementInformationBundle, parameters);
+    step.execute(10);
+
+    Tell tell = new Tell(elementInformationBundle, parameters);
+    parameters.put("id", "10");
+    tell.execute(10);
+
+    assertEquals(3, avatar.getProgramCounter());
   }
 
 }
