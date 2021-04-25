@@ -42,7 +42,7 @@ public class Nearest extends AICommands{
     Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
     int xBlock = block.getLocation().get(X);
     int yBlock = block.getLocation().get(Y);
-    int initialManhattanDistance = Math.abs(avatar.getXCoord() - xBlock) + Math.abs(avatar.getYCoord() - yBlock);
+    int initialManhattanDistance = Integer.MAX_VALUE;
     int newX = avatar.getXCoord();
     int newY = avatar.getYCoord();
     Tile prevTile = getCurrTile(ID);

@@ -7,6 +7,7 @@ import ooga.model.commands.Commands;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.gridData.BoardState;
 import ooga.model.grid.gridData.GoalState;
+import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.Player;
 import ooga.view.level.codearea.CommandBlock;
 import com.google.common.base.Stopwatch;
@@ -39,7 +40,7 @@ public class CommandExecutor {
      * Default constructor
      */
     public CommandExecutor(List<CommandBlock> commandBlocks, BackEndExternalAPI modelController,
-        BoardState initialState,
+        InitialState initialState,
         ElementInformationBundle elementInformationBundle,
         GoalState goalState, Stopwatch stopwatch) {
         this.goalState = goalState;
@@ -112,8 +113,6 @@ public class CommandExecutor {
             commandBlocks.get(avatar.getProgramCounter() - 1).execute(avatar.getId());
             score++;
             modelController.setScore(goalState.getNumOfCommands() - score);
-//            timeLeft = (int) (idealTime - stopwatch.elapsed(TimeUnit.SECONDS));
-//            System.out.println("TIME LEFT: " + timeLeft);
         }
         if(goalState.checkGameEnded(elementInformationBundle)){
             ended = true;
@@ -131,7 +130,7 @@ public class CommandExecutor {
 
     private List<Integer> calculateFinalScores(int idealLines, int idealTime) {
         List<Integer> scores = new ArrayList<>();
-        timeLeft = (int) (idealTime - stopwatch.elapsed(TimeUnit.SECONDS));
+        timeLeft = (int) (timeLimit - stopwatch.elapsed(TimeUnit.SECONDS));
         scores.add((idealLines - commandBlocks.size()) * SCORING_FACTOR);
         scores.add((timeLeft/60) * SCORING_FACTOR);
 
@@ -140,7 +139,7 @@ public class CommandExecutor {
     }
 
     public void checkTimeLeftOrNot() {
-        timeLeft = (int) (idealTime - stopwatch.elapsed(TimeUnit.SECONDS));
+        timeLeft = (int) (timeLimit - stopwatch.elapsed(TimeUnit.SECONDS));
         if(timeLeft <= 0){
             modelController.updateTime(0);
             modelController.timedOut();

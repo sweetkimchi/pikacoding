@@ -30,7 +30,7 @@ public class ModelController implements BackEndExternalAPI {
    */
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
-    matchID = 101;
+    matchID = 900;
     firebaseService = new FirebaseService(0, 0);
     ConcreteDatabaseListener codeAreaParser = new ConcreteDatabaseListener(this, matchID, 0);
     codeAreaParser.codeAreaChanged();
