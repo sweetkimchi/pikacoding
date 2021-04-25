@@ -1,14 +1,14 @@
 {
   "level":7,
-  "numPeople":8,
-  "blocks":["step", "pickUp", "drop", "if", "jump"],
-  "blocks-p1":["step", "if"],
-  "blocks-p2":["pickUp", "drop", "jump"],
+  "numPeople":4,
+  "blocks":["step", "pickUp", "drop", "jump", "if", "nearest", "throw", "throwOver"],
+  "blocks-p1":["step", "if", "jump", "nearest"],
+  "blocks-p2":["pickUp", "drop", "throw", "throwOver"],
   "startState":"startState.json",
   "endState":"endState.json",
   "images":"images.json",
-  "description":"Place the datacubes in reverse order in the same place between the two holes.",
-  "idealNumOfCommands":"600",
-  "timeLimit":"600",
+  "description":"Using the ThrowOver command, pass the datacube and have the rightmost Pikachu drop it in the bottom right corner tile.",
+  "idealNumOfCommands":"500",
+  "timeLimit":"400",
   "grid": "grid.json"
 }

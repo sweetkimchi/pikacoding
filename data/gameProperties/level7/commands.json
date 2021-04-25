@@ -68,5 +68,46 @@
         ]
       }
     ]
+  },
+  "throw": {
+    "parameters": [
+      {
+        "direction": [
+          "up",
+          "up-right",
+          "right",
+          "down-right",
+          "down",
+          "down-left",
+          "left",
+          "up-left"
+        ]
+      }
+    ]
+  },
+  "nearest": {
+    "parameters": [
+      {
+        "target": [
+          "datacube"
+        ]
+      }
+    ]
+  },
+  "throwOver": {
+    "parameters": [
+      {
+        "direction": [
+          "up",
+          "up-right",
+          "right",
+          "down-right",
+          "down",
+          "down-left",
+          "left",
+          "up-left"
+        ]
+      }
+    ]
   }
 }

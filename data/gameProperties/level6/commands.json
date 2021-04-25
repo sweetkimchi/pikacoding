@@ -68,5 +68,14 @@
         ]
       }
     ]
+  },
+  "nearest": {
+    "parameters": [
+      {
+        "target": [
+          "datacube"
+        ]
+      }
+    ]
   }
 }

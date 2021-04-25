@@ -1,14 +1,14 @@
 {
   "level":5,
   "numPeople":4,
-  "blocks":["step", "pickUp", "drop", "jump", "if", "nearest", "throw", "throwOver"],
-  "blocks-p1":["step", "if", "jump", "nearest"],
-  "blocks-p2":["pickUp", "drop", "throw", "throwOver"],
+  "blocks":["step", "pickUp", "drop", "if", "jump"],
+  "blocks-p1":["step", "if"],
+  "blocks-p2":["pickUp", "drop", "jump"],
   "startState":"startState.json",
   "endState":"endState.json",
   "images":"images.json",
-  "description":"Using the ThrowOver command, pass the datacube and have the rightmost Pikachu drop it in the bottom right corner tile.",
-  "idealNumOfCommands":"500",
-  "timeLimit":"400",
+  "description":"Using the If command, have the Pikachu drop the datacubes in a diagonal line. The first three datacubes are provided for convenience.",
+  "idealNumOfCommands":"100",
+  "timeLimit":"300",
   "grid": "grid.json"
 }
