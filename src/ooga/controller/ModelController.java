@@ -50,7 +50,6 @@ public class ModelController implements BackEndExternalAPI {
 
   /**
    * initializes the level
-   *
    * @param level integer indicating the level
    * @return BoardState object with level information
    */
