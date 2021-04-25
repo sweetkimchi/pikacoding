@@ -1,7 +1,5 @@
 package ooga.model.player;
 
-import ooga.model.Direction;
-
 /**
  * An element is the highest level abstraction of a tile in the Grid. Each element has an ID.
  *
@@ -36,9 +34,4 @@ public interface Element {
    */
   void setYCoord(int yCoord);
 
-  boolean isActive();
-
-  void setIsActive(boolean isActive);
-
-  void step(Direction direction);
 }
