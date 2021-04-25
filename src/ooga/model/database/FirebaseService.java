@@ -82,6 +82,7 @@ public class FirebaseService {
           , new TypeToken<HashMap<String, Object>>() {}.getType());
     }
     catch (Exception e) {
+      exceptionOccured = true;
       return;
     }
     setDatabaseContentsWithMap(jsonMap, pathInDB);
