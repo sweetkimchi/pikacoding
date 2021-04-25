@@ -12,6 +12,7 @@ import javax.lang.model.util.Elements;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.Add;
+import ooga.model.commands.Decrement;
 import ooga.model.commands.Drop;
 import ooga.model.commands.Multiply;
 import ooga.model.commands.Nearest;
@@ -309,6 +310,23 @@ public class GridTest {
     add.execute(10);
 
     assertEquals(247, dataCube.getDisplayNum());
+  }
+
+  @Test
+  public void testDecrement(){
+    DataCube dataCube1 = new DataCube(15, 5, 6, 13);
+    elementInformationBundle.addBlock(dataCube1);
+    avatarPickUpDataCubeSameTile();
+
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "down");
+    Step step = new Step(elementInformationBundle, parameters);
+    step.execute(10);
+
+    Decrement add = new Decrement(elementInformationBundle, new HashMap<>());
+    add.execute(10);
+
+    assertEquals(18, dataCube.getDisplayNum());
   }
 
 }
