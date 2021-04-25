@@ -43,7 +43,7 @@ public class Throw extends BasicCommands {
       }
 
       while (block != null) {
-        if (nextTile == null || !nextTile.canAddBlock() || direction == Direction.SELF) {
+        if (nextTile == null || !nextTile.canAddBlock() || direction == Direction.CURRENT) {
           currTile.add(block);
           block.setXCoord(currX);
           block.setYCoord(currY);
