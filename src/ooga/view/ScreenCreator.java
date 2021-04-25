@@ -71,8 +71,12 @@ public class ScreenCreator {
     stage.setScene(scene);
   }
 
+  // TODO: right now pulls up level selection; level selection should be random
   public void teamSelector() {
-
+    TeamSelector teamSelector = new TeamSelector(viewController::initializeLevel);
+    teamSelector.getStylesheets().add(startMenu.getStyleSheet());
+    Scene scene = new Scene(teamSelector, width, height);
+    stage.setScene(scene);
   }
 
   /**

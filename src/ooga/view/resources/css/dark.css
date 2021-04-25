@@ -12,12 +12,12 @@
 
 .type-screen {
     -fx-alignment: CENTER;
-    -fx-spacing: 30.0;
+    -fx-spacing: 80.0;
 }
 
 .instruction-box {
     -fx-alignment: CENTER;
-    -fx-spacing: 20.0;
+    -fx-spacing: 50.0;
 }
 
 .title {
@@ -27,7 +27,7 @@
 
 .level-selector {
     -fx-alignment: CENTER;
-    -fx-spacing: 5.0;
+    -fx-spacing: 10.0;
 }
 
 .state {
@@ -160,4 +160,8 @@
 
 .block-text {
     -fx-fill: #eef0f2;
+}
+
+.team-message {
+    -fx-font-size: 25pt;
 }
