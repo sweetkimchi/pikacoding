@@ -1,6 +1,6 @@
 {
-  "idealLines": 12,
-  "idealTime": 120,
+  "idealLines": 7,
+  "idealTime": 25,
 
   "peopleLocations":{
     "noLoc":true
@@ -8,8 +8,38 @@
 
   "blocks":{
     "101":{
-      "loc":[10,8],
-      "num":1,
+      "loc":[3,3],
+      "num":6,
+      "pickedUp":"False"
+    },
+    "102":{
+      "loc":[4,4],
+      "num":7,
+      "pickedUp":"False"
+    },
+    "103":{
+      "loc":[5,5],
+      "num":8,
+      "pickedUp":"False"
+    },
+    "104":{
+      "loc":[6,6],
+      "num":9,
+      "pickedUp":"False"
+    },
+    "105":{
+      "loc":[7,7],
+      "num":10,
+      "pickedUp":"False"
+    },
+    "106":{
+      "loc":[2,2],
+      "num":5,
+      "pickedUp":"False"
+    },
+    "107":{
+      "loc":[1,1],
+      "num":4,
       "pickedUp":"False"
     }
   }

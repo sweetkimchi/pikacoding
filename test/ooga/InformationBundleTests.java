@@ -128,7 +128,6 @@ public class InformationBundleTests {
 
       @Override
       public void setTeamNumber(int teamNum) {
-
       }
     };
   }

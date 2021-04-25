@@ -64,12 +64,18 @@ class ViewTest extends ApplicationTest {
     assertTrue(lookup("#single-player-button").query() != null);
   }
 
+//  @Test
+//  void determineCorrectTeam() {
+//    clickButton("start-button");
+//    clickButton("multiplayer-button");
+//    clickButton("team1-button");
+//    assertTrue(screenCreator.getTeam() == 1);
+//  }
+
   @Test
-  void determineCorrectTeam() {
-    clickButton("start-button");
-    clickButton("multiplayer-button");
-    clickButton("team1-button");
-    assertTrue(screenCreator.getTeam() == 1);
+  void changeStyleSheet() {
+    clickOn(lookup("#css-combo").queryComboBox());
+
   }
 
   private Object getPrivateField(Object object, String field) {

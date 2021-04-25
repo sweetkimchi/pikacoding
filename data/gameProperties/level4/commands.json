@@ -70,12 +70,12 @@
     ]
   },
   "nearest": {
-    "parameters": [
-      {
-        "target": [
-          "datacube"
-        ]
-      }
-    ]
-  }
+      "parameters": [
+        {
+          "target": [
+            "datacube"
+          ]
+        }
+      ]
+    }
 }
