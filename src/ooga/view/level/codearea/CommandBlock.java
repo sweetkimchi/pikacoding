@@ -47,7 +47,7 @@ public class CommandBlock {
       if (parameters == null) {
         return (this.index == commandBlock.index &&
             this.type.equals(commandBlock.type) &&
-            null == (commandBlock.parameters));
+            (null == (commandBlock.parameters))|| commandBlock.parameters.size() == 0);
       }
       return (this.index == commandBlock.index &&
           this.type.equals(commandBlock.type) &&
