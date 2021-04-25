@@ -23,9 +23,9 @@ public class CommandExecutor {
     private ElementInformationBundle elementInformationBundle;
     private BoardState initialState;
     private int score;
-    private int idealTime = 500;
-    private int idealLines = 20;
-    private int SCORING_FACTOR = 100;
+    private int idealTime;
+    private int idealLines;
+    private int SCORING_FACTOR = 10;
     private ClassLoader classLoader;
     private final String COMMAND_CLASSES_PACKAGE = Commands.class.getPackageName();
     private GoalState goalState;
