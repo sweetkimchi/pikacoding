@@ -40,6 +40,7 @@ public class ProgramStack extends VBox {
 
   public void addCommandBlock(String command) {
 //    System.out.println(command + " 1");
+    System.out.println(command + " " + availableCommands.getCommandNames());
     if (availableCommands.getCommandNames().contains(command)) {
       createAndAddCommandBlock(availableCommands, command, false);
     } else if (availableCommandsOtherPlayer.getCommandNames().contains(command)) {
@@ -137,8 +138,14 @@ public class ProgramStack extends VBox {
           for (String parameter : commandBlock.getParameters().keySet()) {
             String option = commandBlock.getParameters().get(parameter);
 //            System.out.println(parameter + option);
-            programBlocks.get(programBlocks.size() - 1)
-                .selectParameter(parameter, option);
+            if (programBlocks.get(programBlocks.size() - 1) instanceof NestedEndBlockHolder) {
+              programBlocks.get(programBlocks.size() - 2)
+                  .selectParameter(parameter, option);
+            }
+            else {
+              programBlocks.get(programBlocks.size() - 1)
+                  .selectParameter(parameter, option);
+            }
           }
         }
       }
@@ -234,7 +241,7 @@ public class ProgramStack extends VBox {
       beginCommandBlockHolder.setOtherPlayer();
       endCommandBlockHolder.setOtherPlayer();
     }
-    this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder);
+    Platform.runLater(() -> this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder));
   }
 
   private void addJumpCommandBlock(String command,
@@ -245,7 +252,7 @@ public class ProgramStack extends VBox {
       commandBlockHolder.setOtherPlayer();
     }
     programBlocks.add(commandBlockHolder);
-    this.getChildren().add(commandBlockHolder);
+    Platform.runLater(() -> this.getChildren().add(commandBlockHolder));
   }
 
 }
