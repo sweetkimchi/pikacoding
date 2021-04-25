@@ -143,6 +143,11 @@ public class GridTest {
       public void setTeamNumber(int teamNum) {
 
       }
+
+      @Override
+      public void startGameAfterBothTeamsPresent() {
+
+      }
     };
     elementInformationBundle.setModelController(modelController);
     avatar = new Avatar(10, 5, 5);
