@@ -39,7 +39,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   @Override
   public void codeAreaChanged() {
 
-    String rootDBPath = "match_info/match"+matchID+"/"+teamID+"/codingArea/";
+    String rootDBPath = "match_info/match"+matchID+"/team"+teamID+"/codingArea/";
     DatabaseReference ref = FirebaseDatabase.getInstance()
         .getReference(rootDBPath);
     try {

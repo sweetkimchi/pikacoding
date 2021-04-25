@@ -8,14 +8,20 @@ public class DatabaseTester {
 
   public static void main(String[] args) throws IOException, InterruptedException {
 
-//    FirebaseService firebaseService = new FirebaseService(0, 0);
+    FirebaseService firebaseService = new FirebaseService(0, 0);
     //firebaseService.saveGameLevel(1);
     //firebaseService.readDBContentsForLevelInit(1);
     //MongoDriver mongoDriver = new MongoDriver();
     //firebaseService.readCodeAreaInformation(0);
-    ConcreteDatabaseListener test = new ConcreteDatabaseListener(new ModelController(), 0, 0);
-    test.codeAreaChanged();
+//    ConcreteDatabaseListener test = new ConcreteDatabaseListener(new ModelController(), 0, 0);
+//    test.codeAreaChanged();
 //
+//    while (true)  {
+//
+//    }
+
+    PlayerInitialization test = new PlayerInitialization(0, 1);
+
     while (true)  {
 
     }
