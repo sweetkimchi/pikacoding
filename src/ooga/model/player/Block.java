@@ -33,13 +33,4 @@ public abstract class Block implements Element {
     return isHeld;
   }
 
-  @Override
-  public boolean isActive() {
-    return isActive;
-  }
-
-  @Override
-  public void setIsActive(boolean isActive) {
-    this.isActive = isActive;
-  }
 }
