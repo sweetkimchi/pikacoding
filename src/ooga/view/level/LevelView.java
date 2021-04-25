@@ -81,72 +81,6 @@ public class LevelView extends BorderPane implements ProgramListener {
     codeArea.receiveProgramUpdates(program);
   }
 
-  private void openPauseMenu() {
-    VBox pauseMenu = new VBox();
-    pauseMenu.getStyleClass().add("start-screen");
-    pauseMenu.getChildren().add(new Label("Paused"));
-    Button resumeButton = new Button("Resume");
-    resumeButton.setOnAction(e -> {
-      this.setCenter(board);
-      this.setRight(rightPane);
-      this.setBottom(controlPanel);
-    });
-    pauseMenu.getChildren().add(resumeButton);
-    Button startMenuButton = new Button("Home");
-    startMenuButton.setOnAction(e -> screenCreator.loadStartMenu());
-    pauseMenu.getChildren().add(startMenuButton);
-
-    Button levelSelectorButton = new Button("Level Selector");
-    levelSelectorButton.setOnAction(e -> screenCreator.loadLevelSelector());
-    pauseMenu.getChildren().add(levelSelectorButton);
-
-    this.setCenter(pauseMenu);
-    this.setRight(null);
-    this.setBottom(null);
-  }
-
-  private void initializeViewElements() {
-    ResourceBundle levelResources = ResourceBundle
-        .getBundle(ScreenCreator.RESOURCES + LEVEL_PROPERTIES);
-    menuBar.setMinHeight(Double.parseDouble(levelResources.getString("MenuBarHeight")));
-    createRight(levelResources);
-    rightPane.setMinWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
-    rightPane.setMaxWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
-    codeArea.addProgramListener(this);
-    controlPanel.setMinHeight(Double.parseDouble(levelResources.getString("ControlPanelHeight")));
-    controlPanel.setButtonAction("Button1_Reset", e -> animationController.reset());
-    controlPanel.setButtonAction("Button2_Play", e -> animationController.play());
-    controlPanel.setButtonAction("Button3_Pause", e -> animationController.pause());
-    controlPanel.setButtonAction("Button4_Step", e -> animationController.step());
-    this.setTop(menuBar);
-    scoreDisplay = new Label("Apples Left for Pikachu: ");
-
-    board.getChildren().add(scoreDisplay);
-    StackPane.setAlignment(scoreDisplay, Pos.TOP_LEFT);
-    this.setCenter(board);
-    this.setRight(rightPane);
-    this.setBottom(controlPanel);
-  }
-
-  private void createRight(ResourceBundle levelResources) {
-    rightPane = new GridPane();
-    VBox descriptionBox = new VBox();
-    rightPane.setVgap(8);
-    descriptionBox.getStyleClass().add("description-box");
-    Label header = new Label("Level " + level);
-    header.getStyleClass().add("title");
-    description = new Label();
-    descriptionBox.getChildren().addAll(header, description);
-    rightPane.add(descriptionBox, 0, 0);
-    rightPane.add(codeArea, 0, 1);
-
-    RowConstraints rowConstraints = new RowConstraints();
-    rowConstraints.setPrefHeight(Double.parseDouble(levelResources.getString("DescriptionHeight")));
-    rowConstraints.setMinHeight(Double.parseDouble(levelResources.getString("DescriptionHeight")));
-    rightPane.getRowConstraints().add(rowConstraints);
-    rightPane.setPadding(new Insets(8, 8, 8, 8));
-  }
-
   public void updateAvatarPosition(int id, int xCoord, int yCoord) {
     board.updateAvatarPosition(id, xCoord, yCoord);
   }
@@ -173,11 +107,9 @@ public class LevelView extends BorderPane implements ProgramListener {
     } catch (Exception ignored) {
 
     }
-    this.setTop(null);
+    clearScreen();
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
         e -> viewController.initializeLevel(level + 1), level == Controller.NUM_LEVELS));
-    this.setRight(null);
-    this.setBottom(null);
   }
 
   public void setScore(int score) {
@@ -201,19 +133,94 @@ public class LevelView extends BorderPane implements ProgramListener {
 
   public void loseLevel() {
     animationController.reset();
-    this.setCenter(new LoseScreen(e -> {
-      this.setTop(menuBar);
-      this.setCenter(board);
-      this.setRight(rightPane);
-      this.setBottom(controlPanel);
-    }));
-    this.setTop(null);
-    this.setRight(null);
-    this.setBottom(null);
+    clearScreen();
+    this.setCenter(new LoseScreen(e -> restoreScreen()));
   }
 
   public void resetScore() {
     setScore(startingApples);
+  }
+
+  protected ScreenCreator getScreenCreator() {
+    return screenCreator;
+  }
+
+  protected AnimationController getAnimationController() {
+    return animationController;
+  }
+
+  protected void openPauseMenu() {
+    VBox pauseMenu = new VBox();
+    pauseMenu.getStyleClass().add("start-screen");
+    pauseMenu.getChildren().add(new Label("Paused"));
+    Button resumeButton = new Button("Resume");
+    resumeButton.setOnAction(e -> {
+      restoreScreen();
+    });
+    pauseMenu.getChildren().add(resumeButton);
+    Button startMenuButton = new Button("Home");
+    startMenuButton.setOnAction(e -> screenCreator.loadStartMenu());
+    pauseMenu.getChildren().add(startMenuButton);
+
+    Button levelSelectorButton = new Button("Level Selector");
+    levelSelectorButton.setOnAction(e -> screenCreator.loadLevelSelector());
+    pauseMenu.getChildren().add(levelSelectorButton);
+
+    clearScreen();
+    this.setCenter(pauseMenu);
+  }
+
+  protected void clearScreen() {
+    this.setTop(null);
+    this.setCenter(null);
+    this.setRight(null);
+    this.setBottom(null);
+  }
+
+  protected void restoreScreen() {
+    this.setTop(menuBar);
+    this.setCenter(board);
+    this.setRight(rightPane);
+    this.setBottom(controlPanel);
+  }
+
+  private void initializeViewElements() {
+    ResourceBundle levelResources = ResourceBundle
+        .getBundle(ScreenCreator.RESOURCES + LEVEL_PROPERTIES);
+    menuBar.setMinHeight(Double.parseDouble(levelResources.getString("MenuBarHeight")));
+    createRight(levelResources);
+    rightPane.setMinWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
+    rightPane.setMaxWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
+    codeArea.addProgramListener(this);
+    controlPanel.setMinHeight(Double.parseDouble(levelResources.getString("ControlPanelHeight")));
+    controlPanel.setButtonAction("Button1_Reset", e -> animationController.reset());
+    controlPanel.setButtonAction("Button2_Play", e -> animationController.play());
+    controlPanel.setButtonAction("Button3_Pause", e -> animationController.pause());
+    controlPanel.setButtonAction("Button4_Step", e -> animationController.step());
+    scoreDisplay = new Label("Apples Left for Pikachu: ");
+
+    board.getChildren().add(scoreDisplay);
+    StackPane.setAlignment(scoreDisplay, Pos.TOP_LEFT);
+    restoreScreen();
+  }
+
+  private void createRight(ResourceBundle levelResources) {
+    rightPane = new GridPane();
+    VBox descriptionBox = new VBox();
+    rightPane.setVgap(8);
+    descriptionBox.getStyleClass().add("description-box");
+    Label header = new Label("Level " + level);
+    header.getStyleClass().add("title");
+    description = new Label();
+    descriptionBox.getChildren().addAll(header, description);
+    rightPane.add(descriptionBox, 0, 0);
+    rightPane.add(codeArea, 0, 1);
+
+    RowConstraints rowConstraints = new RowConstraints();
+    rowConstraints.setPrefHeight(Double.parseDouble(levelResources.getString("DescriptionHeight")));
+    rowConstraints.setMinHeight(Double.parseDouble(levelResources.getString("DescriptionHeight")));
+    rightPane.getRowConstraints().add(rowConstraints);
+    rightPane.setPadding(new Insets(8, 8, 8, 8));
   }
 
 }
