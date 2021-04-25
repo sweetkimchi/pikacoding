@@ -33,7 +33,7 @@ public class ModelController implements BackEndExternalAPI {
    */
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
-    matchID = 12346;
+    matchID = 1102;
     firebaseService = new FirebaseService();
 
   }
@@ -203,7 +203,7 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void startGameAfterBothTeamsPresent() {
-    viewController.loadMultiLevel();
+    //viewController.loadMultiLevel();
   }
 
 }
