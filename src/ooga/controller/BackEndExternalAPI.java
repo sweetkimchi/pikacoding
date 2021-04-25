@@ -2,6 +2,7 @@
 
 package ooga.controller;
 
+import com.google.common.base.Stopwatch;
 import java.util.List;
 import java.util.Map;
 import ooga.model.player.AvatarData;
@@ -54,7 +55,7 @@ public interface BackEndExternalAPI {
   /**
    * All commands have reached the end and no more to be executed
    */
-  void declareEndOfAnimation();
+  void declareEndOfRun();
 
   /**
    * updates the line numbers for the avatars
@@ -75,4 +76,10 @@ public interface BackEndExternalAPI {
   void loseLevel();
 
   void updateProgram(List<CommandBlock> program);
+
+  void checkTimeLeftOrNot();
+
+  void timedOut();
+
+  void updateTime(int timeLeft);
 }

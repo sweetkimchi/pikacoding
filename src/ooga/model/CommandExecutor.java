@@ -1,6 +1,7 @@
 package ooga.model;
 
 import java.util.*;
+import javafx.scene.paint.Stop;
 import ooga.controller.BackEndExternalAPI;
 import ooga.model.commands.Commands;
 import ooga.model.grid.ElementInformationBundle;
@@ -8,6 +9,8 @@ import ooga.model.grid.gridData.BoardState;
 import ooga.model.grid.gridData.GoalState;
 import ooga.model.player.Player;
 import ooga.view.level.codearea.CommandBlock;
+import com.google.common.base.Stopwatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Ji Yun Hyo
@@ -20,7 +23,7 @@ public class CommandExecutor {
     private ElementInformationBundle elementInformationBundle;
     private BoardState initialState;
     private int score;
-    private int idealTime = 500;
+    private int idealTime = 10;
     private int idealLines = 20;
     private int SCORING_FACTOR = 100;
     private ClassLoader classLoader;
@@ -29,13 +32,15 @@ public class CommandExecutor {
     private List<Integer> endCommandLines;
     private Map<Integer, Integer> idToCommandLines;
     private Stack<Integer> stackOfIfCommands;
+    private Stopwatch stopwatch;
+    private int timeLeft;
     /**
      * Default constructor
      */
     public CommandExecutor(List<CommandBlock> commandBlocks, BackEndExternalAPI modelController,
         BoardState initialState,
         ElementInformationBundle elementInformationBundle,
-        GoalState goalState) {
+        GoalState goalState, Stopwatch stopwatch) {
         this.goalState = goalState;
         this.initialState = initialState;
         this.elementInformationBundle = elementInformationBundle;
@@ -43,7 +48,7 @@ public class CommandExecutor {
         this.commandBlocks = new ArrayList<>();
         this.modelController = modelController;
         this.idToCommandLines = new TreeMap<>();
-
+        this.stopwatch = stopwatch;
         //TODO: remove comment after getIdealTime is implemented
      // this.idealTime = goalState.getIdealTime();
      //   this.idealLines = goalState.getIdealLines();
@@ -85,16 +90,17 @@ public class CommandExecutor {
     }
 
     public void runNextCommand() {
-        boolean ended = true;
+        boolean allCommandsFinishedExecuting = true;
         Map<Integer, Integer> lineUpdates = new HashMap<>();
         for(Player avatar : elementInformationBundle.getAvatarList()){
-            ended = executeCommandsOnAvatar(ended, lineUpdates, avatar);
+            allCommandsFinishedExecuting = executeCommandsOnAvatar(allCommandsFinishedExecuting, lineUpdates, avatar);
         }
         modelController.setLineIndicators(lineUpdates);
-        if(ended){
-            modelController.declareEndOfAnimation();
+        if(allCommandsFinishedExecuting){
+            modelController.declareEndOfRun();
             score = 0;
         }
+        checkTimeLeftOrNot();
 
     }
 
@@ -105,6 +111,8 @@ public class CommandExecutor {
             commandBlocks.get(avatar.getProgramCounter() - 1).execute(avatar.getId());
             score++;
             modelController.setScore(goalState.getNumOfCommands() - score);
+//            timeLeft = (int) (idealTime - stopwatch.elapsed(TimeUnit.SECONDS));
+//            System.out.println("TIME LEFT: " + timeLeft);
         }
         if(goalState.checkGameEnded(elementInformationBundle)){
             ended = true;
@@ -116,12 +124,28 @@ public class CommandExecutor {
             modelController.loseLevel();
             score = 0;
         }
+
         return ended;
     }
 
     private List<Integer> calculateFinalScores(int idealLines, int idealTime) {
         List<Integer> scores = new ArrayList<>();
+        timeLeft = (int) (idealTime - stopwatch.elapsed(TimeUnit.SECONDS));
         scores.add((idealLines - commandBlocks.size()) * SCORING_FACTOR);
+        scores.add((timeLeft/60) * SCORING_FACTOR);
+
+        System.out.println("TOTAL SCORE: " + (score+scores.get(0)+scores.get(1)));
         return scores;
+    }
+
+    public void checkTimeLeftOrNot() {
+        timeLeft = (int) (idealTime - stopwatch.elapsed(TimeUnit.SECONDS));
+        if(timeLeft <= 0){
+            modelController.updateTime(0);
+            modelController.timedOut();
+        }else{
+            modelController.updateTime(timeLeft);
+        }
+//        System.out.println("TIME LEFT: " + timeLeft);
     }
 }

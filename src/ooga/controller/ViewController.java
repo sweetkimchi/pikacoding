@@ -145,8 +145,8 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   @Override
-  public void declareEndOfAnimation() {
-    levelView.declareEndOfAnimation();
+  public void declareEndOfRun() {
+    levelView.declareEndOfRun();
   }
 
   /**
@@ -192,5 +192,20 @@ public class ViewController implements FrontEndExternalAPI {
   @Override
   public void receiveProgramUpdates(List<CommandBlock> program) {
     levelView.receiveProgramUpdates(program);
+  }
+
+  @Override
+  public void checkTimeLeftOrNot() {
+    modelController.checkTimeLeftOrNot();
+  }
+
+  @Override
+  public void timedOut() {
+    levelView.timedOut();
+  }
+
+  @Override
+  public void updateTime(int timeLeft) {
+    levelView.updateTime(timeLeft);
   }
 }

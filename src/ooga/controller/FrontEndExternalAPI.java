@@ -1,5 +1,6 @@
 package ooga.controller;
 
+import com.google.common.base.Stopwatch;
 import java.util.List;
 import java.util.Map;
 import ooga.model.commands.AvailableCommands;
@@ -86,7 +87,7 @@ public interface FrontEndExternalAPI {
 
   void setBlockNumber(int id, int newDisplayNum);
 
-  void declareEndOfAnimation();
+  void declareEndOfRun();
 
   /**
    * Sets the line numbers for the avatars
@@ -115,4 +116,9 @@ public interface FrontEndExternalAPI {
 
   void receiveProgramUpdates(List<CommandBlock> program);
 
+  void checkTimeLeftOrNot();
+
+  void timedOut();
+
+  void updateTime(int timeLeft);
 }
