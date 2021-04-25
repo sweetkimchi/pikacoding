@@ -187,5 +187,5 @@ public class ModelController implements BackEndExternalAPI {
   }
 
   @Override
-  public void getTeamNumber(int teamNum) { }
+  public void setTeamNum(int teamNum) { System.out.println(teamNum); }
 }

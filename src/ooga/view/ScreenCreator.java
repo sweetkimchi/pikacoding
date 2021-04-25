@@ -26,9 +26,7 @@ public class ScreenCreator {
   private final double width;
   private final double height;
   private StartMenu startMenu;
-  private TeamSelector teamSelector;
   private String lang;
-  private int teamNum;
 
   /**
    * Default constructor
@@ -55,8 +53,6 @@ public class ScreenCreator {
    * @param level Level number
    */
   public void initializeMultiLevelView(int level) {
-    teamNum = teamSelector.getTeamNumber();
-    System.out.println(teamNum);
     levelView = new MultiplayerLevelView(level, viewController, this);
     Scene scene = new Scene(levelView, width, height);
     stage.setScene(scene);
@@ -67,8 +63,6 @@ public class ScreenCreator {
    * @param level Level number
    */
   public void initilaizeSingleLevelView(int level) {
-    teamNum = 0;
-    System.out.println(teamNum);
     levelView = new LevelView(level, viewController, this);
     Scene scene = new Scene(levelView, width, height);
     stage.setScene(scene);
@@ -92,13 +86,13 @@ public class ScreenCreator {
 
   // TODO: right now pulls up level selection; level selection should be random
   public void loadTeamSelector() {
-    teamSelector = new TeamSelector(viewController::initializeMultiLevel);
+    TeamSelector teamSelector = new TeamSelector(viewController::initializeMultiLevel, this);
     teamSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(teamSelector, width, height);
     stage.setScene(scene);
   }
 
-  public int getTeam() { return teamNum; }
+  public void setTeamNum(int team) { viewController.setTeamNum(team); }
 
   /**
    * Opens up the level selector
