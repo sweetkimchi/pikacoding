@@ -23,7 +23,7 @@ public class ParserTester {
   private static FirebaseService firebaseService;
   @BeforeAll
   public static void init() {
-    firebaseService = new FirebaseService(0, 0);
+    firebaseService = new FirebaseService();
   }
 
   @Test

@@ -160,7 +160,7 @@ public class ModelController implements BackEndExternalAPI {
   public void updateProgram(List<CommandBlock> program) {
     // TODO: notify database of program update
     this.codeAreaParser.setLastCommandBlockForCurrentComputer(program);
-    firebaseService.saveMatchInformation(matchID, program);
+    firebaseService.saveMatchInformation(matchID, teamID, program);
   }
 
   @Override
@@ -190,7 +190,7 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void setTeamNumber(int teamNum) {
     this.teamID = teamNum;
-    firebaseService = new FirebaseService(teamID, 0);
+    firebaseService = new FirebaseService();
 
   }
 
