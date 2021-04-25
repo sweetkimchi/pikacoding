@@ -44,6 +44,11 @@ public class CommandBlock {
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof CommandBlock commandBlock)  {
+      if (parameters == null) {
+        return (this.index == commandBlock.index &&
+            this.type.equals(commandBlock.type) &&
+            null == (commandBlock.parameters));
+      }
       return (this.index == commandBlock.index &&
           this.type.equals(commandBlock.type) &&
           this.parameters.equals(commandBlock.parameters));
