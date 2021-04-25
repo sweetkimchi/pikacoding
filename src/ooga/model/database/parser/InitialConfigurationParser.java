@@ -9,6 +9,7 @@ import java.util.Map;
 import ooga.controller.ModelController;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.database.FirebaseService;
+import ooga.model.exceptions.ExceptionHandler;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.BlockData;
@@ -222,9 +223,7 @@ public class InitialConfigurationParser {
       }
     }
     catch (Exception e) {
-      e.printStackTrace();
-      this.errorMessage = "Error parsing commands";
-      this.errorOccurred = true;
+      throw new ExceptionHandler("Parse Commands failed.");
     }
   }
 
@@ -254,9 +253,7 @@ public class InitialConfigurationParser {
       }
       this.gameGridData = new GameGridData(this.elementInformationBundle, width, height);
     } catch (Exception e) {
-      e.printStackTrace();
-      this.errorMessage = "Error parsing grid";
-      this.errorOccurred = true;
+      throw new ExceptionHandler("Error parsing grid");
     }
   }
 
