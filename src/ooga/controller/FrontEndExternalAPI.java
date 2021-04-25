@@ -104,7 +104,7 @@ public interface FrontEndExternalAPI {
   /**
    * Notifies the view that the player has won
    */
-  void winLevel();
+  void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken);
 
   /**
    * Notifies the view that the player has lost

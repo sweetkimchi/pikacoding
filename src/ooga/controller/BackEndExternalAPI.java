@@ -70,7 +70,7 @@ public interface BackEndExternalAPI {
    */
   void setScore(int score);
 
-  void winLevel();
+  void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken);
 
   void loseLevel();
 

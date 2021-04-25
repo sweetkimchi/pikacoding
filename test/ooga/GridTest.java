@@ -90,7 +90,7 @@ public class GridTest {
       }
 
       @Override
-      public void winLevel() {
+      public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
 
       }
 

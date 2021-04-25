@@ -167,7 +167,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     board.updateBlock(id, isHeld);
   }
 
-  public void winLevel() {
+  public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
     try {
       Thread.sleep(2000);
     } catch (Exception ignored) {

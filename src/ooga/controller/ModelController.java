@@ -128,8 +128,8 @@ public class ModelController implements BackEndExternalAPI {
   }
 
   @Override
-  public void winLevel() {
-    viewController.winLevel();
+  public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
+    viewController.winLevel(executionScore, bonusFromNumberOfCommands, bonusFromTimeTaken);
   }
 
   @Override
