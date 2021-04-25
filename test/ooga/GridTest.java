@@ -19,6 +19,7 @@ import ooga.model.commands.Jump;
 import ooga.model.commands.Multiply;
 import ooga.model.commands.Nearest;
 import ooga.model.commands.PickUp;
+import ooga.model.commands.SetZero;
 import ooga.model.commands.Step;
 import ooga.model.commands.Subtract;
 import ooga.model.commands.Throw;
@@ -365,6 +366,23 @@ public class GridTest {
     add.execute(10);
 
     assertEquals(20, dataCube.getDisplayNum());
+  }
+
+  @Test
+  public void testSetZero(){
+    DataCube dataCube1 = new DataCube(15, 5, 6, 13);
+    elementInformationBundle.addBlock(dataCube1);
+    avatarPickUpDataCubeSameTile();
+
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "down");
+    Step step = new Step(elementInformationBundle, parameters);
+    step.execute(10);
+
+    SetZero add = new SetZero(elementInformationBundle, new HashMap<>());
+    add.execute(10);
+
+    assertEquals(0, dataCube.getDisplayNum());
   }
 
 }
