@@ -1,8 +1,6 @@
 package ooga.model.database;
 
 import java.io.IOException;
-import ooga.controller.ModelController;
-import ooga.model.database.parser.CodeAreaParser;
 
 public class DatabaseTester {
 

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import ooga.model.CommandExecutor;
 import ooga.model.database.FirebaseService;
-import ooga.model.database.parser.CodeAreaParser;
+import ooga.model.database.parser.ConcreteDatabaseListener;
 import ooga.model.database.parser.InitialConfigurationParser;
 import ooga.view.level.codearea.CommandBlock;
 
@@ -17,7 +17,7 @@ public class ModelController implements BackEndExternalAPI {
   private CommandExecutor commandExecutor;
   private InitialConfigurationParser initialConfigurationParser;
   private FirebaseService firebaseService;
-  private CodeAreaParser codeAreaParser;
+  private ConcreteDatabaseListener codeAreaParser;
   private int level;
 
   /**
@@ -27,7 +27,7 @@ public class ModelController implements BackEndExternalAPI {
     //TODO: Change teamID and playerID to things front end creates
     int matchID = 0;
     firebaseService = new FirebaseService(0, 0);
-    CodeAreaParser codeAreaParser = new CodeAreaParser(this, matchID, 0);
+    ConcreteDatabaseListener codeAreaParser = new ConcreteDatabaseListener(this, matchID, 0);
     codeAreaParser.codeAreaChanged();
     this.codeAreaParser = codeAreaParser;
   }
