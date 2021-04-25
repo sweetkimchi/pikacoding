@@ -103,6 +103,10 @@ public class ElementInformationBundle implements InformationBundle {
     avatarList.add(avatar);
   }
 
+  /**
+   * Purpose: adds a block at the designated location during initialization of the level
+   * @param block block to be added to the location
+   */
   public void addBlock(Block block) {
     int xPos = block.getXCoord();
     int yPos = block.getYCoord();
@@ -110,7 +114,11 @@ public class ElementInformationBundle implements InformationBundle {
     blockList.add(block);
   }
 
-
+  /**
+   * Retrieves the avatar object by its ID
+   * @param id ID of the avatar
+   * @return Avatar object
+   */
   public Player getAvatarById(int id) {
     for (Player avatar : avatarList) {
       if (avatar.getId() == id) {
@@ -122,7 +130,7 @@ public class ElementInformationBundle implements InformationBundle {
 
   /**
    * Returns a collection of the IDs of all the current avatars.
-   *
+   * Assumptions: list of avatars is not null
    * @return A collection of integers containing IDs
    */
   public Collection<Integer> getAvatarIds() {
@@ -145,6 +153,12 @@ public class ElementInformationBundle implements InformationBundle {
     return new TileData(grid[x][y]);
   }
 
+  /**
+   * Returns the specific tile at the coordinate
+   * @param x The x-coordinate of the tile
+   * @param y The y-coordinate of the tile
+   * @return tile object
+   */
   public Tile getTile(int x, int y) {
     if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length) {
       return null;
