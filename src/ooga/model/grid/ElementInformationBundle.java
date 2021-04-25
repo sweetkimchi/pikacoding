@@ -78,7 +78,11 @@ public class ElementInformationBundle implements InformationBundle {
     return ret;
   }
 
-
+  /**
+   * Sets the dimensions of the grid according to the template
+   * @param x row size
+   * @param y col size
+   */
   public void setDimensions(int x, int y) {
     grid = new Tile[x][y];
     for (int i = 0; i < x; i++) {
@@ -88,14 +92,31 @@ public class ElementInformationBundle implements InformationBundle {
     }
   }
 
+  /**
+   * Returns the structure at the location
+   * @param x x coordinate on the grid
+   * @param y y coordinate on the grid
+   * @return the structure at the grid location
+   */
   public Structure getStructure(int x, int y) {
     return grid[x][y].getStructure();
   }
 
+  /**
+   * Purpose: sets the structure at a specific location (e.g. wall, floor, etc)
+   * Assumption: x and y are valid locations within the grid
+   * @param x x coordinate on the grid
+   * @param y y coordinate on the grid
+   * @param structure structure to be added to the location
+   */
   public void setStructure(int x, int y, Structure structure) {
     grid[x][y].setStructure(structure);
   }
 
+  /**
+   * Purpose: adds avatar to the location during initializtion of the level
+   * @param avatar Avatar to be added to the tile
+   */
   public void addAvatar(Avatar avatar) {
     int xPos = avatar.getXCoord();
     int yPos = avatar.getYCoord();
@@ -166,14 +187,27 @@ public class ElementInformationBundle implements InformationBundle {
     return grid[x][y];
   }
 
+  /**
+   * Purpose: keeps track of if/endif pair so that commands can jump to the designated program counter
+   * Assumption: if/endif exists
+   * @param endCommandLines list of endCommands
+   */
   public void setEndCommandLines(List<Integer> endCommandLines) {
     this.endCommandLines = endCommandLines;
   }
 
+  /**
+   * Purpose: keep track of all commands associated with each of the command lines
+   * @param mapOfCommandLines map containing line number and the command at the line
+   */
   public void setMapOfCommandLines(Map<Integer, Integer> mapOfCommandLines) {
     this.mapOfCommandLines = mapOfCommandLines;
   }
 
+  /**
+   * Purpose: returns the map of command lines so that CommandExecutor can execute commands
+   * @return map of commandlines
+   */
   public Map<Integer, Integer> getMapOfCommandLines() {
     return this.mapOfCommandLines;
   }
