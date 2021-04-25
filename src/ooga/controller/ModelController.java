@@ -58,6 +58,8 @@ public class ModelController implements BackEndExternalAPI {
     viewController.setDescription(initialConfigurationParser.getDescription());
     viewController.setAvailableCommands(initialConfigurationParser.getAvailableCommands());
     viewController.setStartingApples(initialConfigurationParser.getGoalState().getNumOfCommands());
+    //TODO: delete after debugging. Initializing level for testing purposes
+
     commandExecutor = new CommandExecutor(new ArrayList<>(), this,
         initialConfigurationParser.getInitialState(),
         initialConfigurationParser.getGameGrid(), initialConfigurationParser.getGoalState(),stopwatch);
@@ -71,6 +73,9 @@ public class ModelController implements BackEndExternalAPI {
    */
   @Override
   public void parseCommands(List<CommandBlock> commandBlocks) {
+    //TODO: delete after debugging. Initializing level for testing purposes
+    initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService);
+
     commandExecutor = new CommandExecutor(commandBlocks, this,
         initialConfigurationParser.getInitialState(),
         initialConfigurationParser.getGameGrid(), initialConfigurationParser.getGoalState(),stopwatch);

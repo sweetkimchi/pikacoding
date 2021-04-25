@@ -70,13 +70,14 @@ public class AnimationController {
   }
 
   public void play() {
+    timeline.play();
     step = false;
     if (!codeIsRunning) {
       reset();
+      isPaused = false;
       viewController.parseCommands(codeArea.getProgram());
       codeIsRunning = true;
     }
-    runSimulation();
   }
 
   public void reset() {
@@ -89,13 +90,13 @@ public class AnimationController {
   }
 
   public void step() {
+    isPaused = false;
     if (!codeIsRunning) {
       reset();
       viewController.parseCommands(codeArea.getProgram());
       queueFinished = false;
       codeIsRunning = true;
     }
-    runSimulation();
     step = true;
     if (queueFinished) {
       viewController.runNextCommand();
