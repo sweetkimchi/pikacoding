@@ -91,7 +91,7 @@ public class InitialConfigurationParser {
           (String) initial.get("description"),
           (int) initial.get("numPeople"),
           (int) initial.get("level"),
-          Integer.parseInt((String) initial.get("timeLimit")));
+          Integer.parseInt((String) initial.get("timeLimit")), playerID);
     } catch (Exception e) {
       e.printStackTrace();
       this.errorMessage = "Error parsing start state";

@@ -42,7 +42,6 @@ public class FirebaseService {
           .setCredentials(GoogleCredentials.fromStream(serviceAccount))
           .setDatabaseUrl("https://team-three-ooga-default-rtdb.firebaseio.com")
           .build();
-
       FirebaseApp.initializeApp(options);
 
       db = FirebaseDatabase.getInstance();
@@ -155,14 +154,32 @@ public class FirebaseService {
    * updates the commandBlock across all
    */
   public void saveMatchInformation(int matchID, List<CommandBlock> commandBlocks) {
-    String rootDBPath = "match_info/match"+matchID+"/team" + this.teamID + "/";
+    String rootDBPath = "match_info/match"+matchID+"/team" + this.teamID + "/codingArea/";
     Map<String, Object> jsonMapOfCodingArea = new HashMap<>();
     for(CommandBlock commandBlock : commandBlocks){
       jsonMapOfCodingArea.put(String.valueOf(commandBlock.getIndex()), createJSONForCommandBlock(commandBlock));
     }
-    Map<String,Object> jsonMap = new HashMap<>();
-    jsonMap.put("codingArea", jsonMapOfCodingArea);
-    setDatabaseContentsWithMap(jsonMap, rootDBPath);
+    setDatabaseContentsWithMap(jsonMapOfCodingArea, rootDBPath);
   }
+
+  public void declareEndOfGame(int matchID, int score)  {
+    try{
+      String rootDBPath = "match_info/match"+matchID+"/team"+teamID+"/gameEnded/";
+      CountDownLatch done = new CountDownLatch(1);
+      Map<String, Object> gameEnded = new HashMap<>();
+      gameEnded.put("gameEnded", true);
+      gameEnded.put("score", score);
+      DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference(rootDBPath);
+      dataRef.setValue(gameEnded, (databaseError, databaseReference) -> {
+        done.countDown();
+      });
+      done.await();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+
 
 }
