@@ -6,6 +6,7 @@ import java.util.Map;
 import ooga.model.CommandExecutor;
 import ooga.model.Executor;
 import ooga.model.database.FirebaseService;
+import ooga.model.database.PlayerInitialization;
 import ooga.model.database.parser.ConcreteDatabaseListener;
 import ooga.model.database.parser.InitialConfigurationParser;
 import ooga.view.level.codearea.CommandBlock;
@@ -25,6 +26,7 @@ public class ModelController implements BackEndExternalAPI {
   private int level;
   private int matchID;
   private int teamID;
+  private int playerID;
   private Stopwatch stopwatch;
 
   /**
@@ -32,8 +34,8 @@ public class ModelController implements BackEndExternalAPI {
    */
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
-    matchID = 12345;
-
+    matchID = 12346;
+    firebaseService = new FirebaseService();
     ConcreteDatabaseListener codeAreaParser = new ConcreteDatabaseListener(this, matchID, 0);
     codeAreaParser.codeAreaChanged();
     this.codeAreaParser = codeAreaParser;
@@ -58,7 +60,7 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void initializeLevel(int level) {
     this.level = level;
-    initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService, 0);
+    initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService, this.playerID);
 
     stopwatch = Stopwatch.createStarted();
     viewController.setBoard(initialConfigurationParser.getGameGridData(),
@@ -82,7 +84,7 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void parseCommands(List<CommandBlock> commandBlocks) {
     //TODO: delete after debugging. Initializing level for testing purposes
-    initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService, 0);
+    initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService, this.playerID);
 
     commandExecutor = new CommandExecutor(commandBlocks, this,
         initialConfigurationParser.getInitialState(),
@@ -181,7 +183,7 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void receivedProgramUpdate(List<CommandBlock> program) {
-    System.out.println(program);
+    System.out.println("recieved update" + program);
     if (program != null)  {
       viewController.receiveProgramUpdates(program);
     }
@@ -189,9 +191,10 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void setTeamNumber(int teamNum) {
+    System.out.println("here");
     this.teamID = teamNum;
-    firebaseService = new FirebaseService();
-
+    PlayerInitialization playerInitialization = new PlayerInitialization(this.matchID, this.teamID);
+    this.playerID = playerInitialization.getPlayerID();
   }
 
 }

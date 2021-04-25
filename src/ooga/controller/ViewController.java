@@ -230,5 +230,8 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   @Override
-  public void getTeamNumber() { modelController.setTeamNumber(screenCreator.getTeam()); }
+  public void getTeamNumber() {
+    System.out.println("here2");
+    modelController.setTeamNumber(screenCreator.getTeam());
+  }
 }
