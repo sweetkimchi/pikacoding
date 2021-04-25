@@ -127,6 +127,7 @@ public class AnimationController {
   }
 
   public void stopAnimation() {
+    isPaused = true;
     timeline.stop();
   }
 }
