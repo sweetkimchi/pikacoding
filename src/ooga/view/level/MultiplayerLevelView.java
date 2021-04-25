@@ -1,7 +1,9 @@
 package ooga.view.level;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
@@ -37,9 +39,23 @@ public class MultiplayerLevelView extends LevelView {
   }
 
   @Override
+  public void updateTime(int timeLeft) {
+    System.out.println(timeLeft);
+    String minutes = "" + timeLeft / 60;
+    String seconds = "" + timeLeft % 60;
+    if (timeLeft % 60 < 10) {
+      seconds = "0" + timeLeft % 60;
+    }
+    timerDisplay.setText(minutes + ":" + seconds);
+  }
+
+  @Override
   protected void initializeViewElements() {
     super.initializeViewElements();
+    timerDisplay = new Label();
 
+    getBoard().getChildren().add(timerDisplay);
+    StackPane.setAlignment(timerDisplay, Pos.TOP_RIGHT);
   }
 
   @Override

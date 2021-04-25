@@ -237,7 +237,6 @@ public class LevelView extends BorderPane implements ProgramListener {
    * @param timeLeft
    */
   public void updateTime(int timeLeft) {
-    System.out.println("TIME LEFT: " + timeLeft);
   }
 
   protected void clearScreen() {
