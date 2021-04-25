@@ -70,6 +70,9 @@ public class ModelController implements BackEndExternalAPI {
     commandExecutor = new CommandExecutor(new ArrayList<>(), this,
         initialConfigurationParser.getInitialState(),
         initialConfigurationParser.getGameGrid(), initialConfigurationParser.getGoalState(),stopwatch);
+
+
+    concreteDatabaseListener.codeAreaChanged();
   }
 
   /**
@@ -195,8 +198,12 @@ public class ModelController implements BackEndExternalAPI {
     this.playerID = playerInitialization.getPlayerID();
     ConcreteDatabaseListener concreteDatabaseListener = new ConcreteDatabaseListener(this, matchID, this.teamID);
     concreteDatabaseListener.checkLevelStarted();
-    concreteDatabaseListener.codeAreaChanged();
     this.concreteDatabaseListener = concreteDatabaseListener;
+  }
+
+  @Override
+  public void startGameAfterBothTeamsPresent() {
+    viewController.loadMultiLevel();
   }
 
 }
