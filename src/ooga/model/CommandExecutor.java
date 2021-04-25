@@ -23,9 +23,9 @@ public class CommandExecutor {
     private ElementInformationBundle elementInformationBundle;
     private BoardState initialState;
     private int score;
-    private int idealTime = 500;
-    private int idealLines = 20;
-    private int SCORING_FACTOR = 100;
+    private int idealTime;
+    private int idealLines;
+    private int SCORING_FACTOR = 10;
     private ClassLoader classLoader;
     private final String COMMAND_CLASSES_PACKAGE = Commands.class.getPackageName();
     private GoalState goalState;
@@ -49,9 +49,8 @@ public class CommandExecutor {
         this.modelController = modelController;
         this.idToCommandLines = new TreeMap<>();
         this.stopwatch = stopwatch;
-        //TODO: remove comment after getIdealTime is implemented
-     // this.idealTime = goalState.getIdealTime();
-     //   this.idealLines = goalState.getIdealLines();
+        this.idealTime = goalState.getIdealTime();
+        this.idealLines = goalState.getIdealLines();
 
         endCommandLines = new ArrayList<>();
         stackOfIfCommands = new Stack<>();
@@ -117,7 +116,7 @@ public class CommandExecutor {
         if(goalState.checkGameEnded(elementInformationBundle)){
             ended = true;
             List<Integer> scores = calculateFinalScores(idealLines, idealTime);
-            modelController.winLevel(score, scores.get(0), scores.get(1));
+            modelController.winLevel(goalState.getNumOfCommands() - score, scores.get(0), scores.get(1));
         }
         if((goalState.getNumOfCommands() - score) < 0){
             modelController.setScore(0);
