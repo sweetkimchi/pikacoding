@@ -1,7 +1,7 @@
 {
   "level":10,
   "numPeople":1,
-  "blocks":["step", "pickUp", "drop", "if", "jump", "throw", "throwOver"],
+  "blocks":["step", "pickUp", "drop", "if", "jump", "nearest"],
   "blocks-p1":["step", "if", "jump"],
   "blocks-p2":["pickUp", "drop", "throw", "throwOver"],
   "startState":"startState.json",
