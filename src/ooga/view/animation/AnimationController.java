@@ -93,6 +93,7 @@ public class AnimationController {
     isPaused = false;
     if (!codeIsRunning) {
       reset();
+      isPaused = false;
       viewController.parseCommands(codeArea.getProgram());
       queueFinished = false;
       codeIsRunning = true;
