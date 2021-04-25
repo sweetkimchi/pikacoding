@@ -69,7 +69,8 @@ public class InitialConfigurationParser {
           null,
           (String) initial.get("description"),
           (int) initial.get("numPeople"),
-          (int) initial.get("level"));
+          (int) initial.get("level"),
+          (int) initial.get("timeLimit"));
     } catch (Exception e) {
       e.printStackTrace();
       this.errorMessage = "Error parsing start state";
@@ -81,7 +82,9 @@ public class InitialConfigurationParser {
   private void parseEndState(int numOfCommands, HashMap endState)  {
     try {
       this.goalState = new GoalState(parseAvatarLocations((Map<String, Object>) endState.get("peopleLocations"), false),
-      parseBlockData((Map<String, Object>) endState.get("blocks"), false), numOfCommands);
+      parseBlockData((Map<String, Object>) endState.get("blocks"), false), numOfCommands,
+          (int) endState.get("idealTime"),
+          (int) endState.get("idealLines"));
     }
     catch (Exception e) {
       e.printStackTrace();
