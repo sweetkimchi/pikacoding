@@ -1,0 +1,37 @@
+{
+  "idealLines": 7,
+  "idealTime": 25,
+
+  "peopleLocations":{
+    "noLoc":true
+  },
+
+  "blocks":{
+    "101":{
+      "loc":[10,3],
+      "num":6,
+      "pickedUp":"False"
+    },
+    "102":{
+      "loc":[10,4],
+      "num":7,
+      "pickedUp":"False"
+    },
+    "103":{
+      "loc":[10,5],
+      "num":8,
+      "pickedUp":"False"
+    },
+    "104":{
+      "loc":[10,6],
+      "num":9,
+      "pickedUp":"False"
+    },
+    "105":{
+      "loc":[10,8],
+      "num":11,
+      "pickedUp":"False"
+    }
+  }
+
+}
