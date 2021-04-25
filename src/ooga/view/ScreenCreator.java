@@ -25,6 +25,7 @@ public class ScreenCreator {
   private final double width;
   private final double height;
   private StartMenu startMenu;
+  private TeamSelector teamSelector;
 
   /**
    * Default constructor
@@ -60,9 +61,28 @@ public class ScreenCreator {
    * Opens up the start menu
    */
   public void loadStartMenu() {
-    startMenu = new StartMenu(e -> loadLevelSelector());
+    startMenu = new StartMenu(e -> loadGameTypeSelector());
     Scene scene = new Scene(startMenu, width, height);
     stage.setScene(scene);
+  }
+
+  public void loadGameTypeSelector() {
+    GameTypeSelector gameTypeSelector = new GameTypeSelector(e -> loadLevelSelector(), e -> teamSelector());
+    gameTypeSelector.getStylesheets().add(startMenu.getStyleSheet());
+    Scene scene = new Scene(gameTypeSelector, width, height);
+    stage.setScene(scene);
+  }
+
+  // TODO: right now pulls up level selection; level selection should be random
+  public void teamSelector() {
+    teamSelector = new TeamSelector(viewController::initializeLevel);
+    teamSelector.getStylesheets().add(startMenu.getStyleSheet());
+    Scene scene = new Scene(teamSelector, width, height);
+    stage.setScene(scene);
+  }
+
+  public int getTeam() {
+    return teamSelector.getTeamNumber();
   }
 
   /**

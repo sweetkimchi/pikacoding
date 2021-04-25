@@ -184,4 +184,7 @@ public class ModelController implements BackEndExternalAPI {
       viewController.receiveProgramUpdates(program);
     }
   }
+
+  @Override
+  public void getTeamNumber(int teamNum) { }
 }

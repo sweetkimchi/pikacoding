@@ -84,4 +84,10 @@ public interface BackEndExternalAPI {
   void updateTime(int timeLeft);
 
   void receivedProgramUpdate(List<CommandBlock> program);
+
+  /**
+   * gets the team number selected by the player from the view
+   * @param teamNum
+   */
+  void getTeamNumber(int teamNum);
 }

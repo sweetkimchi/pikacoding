@@ -128,6 +128,11 @@ public class GridTest {
       public void receivedProgramUpdate(List<CommandBlock> program) {
 
       }
+
+      @Override
+      public void getTeamNumber(int teamNum) {
+
+      }
     };
     elementInformationBundle.setModelController(modelController);
     avatar = new Avatar(10, 5, 5);
