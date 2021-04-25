@@ -59,7 +59,7 @@ public class TeamSelector extends BorderPane {
     tBox.getChildren().addAll(teamMessage, waitingMessage);
     tBox.getStyleClass().add("instruction-box");
 
-    // TODO: REMOVE LATER WHEN YOU FIGURE OUT HOW TO SINK THE LEVELS
+    // TODO: REMOVE LATER WHEN YOU FIGURE OUT HOW TO SYNC THE LEVELS
     Button start = new Button("Start");
     tBox.getChildren().add(start);
     start.setOnAction(handler -> {
