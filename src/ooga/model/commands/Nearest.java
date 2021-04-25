@@ -48,6 +48,11 @@ public class Nearest extends AICommands{
     int newX = avatar.getXCoord() + direction.getXDel();
     int newY = avatar.getYCoord() + direction.getYDel();
 
+    moveAvatar(avatar, prevTile, nextTile, newX, newY);
+    sendAvatarPositionUpdate(avatar);
+  }
+
+  private void moveAvatar(Avatar avatar, Tile prevTile, Tile nextTile, int newX, int newY) {
     nextTile.add(avatar);
     prevTile.removeAvatar();
     avatar.setXCoord(newX);
@@ -57,8 +62,6 @@ public class Nearest extends AICommands{
       avatar.getHeldItem().setYCoord(newY);
       sendBlockPositionUpdate(avatar.getHeldItem());
     }
-
-    sendAvatarPositionUpdate(avatar);
   }
 
   private String calculateDirection(int ID, int newX, int newY, int newBlockX, int newBlockY) {
