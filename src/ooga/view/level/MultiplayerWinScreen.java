@@ -1,4 +1,4 @@
-package ooga.view.level.codearea;
+package ooga.view.level;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;

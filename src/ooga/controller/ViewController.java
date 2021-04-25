@@ -8,6 +8,7 @@ import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
 import ooga.view.ScreenCreator;
 import ooga.view.level.LevelView;
+import ooga.view.level.MultiplayerLevelView;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -86,6 +87,11 @@ public class ViewController implements FrontEndExternalAPI {
   @Override
   public void setAvailableCommands(AvailableCommands availableCommands) {
     levelView.setAvailableCommands(availableCommands);
+  }
+
+  @Override
+  public void setAvailableCommandsOtherPlayer(AvailableCommands availableCommands) {
+    ((MultiplayerLevelView) levelView).setAvailableCommandsOtherPlayer(availableCommands);
   }
 
   /**

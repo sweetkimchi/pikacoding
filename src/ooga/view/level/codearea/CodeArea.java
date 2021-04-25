@@ -53,6 +53,10 @@ public class CodeArea extends GridPane {
     programStack.setAvailableCommands(availableCommands);
   }
 
+  public void setAvailableCommandsOtherPlayer(AvailableCommands availableCommands) {
+    programStack.setAvailableCommandsOtherPlayer(availableCommands);
+  }
+
   public void addProgramListener(ProgramListener programListener) {
     programStack.addProgramListener(programListener);
   }

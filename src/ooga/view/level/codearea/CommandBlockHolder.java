@@ -45,6 +45,7 @@ public class CommandBlockHolder extends GridPane {
   private Map<String, ComboBox<String>> dropdowns;
 
   private int columns;
+  private boolean isOtherPlayer = false;
 
   public CommandBlockHolder(int index, String type,
       List<Map<String, List<String>>> parameterOptions, ProgramStack programStack) {
@@ -106,6 +107,12 @@ public class CommandBlockHolder extends GridPane {
 
   public void selectParameter(String parameter, String option) {
     dropdowns.get(parameter).getSelectionModel().select(option);
+  }
+
+  public void setOtherPlayer() {
+    isOtherPlayer = true;
+    setButtonsDisabled(true);
+    this.getStyleClass().add("command-block-holder-disabled");
   }
 
   protected void initializeDropdowns() {

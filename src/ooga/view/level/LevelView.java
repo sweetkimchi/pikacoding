@@ -149,6 +149,10 @@ public class LevelView extends BorderPane implements ProgramListener {
     return animationController;
   }
 
+  protected CodeArea getCodeArea() {
+    return codeArea;
+  }
+
   protected void openPauseMenu() {
     VBox pauseMenu = new VBox();
     pauseMenu.getStyleClass().add("start-screen");

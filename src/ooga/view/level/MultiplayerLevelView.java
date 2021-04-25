@@ -1,20 +1,21 @@
 package ooga.view.level;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
+import ooga.model.commands.AvailableCommands;
 import ooga.view.ScreenCreator;
-import ooga.view.level.codearea.MultiplayerWinScreen;
 
 public class MultiplayerLevelView extends LevelView {
 
   public MultiplayerLevelView(int level, FrontEndExternalAPI viewController,
       ScreenCreator screenCreator) {
     super(level, viewController, screenCreator);
+  }
+
+  public void setAvailableCommandsOtherPlayer(AvailableCommands availableCommands) {
+    getCodeArea().setAvailableCommandsOtherPlayer(availableCommands);
   }
 
   @Override
