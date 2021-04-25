@@ -25,13 +25,16 @@ public class InitialConfigurationParser {
   private GoalState goalState;
   private String description;
   private AvailableCommands availableCommands;
+  private AvailableCommands availableCommandsOtherPlayer;
   private ElementInformationBundle elementInformationBundle;
   private boolean errorOccurred = false;
   private String errorMessage = "";
   private GameGridData gameGridData;
   private FirebaseService firebaseService;
+  private int playerID;
 
-  public InitialConfigurationParser(int level, FirebaseService firebaseService)  {
+  public InitialConfigurationParser(int level, FirebaseService firebaseService, int playerID)  {
+    this.playerID = playerID;
     this.level = level;
     this.firebaseService = firebaseService;
     this.rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + this.level + "/";
@@ -50,12 +53,32 @@ public class InitialConfigurationParser {
       parseEndState(Integer.parseInt((String) levelInfo.get("idealNumOfCommands")), (HashMap)
           result.get("endState"));
       this.description = (String) levelInfo.get("description");
-      parseCommands((HashMap) result.get("commands"));
+      parseCommands((HashMap) result.get("commands"), blocksForCurrentPlayer(levelInfo),
+          blocksForOtherPlayer(levelInfo));
     }
     catch (Exception e) {
       this.errorMessage = "Error parsing level file";
       this.errorOccurred = true;
     }
+  }
+  private List<String> blocksForCurrentPlayer(HashMap<String, Object> levelInfo) {
+    var result = switch (this.playerID) {
+      case 0 -> (List<String>) levelInfo.get("blocks");
+      case 1 -> (List<String>) levelInfo.get("blocks-p1");
+      case 2 -> (List<String>) levelInfo.get("blocks-p2");
+      default -> null;
+    };
+    return result;
+  }
+
+  private List<String> blocksForOtherPlayer(HashMap<String, Object> levelInfo)  {
+    var result = switch (this.playerID) {
+      case 0 -> null;
+      case 1 -> (List<String>) levelInfo.get("blocks-p2");
+      case 2 -> (List<String>) levelInfo.get("blocks-p1");
+      default -> null;
+    };
+    return result;
   }
 
   private void parseStartState(HashMap startState, HashMap initial) {
@@ -67,7 +90,8 @@ public class InitialConfigurationParser {
           null,
           (String) initial.get("description"),
           (int) initial.get("numPeople"),
-          (int) initial.get("level"));
+          (int) initial.get("level"),
+          Integer.parseInt((String) initial.get("timeLimit")));
     } catch (Exception e) {
       e.printStackTrace();
       this.errorMessage = "Error parsing start state";
@@ -79,7 +103,9 @@ public class InitialConfigurationParser {
   private void parseEndState(int numOfCommands, HashMap endState)  {
     try {
       this.goalState = new GoalState(parseAvatarLocations((Map<String, Object>) endState.get("peopleLocations"), false),
-      parseBlockData((Map<String, Object>) endState.get("blocks"), false), numOfCommands);
+      parseBlockData((Map<String, Object>) endState.get("blocks"), false), numOfCommands,
+          (int) endState.get("idealTime"),
+          (int) endState.get("idealLines"));
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -138,7 +164,8 @@ public class InitialConfigurationParser {
 //    }
 //  }
 
-  private void parseCommands(HashMap<String, Object> commands)  {
+  private void parseCommands(HashMap<String, Object> commands, List<String> commandsForCurrentPlayer,
+      List<String> comamndsForOtherPlayer)  {
     try {
       Map<String, List<Map<String, List<String>>>> commandsMap = new HashMap<>();
       for (String command: commands.keySet()) {
@@ -153,9 +180,13 @@ public class InitialConfigurationParser {
         }
         commandsMap.put(command, params);
       }
-      availableCommands = new AvailableCommands(commandsMap);
+      availableCommands = new AvailableCommands(commandsMap, commandsForCurrentPlayer);
+      if (comamndsForOtherPlayer != null) {
+        availableCommandsOtherPlayer = new AvailableCommands(commandsMap, comamndsForOtherPlayer);
+      }
     }
     catch (Exception e) {
+      e.printStackTrace();
       this.errorMessage = "Error parsing commands";
       this.errorOccurred = true;
     }
@@ -212,6 +243,10 @@ public class InitialConfigurationParser {
 
   public AvailableCommands getAvailableCommands()  {
     return this.availableCommands;
+  }
+
+  public AvailableCommands getAvailableCommandsOtherPlayer()  {
+    return this.availableCommandsOtherPlayer;
   }
 
   public GameGridData getGameGridData() {
