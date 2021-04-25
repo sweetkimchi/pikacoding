@@ -245,7 +245,7 @@ public class LevelView extends BorderPane implements ProgramListener {
 
   protected void restoreScreen() {
     this.setTop(menuBar);
-    this.setCenter(codeArea);
+    this.setCenter(board);
     this.setRight(rightPane);
     this.setBottom(controlPanel);
   }
