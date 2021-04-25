@@ -8,7 +8,7 @@ import javafx.scene.control.ComboBox;
 public class JumpCommandBlockHolder extends CommandBlockHolder {
 
   private ComboBox<String> lineSelector;
-  private String parameter;
+  private String parameter = "destination";
 
   public JumpCommandBlockHolder(int index, String type,
       List<Map<String, List<String>>> parameterOptions,
@@ -35,7 +35,7 @@ public class JumpCommandBlockHolder extends CommandBlockHolder {
 
   @Override
   protected void initializeDropdowns() {
-    parameter = getParameterOptions().get(0).keySet().iterator().next();
+//    parameter = getParameterOptions().get(0).keySet().iterator().next();
     getCommandBlock().setParameter(parameter, "1");
     lineSelector = new ComboBox<>();
     updateDropdown();
