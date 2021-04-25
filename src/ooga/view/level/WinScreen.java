@@ -26,10 +26,12 @@ public class WinScreen extends VBox {
     this.getChildren().add(scoreMessage);
     if (!isLastLevel) {
       Button nextLevelButton = new Button(winMessages.getString("next"));
+      nextLevelButton.setId(ScreenCreator.idsForTests.getString("next"));
       nextLevelButton.setOnAction(nextLevelAction);
       this.getChildren().add(nextLevelButton);
     }
     Button homeButton = new Button(winMessages.getString("home"));
+    homeButton.setId(ScreenCreator.idsForTests.getString("home"));
     homeButton.setOnAction(homeAction);
     this.getChildren().add(homeButton);
   }

@@ -1,0 +1,175 @@
+.root {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Futura";
+    -fx-base: #0077b6;
+    -fx-background: #1d3557;
+}
+
+.start-screen {
+    -fx-alignment: CENTER;
+    -fx-spacing: 10.0;
+}
+
+.type-screen {
+    -fx-alignment: CENTER;
+    -fx-spacing: 80.0;
+}
+
+.instruction-box {
+    -fx-alignment: CENTER;
+    -fx-spacing: 50.0;
+}
+
+.title {
+    -fx-font-family: "Rockwell";
+    -fx-font-size: 30pt;
+}
+
+.level-selector {
+    -fx-alignment: CENTER;
+    -fx-spacing: 10.0;
+}
+
+.state {
+    -fx-stroke: #caf0f8;
+    -fx-stroke-width: 0.5px;
+}
+
+.state-wall {
+    -fx-fill: #023e8a;
+}
+
+.state-floor {
+    -fx-fill: #a8dadc;
+}
+
+.state-hole {
+    -fx-fill: #14213d;
+}
+
+.menu-bar {
+    -fx-background-color: #26547c;
+    -fx-padding: 5.0;
+    -fx-alignment: CENTER-LEFT;
+}
+
+.description-box {
+    -fx-background-color: #0096c7;
+    -fx-padding: 8px 8px 8px 8px;
+}
+
+.command-block-option {
+    -fx-font-size: 12pt;
+    -fx-text-fill: #eef0f2;
+    -fx-background-color: #1a759f;
+    -fx-padding: 4 6 4 6;
+}
+
+.command-block-option:hover {
+    -fx-background-color: linear-gradient(#184e77, #1a759f);
+}
+
+.command-block-option-disabled {
+    -fx-background-color: #e5383b;
+}
+
+.command-block-option-disabled:hover {
+    -fx-background-color: #ba181b;
+}
+
+.command-index {
+    -fx-text-fill: #4d4d4d;
+}
+
+.command-block-holder {
+    -fx-background-color: #1a759f;
+}
+
+.command-block-selected {
+    -fx-background-color: #98c1d9;
+}
+
+.command-block-hovered {
+    -fx-background-color: #64dfdf;
+}
+
+.control-panel {
+    -fx-padding: 10 10 10 200;
+    -fx-background-radius: 10;
+    -fx-background-insets: 5;
+    -fx-background-color: #457b9d;
+    -fx-alignment: CENTER_LEFT;
+    -fx-hgap: 15.0;
+}
+
+.board {
+    -fx-alignment: CENTER;
+}
+
+.scroll-pane {
+    -fx-background-insets: 0 0 0 0;
+}
+
+.Button1_Reset {
+    -fx-border-radius: 20;
+    -fx-background-insets: 1;
+    -fx-background-color: #e5383b;
+}
+
+.Button1_Reset:hover {
+    -fx-background-color: linear-gradient(#bf0603, #ff3c38);
+}
+
+.Button2_Play {
+    -fx-border-radius: 20;
+    -fx-background-insets: 1;
+    -fx-background-color: #34a0a4;
+}
+
+.Button2_Play:hover {
+    -fx-background-color: linear-gradient(#1e6091, #34a0a4);
+}
+
+.Button3_Pause {
+    -fx-border-radius: 20;
+    -fx-background-insets: 1;
+    -fx-background-color: #34a0a4;
+}
+
+.Button3_Pause:hover {
+    -fx-background-color: linear-gradient(#1e6091, #34a0a4);
+}
+
+.Button4_Step {
+    -fx-border-radius: 20;
+    -fx-background-insets: 1;
+    -fx-background-color: #34a0a4;
+}
+
+.Button4_Step:hover {
+    -fx-background-color: linear-gradient(#1e6091, #34a0a4);
+}
+
+.id {
+    -fx-font-size: 5pt;
+}
+
+.default-button {
+    -fx-text-fill: #eef0f2;
+}
+
+.default-button:hover {
+    -fx-text-fill: #eef0f2;
+}
+
+.block {
+    -fx-fill: #031d44;
+}
+
+.block-text {
+    -fx-fill: #eef0f2;
+}
+
+.team-message {
+    -fx-font-size: 25pt;
+}
