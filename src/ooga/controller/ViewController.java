@@ -19,6 +19,7 @@ import ooga.view.level.codearea.CommandBlock;
  *
  * @author Ji Yun Hyo
  * @author David Li
+ * @author Kathleen Chen
  */
 public class ViewController implements FrontEndExternalAPI {
 
@@ -214,4 +215,7 @@ public class ViewController implements FrontEndExternalAPI {
   public void updateTime(int timeLeft) {
     levelView.updateTime(timeLeft);
   }
+
+  @Override
+  public void getTeamNumber() { modelController.getTeamNumber(screenCreator.getTeam()); }
 }

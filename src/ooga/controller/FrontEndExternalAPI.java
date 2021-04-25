@@ -129,4 +129,6 @@ public interface FrontEndExternalAPI {
   void timedOut();
 
   void updateTime(int timeLeft);
+
+  void getTeamNumber();
 }

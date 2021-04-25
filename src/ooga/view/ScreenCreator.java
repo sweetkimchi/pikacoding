@@ -25,6 +25,7 @@ public class ScreenCreator {
   private final double width;
   private final double height;
   private StartMenu startMenu;
+  private TeamSelector teamSelector;
 
   /**
    * Default constructor
@@ -74,10 +75,14 @@ public class ScreenCreator {
 
   // TODO: right now pulls up level selection; level selection should be random
   public void teamSelector() {
-    TeamSelector teamSelector = new TeamSelector(viewController::initializeLevel);
+    teamSelector = new TeamSelector(viewController::initializeLevel);
     teamSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(teamSelector, width, height);
     stage.setScene(scene);
+  }
+
+  public int getTeam() {
+    return teamSelector.getTeamNumber();
   }
 
   /**
