@@ -46,14 +46,6 @@ public class ProgramStack extends VBox {
     } else if (availableCommandsOtherPlayer.getCommandNames().contains(command)) {
       createAndAddCommandBlock(availableCommandsOtherPlayer, command, true);
     }
-//    System.out.println(command + " 2");
-    for (int i = 0; i < programBlocks.size(); i++) {
-      CommandBlockHolder commandBlockHolder = programBlocks.get(i);
-      if (commandBlockHolder instanceof JumpCommandBlockHolder) {
-        ((JumpCommandBlockHolder) commandBlockHolder).updateDropdown(programBlocks.size());
-      }
-    }
-//    System.out.println(command + " 3");
   }
 
   private void addCommandBlockFromDatabase(String command) {
@@ -73,12 +65,6 @@ public class ProgramStack extends VBox {
       }
     }
 //    System.out.println(command + " 2");
-    for (int i = 0; i < programBlocks.size(); i++) {
-      CommandBlockHolder commandBlockHolder = programBlocks.get(i);
-      if (commandBlockHolder instanceof JumpCommandBlockHolder) {
-        ((JumpCommandBlockHolder) commandBlockHolder).updateDropdown(programBlocks.size());
-      }
-    }
 //    System.out.println(command + " 3");
   }
 
@@ -93,12 +79,6 @@ public class ProgramStack extends VBox {
     this.getChildren().remove(index - 1);
     for (int i = index - 1; i < programBlocks.size(); i++) {
       programBlocks.get(i).setIndex(i + 1);
-    }
-    for (int i = 0; i < programBlocks.size(); i++) {
-      CommandBlockHolder commandBlockHolder = programBlocks.get(i);
-      if (commandBlockHolder instanceof JumpCommandBlockHolder) {
-        ((JumpCommandBlockHolder) commandBlockHolder).updateDropdown(programBlocks.size());
-      }
     }
   }
 
@@ -142,6 +122,18 @@ public class ProgramStack extends VBox {
   }
 
   public void receiveProgramUpdates(List<CommandBlock> program) {
+    boolean noChange = true;
+    for (int i = 0; i < program.size(); i++) {
+      if (program.get(i) != getProgram().get(i)) {
+        System.out.println(program.get(i).getType() + program.get(i).getParameters() + " " + getProgram().get(i).getParameters());
+        noChange = false;
+        break;
+      }
+    }
+    if (noChange) {
+      return;
+    }
+    System.out.println(program.size() + " " + getProgram().size());
 //    List<CommandBlock> programCopy = new ArrayList<>();
 //    for (CommandBlock commandBlock : program) {
 //      programCopy.add(new CommandBlock(commandBlock.getIndex(), commandBlock.getType(),
