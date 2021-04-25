@@ -54,6 +54,7 @@ public class CodeArea extends GridPane {
   }
 
   public void setAvailableCommandsOtherPlayer(AvailableCommands availableCommands) {
+    commandBank.addCommandsOtherPlayer(availableCommands.getCommandNames());
     programStack.setAvailableCommandsOtherPlayer(availableCommands);
   }
 
