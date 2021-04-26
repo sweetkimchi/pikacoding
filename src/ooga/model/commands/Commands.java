@@ -1,6 +1,6 @@
 package ooga.model.commands;
 
-import java.util.*;
+import java.util.Map;
 import ooga.model.Direction;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.player.Avatar;
@@ -10,8 +10,8 @@ import ooga.model.player.Avatar;
  */
 public abstract class Commands implements CommandInterface {
 
-  private ElementInformationBundle elementInformationBundle;
-  private Map<String, String> parameters;
+  private final ElementInformationBundle elementInformationBundle;
+  private final Map<String, String> parameters;
 
   /**
    * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to

@@ -6,15 +6,14 @@ import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Tile;
 import ooga.model.grid.gridData.BlockData;
 import ooga.model.player.Avatar;
-import ooga.model.player.Block;
 
 /**
  * @author Ji Yun Hyo
  */
-public class Nearest extends AICommands{
+public class Nearest extends AICommands {
 
-  private int X = 0;
-  private int Y = 1;
+  private final int X = 0;
+  private final int Y = 1;
 
   /**
    * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
@@ -42,11 +41,11 @@ public class Nearest extends AICommands{
     int xAvatar = avatar.getXCoord();
     int yAvatar = avatar.getYCoord();
     BlockData closestBlockData = null;
-    for(BlockData blockData : getElementInformationBundle().getBlockData()){
+    for (BlockData blockData : getElementInformationBundle().getBlockData()) {
       int xBlock = blockData.getLocation().get(X);
       int yBlock = blockData.getLocation().get(Y);
       int manhattanDistance = Math.abs(xAvatar - xBlock) + Math.abs(yAvatar - yBlock);
-      if(manhattanDistance < minDistance){
+      if (manhattanDistance < minDistance) {
         minDistance = manhattanDistance;
         closestBlockData = blockData;
       }
@@ -64,12 +63,13 @@ public class Nearest extends AICommands{
     int newY = avatar.getYCoord();
     Tile prevTile = getCurrTile(ID);
     Tile nextTile = getNextTile(ID, Direction.CURRENT);
-    if(!(xBlock == newX && yBlock == newY)){
-      for(Direction direction : Direction.values()){
+    if (!(xBlock == newX && yBlock == newY)) {
+      for (Direction direction : Direction.values()) {
         int dummyX = avatar.getXCoord() + direction.getXDel();
         int dummyY = avatar.getYCoord() + direction.getYDel();
         int manhattanDistance = Math.abs(dummyX - xBlock) + Math.abs(dummyY - yBlock);
-        if(manhattanDistance < initialManhattanDistance && getNextTile(ID, direction).canAddAvatar() && direction != Direction.CURRENT){
+        if (manhattanDistance < initialManhattanDistance && getNextTile(ID, direction)
+            .canAddAvatar() && direction != Direction.CURRENT) {
           initialManhattanDistance = manhattanDistance;
           newX = dummyX;
           newY = dummyY;

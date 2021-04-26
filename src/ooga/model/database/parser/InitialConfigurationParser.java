@@ -23,7 +23,8 @@ public class InitialConfigurationParser {
 
   private final int level;
   private final String rootURLPathForLevel;
-  private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
+  private static final String ROOT_URL_FOR_CONFIG_FILES =
+      System.getProperty("user.dir") + "/data/gameProperties/";
   private InitialState initialState;
   private GoalState goalState;
   private String description;
@@ -34,20 +35,19 @@ public class InitialConfigurationParser {
   private final FirebaseService firebaseService;
   private final int playerID;
 
-  public InitialConfigurationParser(int level, FirebaseService firebaseService, int playerID)  {
+  public InitialConfigurationParser(int level, FirebaseService firebaseService, int playerID) {
     this.playerID = playerID;
     this.level = level;
     this.firebaseService = firebaseService;
     this.rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + this.level + "/";
     if (this.playerID != ModelController.SINGLE_PLAYER) {
       this.parseLevelInfoFromDB();
-    }
-    else  {
+    } else {
       this.parseLevelInfoFromDataFiles();
     }
   }
 
-  private void parseLevelInfoFromDataFiles()  {
+  private void parseLevelInfoFromDataFiles() {
 
     try {
       String filePathToLevelInfoFile = this.rootURLPathForLevel + "level" + this.level + ".json";
@@ -56,12 +56,12 @@ public class InitialConfigurationParser {
       HashMap<String, Object> levelInfo = (HashMap<String, Object>) result;
       parseGrid(getMapFromFile("grid.json"));
       parseStartState(getMapFromFile("startState.json"), levelInfo);
-      parseEndState(Integer.parseInt((String) levelInfo.get("idealNumOfCommands")), getMapFromFile("endState.json"));
+      parseEndState(Integer.parseInt((String) levelInfo.get("idealNumOfCommands")),
+          getMapFromFile("endState.json"));
       this.description = (String) levelInfo.get("description");
       parseCommands(getMapFromFile("commands.json"), blocksForCurrentPlayer(levelInfo),
           blocksForOtherPlayer(levelInfo));
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       throw new ExceptionHandler("error occured while parsing single player data files");
     }
   }
@@ -85,12 +85,10 @@ public class InitialConfigurationParser {
       this.description = (String) levelInfo.get("description");
       parseCommands((HashMap) result.get("commands"), blocksForCurrentPlayer(levelInfo),
           blocksForOtherPlayer(levelInfo));
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       throw new ExceptionHandler("error occurred while parsing files from DB");
     }
   }
-
 
 
   private List<String> blocksForCurrentPlayer(Map<String, Object> levelInfo) {
@@ -102,7 +100,7 @@ public class InitialConfigurationParser {
     };
   }
 
-  private List<String> blocksForOtherPlayer(Map<String, Object> levelInfo)  {
+  private List<String> blocksForOtherPlayer(Map<String, Object> levelInfo) {
     return switch (this.playerID) {
       case 1 -> (List<String>) levelInfo.get("blocks-p2");
       case 2 -> (List<String>) levelInfo.get("blocks-p1");
@@ -127,30 +125,32 @@ public class InitialConfigurationParser {
 
   }
 
-  private void parseEndState(int numOfCommands, Map endState)  {
+  private void parseEndState(int numOfCommands, Map endState) {
     try {
-      this.goalState = new GoalState(parseAvatarLocations((Map<String, Object>) endState.get("peopleLocations"), false),
-      parseBlockData((Map<String, Object>) endState.get("blocks"), false), numOfCommands,
+      this.goalState = new GoalState(
+          parseAvatarLocations((Map<String, Object>) endState.get("peopleLocations"), false),
+          parseBlockData((Map<String, Object>) endState.get("blocks"), false), numOfCommands,
           (int) endState.get("idealTime"),
           (int) endState.get("idealLines"));
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       throw new ExceptionHandler("error parsing end state");
     }
 
   }
 
-  private Map<String, List<Integer>> parseAvatarLocations(Map<String, Object> peopleLocations, boolean addToGameGrid)  {
+  private Map<String, List<Integer>> parseAvatarLocations(Map<String, Object> peopleLocations,
+      boolean addToGameGrid) {
     Map<String, List<Integer>> mapOfPeople = new HashMap<>();
     if (peopleLocations.containsKey("noLoc")) {
       return mapOfPeople;
     }
-    for (String s: peopleLocations.keySet())  {
+    for (String s : peopleLocations.keySet()) {
       List<Integer> avatarLocation = (List<Integer>) peopleLocations.get(s);
       mapOfPeople.put(s, avatarLocation);
       if (addToGameGrid) {
-        this.elementInformationBundle.addAvatar(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
-            avatarLocation.get(1)));
+        this.elementInformationBundle
+            .addAvatar(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
+                avatarLocation.get(1)));
       }
     }
     return mapOfPeople;
@@ -159,14 +159,14 @@ public class InitialConfigurationParser {
   private Map<String, BlockData> parseBlockData(Map<String, Object> blocks, boolean addToGameGrid) {
     Map<String, BlockData> allBlockData = new HashMap<>();
 
-    for (String s: blocks.keySet()) {
+    for (String s : blocks.keySet()) {
       Map<String, Object> currentBlock = (Map<String, Object>) blocks.get(s);
       List<Integer> blockLoc = (List<Integer>) currentBlock.get("loc");
       BlockData blockData = new BlockData(blockLoc,
           (int) currentBlock.get("num"), Boolean.parseBoolean(
           (String) currentBlock.get("pickedUp")), Integer.parseInt(s));
       allBlockData.put(s, blockData);
-      if (addToGameGrid)  {
+      if (addToGameGrid) {
         this.elementInformationBundle.addBlock(new DataCube(Integer.parseInt(s), blockLoc.get(0),
             blockLoc.get(1), (int) currentBlock.get("num")));
       }
@@ -177,16 +177,16 @@ public class InitialConfigurationParser {
 
 
   private void parseCommands(Map<String, Object> commands, List<String> commandsForCurrentPlayer,
-      List<String> comamndsForOtherPlayer)  {
+      List<String> comamndsForOtherPlayer) {
     try {
       Map<String, List<Map<String, List<String>>>> commandsMap = new HashMap<>();
-      for (String command: commands.keySet()) {
+      for (String command : commands.keySet()) {
         List<Map<String, List<String>>> params = new ArrayList<>();
-        for (Map<String, List<String>> param:((Map<String, List<Map<String, List<String>>>>) commands.get(command)).get("parameters")) {
-          if (param.containsKey("noParams"))  {
+        for (Map<String, List<String>> param : ((Map<String, List<Map<String, List<String>>>>) commands
+            .get(command)).get("parameters")) {
+          if (param.containsKey("noParams")) {
             continue;
-          }
-          else  {
+          } else {
             params.add(param);
           }
         }
@@ -196,23 +196,21 @@ public class InitialConfigurationParser {
       if (comamndsForOtherPlayer != null) {
         availableCommandsOtherPlayer = new AvailableCommands(commandsMap, comamndsForOtherPlayer);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       throw new ExceptionHandler("Parse Commands failed.");
     }
   }
 
-  private void parseGrid(Map grid)  {
+  private void parseGrid(Map grid) {
     try {
-      int width = Integer.parseInt((String)grid.get("width"));
-      int height = Integer.parseInt((String)grid.get("height"));
+      int width = Integer.parseInt((String) grid.get("width"));
+      int height = Integer.parseInt((String) grid.get("height"));
       this.elementInformationBundle = new ElementInformationBundle();
       this.elementInformationBundle.setDimensions(width, height);
       List<List<String>> mapOfGrid;
       if (this.playerID != ModelController.SINGLE_PLAYER) {
-         mapOfGrid = (List<List<String>>) grid.get("grid");
-      }
-      else  {
+        mapOfGrid = (List<List<String>>) grid.get("grid");
+      } else {
         mapOfGrid = parseSinglePlayerGrid(grid, height);
       }
       for (int i = 0; i < height; i++) {
@@ -230,17 +228,19 @@ public class InitialConfigurationParser {
     }
   }
 
-  private List<List<String>>  parseSinglePlayerGrid(Map grid, int height)  {
+  private List<List<String>> parseSinglePlayerGrid(Map grid, int height) {
     List<List<String>> mapOfGrid = new ArrayList<>();
     Map<String, List<String>> currentGrid = (Map<String, List<String>>) grid.get("grid");
-    for (int i = 0; i < height; i++)  {
+    for (int i = 0; i < height; i++) {
       mapOfGrid.add(currentGrid.get("" + i));
     }
     return mapOfGrid;
 
   }
 
-  public ElementInformationBundle getGameGrid() { return this.elementInformationBundle; }
+  public ElementInformationBundle getGameGrid() {
+    return this.elementInformationBundle;
+  }
 
   public GoalState getGoalState() {
     return this.goalState;
@@ -254,11 +254,11 @@ public class InitialConfigurationParser {
     return this.description;
   }
 
-  public AvailableCommands getAvailableCommands()  {
+  public AvailableCommands getAvailableCommands() {
     return this.availableCommands;
   }
 
-  public AvailableCommands getAvailableCommandsOtherPlayer()  {
+  public AvailableCommands getAvailableCommandsOtherPlayer() {
     return this.availableCommandsOtherPlayer;
   }
 
