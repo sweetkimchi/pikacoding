@@ -9,7 +9,14 @@ import ooga.model.grid.gridData.TileData;
 import ooga.model.player.Avatar;
 
 /**
+ * The If command checks if a conditional is satisfied for an avatar given input parameters of a
+ * tile direction, comparator, and target. If is intended to be paired with an Endif, which marks
+ * the end of the If code. If the conditional is satisfied, then the avatar will run the immediately
+ * preceding code, but if the conditional is not satisfied, then the avatar will jump to the
+ * corresponding end if, which demarcates the limits of If.
+ *
  * @author Ji Yun Hyo
+ * @author Harrison Huang
  */
 public class If extends ConditionalCommands {
 
@@ -24,6 +31,12 @@ public class If extends ConditionalCommands {
     super(elementInformationBundle, parameters);
   }
 
+  /**
+   * The execution behavior of the command on an Avatar given by an ID. The specific implementation
+   * is to be overridden by the subclasses.
+   *
+   * @param ID The ID of the avatar to be commanded
+   */
   @Override
   public void execute(int ID) {
     Avatar avatar = getAvatar(ID);

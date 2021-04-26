@@ -7,6 +7,15 @@ import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
 import ooga.model.player.Block;
 
+/**
+ * Throw is a type of Basic Command that directs the given avatar to throw the block it is holding
+ * in a given direction as far as possible (similar to how a queen moves in chess). If the block
+ * runs into a tile that it cannot be placed, then it will stop at the previous valid tile. If the
+ * current tile and the next tile both cannot accept the block, or the avatar is not holding a
+ * block, then the avatar will do nothing.
+ *
+ * @author Harrison Huang
+ */
 public class Throw extends BasicCommands {
 
   /**

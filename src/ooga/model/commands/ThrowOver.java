@@ -7,6 +7,15 @@ import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
 import ooga.model.player.Block;
 
+/**
+ * ThrowOver is a type of Basic Command that directs the given avatar to throw over the block it is
+ * holding for up to two tiles away, in the given direction. In order of priority, the block will
+ * attempt to be placed in the tile two units away, ignoring obstacles in between, then the tile one
+ * unit away, and then the current tile. If none of these tiles can accept a block, or the avatar is
+ * not holding a block, then the avatar will do nothing.
+ *
+ * @author Harrison Huang
+ */
 public class ThrowOver extends BasicCommands {
 
   /**

@@ -4,6 +4,13 @@ import java.util.Map;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.player.Avatar;
 
+/**
+ * The Tell command takes in one parameter, the desired ID of the avatar, and directs only that
+ * avatar to run the code within the Tell brackets. It is intended to be paired with an end tell
+ * command, which demarcates when the Tell ends.
+ *
+ * @author Harrison Huang
+ */
 public class Tell extends ConditionalCommands {
 
   /**
@@ -18,6 +25,12 @@ public class Tell extends ConditionalCommands {
     super(elementInformationBundle, parameters);
   }
 
+  /**
+   * The execution behavior of the command on an Avatar given by an ID. The specific implementation
+   * is to be overridden by the subclasses.
+   *
+   * @param ID The ID of the avatar to be commanded
+   */
   @Override
   public void execute(int ID) {
     Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);

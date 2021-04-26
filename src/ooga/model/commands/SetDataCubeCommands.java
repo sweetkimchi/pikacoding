@@ -5,6 +5,13 @@ import ooga.model.grid.ElementInformationBundle;
 import ooga.model.player.Avatar;
 import ooga.model.player.DataCube;
 
+/**
+ * Set DataCube Commands are a subclass of Basic Commands that set a value to the datacube held by
+ * the Avatar based on the current value of the avatar datacube. The specific formula of the new
+ * value of the avatar datacube is determined by extending subclasses.
+ *
+ * @author Harrison Huang
+ */
 public abstract class SetDataCubeCommands extends BasicCommands {
 
   /**

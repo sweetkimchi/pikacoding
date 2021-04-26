@@ -58,6 +58,12 @@ public abstract class Commands implements CommandInterface {
     return parameters;
   }
 
+  /**
+   * Returns an Avatar queried by the ID number.
+   *
+   * @param id The ID number of the desired Avatar
+   * @return The Avatar that has the given ID number
+   */
   public Avatar getAvatar(int id) {
     return (Avatar) getElementInformationBundle().getAvatarById(id);
   }

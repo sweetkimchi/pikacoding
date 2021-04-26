@@ -25,6 +25,12 @@ public class Nearest extends AICommands{
     super(elementInformationBundle, parameters);
   }
 
+  /**
+   * The execution behavior of the command on an Avatar given by an ID. The specific implementation
+   * is to be overridden by the subclasses.
+   *
+   * @param ID The ID of the avatar to be commanded
+   */
   @Override
   public void execute(int ID) {
     Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);

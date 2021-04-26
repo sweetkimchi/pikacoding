@@ -7,7 +7,11 @@ import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
 
 /**
+ * Step is a type of Basic Command that directs the given avatar to move to the tile by the given
+ * direction, if possible.
+ *
  * @author Ji Yun Hyo
+ * @author Harrison Huang
  */
 public class Step extends BasicCommands {
 
