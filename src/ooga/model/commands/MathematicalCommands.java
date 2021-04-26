@@ -43,7 +43,7 @@ public abstract class MathematicalCommands extends BasicCommands {
       int newDisplayNum = calculateNewDisplayNum(avatarCube.getDisplayNum(),
           tileCube.getDisplayNum());
       avatarCube.setDisplayNum(newDisplayNum);
-      System.out.println("Newly added NUMBER: " + newDisplayNum);
+      //System.out.println("Newly added NUMBER: " + newDisplayNum);
 
       sendDataCubeNumUpdate(avatarCube);
     } else {
