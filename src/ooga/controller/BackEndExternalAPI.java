@@ -91,4 +91,6 @@ public interface BackEndExternalAPI {
   void setTeamNumber(int teamNum);
 
   void startGameAfterBothTeamsPresent();
+
+  void setMatchId(int id);
 }

@@ -16,7 +16,7 @@ public class LevelSelector extends BorderPane {
   public LevelSelector(Consumer<Integer> loadLevelAction) {
     VBox levels = new VBox();
     ResourceBundle levelResources = ResourceBundle.getBundle(ScreenCreator.RESOURCES + WinScreen.SCREEN_MESSAGES);
-    for (int level = 1; level <= Controller.NUM_LEVELS; level++) {
+    for (int level = 1; level <= Integer.parseInt(levelResources.getString("maxNum")); level++) {
       Button levelButton = new Button(applyResourceFormatting(level, levelResources.getString("level")));
       levelButton.setId(applyResourceFormatting(level, ScreenCreator.idsForTests.getString("levelButton")));
       levelButton.getStyleClass().add("default-button");

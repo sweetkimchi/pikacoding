@@ -55,7 +55,6 @@ public class ScreenCreator {
    * @param level Level number
    */
   public void initializeMultiLevelView(int level) {
-    System.out.println("make multplayerLevelView");
     levelView = new MultiplayerLevelView(level, viewController, this);
     Scene scene = new Scene(levelView, width, height);
     stage.setScene(scene);
@@ -75,10 +74,19 @@ public class ScreenCreator {
    * Opens up the start menu
    */
   public void loadStartMenu() {
-    startMenu = new StartMenu(e -> loadGameTypeSelector());
+    startMenu = new StartMenu(e -> loadMatchIdSelector());
     Scene scene = new Scene(startMenu, width, height);
     stage.setScene(scene);
   }
+
+  public void loadMatchIdSelector() {
+    MatchIdSelector matchIdSelector = new MatchIdSelector(this);
+    matchIdSelector.getStylesheets().add(startMenu.getStyleSheet());
+    Scene scene = new Scene(matchIdSelector, width, height);
+    stage.setScene(scene);
+  }
+
+  public void setMatchId(int id) { }
 
   public void loadGameTypeSelector() {
     GameTypeSelector gameTypeSelector = new GameTypeSelector(e -> loadSingleLevelSelector(), e -> loadTeamSelector());
@@ -87,7 +95,6 @@ public class ScreenCreator {
     stage.setScene(scene);
   }
 
-  // TODO: right now pulls up level selection; level selection should be random
   public void loadTeamSelector() {
     TeamSelector teamSelector = new TeamSelector(e -> loadMultiLevelSelector(), viewController::initializeMultiLevel, this);
     teamSelector.getStylesheets().add(startMenu.getStyleSheet());

@@ -235,4 +235,7 @@ public class ViewController implements FrontEndExternalAPI {
 
   @Override
   public void loadMultiLevel() { screenCreator.loadMultiLevel(); }
+
+  @Override
+  public void setMatchId(int id) { }
 }

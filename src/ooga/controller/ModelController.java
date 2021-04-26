@@ -24,7 +24,7 @@ public class ModelController implements BackEndExternalAPI {
   private FirebaseService firebaseService;
   private ConcreteDatabaseListener concreteDatabaseListener;
   private int level;
-  private final int matchID;
+  private int matchID;
   private int teamID;
   private int playerID;
   private Stopwatch stopwatch;
@@ -216,4 +216,6 @@ public class ModelController implements BackEndExternalAPI {
     //viewController.loadMultiLevel();
   }
 
+  @Override
+  public void setMatchId(int id) { this.matchID = id; }
 }
