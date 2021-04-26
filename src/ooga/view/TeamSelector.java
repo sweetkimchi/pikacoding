@@ -2,17 +2,14 @@ package ooga.view;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import ooga.controller.Controller;
 import ooga.view.factories.GUIElementFactory;
 import ooga.view.factories.GUIElementInterface;
 
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -22,16 +19,14 @@ public class TeamSelector extends BorderPane {
   private static final int NO_NUM = 0;
 
   private ResourceBundle teamSelectorResources;
-  private Consumer<Integer> levelAction;
   private ScreenCreator screenCreator;
   private GUIElementInterface GUIFactory;
   private int numberOfTeams;
   private EventHandler<ActionEvent> loadLevelSelector;
 
-  public TeamSelector(EventHandler<ActionEvent> loadAction, Consumer<Integer> lAction, ScreenCreator sc) {
+  public TeamSelector(EventHandler<ActionEvent> loadAction, ScreenCreator sc) {
     GUIFactory = new GUIElementFactory();
     screenCreator = sc;
-    levelAction = lAction;
     loadLevelSelector = loadAction;
     teamSelectorResources = ResourceBundle.getBundle(TEAM_SELECTOR_STRINGS);
     numberOfTeams = Integer.parseInt(teamSelectorResources.getString("numTeams"));

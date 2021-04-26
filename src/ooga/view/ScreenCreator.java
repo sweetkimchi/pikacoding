@@ -96,7 +96,7 @@ public class ScreenCreator {
   }
 
   public void loadTeamSelector() {
-    TeamSelector teamSelector = new TeamSelector(e -> loadMultiLevelSelector(), viewController::initializeMultiLevel, this);
+    TeamSelector teamSelector = new TeamSelector(e -> loadMultiLevelSelector(), this);
     teamSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(teamSelector, width, height);
     stage.setScene(scene);
