@@ -109,6 +109,7 @@ public class CommandBlockHolder extends GridPane {
 //    System.out.println(parameter + " " + commandBlock.getType());
 //    System.out.println(dropdowns.keySet());
     dropdowns.get(parameter).getSelectionModel().select(option);
+    commandBlock.setParameter(parameter, option);
   }
 
   public void setOtherPlayer() {

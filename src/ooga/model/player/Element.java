@@ -15,23 +15,25 @@ public interface Element {
   int getId();
 
   /**
-   * @return xCoordinate of the Element
+   * Getter for the x-coordinate of the Element.
+   *
+   * @return The x-coordinate of the Element
    */
   int getXCoord();
 
   /**
-   * @return yCoordinate of the Element
+   * Getter for the y-coordinate of the Element.
+   *
+   * @return The y-coordinate of the Element
    */
   int getYCoord();
 
   /**
-   * update the xCoordinate
+   * Updates the X and Y coordinates of the Element.
+   *
+   * @param xCoord The new x-coordinate
+   * @param yCoord The new y-coordinate
    */
-  void setXCoord(int xCoord);
-
-  /**
-   * update the yCoordinate
-   */
-  void setYCoord(int yCoord);
+  void setXY(int xCoord, int yCoord);
 
 }

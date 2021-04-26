@@ -93,17 +93,9 @@ public class SpriteLayer extends Pane {
       if(!entry.getValue().isEmpty()){
         double nextX = entry.getValue().pop();
         double nextY = entry.getValue().pop();
-        double currentX = 0;
-        double currentY = 0;
         if(avatars.containsKey(entry.getKey())){
-          currentX = avatars.get(entry.getKey()).getInitialXCoordinate();
-          currentY = avatars.get(entry.getKey()).getInitialYCoordinate();
-
           avatars.get(entry.getKey()).moveAvatar(nextX, nextY);
         }else if(blocks.containsKey(entry.getKey())){
-          currentX = blocks.get(entry.getKey()).getInitialXCoordinate();
-          currentY = blocks.get(entry.getKey()).getInitialYCoordinate();
-
           blocks.get(entry.getKey()).moveBlock(nextX, nextY);
         }
         finished = false;
@@ -118,18 +110,13 @@ public class SpriteLayer extends Pane {
   }
 
   public void resetAvatarLocations() {
-    initialAvatarLocations.forEach((id, location) -> {
-      avatars.get(Integer.parseInt(id)).reset();
-    });
+    initialAvatarLocations.forEach((id, location) -> avatars.get(Integer.parseInt(id)).reset());
   }
 
   public void resetBlockData() {
-    initialBlockData.forEach((id, blockData) -> {
-      blocks.get(Integer.parseInt(id)).reset();
-    });
+    initialBlockData.forEach((id, blockData) -> blocks.get(Integer.parseInt(id)).reset());
   }
 
-  //TODO: refactor with css
   public void resetAvatarImages() {
     if(allElementInformation != null){
       for(Map.Entry<Integer, ViewAvatar> entry : avatars.entrySet()){

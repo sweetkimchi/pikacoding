@@ -9,17 +9,34 @@ import ooga.model.grid.gridData.TileData;
 import ooga.model.player.Avatar;
 
 /**
+ * The If command checks if a conditional is satisfied for an avatar given input parameters of a
+ * tile direction, comparator, and target. If is intended to be paired with an Endif, which marks
+ * the end of the If code. If the conditional is satisfied, then the avatar will run the immediately
+ * preceding code, but if the conditional is not satisfied, then the avatar will jump to the
+ * corresponding end if, which demarcates the limits of If.
+ *
  * @author Ji Yun Hyo
+ * @author Harrison Huang
  */
 public class If extends ConditionalCommands {
 
   /**
-   * Default constructor
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
+   *
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
    */
   public If(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
     super(elementInformationBundle, parameters);
   }
 
+  /**
+   * The execution behavior of the command on an Avatar given by an ID. The specific implementation
+   * is to be overridden by the subclasses.
+   *
+   * @param ID The ID of the avatar to be commanded
+   */
   @Override
   public void execute(int ID) {
     Avatar avatar = getAvatar(ID);
@@ -47,11 +64,10 @@ public class If extends ConditionalCommands {
     }
     if (result ^ equalsOrNot) {
       avatar.setProgramCounter(avatar.getProgramCounter() + 1);
-    }
-    else {
-      // TODO: find next line after end if and set PC to that
-      if(!getElementInformationBundle().getMapOfCommandLines().isEmpty()){
-         avatar.setProgramCounter(getElementInformationBundle().getMapOfCommandLines().get(avatar.getProgramCounter()));
+    } else {
+      if (!getElementInformationBundle().getMapOfCommandLines().isEmpty()) {
+        avatar.setProgramCounter(
+            getElementInformationBundle().getMapOfCommandLines().get(avatar.getProgramCounter()));
       }
 
     }

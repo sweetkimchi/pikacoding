@@ -22,27 +22,27 @@ public class JumpCommandBlockHolder extends CommandBlockHolder {
   }
 
   private void updateDropdown() {
-//    getCommandBlock().setParameter(parameter, "1");
+    getCommandBlock().setParameter("destination", "1");
     lineSelector.getItems().clear();
     List<String> options = new ArrayList<>();
     for (int i = 1; i <= getCommandBlock().getIndex(); i++) {
       options.add(Integer.toString(i));
     }
     lineSelector.getItems().addAll(options);
-    lineSelector.getSelectionModel().selectFirst();
+//    lineSelector.getSelectionModel().selectFirst();
   }
 
   @Override
   protected void initializeDropdowns() {
+    getCommandBlock().setParameter("destination", "1");
     String parameter = getParameterOptions().get(0).keySet().iterator().next();
-//    getCommandBlock().setParameter(parameter, "1");
     lineSelector = new ComboBox<>();
     updateDropdown();
     lineSelector.setOnAction(e -> {
       getCommandBlock().setParameter(parameter, lineSelector.getValue());
       getProgramStack().notifyProgramListeners();
     });
-    lineSelector.getSelectionModel().selectFirst();
+//    lineSelector.getSelectionModel().selectFirst();
     getDropdowns().put(parameter, lineSelector);
     addItem(lineSelector, 120);
   }

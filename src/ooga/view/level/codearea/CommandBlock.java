@@ -31,7 +31,6 @@ public class CommandBlock {
   }
 
   public void setParameter(String parameter, String value) {
-    assert parameters.containsKey(parameter);
     parameters.put(parameter, value);
   }
 
