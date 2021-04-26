@@ -24,7 +24,7 @@ public class ModelController implements BackEndExternalAPI {
   private FirebaseService firebaseService;
   private ConcreteDatabaseListener concreteDatabaseListener;
   private int level;
-  private final int matchID;
+  private int matchID;
   private int teamID;
   private int playerID;
   private Stopwatch stopwatch;
@@ -33,8 +33,6 @@ public class ModelController implements BackEndExternalAPI {
    * Default constructor
    */
   public ModelController() {
-    //TODO: Change teamID and playerID to things front end creates
-    matchID = 420;
     //firebaseService = new FirebaseService();
 
   }
@@ -216,4 +214,6 @@ public class ModelController implements BackEndExternalAPI {
     //viewController.loadMultiLevel();
   }
 
+  @Override
+  public void setMatchId(int id) { this.matchID = id; }
 }

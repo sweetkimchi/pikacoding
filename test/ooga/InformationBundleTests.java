@@ -134,6 +134,11 @@ public class InformationBundleTests {
       public void startGameAfterBothTeamsPresent() {
 
       }
+
+      @Override
+      public void setMatchId(int id) {
+
+      }
     };
   }
 

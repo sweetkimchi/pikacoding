@@ -1,13 +1,17 @@
 package ooga.view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ooga.controller.Controller;
+import ooga.view.factories.GUIElementFactory;
+import ooga.view.factories.GUIElementInterface;
 
-import java.text.MessageFormat;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
@@ -15,15 +19,22 @@ import java.util.function.Consumer;
 
 public class TeamSelector extends BorderPane {
   private static final String TEAM_SELECTOR_STRINGS = ScreenCreator.RESOURCES + "TeamSelector";
+  private static final int NO_NUM = 0;
 
   private ResourceBundle teamSelectorResources;
   private Consumer<Integer> levelAction;
   private ScreenCreator screenCreator;
+  private GUIElementInterface GUIFactory;
+  private int numberOfTeams;
+  private EventHandler<ActionEvent> loadLevelSelector;
 
-  public TeamSelector(Consumer<Integer> lAction, ScreenCreator sc) {
+  public TeamSelector(EventHandler<ActionEvent> loadAction, Consumer<Integer> lAction, ScreenCreator sc) {
+    GUIFactory = new GUIElementFactory();
     screenCreator = sc;
     levelAction = lAction;
+    loadLevelSelector = loadAction;
     teamSelectorResources = ResourceBundle.getBundle(TEAM_SELECTOR_STRINGS);
+    numberOfTeams = Integer.parseInt(teamSelectorResources.getString("numTeams"));
     createTeamChoices();
   }
 
@@ -31,21 +42,16 @@ public class TeamSelector extends BorderPane {
     HBox teamButtons = new HBox();
     teamButtons.getStyleClass().add("type-screen");
 
-    Button team1 = new Button(teamSelectorResources.getString("team1"));
-    team1.setId(ScreenCreator.idsForTests.getString("team1"));
-    team1.getStyleClass().add("default-button");
-    team1.setOnAction(e -> determineTeam(1));
-    Button team2 = new Button(teamSelectorResources.getString("team2"));
-    team2.setId(ScreenCreator.idsForTests.getString("team2"));
-    team2.getStyleClass().add("default-button");
-    team2.setOnAction(e -> determineTeam(2));
-    teamButtons.getChildren().addAll(team1, team2);
+    for (int i = 1; i <= numberOfTeams; i ++) {
+      int teamNum = i;
+      Button team = GUIFactory.makeButton(teamSelectorResources, e -> determineTeam(teamNum), "team" + teamNum, "default-button", "team" + teamNum, NO_NUM);
+      teamButtons.getChildren().add(team);
+    }
 
     VBox vBox = new VBox();
     vBox.getStyleClass().add("instruction-box");
-
-    Label instructions = new Label(teamSelectorResources.getString("instructions"));
-    instructions.getStyleClass().add("title");
+    
+    Label instructions = GUIFactory.makeLabel(teamSelectorResources, "instructions", "title", NO_NUM);
 
     vBox.getChildren().addAll(instructions, teamButtons);
     this.setCenter(vBox);
@@ -59,32 +65,16 @@ public class TeamSelector extends BorderPane {
 
   private void createTeamScreen(int teamNumber) {
     VBox tBox = new VBox();
-    Label teamMessage = new Label(applyResourceFormatting(teamNumber, teamSelectorResources.getString("teamMessage")));
-    teamMessage.getStyleClass().add("team-message");
-    Label waitingMessage = new Label(teamSelectorResources.getString("waitingMessage"));
+
+    Label teamMessage = GUIFactory.makeLabel(teamSelectorResources, "teamMessage", "team-message", teamNumber);
+    Label waitingMessage = GUIFactory.makeLabel(teamSelectorResources, "waitingMessage", "waiting-message", NO_NUM);
+
     tBox.getChildren().addAll(teamMessage, waitingMessage);
     tBox.getStyleClass().add("instruction-box");
     this.setCenter(tBox);
 
-    Button start = new Button(teamSelectorResources.getString("start"));
-    start.setId(ScreenCreator.idsForTests.getString("multiStart"));
+    Button start = GUIFactory.makeButton(teamSelectorResources, loadLevelSelector, "start", "default-button", "multiStart", NO_NUM);
     tBox.getChildren().add(start);
-    start.setOnAction(handler -> {
-      tBox.getChildren().remove(waitingMessage);
-      Random r = new Random();
-      int level = r.nextInt(Controller.NUM_LEVELS) + 1;
-      levelAction.accept(8);
-    });
     this.setCenter(tBox);
-
-  }
-
-  //TODO: I use this a lot so refactor in some factory or inheritance hiearchy
-  private String applyResourceFormatting(int num, String key) {
-    Object[] var = new Object[1];
-    MessageFormat formatter = new MessageFormat("");
-    var[0] = num;
-    formatter.applyPattern(key);
-    return formatter.format(var);
   }
 }

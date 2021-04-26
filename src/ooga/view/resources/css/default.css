@@ -176,3 +176,12 @@
 .team-message {
     -fx-font-size: 25pt;
 }
+
+.waiting-message {
+    -fx-font-size: 15pt;
+}
+
+.match-id {
+    -fx-alignment: CENTER;
+    -fx-spacing: 40.0;
+}
