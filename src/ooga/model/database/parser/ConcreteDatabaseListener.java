@@ -27,6 +27,8 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   private boolean otherTeamStarted = false;
   private boolean levelEndedForCurrentTeam = false;
   private boolean levelEndedForOtherTeam = false;
+  private int scoreForCurrentTeam;
+  private int scoreForOtherTeam;
   private Map<DatabaseReference, ValueEventListener> valueEventListeners = new HashMap<>();
   private List<CommandBlock> lastCommandBlockForCurrentComputer;
   public ConcreteDatabaseListener(ModelController modelController, int matchID, int teamID)  {
@@ -81,7 +83,8 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           Object object = dataSnapshot.getValue(Object.class);
           json[0] = new Gson().toJson(object);
           if (!json[0].equals("null"))  {
-            declareLevelEndedForCurrentTeam();
+            int score = getScoreFromJSON(json[0]);
+            declareLevelEndedForCurrentTeam(score);
           }
         }
         @Override
@@ -95,21 +98,33 @@ public class ConcreteDatabaseListener implements DatabaseListener {
     }
   }
 
-  private void declareLevelEndedForCurrentTeam()  {
+  private int getScoreFromJSON(String json)  {
+    try {
+      Map commands = new ObjectMapper().readValue(json, Map.class);
+      return Integer.parseInt((String) commands.get("score"));
+    }
+    catch (Exception e) {
+      return 0;
+    }
+  }
+
+  private void declareLevelEndedForCurrentTeam(int score)  {
     System.out.println("level ended for current team!!!! ");
     this.levelEndedForCurrentTeam = true;
-    modelController.notifyCurrentTeamEnded(0);
+    this.scoreForCurrentTeam = score;
+    modelController.notifyCurrentTeamEnded(score);
     if (levelEndedForOtherTeam) {
       levelEndedForBothTeams();
     }
   }
 
   private void levelEndedForBothTeams() {
+
     System.out.println("level ended for both teams!!!!!!!");
     for (DatabaseReference ref: this.valueEventListeners.keySet())  {
       ref.removeEventListener(this.valueEventListeners.get(ref));
     }
-    modelController.notifyBothTeamsEnded(0, 0);
+    modelController.notifyBothTeamsEnded(this.scoreForCurrentTeam, this.scoreForOtherTeam);
   }
 
   @Override
@@ -126,7 +141,8 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           Object object = dataSnapshot.getValue(Object.class);
           json[0] = new Gson().toJson(object);
           if (!json[0].equals("null"))  {
-            declareLevelEndedForOtherTeam();
+            int score = getScoreFromJSON(json[0]);
+            declareLevelEndedForOtherTeam(score);
           }
         }
         @Override
@@ -140,8 +156,9 @@ public class ConcreteDatabaseListener implements DatabaseListener {
     }
   }
 
-  private void declareLevelEndedForOtherTeam() {
+  private void declareLevelEndedForOtherTeam(int score) {
     this.levelEndedForOtherTeam = true;
+    this.scoreForOtherTeam = score;
     if (this.levelEndedForCurrentTeam)  {
       levelEndedForBothTeams();
     }
