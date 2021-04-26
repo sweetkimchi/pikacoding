@@ -1,5 +1,6 @@
 package ooga.view.level;
 
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -9,18 +10,16 @@ import ooga.view.ScreenCreator;
 import ooga.view.factories.GUIElementFactory;
 import ooga.view.factories.GUIElementInterface;
 
-import java.text.MessageFormat;
-import java.util.ResourceBundle;
-
 public class WinScreen extends VBox {
+
   public static final String SCREEN_MESSAGES = "ScreenStrings";
   private static final int NO_NUM = 0;
 
-  private ResourceBundle winMessages;
-  private GUIElementInterface GUIFactory;
+  private final ResourceBundle winMessages;
+  private final GUIElementInterface GUIFactory;
 
   public WinScreen(int score, EventHandler<ActionEvent> homeAction,
-                   EventHandler<ActionEvent> nextLevelAction, boolean isLastLevel) {
+      EventHandler<ActionEvent> nextLevelAction, boolean isLastLevel) {
     GUIFactory = new GUIElementFactory();
     winMessages = ResourceBundle.getBundle(ScreenCreator.RESOURCES + SCREEN_MESSAGES);
     this.getStyleClass().add("start-screen");
@@ -31,11 +30,13 @@ public class WinScreen extends VBox {
     this.getChildren().add(scoreMessage);
 
     if (!isLastLevel) {
-      Button nextLevelButton = GUIFactory.makeButton(winMessages, nextLevelAction, "next", "default-button", "next", NO_NUM);
+      Button nextLevelButton = GUIFactory
+          .makeButton(winMessages, nextLevelAction, "next", "default-button", "next", NO_NUM);
       this.getChildren().add(nextLevelButton);
     }
 
-    Button homeButton = GUIFactory.makeButton(winMessages, homeAction, "home", "default-button", "home", NO_NUM);
+    Button homeButton = GUIFactory
+        .makeButton(winMessages, homeAction, "home", "default-button", "home", NO_NUM);
     this.getChildren().add(homeButton);
   }
 }

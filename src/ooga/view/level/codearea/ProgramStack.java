@@ -16,10 +16,10 @@ import ooga.model.commands.AvailableCommands;
  */
 public class ProgramStack extends VBox {
 
-  private List<CommandBlockHolder> programBlocks;
+  private final List<CommandBlockHolder> programBlocks;
   private AvailableCommands availableCommands;
   private AvailableCommands availableCommandsOtherPlayer;
-  private List<ProgramListener> programListeners;
+  private final List<ProgramListener> programListeners;
 
   private int newIndex = 0;
 
@@ -56,8 +56,7 @@ public class ProgramStack extends VBox {
       } else if (availableCommandsOtherPlayer.getCommandNames().contains(command.substring(4))) {
         createAndAddCommandBlockFromDatabase(availableCommandsOtherPlayer, command, true, true);
       }
-    }
-    else {
+    } else {
       if (availableCommands.getCommandNames().contains(command)) {
         createAndAddCommandBlockFromDatabase(availableCommands, command, false, false);
       } else if (availableCommandsOtherPlayer.getCommandNames().contains(command)) {
@@ -166,8 +165,7 @@ public class ProgramStack extends VBox {
             .put(parameter, availableCommandsOtherPlayer.getParameterOptions(command, parameter));
         parameterOptions.add(parameterOptionsMap);
       });
-    }
-    else {
+    } else {
       availableCommands.getParameters(command).forEach(parameter -> {
         Map<String, List<String>> parameterOptionsMap = new HashMap<>();
         parameterOptionsMap
@@ -184,11 +182,11 @@ public class ProgramStack extends VBox {
     }
   }
 
-  private void createAndAddCommandBlockFromDatabase(AvailableCommands availableCommands, String command, boolean isNestedEnd, boolean isMultiplayer) {
+  private void createAndAddCommandBlockFromDatabase(AvailableCommands availableCommands,
+      String command, boolean isNestedEnd, boolean isMultiplayer) {
     if (isNestedEnd) {
       addNestedEndCommandBlock(command, isMultiplayer);
-    }
-    else {
+    } else {
       createAndAddCommandBlock(availableCommands, command, isMultiplayer);
     }
   }
@@ -266,7 +264,8 @@ public class ProgramStack extends VBox {
       beginCommandBlockHolder.setOtherPlayer();
       endCommandBlockHolder.setOtherPlayer();
     }
-    Platform.runLater(() -> this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder));
+    Platform
+        .runLater(() -> this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder));
   }
 
   private void addJumpCommandBlock(String command,

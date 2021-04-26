@@ -1,33 +1,33 @@
 package ooga.view.level.board;
 
+import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.ResourceBundle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import ooga.view.ScreenCreator;
 
-import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.ResourceBundle;
-
 public class ViewAvatar extends StackPane {
+
   private static final String AVATAR_PROPERTIES = "ViewAvatar";
 
-  private int initialXCoordinate;
-  private int initialYCoordinate;
-  private double width;
-  private double height;
-  private SpriteLayer spriteLayer;
-  private ResourceBundle animationImages;
+  private final int initialXCoordinate;
+  private final int initialYCoordinate;
+  private final double width;
+  private final double height;
+  private final SpriteLayer spriteLayer;
+  private final ResourceBundle animationImages;
   private ImageView avatar;
-  private int rightNum = 0;
-  private int leftNum = 0;
-  private int fdbkNum = 0;
-  private int idNum;
+  private final int rightNum = 0;
+  private final int leftNum = 0;
+  private final int fdbkNum = 0;
+  private final int idNum;
   private Text avatarId;
   private double xPadding;
-  private double yPadding;
-  private ResourceBundle avatarFinalValues;
+  private final double yPadding;
+  private final ResourceBundle avatarFinalValues;
   private HashMap<String, Integer> variables;
 
   public ViewAvatar(int x, int y, double w, double h, int id, SpriteLayer root) {
@@ -41,7 +41,7 @@ public class ViewAvatar extends StackPane {
     idNum = id;
     spriteLayer = root;
     animationImages = ResourceBundle.getBundle(ScreenCreator.RESOURCES +
-            avatarFinalValues.getString("imageResource"));
+        avatarFinalValues.getString("imageResource"));
     makeVariableMap();
     makeAvatar();
   }
@@ -57,14 +57,14 @@ public class ViewAvatar extends StackPane {
     boolean right = currentX < nextX;
     boolean left = nextX < currentX;
     boolean base = nextX == currentX && nextY == currentY;
-    boolean fdbk =nextX == currentX && nextY != currentY;
+    boolean fdbk = nextX == currentX && nextY != currentY;
 
     // TODO: refactor
     if (right) {
       animationChanges("right", x, y);
-    } else if (left){
+    } else if (left) {
       animationChanges("left", x, y);
-    } else if (fdbk){
+    } else if (fdbk) {
       animationChanges("fdbk", x, y);
     } else if (base) {
       setAvatarImage(animationImages.getString("baseImage"));
@@ -81,15 +81,15 @@ public class ViewAvatar extends StackPane {
     avatarId.setY(initialYCoordinate * height + yPadding);
   }
 
-  public int getInitialXCoordinate(){
-    return (int) (avatar.getX()/width);
+  public int getInitialXCoordinate() {
+    return (int) (avatar.getX() / width);
   }
 
-  public int getInitialYCoordinate(){
-    return (int) (avatar.getY()/height);
+  public int getInitialYCoordinate() {
+    return (int) (avatar.getY() / height);
   }
 
-  public void setAvatarImage(String image){
+  public void setAvatarImage(String image) {
     avatar.setImage(new Image(image));
   }
 
