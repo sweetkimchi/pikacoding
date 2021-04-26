@@ -77,17 +77,6 @@ public class TeamSelector extends BorderPane {
   }
 
   public void enableStart() {
-    System.out.println("team selector");
-//    tBox.getChildren().removeAll(waitingMessage, start);
-//    System.out.println("ah");
-//    Label readyMessage = GUIFactory.makeLabel(teamSelectorResources, "readyMessage", "waiting-message", NO_NUM);
-//    System.out.println("ah");
-//    start.setDisable(false);
-//    System.out.println("ah");
-//    tBox.getChildren().addAll(readyMessage, start);
-//    System.out.println("ah");
-//    System.out.println(start.isDisable());
     start.setDisable(false);
-    System.out.println("set false");
   }
 }

@@ -238,7 +238,6 @@ public class ViewController implements FrontEndExternalAPI {
 
   @Override
   public void notifyBothTeamsPresent() {
-    System.out.println("viewController");
     screenCreator.setTeamReady();
   }
 

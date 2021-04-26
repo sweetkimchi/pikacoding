@@ -104,7 +104,6 @@ public class ScreenCreator {
   }
 
   public void setTeamNum(int team) {
-    System.out.println("screen creator");
     viewController.setTeamNum(team);
   }
 
