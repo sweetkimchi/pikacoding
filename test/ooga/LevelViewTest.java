@@ -101,8 +101,8 @@ class LevelViewTest extends ApplicationTest {
 
   private void clickButton(String button) {
     clickOn(lookup("#" + button).queryButton());
-    //Platform.runLater(() -> lookup("#" + button).queryButton().fire());
-    //sleep(100);
+//    Platform.runLater(() -> lookup("#" + button).queryButton().fire());
+//    sleep(100);
   }
 
 }

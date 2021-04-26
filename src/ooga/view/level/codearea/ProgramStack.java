@@ -118,6 +118,7 @@ public class ProgramStack extends VBox {
   }
 
   public void notifyProgramListeners() {
+    System.out.println("program update");
     programListeners.forEach(ProgramListener::onProgramUpdate);
   }
 
@@ -133,7 +134,7 @@ public class ProgramStack extends VBox {
 //    if (noChange) {
 //      return;
 //    }
-    System.out.println(program.size() + " " + getProgram().size());
+    System.out.println(program.size() + " PROGOARM STIZE");
 //    List<CommandBlock> programCopy = new ArrayList<>();
 //    for (CommandBlock commandBlock : program) {
 //      programCopy.add(new CommandBlock(commandBlock.getIndex(), commandBlock.getType(),
@@ -149,13 +150,10 @@ public class ProgramStack extends VBox {
     Platform.runLater(() -> {
       for (int i = 0; i < program.size(); i++) {
         CommandBlock commandBlock = program.get(i);
-//      System.out.println(programCopy.size());
         addCommandBlockFromDatabase(commandBlock.getType());
         if (commandBlock.getParameters() != null) {
-//          System.out.println(commandBlock.getParameters().keySet());
           for (String parameter : commandBlock.getParameters().keySet()) {
             String option = commandBlock.getParameters().get(parameter);
-//            System.out.println(parameter + option);
             if (programBlocks.get(programBlocks.size() - 1) instanceof NestedEndBlockHolder) {
               int size = programBlocks.size();
               programBlocks.remove(size - 1);
@@ -180,12 +178,22 @@ public class ProgramStack extends VBox {
   private void createAndAddCommandBlock(AvailableCommands availableCommands, String command,
       boolean isMultiplayer) {
     List<Map<String, List<String>>> parameterOptions = new ArrayList<>();
-    availableCommands.getParameters(command).forEach(parameter -> {
-      Map<String, List<String>> parameterOptionsMap = new HashMap<>();
-      parameterOptionsMap
-          .put(parameter, availableCommands.getParameterOptions(command, parameter));
-      parameterOptions.add(parameterOptionsMap);
-    });
+    if (isMultiplayer) {
+      availableCommandsOtherPlayer.getParameters(command).forEach(parameter -> {
+        Map<String, List<String>> parameterOptionsMap = new HashMap<>();
+        parameterOptionsMap
+            .put(parameter, availableCommandsOtherPlayer.getParameterOptions(command, parameter));
+        parameterOptions.add(parameterOptionsMap);
+      });
+    }
+    else {
+      availableCommands.getParameters(command).forEach(parameter -> {
+        Map<String, List<String>> parameterOptionsMap = new HashMap<>();
+        parameterOptionsMap
+            .put(parameter, availableCommands.getParameterOptions(command, parameter));
+        parameterOptions.add(parameterOptionsMap);
+      });
+    }
     if (command.equals("jump")) {
       addJumpCommandBlock(command, parameterOptions, isMultiplayer);
     } else if (command.equals("if")) {

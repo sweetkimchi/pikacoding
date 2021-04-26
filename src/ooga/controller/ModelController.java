@@ -34,7 +34,7 @@ public class ModelController implements BackEndExternalAPI {
    */
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
-    matchID = 1102;
+    matchID = 420;
     //firebaseService = new FirebaseService();
 
   }
@@ -71,7 +71,10 @@ public class ModelController implements BackEndExternalAPI {
         initialConfigurationParser.getGameGrid(), initialConfigurationParser.getGoalState(),stopwatch);
 
 
-    if (this.teamID != SINGLE_PLAYER) {concreteDatabaseListener.codeAreaChanged();}
+    if (this.teamID != SINGLE_PLAYER) {
+      concreteDatabaseListener.codeAreaChanged();
+      viewController.setAvailableCommandsOtherPlayer(initialConfigurationParser.getAvailableCommandsOtherPlayer());
+    }
   }
 
   /**

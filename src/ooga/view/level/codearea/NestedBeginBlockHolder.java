@@ -2,6 +2,7 @@ package ooga.view.level.codearea;
 
 import java.util.List;
 import java.util.Map;
+import javafx.application.Platform;
 
 public class NestedBeginBlockHolder extends CommandBlockHolder {
 
@@ -23,8 +24,9 @@ public class NestedBeginBlockHolder extends CommandBlockHolder {
 
   @Override
   protected void removeAction() {
-    getProgramStack().removeCommandBlock(endCommandBlockHolder.getIndex());
+//    getProgramStack().removeCommandBlock(endCommandBlockHolder.getIndex());
     getProgramStack().removeCommandBlock(getIndex());
+
     getProgramStack().notifyProgramListeners();
   }
 }
