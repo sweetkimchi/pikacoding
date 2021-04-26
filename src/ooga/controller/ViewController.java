@@ -78,6 +78,7 @@ public class ViewController implements FrontEndExternalAPI {
     screenCreator.initilaizeSingleLevelView(level);
     levelView = screenCreator.getLevelView();
     modelController.initializeLevel(level);
+    levelView.resetAnimation();
   }
 
   /**
@@ -230,5 +231,8 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   @Override
-  public void getTeamNumber() { modelController.getTeamNumber(screenCreator.getTeam()); }
+  public void setTeamNum(int teamNum) { modelController.setTeamNumber(teamNum); }
+
+  @Override
+  public void loadMultiLevel() { screenCreator.loadMultiLevel(); }
 }

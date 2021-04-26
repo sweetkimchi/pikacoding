@@ -127,7 +127,11 @@ public class InformationBundleTests {
       }
 
       @Override
-      public void getTeamNumber(int teamNum) {
+      public void setTeamNumber(int teamNum) {
+      }
+
+      @Override
+      public void startGameAfterBothTeamsPresent() {
 
       }
     };

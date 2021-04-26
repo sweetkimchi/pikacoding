@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import ooga.model.exceptions.ExceptionHandler;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -28,12 +29,7 @@ public class FirebaseService {
   private FirebaseDatabase db;
   private String rootURLPathForLevel;
   private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
-  private boolean exceptionOccured = false;
-  private int teamID;
-  private int playerID;
-  public FirebaseService(int teamID, int playerID) {
-    this.playerID = playerID;
-    this.teamID = teamID;
+  public FirebaseService() {
     try{
       FileInputStream serviceAccount =
           new FileInputStream("data/firebaseKey/key.json");
@@ -47,8 +43,7 @@ public class FirebaseService {
       db = FirebaseDatabase.getInstance();
     }
     catch (Exception e) {
-      e.printStackTrace();
-      exceptionOccured = true;
+      throw new ExceptionHandler("error connecting to firebase");
     }
 
   }
@@ -81,8 +76,7 @@ public class FirebaseService {
           , new TypeToken<HashMap<String, Object>>() {}.getType());
     }
     catch (Exception e) {
-      exceptionOccured = true;
-      return;
+      throw new ExceptionHandler("error setting database contents");
     }
     setDatabaseContentsWithMap(jsonMap, pathInDB);
   }
@@ -98,7 +92,7 @@ public class FirebaseService {
       done.await();
     }
     catch (Exception e) {
-      exceptionOccured = true;
+      throw new ExceptionHandler("error setting database contents");
     }
   }
 
@@ -124,8 +118,7 @@ public class FirebaseService {
       return json[0];
     }
     catch (Exception e) {
-      exceptionOccured = true;
-      return null;
+      throw new ExceptionHandler("error reading levels from database");
     }
 
   }
@@ -146,15 +139,11 @@ public class FirebaseService {
     return map;
   }
 
-  public boolean getExceptionOccured()  {
-    return this.exceptionOccured;
-  }
-
   /**
    * updates the commandBlock across all
    */
-  public void saveMatchInformation(int matchID, List<CommandBlock> commandBlocks) {
-    String rootDBPath = "match_info/match"+matchID+"/team" + this.teamID + "/codingArea/";
+  public void saveMatchInformation(int matchID, int teamID, List<CommandBlock> commandBlocks) {
+    String rootDBPath = "match_info/match"+matchID+"/team" + teamID  + "/codingArea/";
     Map<String, Object> jsonMapOfCodingArea = new HashMap<>();
     for(CommandBlock commandBlock : commandBlocks){
       jsonMapOfCodingArea.put(String.valueOf(commandBlock.getIndex()), createJSONForCommandBlock(commandBlock));
@@ -162,7 +151,7 @@ public class FirebaseService {
     setDatabaseContentsWithMap(jsonMapOfCodingArea, rootDBPath);
   }
 
-  public void declareEndOfGame(int matchID, int score)  {
+  public void declareEndOfGame(int matchID, int teamID, int score)  {
     try{
       String rootDBPath = "match_info/match"+matchID+"/team"+teamID+"/gameEnded/";
       CountDownLatch done = new CountDownLatch(1);
@@ -176,10 +165,9 @@ public class FirebaseService {
       done.await();
     }
     catch (Exception e) {
-      e.printStackTrace();
+      throw new ExceptionHandler("error declaring end of game");
     }
   }
-
 
 
 }

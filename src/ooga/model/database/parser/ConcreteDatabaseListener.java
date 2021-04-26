@@ -15,6 +15,7 @@ import java.util.concurrent.CountDownLatch;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.ModelController;
 import ooga.model.database.DatabaseListener;
+import ooga.model.exceptions.ExceptionHandler;
 import ooga.view.level.codearea.CommandBlock;
 
 public class ConcreteDatabaseListener implements DatabaseListener {
@@ -62,7 +63,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       });
     }
     catch (Exception e) {
-
+      throw new ExceptionHandler("error receiving code area changes");
     }
   }
 
@@ -89,7 +90,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       });
     }
     catch (Exception e) {
-
+      throw new ExceptionHandler("error checking if level has ended");
     }
   }
 
@@ -122,7 +123,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       });
     }
     catch (Exception e) {
-
+      throw new ExceptionHandler("error checking if level has ended");
     }
   }
 
@@ -153,12 +154,12 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           try {
             List playerIDs =
                 new ObjectMapper().readValue(json[0], List.class);
-            //System.out.println(playerIDs);
+            System.out.println("player IDs" + playerIDs);
             if (playerIDs.size() == 2)  {
               teamAllHere();
             }
           } catch (IOException e) {
-            e.printStackTrace();
+            throw new ExceptionHandler("error checking if all people present");
           }
         }
         @Override
@@ -168,6 +169,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       });
     }
     catch (Exception e) {
+      throw new ExceptionHandler("error checking if all people present");
     }
   }
 
@@ -188,12 +190,11 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           try {
             List playerIDs =
                 new ObjectMapper().readValue(json[0], List.class);
-            //System.out.println(playerIDs);
             if (playerIDs.size() == 2)  {
               otherTeamAllHere();
             }
           } catch (IOException e) {
-            e.printStackTrace();
+            throw new ExceptionHandler("error checking if all people present");
           }
         }
         @Override
@@ -203,6 +204,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       });
     }
     catch (Exception e) {
+      throw new ExceptionHandler("error checking if all people present");
     }
   }
 
@@ -251,9 +253,19 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         ret.add(new CommandBlock((int) commandBlockParams.get("index"),
             (String) commandBlockParams.get("type"), (Map) commandBlockParams.get("parameters")));
       }
+      System.out.println(this.lastCommandBlockForCurrentComputer);
+      System.out.println(ret);
       if (ret.size() == this.lastCommandBlockForCurrentComputer.size()) {
         for (int i = 0; i < ret.size(); i++)  {
+          System.out.println(ret.get(i).getIndex() + " " + this.lastCommandBlockForCurrentComputer.get(i).getIndex());
           if (!ret.get(i).equals(this.lastCommandBlockForCurrentComputer.get(i)))  {
+            System.out.println(i);
+
+            System.out.println(ret.get(i).getIndex() + " " + lastCommandBlockForCurrentComputer.get(i).getIndex());
+            System.out.println(ret.get(i).getType() + " " + lastCommandBlockForCurrentComputer.get(i).getType());
+            System.out.println(ret.get(i).getParameters() + " " + lastCommandBlockForCurrentComputer.get(i).getParameters());
+
+
             return ret;
           }
         }
@@ -263,7 +275,6 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       return ret;
     }
     catch (Exception e) {
-      e.printStackTrace();
       return null;
     }
 

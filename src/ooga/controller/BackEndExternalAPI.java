@@ -87,7 +87,8 @@ public interface BackEndExternalAPI {
 
   /**
    * gets the team number selected by the player from the view
-   * @param teamNum
    */
-  void getTeamNumber(int teamNum);
+  void setTeamNumber(int teamNum);
+
+  void startGameAfterBothTeamsPresent();
 }

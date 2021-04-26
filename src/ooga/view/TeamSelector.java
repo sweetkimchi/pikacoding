@@ -16,11 +16,12 @@ import java.util.function.Consumer;
 public class TeamSelector extends BorderPane {
   private static final String TEAM_SELECTOR_STRINGS = ScreenCreator.RESOURCES + "TeamSelector";
 
-  private int teamNumber;
   private ResourceBundle teamSelectorResources;
   private Consumer<Integer> levelAction;
+  private ScreenCreator screenCreator;
 
-  public TeamSelector(Consumer<Integer> lAction) {
+  public TeamSelector(Consumer<Integer> lAction, ScreenCreator sc) {
+    screenCreator = sc;
     levelAction = lAction;
     teamSelectorResources = ResourceBundle.getBundle(TEAM_SELECTOR_STRINGS);
     createTeamChoices();
@@ -51,21 +52,22 @@ public class TeamSelector extends BorderPane {
   }
 
   private void determineTeam(int teamNum) {
-    teamNumber = teamNum;
+    screenCreator.setTeamNum(teamNum);
     this.getChildren().clear();
-    createTeamScreen();
+    createTeamScreen(teamNum);
   }
 
-  private void createTeamScreen() {
+  private void createTeamScreen(int teamNumber) {
     VBox tBox = new VBox();
     Label teamMessage = new Label(applyResourceFormatting(teamNumber, teamSelectorResources.getString("teamMessage")));
     teamMessage.getStyleClass().add("team-message");
     Label waitingMessage = new Label(teamSelectorResources.getString("waitingMessage"));
     tBox.getChildren().addAll(teamMessage, waitingMessage);
     tBox.getStyleClass().add("instruction-box");
+    this.setCenter(tBox);
 
-    // TODO: REMOVE LATER WHEN YOU FIGURE OUT HOW TO SYNC THE LEVELS
-    Button start = new Button("Start");
+    Button start = new Button(teamSelectorResources.getString("start"));
+    start.setId(ScreenCreator.idsForTests.getString("multiStart"));
     tBox.getChildren().add(start);
     start.setOnAction(handler -> {
       tBox.getChildren().remove(waitingMessage);
@@ -74,10 +76,7 @@ public class TeamSelector extends BorderPane {
       levelAction.accept(level);
     });
     this.setCenter(tBox);
-  }
 
-  public int getTeamNumber() {
-    return teamNumber;
   }
 
   //TODO: I use this a lot so refactor in some factory or inheritance hiearchy

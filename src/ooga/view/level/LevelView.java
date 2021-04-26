@@ -96,6 +96,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     Button levelSelectorButton = new Button("Level Selector");
     levelSelectorButton.setOnAction(e -> screenCreator.loadLevelSelector());
     pauseMenu.getChildren().add(levelSelectorButton);
+    animationController.pause();
 
     clearScreen();
     this.setCenter(pauseMenu);
@@ -187,7 +188,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     }
     clearScreen();
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
-        e -> viewController.initializeMultiLevel(level + 1), level == Controller.NUM_LEVELS));
+        e -> viewController.initializeSingleLevel(level + 1), level == Controller.NUM_LEVELS));
   }
 
   public void setScore(int score) {
@@ -252,4 +253,8 @@ public class LevelView extends BorderPane implements ProgramListener {
     this.setBottom(controlPanel);
   }
 
+  public void resetAnimation() {
+    board.resetAnimation();
+    animationController.declareEndOfRun();
+  }
 }
