@@ -103,7 +103,10 @@ public class ScreenCreator {
     stage.setScene(scene);
   }
 
-  public void setTeamNum(int team) { viewController.setTeamNum(team); }
+  public void setTeamNum(int team) {
+    System.out.println("screen creator");
+    viewController.setTeamNum(team);
+  }
 
   public void setTeamReady() { teamSelector.enableStart(); }
 
