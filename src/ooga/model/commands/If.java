@@ -14,7 +14,11 @@ import ooga.model.player.Avatar;
 public class If extends ConditionalCommands {
 
   /**
-   * Default constructor
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
+   *
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
    */
   public If(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
     super(elementInformationBundle, parameters);
@@ -47,10 +51,10 @@ public class If extends ConditionalCommands {
     }
     if (result ^ equalsOrNot) {
       avatar.setProgramCounter(avatar.getProgramCounter() + 1);
-    }
-    else {
-      if(!getElementInformationBundle().getMapOfCommandLines().isEmpty()){
-         avatar.setProgramCounter(getElementInformationBundle().getMapOfCommandLines().get(avatar.getProgramCounter()));
+    } else {
+      if (!getElementInformationBundle().getMapOfCommandLines().isEmpty()) {
+        avatar.setProgramCounter(
+            getElementInformationBundle().getMapOfCommandLines().get(avatar.getProgramCounter()));
       }
 
     }

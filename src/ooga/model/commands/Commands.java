@@ -13,6 +13,13 @@ public abstract class Commands implements CommandInterface {
   private ElementInformationBundle elementInformationBundle;
   private Map<String, String> parameters;
 
+  /**
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
+   *
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
+   */
   public Commands(ElementInformationBundle elementInformationBundle,
       Map<String, String> parameters) {
     this.elementInformationBundle = elementInformationBundle;

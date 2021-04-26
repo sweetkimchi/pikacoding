@@ -11,9 +11,12 @@ import ooga.model.player.Avatar;
  */
 public class Step extends BasicCommands {
 
-
   /**
-   * Default constructor
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
+   *
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
    */
   public Step(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
     super(elementInformationBundle, parameters);

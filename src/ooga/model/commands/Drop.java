@@ -9,10 +9,11 @@ import ooga.model.player.Block;
 public class Drop extends BasicCommands {
 
   /**
-   * Default constructor
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
    *
-   * @param elementInformationBundle
-   * @param parameters
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
    */
   public Drop(ElementInformationBundle elementInformationBundle,
       Map<String, String> parameters) {

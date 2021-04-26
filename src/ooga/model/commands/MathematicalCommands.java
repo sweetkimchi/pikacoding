@@ -9,10 +9,11 @@ import ooga.model.player.DataCube;
 public abstract class MathematicalCommands extends BasicCommands {
 
   /**
-   * Default constructor
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
    *
-   * @param elementInformationBundle
-   * @param parameters
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
    */
   public MathematicalCommands(ElementInformationBundle elementInformationBundle,
       Map<String, String> parameters) {
@@ -31,7 +32,8 @@ public abstract class MathematicalCommands extends BasicCommands {
     Tile currTile = getCurrTile(ID);
     if (currTile.getBlock() instanceof DataCube tileCube && avatar
         .getHeldItem() instanceof DataCube avatarCube) {
-      int newDisplayNum = calculateNewDisplayNum(avatarCube.getDisplayNum(), tileCube.getDisplayNum());
+      int newDisplayNum = calculateNewDisplayNum(avatarCube.getDisplayNum(),
+          tileCube.getDisplayNum());
       avatarCube.setDisplayNum(newDisplayNum);
       System.out.println("Newly added NUMBER: " + newDisplayNum);
 
@@ -49,7 +51,7 @@ public abstract class MathematicalCommands extends BasicCommands {
    * implementation and formula of the new display number is to be handled by subclasses.
    *
    * @param avatarCubeNum The current number of the cube held by the avatar
-   * @param tileCubeNum The current number of the cube on the tile
+   * @param tileCubeNum   The current number of the cube on the tile
    * @return The new number to be set to the avatar cube
    */
   public abstract int calculateNewDisplayNum(int avatarCubeNum, int tileCubeNum);

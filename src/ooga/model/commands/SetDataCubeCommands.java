@@ -8,10 +8,11 @@ import ooga.model.player.DataCube;
 public abstract class SetDataCubeCommands extends BasicCommands {
 
   /**
-   * Default constructor
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
    *
-   * @param elementInformationBundle
-   * @param parameters
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
    */
   public SetDataCubeCommands(ElementInformationBundle elementInformationBundle,
       Map<String, String> parameters) {

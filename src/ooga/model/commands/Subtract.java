@@ -6,10 +6,11 @@ import ooga.model.grid.ElementInformationBundle;
 public class Subtract extends MathematicalCommands {
 
   /**
-   * Default constructor
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
    *
-   * @param elementInformationBundle
-   * @param parameters
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
    */
   public Subtract(ElementInformationBundle elementInformationBundle,
       Map<String, String> parameters) {

@@ -12,6 +12,14 @@ public class Nearest extends AICommands{
 
   private int X = 0;
   private int Y = 1;
+
+  /**
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
+   *
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
+   */
   public Nearest(ElementInformationBundle elementInformationBundle,
       Map<String, String> parameters) {
     super(elementInformationBundle, parameters);
