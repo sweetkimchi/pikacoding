@@ -8,22 +8,43 @@ import ooga.model.player.Avatar;
 /**
  * @author Ji Yun Hyo
  */
-public abstract class Commands implements CommandInterface{
+public abstract class Commands implements CommandInterface {
 
   private ElementInformationBundle elementInformationBundle;
-  private Map<String,String> parameters;
-  public Commands(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
+  private Map<String, String> parameters;
+
+  /**
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
+   *
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
+   */
+  public Commands(ElementInformationBundle elementInformationBundle,
+      Map<String, String> parameters) {
     this.elementInformationBundle = elementInformationBundle;
     this.parameters = parameters;
   }
 
+  /**
+   * The execution behavior of the command on an Avatar given by an ID. The specific implementation
+   * is to be overridden by the subclasses.
+   *
+   * @param ID The ID of the avatar to be commanded
+   */
   public abstract void execute(int ID);
 
-  Direction getDirection(String direction) {
+  /**
+   * Generates a Direction object from the input string given by parameters of the command.
+   *
+   * @param direction The direction string
+   * @return The Direction object corresponding to the input string
+   */
+  protected Direction getDirection(String direction) {
     return Direction.valueOf(parseDirection(direction));
   }
 
-  protected String parseDirection(String direction){
+  private String parseDirection(String direction) {
     String parsedDirection = direction.toUpperCase();
     parsedDirection = parsedDirection.replaceAll("-", "_");
     return parsedDirection;
@@ -37,6 +58,12 @@ public abstract class Commands implements CommandInterface{
     return parameters;
   }
 
+  /**
+   * Returns an Avatar queried by the ID number.
+   *
+   * @param id The ID number of the desired Avatar
+   * @return The Avatar that has the given ID number
+   */
   public Avatar getAvatar(int id) {
     return (Avatar) getElementInformationBundle().getAvatarById(id);
   }

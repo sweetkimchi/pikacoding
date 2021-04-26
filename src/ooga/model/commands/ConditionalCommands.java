@@ -9,12 +9,17 @@ import ooga.model.player.Avatar;
  */
 public abstract class ConditionalCommands extends Commands {
 
-    /**
-     * Default constructor
-     */
-    public ConditionalCommands(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
-        super(elementInformationBundle, parameters);
-    }
+  /**
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
+   *
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
+   */
+  public ConditionalCommands(ElementInformationBundle elementInformationBundle,
+      Map<String, String> parameters) {
+    super(elementInformationBundle, parameters);
+  }
 
 
 }
