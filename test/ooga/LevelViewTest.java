@@ -63,15 +63,15 @@ class LevelViewTest extends ApplicationTest {
     assertTrue(initialY > avatarImage.getY());
   }
 
-  @Test
-  void testLoseScreen() {
-    for(int i: new int[20]) {
-      clickButton("step-option-button");
-    }
-    clickButton("Button2_Play-button");
-    sleep(24000);
-    assertTrue(lookup("#try-again-button").query() != null);
-  }
+//  @Test
+//  void testLoseScreen() {
+//    for(int i: new int[20]) {
+//      clickButton("step-option-button");
+//    }
+//    clickButton("Button2_Play-button");
+//    sleep(24000);
+//    assertTrue(lookup("#try-again-button").query() != null);
+//  }
 
 //  @Test
 //  void testWinScreen() {
@@ -101,8 +101,8 @@ class LevelViewTest extends ApplicationTest {
 
   private void clickButton(String button) {
     clickOn(lookup("#" + button).queryButton());
-//    Platform.runLater(() -> lookup("#" + button).queryButton().fire());
-//    sleep(100);
+    Platform.runLater(() -> lookup("#" + button).queryButton().fire());
+    sleep(100);
   }
 
 }
