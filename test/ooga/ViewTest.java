@@ -31,9 +31,12 @@ class ViewTest extends ApplicationTest {
   @Override
   public void start(Stage stage) throws Exception {
     Controller controller = new Controller(stage);
+
     viewController = (FrontEndExternalAPI)  getPrivateField(controller, "viewController");
     modelController = (BackEndExternalAPI)  getPrivateField(controller, "modelController");
     screenCreator = (ScreenCreator)  getPrivateField(viewController, "screenCreator");
+    screenCreator.setTeamNum(10);
+    screenCreator.setMatchId(12);
   }
 
   @Test
@@ -108,5 +111,25 @@ class ViewTest extends ApplicationTest {
     textField.setText("9876");
     clickButton("enter-button");
   }
+
+  @Test
+  public void testSetTeamNumber(){
+    int teamNumber = 19;
+    int matchNumber =10;
+    screenCreator.setTeamNum(teamNumber);
+    screenCreator.setMatchId(matchNumber);
+    assertEquals(teamNumber, 19);
+    assertEquals(matchNumber, 10);
+  }
+
+  @Test
+  public void testMultiplayer(){
+    clickButton("start-button");
+    clickButton("multi-player-button");
+    clickButton("load-level-1");
+    LevelView levelView = screenCreator.getLevelView();
+    assertEquals(1, (int) getPrivateField(levelView, "level"));
+  }
+
 
 }

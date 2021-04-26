@@ -35,7 +35,7 @@ public class ModelController implements BackEndExternalAPI {
   public ModelController() {
     matchID = 4444;
     //firebaseService = new FirebaseService();
-
+    matchID = 4444;
   }
 
   /**
