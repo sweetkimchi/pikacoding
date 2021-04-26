@@ -29,6 +29,7 @@ public class ScreenCreator {
   private final double height;
   private StartMenu startMenu;
   private String lang;
+  private TeamSelector teamSelector;
 
   /**
    * Default constructor
@@ -64,7 +65,7 @@ public class ScreenCreator {
    * Creates a new LevelView and loads it into the stage
    * @param level Level number
    */
-  public void initilaizeSingleLevelView(int level) {
+  public void initializeSingleLevelView(int level) {
     levelView = new LevelView(level, viewController, this);
     Scene scene = new Scene(levelView, width, height);
     stage.setScene(scene);
@@ -96,13 +97,17 @@ public class ScreenCreator {
   }
 
   public void loadTeamSelector() {
-    TeamSelector teamSelector = new TeamSelector(e -> loadMultiLevelSelector(), viewController::initializeMultiLevel, this);
+    teamSelector = new TeamSelector(e -> loadMultiLevelSelector(),this);
     teamSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(teamSelector, width, height);
     stage.setScene(scene);
   }
 
-  public void setTeamNum(int team) { viewController.setTeamNum(team); }
+  public void setTeamNum(int team) {
+    viewController.setTeamNum(team);
+  }
+
+  public void setTeamReady() { teamSelector.enableStart(); }
 
   /**
    * Opens up the level selector

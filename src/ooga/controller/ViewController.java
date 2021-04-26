@@ -75,7 +75,7 @@ public class ViewController implements FrontEndExternalAPI {
    */
   @Override
   public void initializeSingleLevel(int level) {
-    screenCreator.initilaizeSingleLevelView(level);
+    screenCreator.initializeSingleLevelView(level);
     levelView = screenCreator.getLevelView();
     modelController.initializeLevel(level);
     levelView.resetAnimation();
@@ -235,4 +235,19 @@ public class ViewController implements FrontEndExternalAPI {
 
   @Override
   public void setMatchId(int id) { modelController.setMatchId(id); }
+
+  @Override
+  public void notifyBothTeamsPresent() {
+    screenCreator.setTeamReady();
+  }
+
+  @Override
+  public void notifyCurrentTeamFinished() {
+
+  }
+
+  @Override
+  public void notifyBothTeamsFinished() {
+
+  }
 }
