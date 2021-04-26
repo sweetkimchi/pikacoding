@@ -26,7 +26,6 @@ public class ParserTester {
     InitialConfigurationParser tester = new InitialConfigurationParser(1, null, 0);
     GoalState goalState = tester.getGoalState();
     InitialState initialState = tester.getInitialState();
-    System.out.println(tester.getErrorMessage());
     assertEquals(1, initialState.getLevel());
     assertEquals(3, initialState.getNumPeople());
     assertEquals(Arrays.asList("step", "pickUp", "drop"), initialState.getCommandsAvailable());
