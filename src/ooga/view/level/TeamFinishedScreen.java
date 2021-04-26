@@ -18,11 +18,13 @@ public class TeamFinishedScreen extends VBox {
   public TeamFinishedScreen(int score) {
     winMessages = ResourceBundle.getBundle(ScreenCreator.RESOURCES + SCREEN_MESSAGES);
     this.getStyleClass().add("start-screen");
-    Label winMessage = new Label(winMessages.getString("teamWin"));
+    Label winMessage = new Label(winMessages.getString("teamFinished"));
     winMessage.getStyleClass().add("title");
     this.getChildren().add(winMessage);
     Label scoreMessage = new Label(getScore(score, "winScore"));
     this.getChildren().add(scoreMessage);
+    Label waitingMessage = new Label(winMessages.getString("waitingOtherTeam"));
+    this.getChildren().add(waitingMessage);
   }
 
   private String getScore(int score, String key) {

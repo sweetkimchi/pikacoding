@@ -247,8 +247,8 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   @Override
-  public void notifyBothTeamsFinished(int team1Score, int team2Score) {
-
+  public void notifyBothTeamsFinished(int currentScore, int otherScore) {
+    levelView.notifyBothTeamsFinished(currentScore, otherScore);
   }
 
 }
