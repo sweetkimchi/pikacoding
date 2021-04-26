@@ -2,10 +2,8 @@
 
 package ooga.controller;
 
-import com.google.common.base.Stopwatch;
 import java.util.List;
 import java.util.Map;
-import ooga.model.player.AvatarData;
 import ooga.view.level.codearea.CommandBlock;
 
 /**

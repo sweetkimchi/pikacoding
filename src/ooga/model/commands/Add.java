@@ -4,9 +4,9 @@ import java.util.Map;
 import ooga.model.grid.ElementInformationBundle;
 
 /**
- * Add is a type of Mathematical Command that takes the sum of the display number of two datacubes,
- * one held by the Avatar and the other on the tile that the Avatar is standing on, and sets this
- * value to the datacube held by the Avatar.
+ * Add is a type of Mathematical Command that takes the sum of the display number of two blocks, one
+ * held by the Avatar and the other on the tile that the Avatar is standing on, and sets this value
+ * to the block held by the Avatar.
  *
  * @author Harrison Huang
  */
@@ -25,12 +25,12 @@ public class Add extends MathematicalCommands {
   }
 
   /**
-   * The formula for calculating the new display number of the dataCube held by the avatar. The
+   * The formula for calculating the new display number of the block held by the avatar. The
    * implementation and formula of the new display number is to be handled by subclasses.
    *
-   * @param avatarCubeNum The current number of the cube held by the avatar
-   * @param tileCubeNum   The current number of the cube on the tile
-   * @return The new number to be set to the avatar cube
+   * @param avatarCubeNum The current number of the block held by the avatar
+   * @param tileCubeNum   The current number of the block on the tile
+   * @return The new number to be set to the avatar block
    */
   @Override
   public int calculateNewDisplayNum(int avatarCubeNum, int tileCubeNum) {
