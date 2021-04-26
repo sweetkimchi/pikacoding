@@ -212,7 +212,7 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void startGameAfterBothTeamsPresent() {
-    //viewController.loadMultiLevel();
+    viewController.notifyBothTeamsPresent();
   }
 
   @Override
