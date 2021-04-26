@@ -39,11 +39,11 @@ class LevelViewTest extends ApplicationTest {
     programStack = lookup("#program-stack").queryAs(ProgramStack.class);
   }
 
-//  @Test
-//  void testAddCommandBlock() {
-//    clickButton("drop-option-button");
-//    assertEquals("drop", programStack.getProgram().get(0).getType());
-//  }
+  @Test
+  void testAddCommandBlock() {
+    clickButton("drop-option-button");
+    assertEquals("drop", programStack.getProgram().get(0).getType());
+  }
 
 //  @Test
 //  void testRemoveCommandBlock() {
@@ -101,8 +101,8 @@ class LevelViewTest extends ApplicationTest {
 
   private void clickButton(String button) {
     clickOn(lookup("#" + button).queryButton());
-//    Platform.runLater(() -> lookup("#" + button).queryButton().fire());
-//    sleep(100);
+    Platform.runLater(() -> lookup("#" + button).queryButton().fire());
+    sleep(100);
   }
 
 }
