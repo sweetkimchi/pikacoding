@@ -16,10 +16,10 @@ import ooga.model.commands.AvailableCommands;
  */
 public class ProgramStack extends VBox {
 
-  private List<CommandBlockHolder> programBlocks;
+  private final List<CommandBlockHolder> programBlocks;
   private AvailableCommands availableCommands;
   private AvailableCommands availableCommandsOtherPlayer;
-  private List<ProgramListener> programListeners;
+  private final List<ProgramListener> programListeners;
 
   private int newIndex = 0;
 
@@ -38,34 +38,14 @@ public class ProgramStack extends VBox {
     this.availableCommandsOtherPlayer = availableCommands;
   }
 
-  public void addCommandBlock(String command) {
-//    System.out.println(command + " 1");
-    System.out.println(command + " " + availableCommands.getCommandNames());
+  public CommandBlockHolder addCommandBlock(String command) {
+    CommandBlockHolder commandBlockHolder = null;
     if (availableCommands.getCommandNames().contains(command)) {
-      createAndAddCommandBlock(availableCommands, command, false);
+      commandBlockHolder = createAndAddCommandBlock(availableCommands, command, false);
     } else if (availableCommandsOtherPlayer.getCommandNames().contains(command)) {
-      createAndAddCommandBlock(availableCommandsOtherPlayer, command, true);
+      commandBlockHolder = createAndAddCommandBlock(availableCommandsOtherPlayer, command, true);
     }
-  }
-
-  private void addCommandBlockFromDatabase(String command) {
-//    System.out.println(command + " 1");
-    if (command.startsWith("end ")) {
-      if (availableCommands.getCommandNames().contains(command.substring(4))) {
-        createAndAddCommandBlockFromDatabase(availableCommands, command, true, false);
-      } else if (availableCommandsOtherPlayer.getCommandNames().contains(command.substring(4))) {
-        createAndAddCommandBlockFromDatabase(availableCommandsOtherPlayer, command, true, true);
-      }
-    }
-    else {
-      if (availableCommands.getCommandNames().contains(command)) {
-        createAndAddCommandBlockFromDatabase(availableCommands, command, false, false);
-      } else if (availableCommandsOtherPlayer.getCommandNames().contains(command)) {
-        createAndAddCommandBlockFromDatabase(availableCommandsOtherPlayer, command, false, true);
-      }
-    }
-//    System.out.println(command + " 2");
-//    System.out.println(command + " 3");
+    return commandBlockHolder;
   }
 
   public List<CommandBlock> getProgram() {
@@ -118,75 +98,44 @@ public class ProgramStack extends VBox {
   }
 
   public void notifyProgramListeners() {
-    System.out.println("program update");
     programListeners.forEach(ProgramListener::onProgramUpdate);
   }
 
   public void receiveProgramUpdates(List<CommandBlock> program) {
-//    boolean noChange = true;
-//    for (int i = 0; i < program.size(); i++) {
-//      if (program.get(i) != getProgram().get(i)) {
-//        System.out.println(program.get(i).getType() + program.get(i).getParameters() + " " + getProgram().get(i).getParameters());
-//        noChange = false;
-//        break;
-//      }
-//    }
-//    if (noChange) {
-//      return;
-//    }
-    System.out.println(program.size() + " PROGOARM STIZE");
-//    List<CommandBlock> programCopy = new ArrayList<>();
-//    for (CommandBlock commandBlock : program) {
-//      programCopy.add(new CommandBlock(commandBlock.getIndex(), commandBlock.getType(),
-//          commandBlock.getParameters()));
-//    }
-
-//    System.out.println("program recieved " + program.size());
     Platform.runLater(() -> {
       programBlocks.clear();
       this.getChildren().clear();
     });
 
     Platform.runLater(() -> {
-      for (int i = 0; i < program.size(); i++) {
-        CommandBlock commandBlock = program.get(i);
-        addCommandBlockFromDatabase(commandBlock.getType());
+      for (CommandBlock commandBlock : program) {
+        CommandBlockHolder commandBlockHolder = addCommandBlockFromDatabase(commandBlock.getType());
         if (commandBlock.getParameters() != null) {
           for (String parameter : commandBlock.getParameters().keySet()) {
             String option = commandBlock.getParameters().get(parameter);
-            if (programBlocks.get(programBlocks.size() - 1) instanceof NestedEndBlockHolder) {
+            if (commandBlockHolder instanceof NestedBeginBlockHolder) {
               int size = programBlocks.size();
               programBlocks.remove(size - 1);
               Platform.runLater(() -> this.getChildren().remove(size - 1));
             }
-            programBlocks.get(programBlocks.size() - 1)
-                .selectParameter(parameter, option);
+            commandBlockHolder.selectParameter(parameter, option);
           }
         }
       }
     });
-
-//      commandBlock.getParameters().forEach(
-//          (parameter, option) -> {
-//            System.out.println(parameter + option);
-//            programBlocks.get(programBlocks.size() - 1)
-//              .selectParameter(parameter, option);});
-//    System.out.println("paratmeter");
   }
-//    System.out.println(programCopy.size());
 
-  private void createAndAddCommandBlock(AvailableCommands availableCommands, String command,
-      boolean isMultiplayer) {
+  private CommandBlockHolder createAndAddCommandBlock(AvailableCommands availableCommands, String command,
+      boolean isOtherPlayerCommandBlock) {
     List<Map<String, List<String>>> parameterOptions = new ArrayList<>();
-    if (isMultiplayer) {
+    if (isOtherPlayerCommandBlock) {
       availableCommandsOtherPlayer.getParameters(command).forEach(parameter -> {
         Map<String, List<String>> parameterOptionsMap = new HashMap<>();
         parameterOptionsMap
             .put(parameter, availableCommandsOtherPlayer.getParameterOptions(command, parameter));
         parameterOptions.add(parameterOptionsMap);
       });
-    }
-    else {
+    } else {
       availableCommands.getParameters(command).forEach(parameter -> {
         Map<String, List<String>> parameterOptionsMap = new HashMap<>();
         parameterOptionsMap
@@ -194,32 +143,102 @@ public class ProgramStack extends VBox {
         parameterOptions.add(parameterOptionsMap);
       });
     }
+    CommandBlockHolder commandBlockHolder;
     if (command.equals("jump")) {
-      addJumpCommandBlock(command, parameterOptions, isMultiplayer);
+      commandBlockHolder = addJumpCommandBlock(command, parameterOptions, isOtherPlayerCommandBlock);
     } else if (command.equals("if")) {
-      addNestedCommandBlocks(command, parameterOptions, isMultiplayer);
+      commandBlockHolder = addNestedCommandBlocks(command, parameterOptions, isOtherPlayerCommandBlock);
     } else {
-      addStandardCommandBlock(command, parameterOptions, isMultiplayer);
+      commandBlockHolder = addStandardCommandBlock(command, parameterOptions, isOtherPlayerCommandBlock);
     }
+    return commandBlockHolder;
   }
 
-  private void createAndAddCommandBlockFromDatabase(AvailableCommands availableCommands, String command, boolean isNestedEnd, boolean isMultiplayer) {
+  private CommandBlockHolder createAndAddCommandBlockFromDatabase(AvailableCommands availableCommands,
+      String command, boolean isNestedEnd, boolean isOtherPlayerCommandBlock) {
+    CommandBlockHolder commandBlockHolder;
     if (isNestedEnd) {
-      addNestedEndCommandBlock(command, isMultiplayer);
+      commandBlockHolder = addStandardCommandBlock(command, new ArrayList<>(), isOtherPlayerCommandBlock);
+    } else {
+      commandBlockHolder = createAndAddCommandBlock(availableCommands, command, isOtherPlayerCommandBlock);
     }
-    else {
-      createAndAddCommandBlock(availableCommands, command, isMultiplayer);
+    return commandBlockHolder;
+  }
+
+  private void moveCommandBlock(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) {
+      Collections.rotate(programBlocks.subList(oldIndex - 1, newIndex), -1);
+    } else if (oldIndex > newIndex) {
+      Collections.rotate(programBlocks.subList(newIndex - 1, oldIndex), 1);
+    }
+    this.getChildren().clear();
+    for (int i = 0; i < programBlocks.size(); i++) {
+      programBlocks.get(i).setIndex(i + 1);
+      this.getChildren().add(programBlocks.get(i));
     }
   }
 
-  private void addNestedEndCommandBlock(String command, boolean isMultiplayer) {
+  private CommandBlockHolder addStandardCommandBlock(String command,
+      List<Map<String, List<String>>> parameterOptions, boolean isOtherPlayerCommandBlock) {
     CommandBlockHolder commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
-        command, new ArrayList<>(), this);
-    if (isMultiplayer) {
+        command, parameterOptions, this);
+    if (isOtherPlayerCommandBlock) {
       commandBlockHolder.setOtherPlayer();
     }
     programBlocks.add(commandBlockHolder);
     Platform.runLater(() -> this.getChildren().add(commandBlockHolder));
+    return commandBlockHolder;
+  }
+
+  private CommandBlockHolder addNestedCommandBlocks(String command,
+      List<Map<String, List<String>>> parameterOptions, boolean isOtherPlayerCommandBlock) {
+    NestedBeginBlockHolder beginCommandBlockHolder = new NestedBeginBlockHolder(
+        programBlocks.size() + 1,
+        command, parameterOptions, this);
+    programBlocks.add(beginCommandBlockHolder);
+    NestedEndBlockHolder endCommandBlockHolder = new NestedEndBlockHolder(
+        programBlocks.size() + 1,
+        command, this);
+    programBlocks.add(endCommandBlockHolder);
+    beginCommandBlockHolder.attachEndHolder(endCommandBlockHolder);
+    endCommandBlockHolder.attachBeginHolder(beginCommandBlockHolder);
+    if (isOtherPlayerCommandBlock) {
+      beginCommandBlockHolder.setOtherPlayer();
+      endCommandBlockHolder.setOtherPlayer();
+    }
+    Platform
+        .runLater(() -> this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder));
+    return beginCommandBlockHolder;
+  }
+
+  private CommandBlockHolder addJumpCommandBlock(String command,
+      List<Map<String, List<String>>> parameterOptions, boolean isOtherPlayerCommandBlock) {
+    CommandBlockHolder commandBlockHolder = new JumpCommandBlockHolder(programBlocks.size() + 1,
+        command, parameterOptions, this);
+    if (isOtherPlayerCommandBlock) {
+      commandBlockHolder.setOtherPlayer();
+    }
+    programBlocks.add(commandBlockHolder);
+    Platform.runLater(() -> this.getChildren().add(commandBlockHolder));
+    return commandBlockHolder;
+  }
+
+  private CommandBlockHolder addCommandBlockFromDatabase(String command) {
+    CommandBlockHolder commandBlockHolder = null;
+    if (command.startsWith("end ")) {
+      if (availableCommands.getCommandNames().contains(command.substring(4))) {
+        commandBlockHolder = createAndAddCommandBlockFromDatabase(availableCommands, command, true, false);
+      } else if (availableCommandsOtherPlayer.getCommandNames().contains(command.substring(4))) {
+        commandBlockHolder = createAndAddCommandBlockFromDatabase(availableCommandsOtherPlayer, command, true, true);
+      }
+    } else {
+      if (availableCommands.getCommandNames().contains(command)) {
+        commandBlockHolder = createAndAddCommandBlockFromDatabase(availableCommands, command, false, false);
+      } else if (availableCommandsOtherPlayer.getCommandNames().contains(command)) {
+        commandBlockHolder = createAndAddCommandBlockFromDatabase(availableCommandsOtherPlayer, command, false, true);
+      }
+    }
+    return commandBlockHolder;
   }
 
   private void resetMouseActions() {
@@ -243,60 +262,6 @@ public class ProgramStack extends VBox {
           .getIndex();
     }
     return true;
-  }
-
-  private void moveCommandBlock(int oldIndex, int newIndex) {
-    if (oldIndex < newIndex) {
-      Collections.rotate(programBlocks.subList(oldIndex - 1, newIndex), -1);
-    } else if (oldIndex > newIndex) {
-      Collections.rotate(programBlocks.subList(newIndex - 1, oldIndex), 1);
-    }
-    this.getChildren().clear();
-    for (int i = 0; i < programBlocks.size(); i++) {
-      programBlocks.get(i).setIndex(i + 1);
-      this.getChildren().add(programBlocks.get(i));
-    }
-  }
-
-  private void addStandardCommandBlock(String command,
-      List<Map<String, List<String>>> parameterOptions, boolean isMultiplayer) {
-    CommandBlockHolder commandBlockHolder = new CommandBlockHolder(programBlocks.size() + 1,
-        command, parameterOptions, this);
-    if (isMultiplayer) {
-      commandBlockHolder.setOtherPlayer();
-    }
-    programBlocks.add(commandBlockHolder);
-    Platform.runLater(() -> this.getChildren().add(commandBlockHolder));
-  }
-
-  private void addNestedCommandBlocks(String command,
-      List<Map<String, List<String>>> parameterOptions, boolean isMultiplayer) {
-    NestedBeginBlockHolder beginCommandBlockHolder = new NestedBeginBlockHolder(
-        programBlocks.size() + 1,
-        command, parameterOptions, this);
-    programBlocks.add(beginCommandBlockHolder);
-    NestedEndBlockHolder endCommandBlockHolder = new NestedEndBlockHolder(
-        programBlocks.size() + 1,
-        command, this);
-    programBlocks.add(endCommandBlockHolder);
-    beginCommandBlockHolder.attachEndHolder(endCommandBlockHolder);
-    endCommandBlockHolder.attachBeginHolder(beginCommandBlockHolder);
-    if (isMultiplayer) {
-      beginCommandBlockHolder.setOtherPlayer();
-      endCommandBlockHolder.setOtherPlayer();
-    }
-    Platform.runLater(() -> this.getChildren().addAll(beginCommandBlockHolder, endCommandBlockHolder));
-  }
-
-  private void addJumpCommandBlock(String command,
-      List<Map<String, List<String>>> parameterOptions, boolean isMultiplayer) {
-    CommandBlockHolder commandBlockHolder = new JumpCommandBlockHolder(programBlocks.size() + 1,
-        command, parameterOptions, this);
-    if (isMultiplayer) {
-      commandBlockHolder.setOtherPlayer();
-    }
-    programBlocks.add(commandBlockHolder);
-    Platform.runLater(() -> this.getChildren().add(commandBlockHolder));
   }
 
 }
