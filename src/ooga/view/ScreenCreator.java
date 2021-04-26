@@ -1,8 +1,10 @@
 package ooga.view;
 
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.view.level.LevelView;
 import ooga.view.level.MultiplayerLevelView;
@@ -26,7 +28,6 @@ public class ScreenCreator {
   private final double width;
   private final double height;
   private StartMenu startMenu;
-  private TeamSelector teamSelector;
   private String lang;
 
   /**
@@ -54,6 +55,7 @@ public class ScreenCreator {
    * @param level Level number
    */
   public void initializeMultiLevelView(int level) {
+    System.out.println("make multplayerLevelView");
     levelView = new MultiplayerLevelView(level, viewController, this);
     Scene scene = new Scene(levelView, width, height);
     stage.setScene(scene);
@@ -87,24 +89,29 @@ public class ScreenCreator {
 
   // TODO: right now pulls up level selection; level selection should be random
   public void loadTeamSelector() {
-    teamSelector = new TeamSelector(viewController::initializeMultiLevel);
+    TeamSelector teamSelector = new TeamSelector(viewController::initializeMultiLevel, this);
     teamSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(teamSelector, width, height);
     stage.setScene(scene);
   }
 
-  public int getTeam() {
-    return teamSelector.getTeamNumber();
-  }
+  public void setTeamNum(int team) { viewController.setTeamNum(team); }
 
   /**
    * Opens up the level selector
    */
   public void loadLevelSelector() {
+    setTeamNum(0);
     LevelSelector levelSelector = new LevelSelector(viewController::initializeSingleLevel);
     levelSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(levelSelector, width, height);
     stage.setScene(scene);
+  }
+
+  public void loadMultiLevel() {
+    Random r = new Random();
+    int level = r.nextInt(Controller.NUM_LEVELS) + 1;
+    viewController.initializeMultiLevel(level);
   }
 
   private void initializeStage() {

@@ -1,7 +1,6 @@
 package ooga.view.level.codearea;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.control.ComboBox;
@@ -9,6 +8,7 @@ import javafx.scene.control.ComboBox;
 public class JumpCommandBlockHolder extends CommandBlockHolder {
 
   private ComboBox<String> lineSelector;
+  private String parameter = "destination";
 
   public JumpCommandBlockHolder(int index, String type,
       List<Map<String, List<String>>> parameterOptions,
@@ -16,20 +16,29 @@ public class JumpCommandBlockHolder extends CommandBlockHolder {
     super(index, type, parameterOptions, programStack);
   }
 
-  public void updateDropdown(int lines) {
+  @Override
+  public void setIndex(int index) {
+    super.setIndex(index);
+    updateDropdown();
+  }
+
+  private void updateDropdown() {
+    getCommandBlock().setParameter(parameter, "1");
     lineSelector.getItems().clear();
     List<String> options = new ArrayList<>();
-    for (int i = 1; i <= lines; i++) {
+    for (int i = 1; i <= getCommandBlock().getIndex(); i++) {
       options.add(Integer.toString(i));
     }
     lineSelector.getItems().addAll(options);
-//    lineSelector.getSelectionModel().selectFirst();
+    lineSelector.getSelectionModel().selectFirst();
   }
 
   @Override
   protected void initializeDropdowns() {
-    String parameter = getParameterOptions().get(0).keySet().iterator().next();
+//    parameter = getParameterOptions().get(0).keySet().iterator().next();
+    getCommandBlock().setParameter(parameter, "1");
     lineSelector = new ComboBox<>();
+    updateDropdown();
     lineSelector.setOnAction(e -> {
       getCommandBlock().setParameter(parameter, lineSelector.getValue());
       getProgramStack().notifyProgramListeners();
@@ -37,7 +46,7 @@ public class JumpCommandBlockHolder extends CommandBlockHolder {
     lineSelector.getSelectionModel().selectFirst();
     getDropdowns().put(parameter, lineSelector);
     addItem(lineSelector, 120);
+    System.out.println(getCommandBlock().getParameters());
   }
-
 
 }

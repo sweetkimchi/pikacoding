@@ -70,7 +70,8 @@ public class AnimationController {
   }
 
   public void play() {
-    timeline.play();
+//    timeline.play();
+    isPaused = false;
     step = false;
     if (!codeIsRunning) {
       reset();

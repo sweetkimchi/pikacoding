@@ -6,24 +6,27 @@ import java.util.Map;
 import ooga.model.CommandExecutor;
 import ooga.model.Executor;
 import ooga.model.database.FirebaseService;
+import ooga.model.database.PlayerInitialization;
 import ooga.model.database.parser.ConcreteDatabaseListener;
 import ooga.model.database.parser.InitialConfigurationParser;
 import ooga.view.level.codearea.CommandBlock;
 import com.google.common.base.Stopwatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  *
  */
 public class ModelController implements BackEndExternalAPI {
 
+  public static final int SINGLE_PLAYER = 0;
   private FrontEndExternalAPI viewController;
   private Executor commandExecutor;
   private InitialConfigurationParser initialConfigurationParser;
   private FirebaseService firebaseService;
-  private ConcreteDatabaseListener codeAreaParser;
+  private ConcreteDatabaseListener concreteDatabaseListener;
   private int level;
   private int matchID;
+  private int teamID;
+  private int playerID;
   private Stopwatch stopwatch;
 
   /**
@@ -31,11 +34,9 @@ public class ModelController implements BackEndExternalAPI {
    */
   public ModelController() {
     //TODO: Change teamID and playerID to things front end creates
-    matchID = 900;
-    firebaseService = new FirebaseService(0, 0);
-    ConcreteDatabaseListener codeAreaParser = new ConcreteDatabaseListener(this, matchID, 0);
-    codeAreaParser.codeAreaChanged();
-    this.codeAreaParser = codeAreaParser;
+    matchID = 1102;
+    //firebaseService = new FirebaseService();
+
   }
 
   /**
@@ -57,7 +58,7 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void initializeLevel(int level) {
     this.level = level;
-    initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService, 0);
+    initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService, this.playerID);
 
     stopwatch = Stopwatch.createStarted();
     viewController.setBoard(initialConfigurationParser.getGameGridData(),
@@ -70,6 +71,9 @@ public class ModelController implements BackEndExternalAPI {
     commandExecutor = new CommandExecutor(new ArrayList<>(), this,
         initialConfigurationParser.getInitialState(),
         initialConfigurationParser.getGameGrid(), initialConfigurationParser.getGoalState(),stopwatch);
+
+
+    if (this.teamID != SINGLE_PLAYER) {concreteDatabaseListener.codeAreaChanged();}
   }
 
   /**
@@ -81,7 +85,7 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void parseCommands(List<CommandBlock> commandBlocks) {
     //TODO: delete after debugging. Initializing level for testing purposes
-    initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService, 0);
+    initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService, this.playerID);
 
     commandExecutor = new CommandExecutor(commandBlocks, this,
         initialConfigurationParser.getInitialState(),
@@ -158,8 +162,11 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void updateProgram(List<CommandBlock> program) {
     // TODO: notify database of program update
-    this.codeAreaParser.setLastCommandBlockForCurrentComputer(program);
-    firebaseService.saveMatchInformation(matchID, program);
+    System.out.println(program);
+    if (this.teamID != SINGLE_PLAYER) {
+      this.concreteDatabaseListener.setLastCommandBlockForCurrentComputer(program);
+      firebaseService.saveMatchInformation(matchID, teamID, program);
+    }
   }
 
   @Override
@@ -180,12 +187,31 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void receivedProgramUpdate(List<CommandBlock> program) {
-    System.out.println(program);
+    System.out.println("recieved update" + program);
     if (program != null)  {
       viewController.receiveProgramUpdates(program);
     }
   }
 
   @Override
-  public void getTeamNumber(int teamNum) { }
+  public void setTeamNumber(int teamNum) {
+    System.out.println("here" + teamNum);
+    this.teamID = teamNum;
+    if (teamNum == SINGLE_PLAYER) {
+      PlayerInitialization playerInitialization = new PlayerInitialization(this.matchID, this.teamID);
+      this.playerID = playerInitialization.getPlayerID();
+    }
+    else  {
+      this.firebaseService = new FirebaseService();
+      concreteDatabaseListener = new ConcreteDatabaseListener(this, matchID, this.teamID);
+      concreteDatabaseListener.checkLevelStarted();
+      this.concreteDatabaseListener = concreteDatabaseListener;
+    }
+  }
+
+  @Override
+  public void startGameAfterBothTeamsPresent() {
+    //viewController.loadMultiLevel();
+  }
+
 }

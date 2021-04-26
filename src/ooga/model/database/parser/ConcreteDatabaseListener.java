@@ -153,7 +153,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           try {
             List playerIDs =
                 new ObjectMapper().readValue(json[0], List.class);
-            //System.out.println(playerIDs);
+            System.out.println("player IDs" + playerIDs);
             if (playerIDs.size() == 2)  {
               teamAllHere();
             }
@@ -251,9 +251,19 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         ret.add(new CommandBlock((int) commandBlockParams.get("index"),
             (String) commandBlockParams.get("type"), (Map) commandBlockParams.get("parameters")));
       }
+      System.out.println(this.lastCommandBlockForCurrentComputer);
+      System.out.println(ret);
       if (ret.size() == this.lastCommandBlockForCurrentComputer.size()) {
         for (int i = 0; i < ret.size(); i++)  {
+          System.out.println(ret.get(i).getIndex() + " " + this.lastCommandBlockForCurrentComputer.get(i).getIndex());
           if (!ret.get(i).equals(this.lastCommandBlockForCurrentComputer.get(i)))  {
+            System.out.println(i);
+
+            System.out.println(ret.get(i).getIndex() + " " + lastCommandBlockForCurrentComputer.get(i).getIndex());
+            System.out.println(ret.get(i).getType() + " " + lastCommandBlockForCurrentComputer.get(i).getType());
+            System.out.println(ret.get(i).getParameters() + " " + lastCommandBlockForCurrentComputer.get(i).getParameters());
+
+
             return ret;
           }
         }
