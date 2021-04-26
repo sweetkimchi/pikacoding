@@ -73,7 +73,7 @@ public class TeamSelector extends BorderPane {
       tBox.getChildren().remove(waitingMessage);
       Random r = new Random();
       int level = r.nextInt(Controller.NUM_LEVELS) + 1;
-      levelAction.accept(level);
+      levelAction.accept(8);
     });
     this.setCenter(tBox);
 
