@@ -138,5 +138,5 @@ public interface FrontEndExternalAPI {
 
   void setTeamNum(int teamNum);
 
-  void loadMultiLevel();
+  void setMatchId(int id);
 }

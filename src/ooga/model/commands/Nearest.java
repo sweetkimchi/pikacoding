@@ -64,17 +64,20 @@ public class Nearest extends AICommands{
     int newY = avatar.getYCoord();
     Tile prevTile = getCurrTile(ID);
     Tile nextTile = getNextTile(ID, Direction.CURRENT);
-    for(Direction direction : Direction.values()){
-      int dummyX = avatar.getXCoord() + direction.getXDel();
-      int dummyY = avatar.getYCoord() + direction.getYDel();
-      int manhattanDistance = Math.abs(dummyX - xBlock) + Math.abs(dummyY - yBlock);
-      if(manhattanDistance < initialManhattanDistance && getNextTile(ID, direction).canAddAvatar()){
-       initialManhattanDistance = manhattanDistance;
-       newX = dummyX;
-       newY = dummyY;
-       nextTile = getNextTile(ID, direction);
+    if(!(xBlock == newX && yBlock == newY)){
+      for(Direction direction : Direction.values()){
+        int dummyX = avatar.getXCoord() + direction.getXDel();
+        int dummyY = avatar.getYCoord() + direction.getYDel();
+        int manhattanDistance = Math.abs(dummyX - xBlock) + Math.abs(dummyY - yBlock);
+        if(manhattanDistance < initialManhattanDistance && getNextTile(ID, direction).canAddAvatar() && direction != Direction.CURRENT){
+          initialManhattanDistance = manhattanDistance;
+          newX = dummyX;
+          newY = dummyY;
+          nextTile = getNextTile(ID, direction);
+        }
       }
     }
+
     moveAvatar(avatar, prevTile, nextTile, newX, newY);
     sendAvatarPositionUpdate(avatar);
   }

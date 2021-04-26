@@ -5,9 +5,9 @@ import java.util.Map;
 import ooga.model.grid.ElementInformationBundle;
 
 public class GoalState extends BoardState {
-  private int numOfCommands;
-  private int idealTime;
-  private int idealLines;
+  private final int numOfCommands;
+  private final int idealTime;
+  private final int idealLines;
   public GoalState(
       Map<String, List<Integer>> allAvatarLocations,
       Map<String, BlockData> allBlockData, int numOfCommands,
@@ -18,9 +18,6 @@ public class GoalState extends BoardState {
     this.idealLines = idealLines;
     this.idealTime = idealTime;
   }
-
-
-
 
   public boolean checkGameEnded(ElementInformationBundle currentGrid) {
     for (String id: super.getAllAvatarLocations().keySet()) {
@@ -34,7 +31,6 @@ public class GoalState extends BoardState {
     for (BlockData block: currentBlockData) {
       if (super.getAllBlockData().containsKey("" + block.getId())) {
         if (!super.getAllBlockData().get("" + block.getId()).equals(block)) {
-          System.out.println("block " + block.getId() + " not equal!");
           return false;
         }
       }
