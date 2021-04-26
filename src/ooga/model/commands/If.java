@@ -46,7 +46,7 @@ public class If extends ConditionalCommands {
     TileData tileToCheck = getElementInformationBundle().getTileData(newX, newY);
 
     // equals or not equals
-    System.out.println(getParameters());
+    //System.out.println(getParameters());
     String condition = getParameters().get("comparator");
     boolean equalsOrNot = !condition.equals("equal");
 
