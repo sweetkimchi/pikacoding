@@ -118,6 +118,7 @@ public class ProgramStack extends VBox {
   }
 
   public void notifyProgramListeners() {
+    System.out.println("program update");
     programListeners.forEach(ProgramListener::onProgramUpdate);
   }
 
