@@ -10,10 +10,8 @@ import ooga.controller.BackEndExternalAPI;
 import ooga.model.grid.gridData.BlockData;
 import ooga.model.grid.gridData.TileData;
 import ooga.model.player.Avatar;
-import ooga.model.player.AvatarData;
 import ooga.model.player.Element;
 import ooga.model.player.Block;
-import ooga.model.player.ElementData;
 import ooga.model.player.Player;
 
 /**
@@ -25,7 +23,6 @@ public class ElementInformationBundle implements InformationBundle {
   private final List<Player> avatarList;
   private final List<Block> blockList;
   private Map<Integer, Integer> lineUpdates;
-  private ElementData newUpdate;
   private BackEndExternalAPI modelController;
   private List<Integer> endCommandLines;
   private Map<Integer, Integer> mapOfCommandLines;
@@ -34,7 +31,6 @@ public class ElementInformationBundle implements InformationBundle {
     avatarList = new ArrayList<>();
     blockList = new ArrayList<>();
     lineUpdates = new HashMap<>();
-    newUpdate = new AvatarData();
   }
 
   /**

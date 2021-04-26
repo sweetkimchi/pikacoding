@@ -27,11 +27,11 @@ public class Increment extends SetDataCubeCommands {
    * The formula for calculating the new display number of the dataCube held by the avatar. The
    * implementation and formula of the new display number is to be handled by subclasses.
    *
-   * @param avatarCubeNum The current number of the cube held by the avatar
+   * @param avatarBlockNum The current number of the cube held by the avatar
    * @return The new number to be set to the avatar cube
    */
   @Override
-  public int calculateNewDisplayNum(int avatarCubeNum) {
-    return avatarCubeNum + 1;
+  public int calculateNewDisplayNum(int avatarBlockNum) {
+    return avatarBlockNum + 1;
   }
 }

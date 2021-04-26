@@ -75,6 +75,7 @@ public class DataCube extends Block {
    *
    * @return The number of the DataCube
    */
+  @Override
   public int getDisplayNum() {
     return displayNum;
   }
@@ -84,6 +85,7 @@ public class DataCube extends Block {
    *
    * @param displayNum The new number of the DataCube
    */
+  @Override
   public void setDisplayNum(int displayNum) {
     this.displayNum = displayNum;
   }
