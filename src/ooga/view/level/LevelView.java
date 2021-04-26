@@ -46,6 +46,7 @@ public class LevelView extends BorderPane implements ProgramListener {
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
   private Label description;
+  private ResourceBundle levelResources;
 
   private int startingApples;
   private int score;
@@ -120,7 +121,7 @@ public class LevelView extends BorderPane implements ProgramListener {
   }
 
   protected void initializeViewElements() {
-    ResourceBundle levelResources = ResourceBundle
+    levelResources = ResourceBundle
         .getBundle(ScreenCreator.RESOURCES + LEVEL_PROPERTIES);
     menuBar.setMinHeight(Double.parseDouble(levelResources.getString("MenuBarHeight")));
     createRight(levelResources);
@@ -189,7 +190,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     }
     clearScreen();
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
-        e -> viewController.initializeSingleLevel(level + 1), level == Controller.NUM_LEVELS));
+        e -> viewController.initializeSingleLevel(level + 1), level == Integer.parseInt(levelResources.getString("maxLevel"))));
   }
 
   public void setScore(int score) {

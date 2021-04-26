@@ -86,7 +86,7 @@ public class ScreenCreator {
     stage.setScene(scene);
   }
 
-  public void setMatchId(int id) { }
+  public void setMatchId(int id) { viewController.setMatchId(id); }
 
   public void loadGameTypeSelector() {
     GameTypeSelector gameTypeSelector = new GameTypeSelector(e -> loadSingleLevelSelector(), e -> loadTeamSelector());
@@ -120,12 +120,6 @@ public class ScreenCreator {
     levelSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(levelSelector, width, height);
     stage.setScene(scene);
-  }
-
-  public void loadMultiLevel() {
-    Random r = new Random();
-    int level = r.nextInt(Controller.NUM_LEVELS) + 1;
-    viewController.initializeMultiLevel(8);
   }
 
   private void initializeStage() {
