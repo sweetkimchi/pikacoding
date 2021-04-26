@@ -23,6 +23,9 @@ public class TeamSelector extends BorderPane {
   private GUIElementInterface GUIFactory;
   private int numberOfTeams;
   private EventHandler<ActionEvent> loadLevelSelector;
+  private VBox tBox;
+  private Label waitingMessage;
+  private Button start;
 
   public TeamSelector(EventHandler<ActionEvent> loadAction, ScreenCreator sc) {
     GUIFactory = new GUIElementFactory();
@@ -59,17 +62,24 @@ public class TeamSelector extends BorderPane {
   }
 
   private void createTeamScreen(int teamNumber) {
-    VBox tBox = new VBox();
+    tBox = new VBox();
 
     Label teamMessage = GUIFactory.makeLabel(teamSelectorResources, "teamMessage", "team-message", teamNumber);
-    Label waitingMessage = GUIFactory.makeLabel(teamSelectorResources, "waitingMessage", "waiting-message", NO_NUM);
+    waitingMessage = GUIFactory.makeLabel(teamSelectorResources, "waitingMessage", "waiting-message", NO_NUM);
 
     tBox.getChildren().addAll(teamMessage, waitingMessage);
     tBox.getStyleClass().add("instruction-box");
     this.setCenter(tBox);
 
-    Button start = GUIFactory.makeButton(teamSelectorResources, loadLevelSelector, "start", "default-button", "multiStart", NO_NUM);
+    start = GUIFactory.makeButton(teamSelectorResources, loadLevelSelector, "start", "default-button", "multiStart", NO_NUM);
+    start.setDisable(true);
     tBox.getChildren().add(start);
     this.setCenter(tBox);
+  }
+
+  public void enableStart() {
+    tBox.getChildren().remove(waitingMessage);
+    Label readyMessage = GUIFactory.makeLabel(teamSelectorResources, "readyMessage", "waiting-message", NO_NUM);
+    start.setDisable(false);
   }
 }
