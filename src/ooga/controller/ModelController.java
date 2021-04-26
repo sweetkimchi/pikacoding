@@ -226,13 +226,14 @@ public class ModelController implements BackEndExternalAPI {
   }
 
   @Override
-  public void notifyCurrentTeamEnded() {
+  public void notifyCurrentTeamEnded(int score) {
+    viewController.notifyCurrentTeamFinished();
     System.out.println("level ended for current team");
   }
 
   @Override
-  public void notifyBothTeamsEnded() {
-
+  public void notifyBothTeamsEnded(int team1_score, int team2_score) {
+    viewController.notifyBothTeamsFinished();
   }
 
 

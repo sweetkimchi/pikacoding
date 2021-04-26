@@ -152,14 +152,16 @@ public class GridTest {
       }
 
       @Override
-      public void notifyCurrentTeamEnded() {
+      public void notifyCurrentTeamEnded(int score) {
 
       }
 
       @Override
-      public void notifyBothTeamsEnded() {
+      public void notifyBothTeamsEnded(int team1_score, int team2_score) {
 
       }
+
+
     };
     elementInformationBundle.setModelController(modelController);
     avatar = new Avatar(10, 5, 5);

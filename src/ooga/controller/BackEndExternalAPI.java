@@ -92,7 +92,7 @@ public interface BackEndExternalAPI {
 
   void setMatchId(int id);
 
-  void notifyCurrentTeamEnded();
+  void notifyCurrentTeamEnded(int score);
 
-  void notifyBothTeamsEnded();
+  void notifyBothTeamsEnded(int team1_score, int team2_score);
 }
