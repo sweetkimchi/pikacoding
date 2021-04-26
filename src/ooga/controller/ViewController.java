@@ -243,7 +243,7 @@ public class ViewController implements FrontEndExternalAPI {
 
   @Override
   public void notifyCurrentTeamFinished(int score) {
-
+    levelView.notifyCurrentTeamFinished(score);
   }
 
   @Override
