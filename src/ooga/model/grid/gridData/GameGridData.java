@@ -5,10 +5,10 @@ import ooga.model.grid.Structure;
 
 public class GameGridData {
 
-  private Structure[][] structures;
-  private ElementInformationBundle elementInformationBundle;
-  private int rows;
-  private int columns;
+  private final Structure[][] structures;
+  private final ElementInformationBundle elementInformationBundle;
+  private final int rows;
+  private final int columns;
 
   public GameGridData(ElementInformationBundle elementInformationBundle, int x, int y) {
     this.elementInformationBundle = elementInformationBundle;

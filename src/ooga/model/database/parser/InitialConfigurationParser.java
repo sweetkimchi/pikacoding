@@ -21,8 +21,8 @@ import ooga.model.player.DataCube;
 
 public class InitialConfigurationParser {
 
-  private int level;
-  private String rootURLPathForLevel;
+  private final int level;
+  private final String rootURLPathForLevel;
   private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
   private InitialState initialState;
   private GoalState goalState;
@@ -30,10 +30,9 @@ public class InitialConfigurationParser {
   private AvailableCommands availableCommands;
   private AvailableCommands availableCommandsOtherPlayer;
   private ElementInformationBundle elementInformationBundle;
-  private String errorMessage = "";
   private GameGridData gameGridData;
-  private FirebaseService firebaseService;
-  private int playerID;
+  private final FirebaseService firebaseService;
+  private final int playerID;
 
   public InitialConfigurationParser(int level, FirebaseService firebaseService, int playerID)  {
     this.playerID = playerID;
@@ -69,9 +68,7 @@ public class InitialConfigurationParser {
 
   private Map getMapFromFile(String filePath) throws java.io.IOException {
     String filePathToStartState = rootURLPathForLevel + filePath;
-    Map result =
-        new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
-    return result;
+    return new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
   }
 
   private void parseLevelInfoFromDB() {
@@ -97,23 +94,20 @@ public class InitialConfigurationParser {
 
 
   private List<String> blocksForCurrentPlayer(Map<String, Object> levelInfo) {
-    var result = switch (this.playerID) {
+    return switch (this.playerID) {
       case 0 -> (List<String>) levelInfo.get("blocks");
       case 1 -> (List<String>) levelInfo.get("blocks-p1");
       case 2 -> (List<String>) levelInfo.get("blocks-p2");
       default -> null;
     };
-    return result;
   }
 
   private List<String> blocksForOtherPlayer(Map<String, Object> levelInfo)  {
-    var result = switch (this.playerID) {
-      case 0 -> null;
+    return switch (this.playerID) {
       case 1 -> (List<String>) levelInfo.get("blocks-p2");
       case 2 -> (List<String>) levelInfo.get("blocks-p1");
       default -> null;
     };
-    return result;
   }
 
   private void parseStartState(Map startState, Map initial) {
@@ -237,17 +231,13 @@ public class InitialConfigurationParser {
   }
 
   private List<List<String>>  parseSinglePlayerGrid(Map grid, int height)  {
-    List<List<String>> mapOfGrid = new ArrayList<List<String>>();
+    List<List<String>> mapOfGrid = new ArrayList<>();
     Map<String, List<String>> currentGrid = (Map<String, List<String>>) grid.get("grid");
     for (int i = 0; i < height; i++)  {
       mapOfGrid.add(currentGrid.get("" + i));
     }
     return mapOfGrid;
 
-  }
-
-  public String getErrorMessage() {
-    return this.errorMessage;
   }
 
   public ElementInformationBundle getGameGrid() { return this.elementInformationBundle; }

@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.FileInputStream;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +25,7 @@ import ooga.view.level.codearea.CommandBlock;
  */
 public class FirebaseService {
 
-  private FirebaseDatabase db;
-  private String rootURLPathForLevel;
+  private final FirebaseDatabase db;
   private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
   public FirebaseService() {
     try{
@@ -54,8 +52,8 @@ public class FirebaseService {
   public void saveGameLevel(int level) {
     DatabaseReference ref = db.getReference("data");
     DatabaseReference levelsRef = ref.child("startState/level"+level);
-    this.rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + level + "/";
-    String filePathToLevelInfoFile = this.rootURLPathForLevel + "level" + level + ".json";
+    String rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + level + "/";
+    String filePathToLevelInfoFile = rootURLPathForLevel + "level" + level + ".json";
     String filePathToStartState = rootURLPathForLevel + "startState.json";
     String filePathToEndState = rootURLPathForLevel + "endState.json";
     String filePathToCommands = rootURLPathForLevel + "commands.json";
@@ -70,7 +68,7 @@ public class FirebaseService {
 
 
   private void setDatabaseContentsFromFile(String pathInDB, String pathToFile)  {
-    Map<String, Object> jsonMap = null;
+    Map<String, Object> jsonMap;
     try {
        jsonMap = new Gson().fromJson(new FileReader(pathToFile)
           , new TypeToken<HashMap<String, Object>>() {}.getType());
@@ -123,13 +121,6 @@ public class FirebaseService {
 
   }
 
-  public void setCurrentState(String userName, List<CommandBlock> commandBlocks)  {
-    List<Map<String, Object>> listOfCommands = new ArrayList<>();
-    commandBlocks.forEach(commandBlock -> listOfCommands.add(createJSONForCommandBlock(commandBlock)));
-    Map<String, Object> jsonMap = new HashMap<>();
-    jsonMap.put(userName, listOfCommands);
-    setDatabaseContentsWithMap(jsonMap, "gameState/");
-  }
 
   private Map<String, Object> createJSONForCommandBlock(CommandBlock commandBlock) {
     Map<String, Object> map = new HashMap<>();
@@ -159,15 +150,12 @@ public class FirebaseService {
       gameEnded.put("gameEnded", true);
       gameEnded.put("score", score);
       DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference(rootDBPath);
-      dataRef.setValue(gameEnded, (databaseError, databaseReference) -> {
-        done.countDown();
-      });
+      dataRef.setValue(gameEnded, (databaseError, databaseReference) -> done.countDown());
       done.await();
     }
     catch (Exception e) {
       throw new ExceptionHandler("error declaring end of game");
     }
   }
-
 
 }
