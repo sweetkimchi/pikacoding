@@ -178,12 +178,22 @@ public class ProgramStack extends VBox {
   private void createAndAddCommandBlock(AvailableCommands availableCommands, String command,
       boolean isMultiplayer) {
     List<Map<String, List<String>>> parameterOptions = new ArrayList<>();
-    availableCommands.getParameters(command).forEach(parameter -> {
-      Map<String, List<String>> parameterOptionsMap = new HashMap<>();
-      parameterOptionsMap
-          .put(parameter, availableCommands.getParameterOptions(command, parameter));
-      parameterOptions.add(parameterOptionsMap);
-    });
+    if (isMultiplayer) {
+      availableCommandsOtherPlayer.getParameters(command).forEach(parameter -> {
+        Map<String, List<String>> parameterOptionsMap = new HashMap<>();
+        parameterOptionsMap
+            .put(parameter, availableCommandsOtherPlayer.getParameterOptions(command, parameter));
+        parameterOptions.add(parameterOptionsMap);
+      });
+    }
+    else {
+      availableCommands.getParameters(command).forEach(parameter -> {
+        Map<String, List<String>> parameterOptionsMap = new HashMap<>();
+        parameterOptionsMap
+            .put(parameter, availableCommands.getParameterOptions(command, parameter));
+        parameterOptions.add(parameterOptionsMap);
+      });
+    }
     if (command.equals("jump")) {
       addJumpCommandBlock(command, parameterOptions, isMultiplayer);
     } else if (command.equals("if")) {
