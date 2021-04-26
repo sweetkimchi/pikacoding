@@ -111,7 +111,7 @@ public class ScreenCreator {
   public void loadMultiLevel() {
     Random r = new Random();
     int level = r.nextInt(Controller.NUM_LEVELS) + 1;
-    viewController.initializeMultiLevel(level);
+    viewController.initializeMultiLevel(8);
   }
 
   private void initializeStage() {

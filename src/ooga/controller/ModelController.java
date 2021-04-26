@@ -72,7 +72,10 @@ public class ModelController implements BackEndExternalAPI {
         initialConfigurationParser.getGameGrid(), initialConfigurationParser.getGoalState(),stopwatch);
 
 
-    if (this.teamID != SINGLE_PLAYER) {concreteDatabaseListener.codeAreaChanged();}
+    if (this.teamID != SINGLE_PLAYER) {
+      concreteDatabaseListener.codeAreaChanged();
+      viewController.setAvailableCommandsOtherPlayer(initialConfigurationParser.getAvailableCommandsOtherPlayer());
+    }
   }
 
   /**
