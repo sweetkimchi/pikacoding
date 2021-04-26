@@ -185,3 +185,7 @@
     -fx-alignment: CENTER;
     -fx-spacing: 40.0;
 }
+
+.default-string {
+    -fx-font-size: 10pt;
+}
