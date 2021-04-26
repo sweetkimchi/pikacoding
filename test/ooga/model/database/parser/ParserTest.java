@@ -19,7 +19,7 @@ import ooga.model.player.DataCube;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class ParserTester {
+public class ParserTest {
 
   @Test
   public void checkParseLevel1() {

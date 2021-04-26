@@ -235,4 +235,19 @@ public class ViewController implements FrontEndExternalAPI {
 
   @Override
   public void setMatchId(int id) { modelController.setMatchId(id); }
+
+  @Override
+  public void notifyBothTeamsPresent() {
+
+  }
+
+  @Override
+  public void notifyCurrentTeamFinished() {
+
+  }
+
+  @Override
+  public void notifyBothTeamsFinished() {
+
+  }
 }
