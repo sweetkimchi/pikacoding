@@ -9,6 +9,7 @@ import ooga.model.database.FirebaseService;
 import ooga.model.database.PlayerInitialization;
 import ooga.model.database.parser.ConcreteDatabaseListener;
 import ooga.model.database.parser.InitialConfigurationParser;
+import ooga.model.exceptions.ExceptionHandler;
 import ooga.view.level.codearea.CommandBlock;
 import com.google.common.base.Stopwatch;
 
@@ -54,7 +55,6 @@ public class ModelController implements BackEndExternalAPI {
    */
   @Override
   public void initializeLevel(int level) {
-    this.matchID++;
     this.level = level;
     initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService, this.playerID);
 
@@ -207,11 +207,16 @@ public class ModelController implements BackEndExternalAPI {
       this.playerID = playerInitialization.getPlayerID();
     }
     else  {
-      this.firebaseService = new FirebaseService();
+      if (this.firebaseService != null) {
+        this.firebaseService = new FirebaseService();
+      }
       PlayerInitialization playerInitialization = new PlayerInitialization(this.matchID, this.teamID);
       this.playerID = playerInitialization.getPlayerID();
       concreteDatabaseListener = new ConcreteDatabaseListener(this, matchID, this.teamID);
       concreteDatabaseListener.checkLevelStarted();
+      if (playerInitialization.getErrorOccurred())  {
+        throw new ExceptionHandler("two players already present in team");
+      }
     }
   }
 
@@ -234,6 +239,7 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void notifyBothTeamsEnded(int team1_score, int team2_score) {
+    matchID++;
     viewController.notifyBothTeamsFinished();
   }
 
