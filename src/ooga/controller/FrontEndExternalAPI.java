@@ -142,7 +142,7 @@ public interface FrontEndExternalAPI {
 
   void notifyBothTeamsPresent();
 
-  void notifyCurrentTeamFinished();
+  void notifyCurrentTeamFinished(int score);
 
-  void notifyBothTeamsFinished();
+  void notifyBothTeamsFinished(int team1Score, int team2Score);
 }

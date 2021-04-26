@@ -150,6 +150,17 @@ public class InformationBundleTests {
       public void setMatchId(int id) {
 
       }
+
+      @Override
+      public void notifyCurrentTeamEnded(int score) {
+
+      }
+
+      @Override
+      public void notifyBothTeamsEnded(int team1_score, int team2_score) {
+
+      }
+
     };
     Map<String, List<Integer>> allAvatarLocations = new HashMap<>();
     Map<String, BlockData> allBlockData = new HashMap<>();

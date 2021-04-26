@@ -9,6 +9,7 @@ import ooga.model.database.FirebaseService;
 import ooga.model.database.PlayerInitialization;
 import ooga.model.database.parser.ConcreteDatabaseListener;
 import ooga.model.database.parser.InitialConfigurationParser;
+import ooga.model.exceptions.ExceptionHandler;
 import ooga.view.level.codearea.CommandBlock;
 import com.google.common.base.Stopwatch;
 
@@ -72,6 +73,8 @@ public class ModelController implements BackEndExternalAPI {
 
     if (this.teamID != SINGLE_PLAYER) {
       concreteDatabaseListener.codeAreaChanged();
+      concreteDatabaseListener.checkLevelEndedForCurrentTeam();
+      concreteDatabaseListener.checkLevelEndedForBothTeams();
       viewController.setAvailableCommandsOtherPlayer(initialConfigurationParser.getAvailableCommandsOtherPlayer());
     }
   }
@@ -151,6 +154,8 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
+    int total = executionScore + bonusFromNumberOfCommands + bonusFromTimeTaken;
+    if (teamID != ModelController.SINGLE_PLAYER) firebaseService.declareEndOfGame(this.matchID, this.teamID, total);
     viewController.winLevel(executionScore, bonusFromNumberOfCommands, bonusFromTimeTaken);
   }
 
@@ -207,6 +212,9 @@ public class ModelController implements BackEndExternalAPI {
       this.playerID = playerInitialization.getPlayerID();
       concreteDatabaseListener = new ConcreteDatabaseListener(this, matchID, this.teamID);
       concreteDatabaseListener.checkLevelStarted();
+      if (playerInitialization.getErrorOccurred())  {
+        throw new ExceptionHandler("two players already present in team");
+      }
     }
   }
 
@@ -220,5 +228,18 @@ public class ModelController implements BackEndExternalAPI {
     this.matchID = id;
     System.out.println("set match id");
   }
+
+  @Override
+  public void notifyCurrentTeamEnded(int score) {
+    viewController.notifyCurrentTeamFinished(score);
+    System.out.println("level ended for current team");
+  }
+
+  @Override
+  public void notifyBothTeamsEnded(int team1_score, int team2_score) {
+    matchID++;
+    viewController.notifyBothTeamsFinished(team1_score, team2_score);
+  }
+
 
 }

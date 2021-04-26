@@ -150,6 +150,18 @@ public class GridTest {
       public void setMatchId(int id) {
 
       }
+
+      @Override
+      public void notifyCurrentTeamEnded(int score) {
+
+      }
+
+      @Override
+      public void notifyBothTeamsEnded(int team1_score, int team2_score) {
+
+      }
+
+
     };
     elementInformationBundle.setModelController(modelController);
     avatar = new Avatar(10, 5, 5);

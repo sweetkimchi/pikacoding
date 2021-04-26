@@ -36,7 +36,9 @@ public class FirebaseService {
           .setCredentials(GoogleCredentials.fromStream(serviceAccount))
           .setDatabaseUrl("https://team-three-ooga-default-rtdb.firebaseio.com")
           .build();
-      FirebaseApp.initializeApp(options);
+      if (FirebaseApp.getApps().isEmpty()) {
+        FirebaseApp.initializeApp(options);
+      }
 
       db = FirebaseDatabase.getInstance();
     }
