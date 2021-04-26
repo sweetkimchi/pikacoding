@@ -247,7 +247,9 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         return null;
       }
       //System.out.println("new PARSED COMMANDS" + commands);
-      if (commands == null) return null;
+      if (commands == null) {
+        return new ArrayList<CommandBlock>();
+      }
       for (int i = 1; i < commands.size(); i++) {
         Map commandBlockParams = (Map) commands.get(i);
         ret.add(new CommandBlock((int) commandBlockParams.get("index"),
