@@ -33,6 +33,7 @@ public class ModelController implements BackEndExternalAPI {
    * Default constructor
    */
   public ModelController() {
+    matchID = 4444;
     //firebaseService = new FirebaseService();
 
   }
@@ -215,5 +216,9 @@ public class ModelController implements BackEndExternalAPI {
   }
 
   @Override
-  public void setMatchId(int id) { this.matchID = id; }
+  public void setMatchId(int id) {
+    this.matchID = id;
+    System.out.println("set match id");
+  }
+
 }
