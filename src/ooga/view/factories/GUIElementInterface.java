@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 
 public interface GUIElementInterface {
 
-  Button makeButton(ResourceBundle resourceBundle, EventHandler<ActionEvent> buttonAction, String key, String styleKey, int num);
+  Button makeButton(ResourceBundle resourceBundle, EventHandler<ActionEvent> buttonAction, String key, String styleKey, String idKey, int num);
 
   Label makeLabel(ResourceBundle resourceBundle, String key, String styleKey, int num);
 }

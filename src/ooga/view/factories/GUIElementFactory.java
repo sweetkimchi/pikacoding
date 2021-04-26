@@ -19,8 +19,12 @@ public class GUIElementFactory implements GUIElementInterface {
   }
 
   @Override
-  public Button makeButton(ResourceBundle resourceBundle, EventHandler<ActionEvent> buttonAction, String key, String styleKey, int num) {
-    return null;
+  public Button makeButton(ResourceBundle resourceBundle, EventHandler<ActionEvent> buttonAction, String key, String styleKey, String idKey, int num) {
+    Button button = new Button(readPropertiesFile(num, resourceBundle.getString(key)));
+    button.getStyleClass().add(styleKey);
+    button.setOnAction(buttonAction);
+    button.setId(IDS_RESOURCE.getString(idKey));
+    return button;
   }
 
   @Override
