@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.ModelController;
 import ooga.model.database.DatabaseListener;
@@ -20,9 +19,9 @@ import ooga.view.level.codearea.CommandBlock;
 
 public class ConcreteDatabaseListener implements DatabaseListener {
 
-  private BackEndExternalAPI modelController;
-  private int matchID;
-  private int teamID;
+  private final BackEndExternalAPI modelController;
+  private final int matchID;
+  private final int teamID;
   private boolean currentTeamStarted = false;
   private boolean otherTeamStarted = false;
   private boolean levelEndedForCurrentTeam = false;
@@ -145,7 +144,6 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         .getReference(rootDBPath);
     try {
       final String[] json = {""};
-      final boolean[] allPlayersPresent = {false};
       var listener = ref.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -181,7 +179,6 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         .getReference(rootDBPath);
     try {
       final String[] json = {""};
-      final boolean[] allPlayersPresent = {false};
       var listener = ref.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -209,7 +206,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   }
 
   private int getOtherTeamID() {
-    int otherTeam = 0;
+    int otherTeam;
     if (teamID == 1)  {
       otherTeam = 2;
     }
@@ -248,7 +245,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       }
       //System.out.println("new PARSED COMMANDS" + commands);
       if (commands == null) {
-        return new ArrayList<CommandBlock>();
+        return new ArrayList<>();
       }
       for (int i = 1; i < commands.size(); i++) {
         Map commandBlockParams = (Map) commands.get(i);
