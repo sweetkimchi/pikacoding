@@ -134,7 +134,7 @@ public class ProgramStack extends VBox {
 //    if (noChange) {
 //      return;
 //    }
-    System.out.println(program.get(0).getParameters() + " " + getProgram().get(0).getParameters());
+    System.out.println(program.size() + " PROGOARM STIZE");
 //    List<CommandBlock> programCopy = new ArrayList<>();
 //    for (CommandBlock commandBlock : program) {
 //      programCopy.add(new CommandBlock(commandBlock.getIndex(), commandBlock.getType(),
@@ -150,13 +150,10 @@ public class ProgramStack extends VBox {
     Platform.runLater(() -> {
       for (int i = 0; i < program.size(); i++) {
         CommandBlock commandBlock = program.get(i);
-//      System.out.println(programCopy.size());
         addCommandBlockFromDatabase(commandBlock.getType());
         if (commandBlock.getParameters() != null) {
-//          System.out.println(commandBlock.getParameters().keySet());
           for (String parameter : commandBlock.getParameters().keySet()) {
             String option = commandBlock.getParameters().get(parameter);
-//            System.out.println(parameter + option);
             if (programBlocks.get(programBlocks.size() - 1) instanceof NestedEndBlockHolder) {
               int size = programBlocks.size();
               programBlocks.remove(size - 1);
