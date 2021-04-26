@@ -6,42 +6,36 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import ooga.view.ScreenCreator;
+import ooga.view.factories.GUIElementFactory;
+import ooga.view.factories.GUIElementInterface;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 public class WinScreen extends VBox {
   public static final String SCREEN_MESSAGES = "ScreenStrings";
+  private static final int NO_NUM = 0;
 
   private ResourceBundle winMessages;
+  private GUIElementInterface GUIFactory;
 
   public WinScreen(int score, EventHandler<ActionEvent> homeAction,
-      EventHandler<ActionEvent> nextLevelAction, boolean isLastLevel) {
+                   EventHandler<ActionEvent> nextLevelAction, boolean isLastLevel) {
+    GUIFactory = new GUIElementFactory();
     winMessages = ResourceBundle.getBundle(ScreenCreator.RESOURCES + SCREEN_MESSAGES);
     this.getStyleClass().add("start-screen");
-    Label winMessage = new Label(winMessages.getString("win"));
-    winMessage.getStyleClass().add("title");
+
+    Label winMessage = GUIFactory.makeLabel(winMessages, "win", "title", NO_NUM);
     this.getChildren().add(winMessage);
-    Label scoreMessage = new Label(getScore(score, "winScore"));
+    Label scoreMessage = GUIFactory.makeLabel(winMessages, "winScore", "default-string", score);
     this.getChildren().add(scoreMessage);
+
     if (!isLastLevel) {
-      Button nextLevelButton = new Button(winMessages.getString("next"));
-      nextLevelButton.setId(ScreenCreator.idsForTests.getString("next"));
-      nextLevelButton.setOnAction(nextLevelAction);
+      Button nextLevelButton = GUIFactory.makeButton(winMessages, nextLevelAction, "next", "default-button", "next", NO_NUM);
       this.getChildren().add(nextLevelButton);
     }
-    Button homeButton = new Button(winMessages.getString("home"));
-    homeButton.setId(ScreenCreator.idsForTests.getString("home"));
-    homeButton.setOnAction(homeAction);
+
+    Button homeButton = GUIFactory.makeButton(winMessages, homeAction, "home", "default-button", "home", NO_NUM);
     this.getChildren().add(homeButton);
   }
-
-  private String getScore(int score, String key) {
-    Object[] currNum = new Object[1];
-    MessageFormat formatter = new MessageFormat("");
-    currNum[0] = score;
-    formatter.applyPattern(winMessages.getString(key));
-    return formatter.format(currNum);
-  }
-
 }
