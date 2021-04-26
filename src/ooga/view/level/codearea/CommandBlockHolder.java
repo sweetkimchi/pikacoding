@@ -100,9 +100,13 @@ public class CommandBlockHolder extends GridPane {
   }
 
   public void setButtonsDisabled(boolean disabled) {
+    if (isOtherPlayer) {
+      disabled = true;
+    }
     moveButton.setDisable(disabled);
     removeButton.setDisable(disabled);
-    dropdowns.forEach((name, dropdown) -> dropdown.setDisable(disabled));
+    boolean finalDisabled = disabled;
+    dropdowns.forEach((name, dropdown) -> dropdown.setDisable(finalDisabled));
   }
 
   public void selectParameter(String parameter, String option) {
