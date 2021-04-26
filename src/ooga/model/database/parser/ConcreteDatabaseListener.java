@@ -144,7 +144,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         .getReference(rootDBPath);
     try {
       final String[] json = {""};
-      var listener = ref.addValueEventListener(new ValueEventListener() {
+      ValueEventListener listener = ref.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
           Object object = dataSnapshot.getValue(Object.class);
@@ -179,7 +179,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         .getReference(rootDBPath);
     try {
       final String[] json = {""};
-      var listener = ref.addValueEventListener(new ValueEventListener() {
+      ValueEventListener listener = ref.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
           Object object = dataSnapshot.getValue(Object.class);
