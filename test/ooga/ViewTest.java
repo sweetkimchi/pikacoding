@@ -69,14 +69,14 @@ class ViewTest extends ApplicationTest {
     assertTrue(lookup("#single-player-button").query() != null);
   }
 
-  @Test
-  void determineCorrectTeam() {
-    clickButton("start-button");
-    enterMatchId();
-    clickButton("multiplayer-button");
-    clickButton("team1-button");
-    assertTrue(((int) getPrivateField(modelController, "teamID")) == 1);
-  }
+//  @Test
+//  void determineCorrectTeam() {
+//    clickButton("start-button");
+//    enterMatchId();
+//    clickButton("multiplayer-button");
+//    clickButton("team1-button");
+//    assertTrue(((int) getPrivateField(modelController, "teamID")) == 1);
+//  }
 
   @Test
   void changeStyleSheet() {
