@@ -94,7 +94,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     Button startMenuButton = GUIFactory.makeButton(levelResources, e -> screenCreator.loadStartMenu(), "startMenuButton", "default-button", "startMenuButton", NO_NUM);
     pauseMenu.getChildren().add(startMenuButton);
 
-    Button levelSelectorButton = GUIFactory.makeButton(levelResources, e -> screenCreator.loadSingleLevelSelector(), "levelSelector", "default-button", "levelSelectorButton", NO_NUM);
+    Button levelSelectorButton = GUIFactory.makeButton(levelResources, e -> screenCreator.loadSingleLevelSelector(), "levelSelectorButton", "default-button", "levelSelectorButton", NO_NUM);
     pauseMenu.getChildren().add(levelSelectorButton);
     animationController.pause();
 
