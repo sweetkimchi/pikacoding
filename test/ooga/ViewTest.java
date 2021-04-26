@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Field;
+import java.util.Random;
 
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
@@ -35,7 +36,7 @@ class ViewTest extends ApplicationTest {
     viewController = (FrontEndExternalAPI)  getPrivateField(controller, "viewController");
     modelController = (BackEndExternalAPI)  getPrivateField(controller, "modelController");
     screenCreator = (ScreenCreator)  getPrivateField(viewController, "screenCreator");
-    screenCreator.setTeamNum(10);
+    screenCreator.setTeamNum(0);
     screenCreator.setMatchId(12);
   }
 
@@ -120,15 +121,6 @@ class ViewTest extends ApplicationTest {
     screenCreator.setMatchId(matchNumber);
     assertEquals(teamNumber, 19);
     assertEquals(matchNumber, 10);
-  }
-
-  @Test
-  public void testMultiplayer(){
-    clickButton("start-button");
-    clickButton("multi-player-button");
-    clickButton("load-level-1");
-    LevelView levelView = screenCreator.getLevelView();
-    assertEquals(1, (int) getPrivateField(levelView, "level"));
   }
 
 
