@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.google.protobuf.Value;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,7 +53,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         .getReference(rootDBPath);
     try {
       final String[] json = {""};
-      ref.addValueEventListener(new ValueEventListener() {
+      ValueEventListener listener = ref.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
           Object object = dataSnapshot.getValue(Object.class);
@@ -64,6 +65,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           System.out.println("The read failed: " + databaseError.getCode());
         }
       });
+      this.valueEventListeners.put(ref, listener);
     }
     catch (Exception e) {
       throw new ExceptionHandler("error receiving code area changes");
@@ -77,7 +79,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         .getReference(rootDBPath);
     try {
       final String[] json = {""};
-      ref.addValueEventListener(new ValueEventListener() {
+      ValueEventListener listener = ref.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
           Object object = dataSnapshot.getValue(Object.class);
@@ -92,6 +94,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           System.out.println("The read failed: " + databaseError.getCode());
         }
       });
+      this.valueEventListeners.put(ref, listener);
     }
     catch (Exception e) {
       throw new ExceptionHandler("error checking if level has ended");
@@ -135,7 +138,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         .getReference(rootDBPath);
     try {
       final String[] json = {""};
-      ref.addValueEventListener(new ValueEventListener() {
+      ValueEventListener listener = ref.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
           Object object = dataSnapshot.getValue(Object.class);
@@ -150,6 +153,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           System.out.println("The read failed: " + databaseError.getCode());
         }
       });
+      this.valueEventListeners.put(ref, listener);
     }
     catch (Exception e) {
       throw new ExceptionHandler("error checking if level has ended");
