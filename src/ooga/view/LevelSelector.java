@@ -20,7 +20,11 @@ public class LevelSelector extends BorderPane {
       levelButton.setId(applyResourceFormatting(level, ScreenCreator.idsForTests.getString("levelButton")));
       levelButton.getStyleClass().add("default-button");
       int thisLevel = level;
-      levelButton.setOnAction(e -> loadLevelAction.accept(thisLevel));
+      try{
+        levelButton.setOnAction(e -> loadLevelAction.accept(thisLevel));
+      }catch(Exception error){
+
+      }
       levels.getChildren().add(levelButton);
     }
     levels.getStyleClass().add("level-selector");
