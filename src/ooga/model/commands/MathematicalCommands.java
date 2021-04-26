@@ -7,8 +7,10 @@ import ooga.model.player.Avatar;
 import ooga.model.player.DataCube;
 
 /**
- * Mathematical Commands are a subclass of Basic Commands that set a value to the datacube.
- * value to the datacube held by the Avatar.
+ * Mathematical Commands are a subclass of Basic Commands that set a value to the datacube held by
+ * the Avatar based on the current value of the avatar datacube or the value of the datacube on the
+ * same tile that the Avatar is standing on. The specific formula of the new value of the avatar
+ * datacube is determined by extending subclasses.
  *
  * @author Harrison Huang
  */
