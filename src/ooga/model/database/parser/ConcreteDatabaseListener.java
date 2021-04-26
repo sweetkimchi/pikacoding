@@ -235,14 +235,9 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   private List<CommandBlock> parseJSONIntoBlocks(String json)  {
     try {
       List<CommandBlock> ret = new ArrayList<>();
-      List commands;
-      try {
-        commands =
+      List commands =
             new ObjectMapper().readValue(json, List.class);
-      }
-      catch (Exception e)  {
-        return null;
-      }
+
       //System.out.println("new PARSED COMMANDS" + commands);
       if (commands == null) {
         return new ArrayList<>();
