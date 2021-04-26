@@ -102,8 +102,8 @@ public class ConcreteDatabaseListener implements DatabaseListener {
 
   private int getScoreFromJSON(String json)  {
     try {
-      Map commands = new ObjectMapper().readValue(json, Map.class);
-      return Integer.parseInt((String) commands.get("score"));
+      Map jsonMap = new ObjectMapper().readValue(json, Map.class);
+      return (Integer) jsonMap.get("score");
     }
     catch (Exception e) {
       return 0;
@@ -111,7 +111,6 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   }
 
   private void declareLevelEndedForCurrentTeam(int score)  {
-    System.out.println("level ended for current team!!!! ");
     this.levelEndedForCurrentTeam = true;
     this.scoreForCurrentTeam = score;
     modelController.notifyCurrentTeamEnded(score);
