@@ -207,9 +207,7 @@ public class ModelController implements BackEndExternalAPI {
       this.playerID = playerInitialization.getPlayerID();
     }
     else  {
-      if (this.firebaseService != null) {
-        this.firebaseService = new FirebaseService();
-      }
+      this.firebaseService = new FirebaseService();
       PlayerInitialization playerInitialization = new PlayerInitialization(this.matchID, this.teamID);
       this.playerID = playerInitialization.getPlayerID();
       concreteDatabaseListener = new ConcreteDatabaseListener(this, matchID, this.teamID);
