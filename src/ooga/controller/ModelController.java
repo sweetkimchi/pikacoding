@@ -54,6 +54,7 @@ public class ModelController implements BackEndExternalAPI {
    */
   @Override
   public void initializeLevel(int level) {
+    this.matchID++;
     this.level = level;
     initialConfigurationParser = new InitialConfigurationParser(level, this.firebaseService, this.playerID);
 
