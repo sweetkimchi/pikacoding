@@ -16,7 +16,7 @@ public class BothTeamsFinishedScreen extends VBox {
   private ResourceBundle winMessages;
 
   public BothTeamsFinishedScreen(int currentScore, int otherScore,
-      EventHandler<ActionEvent> homeAction, EventHandler<ActionEvent> playAgainAction) {
+      EventHandler<ActionEvent> homeAction) {
     winMessages = ResourceBundle.getBundle(ScreenCreator.RESOURCES + SCREEN_MESSAGES);
     this.getStyleClass().add("start-screen");
     Label resultMessage = new Label();
@@ -39,10 +39,6 @@ public class BothTeamsFinishedScreen extends VBox {
     Button homeButton = new Button(winMessages.getString("home"));
     homeButton.setOnAction(homeAction);
     this.getChildren().add(homeButton);
-
-    Button playAgainButton = new Button(winMessages.getString("playAgain"));
-    playAgainButton.setOnAction(playAgainAction);
-    this.getChildren().add(playAgainButton);
   }
 
   private String getScore(int score, String key) {

@@ -268,8 +268,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     Platform.runLater(() -> {
       clearScreen();
       this.setCenter(
-          new BothTeamsFinishedScreen(currentScore, otherScore, e -> screenCreator.loadStartMenu(),
-              e -> screenCreator.loadMultiLevelSelector()));
+          new BothTeamsFinishedScreen(currentScore, otherScore, e -> screenCreator.loadStartMenu()));
     });
 
   }
