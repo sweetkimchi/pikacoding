@@ -97,15 +97,15 @@ public class ParserTester {
     assertEquals(parsedGoalState.getIdealTime(), 10);
   }
 
-  @Test
-  public void checkUploadWrongLevel(){
-    firebaseService.saveGameLevel(-1);
-    assertTrue(firebaseService.getExceptionOccured());
-  }
-
-  @Test
-  public void checkUploadLevel(){
-    firebaseService.saveGameLevel(1);
-    assertFalse(firebaseService.getExceptionOccured());
-  }
+//  @Test
+//  public void checkUploadWrongLevel(){
+//    firebaseService.saveGameLevel(-1);
+//    assertTrue(firebaseService.getExceptionOccured());
+//  }
+//
+//  @Test
+//  public void checkUploadLevel(){
+//    firebaseService.saveGameLevel(1);
+//    assertFalse(firebaseService.getExceptionOccured());
+//  }
 }

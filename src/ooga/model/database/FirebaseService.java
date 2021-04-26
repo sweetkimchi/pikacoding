@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import ooga.model.exceptions.ExceptionHandler;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
@@ -28,7 +29,6 @@ public class FirebaseService {
   private FirebaseDatabase db;
   private String rootURLPathForLevel;
   private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
-  private boolean exceptionOccured = false;
   public FirebaseService() {
     try{
       FileInputStream serviceAccount =
@@ -43,8 +43,7 @@ public class FirebaseService {
       db = FirebaseDatabase.getInstance();
     }
     catch (Exception e) {
-      e.printStackTrace();
-      exceptionOccured = true;
+      throw new ExceptionHandler("error connecting to firebase");
     }
 
   }
@@ -77,8 +76,7 @@ public class FirebaseService {
           , new TypeToken<HashMap<String, Object>>() {}.getType());
     }
     catch (Exception e) {
-      exceptionOccured = true;
-      return;
+      throw new ExceptionHandler("error setting database contents");
     }
     setDatabaseContentsWithMap(jsonMap, pathInDB);
   }
@@ -94,7 +92,7 @@ public class FirebaseService {
       done.await();
     }
     catch (Exception e) {
-      exceptionOccured = true;
+      throw new ExceptionHandler("error setting database contents");
     }
   }
 
@@ -120,8 +118,7 @@ public class FirebaseService {
       return json[0];
     }
     catch (Exception e) {
-      exceptionOccured = true;
-      return null;
+      throw new ExceptionHandler("error reading levels from database");
     }
 
   }
@@ -140,10 +137,6 @@ public class FirebaseService {
     map.put("type", commandBlock.getType());
     map.put("parameters", commandBlock.getParameters());
     return map;
-  }
-
-  public boolean getExceptionOccured()  {
-    return this.exceptionOccured;
   }
 
   /**
@@ -172,10 +165,9 @@ public class FirebaseService {
       done.await();
     }
     catch (Exception e) {
-      e.printStackTrace();
+      throw new ExceptionHandler("error declaring end of game");
     }
   }
-
 
 
 }

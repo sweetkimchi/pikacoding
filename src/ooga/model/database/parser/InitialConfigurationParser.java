@@ -64,7 +64,7 @@ public class InitialConfigurationParser {
           blocksForOtherPlayer(levelInfo));
     }
     catch (Exception e) {
-      //handle later
+      throw new ExceptionHandler("error occured while parsing single player data files");
     }
   }
 
@@ -91,8 +91,7 @@ public class InitialConfigurationParser {
           blocksForOtherPlayer(levelInfo));
     }
     catch (Exception e) {
-      this.errorMessage = "Error parsing level file";
-      this.errorOccurred = true;
+      throw new ExceptionHandler("error occured while parsing files from DB");
     }
   }
 
@@ -130,9 +129,7 @@ public class InitialConfigurationParser {
           (int) initial.get("level"),
           Integer.parseInt((String) initial.get("timeLimit")), playerID);
     } catch (Exception e) {
-      e.printStackTrace();
-      this.errorMessage = "Error parsing start state";
-      this.errorOccurred = true;
+      throw new ExceptionHandler("error parsing start state");
     }
 
   }
@@ -145,9 +142,7 @@ public class InitialConfigurationParser {
           (int) endState.get("idealLines"));
     }
     catch (Exception e) {
-      e.printStackTrace();
-      this.errorMessage = "Error parsing end state";
-      this.errorOccurred = true;
+      throw new ExceptionHandler("error parsing end state");
     }
 
   }
@@ -187,19 +182,6 @@ public class InitialConfigurationParser {
     return allBlockData;
   }
 
-//  private Map<String, String> parseImageLocations(String imageLocations) {
-//    try {
-//      String filePathToStartState = rootURLPathForLevel + imageLocations;
-//      HashMap result =
-//          new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
-//      return (HashMap<String, String>) result;
-//    }
-//    catch (Exception e) {
-//      this.errorMessage = "Error parsing image locations";
-//      this.errorOccurred = true;
-//      return null;
-//    }
-//  }
 
   private void parseCommands(Map<String, Object> commands, List<String> commandsForCurrentPlayer,
       List<String> comamndsForOtherPlayer)  {
