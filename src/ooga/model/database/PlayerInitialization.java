@@ -8,10 +8,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import ooga.model.exceptions.ExceptionHandler;
 
 public class PlayerInitialization {
 
@@ -55,12 +57,13 @@ public class PlayerInitialization {
       done.await();
     }
     catch (Exception e) {
+      throw new ExceptionHandler("exception generating new player");
     }
   }
 
   private void setUpNewLevel(CountDownLatch done)  {
     Map<String, List<Integer>> players = new HashMap<>();
-    players.put("playerIDs", Arrays.asList(1));
+    players.put("playerIDs", Collections.singletonList(1));
     this.playerID = 1;
     setPlayersInDB(done, players);
 
@@ -69,9 +72,7 @@ public class PlayerInitialization {
   private void setPlayersInDB(CountDownLatch done, Map<String, List<Integer>> players) {
     try{
       DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference(rootDBPath);
-      dataRef.setValue(players, (databaseError, databaseReference) -> {
-        done.countDown();
-      });
+      dataRef.setValue(players, (databaseError, databaseReference) -> done.countDown());
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -80,7 +81,7 @@ public class PlayerInitialization {
 
   private void attemptToAddPlayerToLevel(String json, CountDownLatch done)  {
     try{
-      List<Integer> playerIDs = (List) ((Map)new ObjectMapper().readValue(json, Map.class)).get("playerIDs");
+      List<Integer> playerIDs = (List) new ObjectMapper().readValue(json, Map.class).get("playerIDs");
       if (playerIDs.size() != 1) {
         errorOccured = true;
         System.out.println("error occured");
