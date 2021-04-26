@@ -17,15 +17,15 @@ import ooga.model.exceptions.ExceptionHandler;
 
 public class PlayerInitialization {
 
-  private String rootDBPath;
+  private final String rootDBPath;
   private int playerID;
   private boolean errorOccured = false;
+
   public PlayerInitialization(int matchID, int teamID) {
-    rootDBPath = "match_info/match"+matchID+"/team"+teamID+"/";
-    if (teamID == 0)  {
+    rootDBPath = "match_info/match" + matchID + "/team" + teamID + "/";
+    if (teamID == 0) {
       this.playerID = 0;
-    }
-    else  {
+    } else {
       checkGameStatus();
     }
   }
@@ -42,26 +42,25 @@ public class PlayerInitialization {
           Object object = dataSnapshot.getValue(Object.class);
           if (object == null) {
             setUpNewLevel(done);
-          }
-          else  {
+          } else {
             json[0] = new Gson().toJson(object);
             attemptToAddPlayerToLevel(json[0], done);
           }
           done.countDown();
         }
+
         @Override
         public void onCancelled(DatabaseError databaseError) {
           // Code
         }
       });
       done.await();
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       throw new ExceptionHandler("exception generating new player");
     }
   }
 
-  private void setUpNewLevel(CountDownLatch done)  {
+  private void setUpNewLevel(CountDownLatch done) {
     Map<String, List<Integer>> players = new HashMap<>();
     players.put("playerIDs", Collections.singletonList(1));
     this.playerID = 1;
@@ -70,40 +69,38 @@ public class PlayerInitialization {
   }
 
   private void setPlayersInDB(CountDownLatch done, Map<String, List<Integer>> players) {
-    try{
+    try {
       DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference(rootDBPath);
       dataRef.setValue(players, (databaseError, databaseReference) -> done.countDown());
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-  private void attemptToAddPlayerToLevel(String json, CountDownLatch done)  {
-    try{
-      List<Integer> playerIDs = (List) new ObjectMapper().readValue(json, Map.class).get("playerIDs");
+  private void attemptToAddPlayerToLevel(String json, CountDownLatch done) {
+    try {
+      List<Integer> playerIDs = (List) new ObjectMapper().readValue(json, Map.class)
+          .get("playerIDs");
       if (playerIDs.size() != 1) {
         errorOccured = true;
         System.out.println("error occured");
         done.countDown();
-      }
-      else {
+      } else {
         Map<String, List<Integer>> players = new HashMap<>();
         players.put("playerIDs", Arrays.asList(1, 2));
         this.playerID = 2;
         setPlayersInDB(done, players);
       }
-    }
-    catch(Exception e)  {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-  public boolean getErrorOccurred()  {
+  public boolean getErrorOccurred() {
     return this.errorOccured;
   }
 
-  public int getPlayerID()  {
+  public int getPlayerID() {
     return this.playerID;
   }
 

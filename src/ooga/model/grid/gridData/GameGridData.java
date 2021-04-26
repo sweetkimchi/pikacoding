@@ -18,10 +18,10 @@ public class GameGridData {
     setStructures();
   }
 
-  private void setStructures()  {
-    for (int i=0; i<columns; i++) {
-      for (int j=0; j<rows; j++) {
-        structures[i][j] = elementInformationBundle.getStructure(i,j);
+  private void setStructures() {
+    for (int i = 0; i < columns; i++) {
+      for (int j = 0; j < rows; j++) {
+        structures[i][j] = elementInformationBundle.getStructure(i, j);
       }
     }
   }

@@ -1,8 +1,6 @@
 package ooga.model.database;
 
 import java.io.IOException;
-import ooga.controller.ModelController;
-import ooga.model.database.parser.ConcreteDatabaseListener;
 
 public class DatabaseTester {
 
@@ -13,7 +11,7 @@ public class DatabaseTester {
     //firebaseService.readDBContentsForLevelInit(1);
     //MongoDriver mongoDriver = new MongoDriver();
     //firebaseService.readCodeAreaInformation(0);
-   // ConcreteDatabaseListener test = new ConcreteDatabaseListener(new ModelController(), 0, 1);
+    // ConcreteDatabaseListener test = new ConcreteDatabaseListener(new ModelController(), 0, 1);
 //    test.codeAreaChanged();
 //
 //    while (true)  {

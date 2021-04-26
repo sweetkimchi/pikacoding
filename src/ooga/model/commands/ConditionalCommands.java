@@ -2,7 +2,6 @@ package ooga.model.commands;
 
 import java.util.Map;
 import ooga.model.grid.ElementInformationBundle;
-import ooga.model.player.Avatar;
 
 /**
  * @author Ji Yun Hyo

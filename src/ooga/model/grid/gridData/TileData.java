@@ -12,8 +12,12 @@ public class TileData {
 
   public TileData(Tile tile) {
     structure = tile.getStructure();
-    if (tile.hasAvatar()) avatarId = tile.getAvatar().getId();
-    if (tile.hasBlock()) blockId = tile.getBlock().getId();
+    if (tile.hasAvatar()) {
+      avatarId = tile.getAvatar().getId();
+    }
+    if (tile.hasBlock()) {
+      blockId = tile.getBlock().getId();
+    }
   }
 
   public Structure getStructure() {
