@@ -9,7 +9,6 @@ import ooga.controller.Controller;
 import ooga.view.factories.GUIElementFactory;
 import ooga.view.factories.GUIElementInterface;
 
-import java.text.MessageFormat;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
@@ -74,6 +73,7 @@ public class TeamSelector extends BorderPane {
     this.setCenter(tBox);
   }
 
+  // TODO: FIX!
   private void start() {
     Random r = new Random();
     int level = r.nextInt(Controller.NUM_LEVELS) + 1;
