@@ -2,6 +2,7 @@ package ooga.view;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -56,9 +57,16 @@ public class TeamSelector extends BorderPane {
   }
 
   private void determineTeam(int teamNum) {
-    screenCreator.setTeamNum(teamNum);
-    this.getChildren().clear();
-    createTeamScreen(teamNum);
+    try {
+      screenCreator.setTeamNum(teamNum);
+      this.getChildren().clear();
+      createTeamScreen(teamNum);
+    } catch (Exception e) {
+      String errorMessage = e.getMessage();
+      Alert error = new Alert(Alert.AlertType.ERROR);
+      error.setContentText(errorMessage);
+      error.showAndWait();
+    }
   }
 
   private void createTeamScreen(int teamNumber) {
