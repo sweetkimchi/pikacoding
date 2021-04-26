@@ -95,13 +95,13 @@ public abstract class BasicCommands extends Commands {
   }
 
   /**
-   * Sends an update of the display number of the dataCube to the model controller.
+   * Sends an update of the display number of the block to the model controller.
    *
-   * @param dataCube The dataCube whose number is to be updated
+   * @param block The block whose number is to be updated
    */
-  protected void sendDataCubeNumUpdate(DataCube dataCube) {
-    getElementInformationBundle().getModelController().setBlockNumber(dataCube.getId(),
-        dataCube.getDisplayNum());
+  protected void sendDataCubeNumUpdate(Block block) {
+    getElementInformationBundle().getModelController().setBlockNumber(block.getId(),
+        block.getDisplayNum());
   }
 
 }

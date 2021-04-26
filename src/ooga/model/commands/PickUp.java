@@ -45,7 +45,7 @@ public class PickUp extends BasicCommands {
         temp.drop();
       }
       Block block = tileToPickUpFrom.getBlock();
-      System.out.println("Pickup " + block.getId());
+      //System.out.println("Pickup " + block.getId());
 
       avatar.pickUp(block);
 
