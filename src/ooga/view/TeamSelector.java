@@ -1,5 +1,8 @@
 package ooga.view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -23,11 +26,13 @@ public class TeamSelector extends BorderPane {
   private ScreenCreator screenCreator;
   private GUIElementInterface GUIFactory;
   private int numberOfTeams;
+  private EventHandler<ActionEvent> loadLevelSelector;
 
-  public TeamSelector(Consumer<Integer> lAction, ScreenCreator sc) {
+  public TeamSelector(EventHandler<ActionEvent> loadAction, Consumer<Integer> lAction, ScreenCreator sc) {
     GUIFactory = new GUIElementFactory();
     screenCreator = sc;
     levelAction = lAction;
+    loadLevelSelector = loadAction;
     teamSelectorResources = ResourceBundle.getBundle(TEAM_SELECTOR_STRINGS);
     numberOfTeams = Integer.parseInt(teamSelectorResources.getString("numTeams"));
     createTeamChoices();
@@ -68,15 +73,8 @@ public class TeamSelector extends BorderPane {
     tBox.getStyleClass().add("instruction-box");
     this.setCenter(tBox);
 
-    Button start = GUIFactory.makeButton(teamSelectorResources, e -> start(), "start", "default-button", "multiStart", NO_NUM);
+    Button start = GUIFactory.makeButton(teamSelectorResources, loadLevelSelector, "start", "default-button", "multiStart", NO_NUM);
     tBox.getChildren().add(start);
     this.setCenter(tBox);
-  }
-
-  // TODO: FIX!
-  private void start() {
-    Random r = new Random();
-    int level = r.nextInt(Controller.NUM_LEVELS) + 1;
-    levelAction.accept(level);
   }
 }

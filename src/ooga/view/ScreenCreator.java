@@ -89,7 +89,7 @@ public class ScreenCreator {
 
   // TODO: right now pulls up level selection; level selection should be random
   public void loadTeamSelector() {
-    TeamSelector teamSelector = new TeamSelector(viewController::initializeMultiLevel, this);
+    TeamSelector teamSelector = new TeamSelector(e -> loadLevelSelector(), viewController::initializeMultiLevel, this);
     teamSelector.getStylesheets().add(startMenu.getStyleSheet());
     Scene scene = new Scene(teamSelector, width, height);
     stage.setScene(scene);
