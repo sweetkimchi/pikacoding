@@ -95,7 +95,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     pauseMenu.getChildren().add(startMenuButton);
 
     Button levelSelectorButton = new Button("Level Selector");
-    levelSelectorButton.setOnAction(e -> screenCreator.loadLevelSelector());
+    levelSelectorButton.setOnAction(e -> screenCreator.loadSingleLevelSelector());
     pauseMenu.getChildren().add(levelSelectorButton);
     animationController.pause();
 
