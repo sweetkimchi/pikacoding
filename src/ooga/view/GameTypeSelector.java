@@ -7,32 +7,30 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import ooga.view.factories.GUIElementFactory;
+import ooga.view.factories.GUIElementInterface;
 
 import java.util.ResourceBundle;
 
 public class GameTypeSelector extends BorderPane {
 
   private static final String GAME_TYPE_STRINGS = ScreenCreator.RESOURCES + "GameTypeSelector";
+  private static final int NO_NUM = 0;
+
+  private GUIElementInterface GUIFactory;
 
   public GameTypeSelector(EventHandler<ActionEvent> singleAction, EventHandler<ActionEvent> multiAction) {
+    GUIFactory = new GUIElementFactory();
     ResourceBundle gameTypeResources = ResourceBundle.getBundle(GAME_TYPE_STRINGS);
     HBox gameType = new HBox();
     gameType.getStyleClass().add("type-screen");
 
-    Button singlePlayer = new Button(gameTypeResources.getString("singlePlayer"));
-    singlePlayer.setId(ScreenCreator.idsForTests.getString("singlePlayer"));
-    singlePlayer.getStyleClass().add("default-button");
-    singlePlayer.setOnAction(singleAction);
-
-    Button multiPlayer = new Button(gameTypeResources.getString("multiPlayer"));
-    multiPlayer.setId(ScreenCreator.idsForTests.getString("multiPlayer"));
-    multiPlayer.getStyleClass().add("default-button");
-    multiPlayer.setOnAction(multiAction);
-
+    Button singlePlayer = GUIFactory.makeButton(gameTypeResources, singleAction, "singlePlayer", "default-button", "singlePlayer", NO_NUM);
+    Button multiPlayer = GUIFactory.makeButton(gameTypeResources, multiAction, "multiPlayer", "default-button", "multiPlayer", NO_NUM);
     gameType.getChildren().addAll(singlePlayer, multiPlayer);
 
-    Label instruction = new Label(gameTypeResources.getString("instructions"));
-    instruction.getStyleClass().add("title");
+    Label instruction = GUIFactory.makeLabel(gameTypeResources, "instructions", "title", NO_NUM);
+            new Label(gameTypeResources.getString("instructions"));
 
     VBox iBox = new VBox();
     iBox.getChildren().addAll(instruction, gameType);

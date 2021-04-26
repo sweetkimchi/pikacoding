@@ -6,21 +6,31 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.google.api.client.util.ArrayMap;
+import com.google.common.base.Stopwatch;
+import java.security.spec.ECField;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.CommandExecutor;
 import ooga.model.Executor;
+import ooga.model.exceptions.ExceptionHandler;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
 import ooga.model.grid.Tile;
+import ooga.model.grid.gridData.BlockData;
+import ooga.model.grid.gridData.GoalState;
+import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.Avatar;
 import ooga.model.player.Block;
 import ooga.model.player.DataCube;
 import ooga.view.level.codearea.CommandBlock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.Stop;
 
 public class InformationBundleTests {
 
@@ -29,11 +39,12 @@ public class InformationBundleTests {
   private DataCube dataCube;
   private BackEndExternalAPI modelController;
   private Executor commandExecutor;
+  private ExceptionHandler exceptionHandler;
 
   @BeforeEach
   public void setup(){
 //    commandExecutor = new CommandExecutor();
-    elementInformationBundle = new ElementInformationBundle();
+    exceptionHandler = new ExceptionHandler("test");
     modelController = new BackEndExternalAPI() {
       @Override
       public void setViewController(FrontEndExternalAPI viewController) {
@@ -151,6 +162,26 @@ public class InformationBundleTests {
       }
 
     };
+    Map<String, List<Integer>> allAvatarLocations = new HashMap<>();
+    Map<String, BlockData> allBlockData = new HashMap<>();
+    List<String> commandsAvailable = new ArrayList<>();
+        Map<String, String> imageLocations = new HashMap<>();
+        String description = "test";
+    int numPeople = 2;
+    int level = 3;
+    int timeLimit = 500;
+    int playerID = 3;
+    int numOfCommands = 10;
+    int idealTime = 30;
+    int idealLines = 30;
+
+
+    elementInformationBundle = new ElementInformationBundle();
+    Stopwatch stopwatch = Stopwatch.createStarted();
+    List<CommandBlock> commandBlocks = new ArrayList<>();
+    GoalState goalState = new GoalState(allAvatarLocations,allBlockData,numOfCommands,idealTime,idealLines);
+    InitialState initialState = new InitialState(allAvatarLocations, allBlockData,commandsAvailable,imageLocations,description,numPeople,level,timeLimit,playerID);
+    commandExecutor = new CommandExecutor(commandBlocks, modelController, initialState, elementInformationBundle, goalState, stopwatch);
   }
 
   @Test
@@ -179,7 +210,21 @@ public class InformationBundleTests {
     elementInformationBundle.setDimensions(10,20);
     elementInformationBundle.setStructure(2,2, Structure.FLOOR);
     elementInformationBundle.addBlock(block);
+    commandExecutor.runNextCommand();
     Block block2 = elementInformationBundle.getTile(2,2).getBlock();
     assertEquals(block, block2);
   }
+
+  @Test
+  public void testException(){
+    Block block = null;
+    try{
+      block.getId();
+    }catch (Exception e){
+      ExceptionHandler exceptionHandler = new ExceptionHandler(e);
+      assertEquals("Cannot invoke \"ooga.model.player.Block.getId()\" because \"block\" is null", e.getMessage());
+
+    }
+  }
+
 }

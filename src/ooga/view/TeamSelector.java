@@ -8,11 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import ooga.controller.Controller;
 import ooga.view.factories.GUIElementFactory;
 import ooga.view.factories.GUIElementInterface;
 
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -22,16 +20,17 @@ public class TeamSelector extends BorderPane {
   private static final int NO_NUM = 0;
 
   private ResourceBundle teamSelectorResources;
-  private Consumer<Integer> levelAction;
   private ScreenCreator screenCreator;
   private GUIElementInterface GUIFactory;
   private int numberOfTeams;
   private EventHandler<ActionEvent> loadLevelSelector;
+  private VBox tBox;
+  private Label waitingMessage;
+  private Button start;
 
-  public TeamSelector(EventHandler<ActionEvent> loadAction, Consumer<Integer> lAction, ScreenCreator sc) {
+  public TeamSelector(EventHandler<ActionEvent> loadAction, ScreenCreator sc) {
     GUIFactory = new GUIElementFactory();
     screenCreator = sc;
-    levelAction = lAction;
     loadLevelSelector = loadAction;
     teamSelectorResources = ResourceBundle.getBundle(TEAM_SELECTOR_STRINGS);
     numberOfTeams = Integer.parseInt(teamSelectorResources.getString("numTeams"));
@@ -58,23 +57,34 @@ public class TeamSelector extends BorderPane {
   }
 
   private void determineTeam(int teamNum) {
-    screenCreator.setTeamNum(teamNum);
-    this.getChildren().clear();
-    createTeamScreen(teamNum);
+    try {
+      screenCreator.setTeamNum(teamNum);
+      this.getChildren().clear();
+      createTeamScreen(teamNum);
+    } catch (Exception e) {
+      String errorMessage = e.getMessage();
+      Alert error = new Alert(Alert.AlertType.ERROR);
+      error.setContentText(errorMessage);
+      error.showAndWait();
+    }
   }
 
   private void createTeamScreen(int teamNumber) {
-    VBox tBox = new VBox();
+    tBox = new VBox();
 
     Label teamMessage = GUIFactory.makeLabel(teamSelectorResources, "teamMessage", "team-message", teamNumber);
-    Label waitingMessage = GUIFactory.makeLabel(teamSelectorResources, "waitingMessage", "waiting-message", NO_NUM);
+    waitingMessage = GUIFactory.makeLabel(teamSelectorResources, "waitingMessage", "waiting-message", NO_NUM);
 
     tBox.getChildren().addAll(teamMessage, waitingMessage);
     tBox.getStyleClass().add("instruction-box");
-    this.setCenter(tBox);
 
-    Button start = GUIFactory.makeButton(teamSelectorResources, loadLevelSelector, "start", "default-button", "multiStart", NO_NUM);
+    start = GUIFactory.makeButton(teamSelectorResources, loadLevelSelector, "start", "default-button", "multiStart", NO_NUM);
+    start.setDisable(true);
     tBox.getChildren().add(start);
     this.setCenter(tBox);
+  }
+
+  public void enableStart() {
+    start.setDisable(false);
   }
 }
