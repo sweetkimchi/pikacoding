@@ -8,6 +8,9 @@ import ooga.model.grid.gridData.BlockData;
 import ooga.model.player.Avatar;
 import ooga.model.player.Block;
 
+/**
+ * @author Ji Yun Hyo
+ */
 public class Nearest extends AICommands{
 
   private int X = 0;
@@ -35,7 +38,7 @@ public class Nearest extends AICommands{
   public void execute(int ID) {
     Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
 
-    int minDistance = 10000;
+    int minDistance = Integer.MAX_VALUE;
     int xAvatar = avatar.getXCoord();
     int yAvatar = avatar.getYCoord();
     BlockData closestBlockData = null;
