@@ -18,6 +18,7 @@ import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
 import ooga.view.ScreenCreator;
+import ooga.view.animation.AnimationAPI;
 import ooga.view.animation.AnimationController;
 import ooga.view.level.board.Board;
 import ooga.view.level.codearea.CodeArea;
@@ -40,7 +41,7 @@ public class LevelView extends BorderPane implements ProgramListener {
   private final MenuBar menuBar;
   private Label scoreDisplay;
   private final Board board;
-  private final AnimationController animationController;
+  private final AnimationAPI animationController;
   private GridPane rightPane;
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
@@ -110,7 +111,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     return screenCreator;
   }
 
-  protected AnimationController getAnimationController() {
+  protected AnimationAPI getAnimationController() {
     return animationController;
   }
 
