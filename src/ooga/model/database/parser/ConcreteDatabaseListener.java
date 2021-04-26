@@ -98,6 +98,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   private void declareLevelEndedForCurrentTeam()  {
     System.out.println("level ended for current team!!!! ");
     this.levelEndedForCurrentTeam = true;
+    modelController.notifyCurrentTeamEnded(0);
     if (levelEndedForOtherTeam) {
       levelEndedForBothTeams();
     }
@@ -108,6 +109,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
     for (DatabaseReference ref: this.valueEventListeners.keySet())  {
       ref.removeEventListener(this.valueEventListeners.get(ref));
     }
+    modelController.notifyBothTeamsEnded(0, 0);
   }
 
   @Override

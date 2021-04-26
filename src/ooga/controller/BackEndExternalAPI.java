@@ -91,4 +91,8 @@ public interface BackEndExternalAPI {
   void startGameAfterBothTeamsPresent();
 
   void setMatchId(int id);
+
+  void notifyCurrentTeamEnded(int score);
+
+  void notifyBothTeamsEnded(int team1_score, int team2_score);
 }
