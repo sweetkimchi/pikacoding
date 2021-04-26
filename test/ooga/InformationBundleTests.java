@@ -139,6 +139,16 @@ public class InformationBundleTests {
       public void setMatchId(int id) {
 
       }
+
+      @Override
+      public void notifyCurrentTeamEnded() {
+
+      }
+
+      @Override
+      public void notifyBothTeamsEnded() {
+
+      }
     };
   }
 
