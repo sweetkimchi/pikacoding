@@ -9,6 +9,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ooga.controller.BackEndExternalAPI;
@@ -25,7 +26,8 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   private boolean currentTeamStarted = false;
   private boolean otherTeamStarted = false;
   private boolean levelEndedForCurrentTeam = false;
-
+  private boolean levelEndedForOtherTeam = false;
+  private Map<DatabaseReference, ValueEventListener> valueEventListeners = new HashMap<>();
   private List<CommandBlock> lastCommandBlockForCurrentComputer;
   public ConcreteDatabaseListener(ModelController modelController, int matchID, int teamID)  {
     this.modelController = modelController;
@@ -96,6 +98,16 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   private void declareLevelEndedForCurrentTeam()  {
     System.out.println("level ended for current team!!!! ");
     this.levelEndedForCurrentTeam = true;
+    if (levelEndedForOtherTeam) {
+      levelEndedForBothTeams();
+    }
+  }
+
+  private void levelEndedForBothTeams() {
+    System.out.println("level ended for both teams!!!!!!!");
+    for (DatabaseReference ref: this.valueEventListeners.keySet())  {
+      ref.removeEventListener(this.valueEventListeners.get(ref));
+    }
   }
 
   @Override
@@ -127,8 +139,9 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   }
 
   private void declareLevelEndedForOtherTeam() {
+    this.levelEndedForOtherTeam = true;
     if (this.levelEndedForCurrentTeam)  {
-      System.out.println("level ended for both teams!!!!!!!");
+      levelEndedForBothTeams();
     }
   }
 
@@ -165,6 +178,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           System.out.println("The read failed: " + databaseError.getCode());
         }
       });
+      this.valueEventListeners.put(ref, listener);
     }
     catch (Exception e) {
       throw new ExceptionHandler("error checking if all people present");
@@ -199,6 +213,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           System.out.println("The read failed: " + databaseError.getCode());
         }
       });
+      this.valueEventListeners.put(ref, listener);
     }
     catch (Exception e) {
       throw new ExceptionHandler("error checking if all people present");
