@@ -122,6 +122,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   private void levelEndedForBothTeams() {
     System.out.println("level ended for both teams!!!!!!!");
     for (DatabaseReference ref: this.valueEventListeners.keySet())  {
+      System.out.println("removing listener");
       ref.removeEventListener(this.valueEventListeners.get(ref));
     }
     modelController.notifyBothTeamsEnded(this.scoreForCurrentTeam, this.scoreForOtherTeam);
