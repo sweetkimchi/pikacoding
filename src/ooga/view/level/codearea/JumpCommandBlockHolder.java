@@ -8,7 +8,6 @@ import javafx.scene.control.ComboBox;
 public class JumpCommandBlockHolder extends CommandBlockHolder {
 
   private ComboBox<String> lineSelector;
-  private String parameter = "destination";
 
   public JumpCommandBlockHolder(int index, String type,
       List<Map<String, List<String>>> parameterOptions,
@@ -23,7 +22,7 @@ public class JumpCommandBlockHolder extends CommandBlockHolder {
   }
 
   private void updateDropdown() {
-    getCommandBlock().setParameter(parameter, "1");
+//    getCommandBlock().setParameter(parameter, "1");
     lineSelector.getItems().clear();
     List<String> options = new ArrayList<>();
     for (int i = 1; i <= getCommandBlock().getIndex(); i++) {
@@ -35,8 +34,8 @@ public class JumpCommandBlockHolder extends CommandBlockHolder {
 
   @Override
   protected void initializeDropdowns() {
-//    parameter = getParameterOptions().get(0).keySet().iterator().next();
-    getCommandBlock().setParameter(parameter, "1");
+    String parameter = getParameterOptions().get(0).keySet().iterator().next();
+//    getCommandBlock().setParameter(parameter, "1");
     lineSelector = new ComboBox<>();
     updateDropdown();
     lineSelector.setOnAction(e -> {
@@ -46,7 +45,6 @@ public class JumpCommandBlockHolder extends CommandBlockHolder {
     lineSelector.getSelectionModel().selectFirst();
     getDropdowns().put(parameter, lineSelector);
     addItem(lineSelector, 120);
-    System.out.println(getCommandBlock().getParameters());
   }
 
 }
