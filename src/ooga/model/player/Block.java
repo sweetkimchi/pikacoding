@@ -25,6 +25,13 @@ public abstract class Block implements Element {
   public abstract int getDisplayNum();
 
   /**
+   * Setter for the number associated with the block.
+   *
+   * @param displayNum The new number of the block
+   */
+  public abstract void setDisplayNum(int displayNum);
+
+  /**
    * Runs the behavior when the block is dropped. Sets the isHeld boolean to be false.
    */
   public void drop() {

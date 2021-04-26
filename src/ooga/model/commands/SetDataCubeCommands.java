@@ -3,6 +3,7 @@ package ooga.model.commands;
 import java.util.Map;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.player.Avatar;
+import ooga.model.player.Block;
 import ooga.model.player.DataCube;
 
 /**
@@ -35,10 +36,11 @@ public abstract class SetDataCubeCommands extends BasicCommands {
   @Override
   public void execute(int ID) {
     Avatar avatar = getAvatar(ID);
-    if (avatar.getHeldItem() instanceof DataCube avatarCube) {
-      int newDisplayNum = calculateNewDisplayNum(avatarCube.getDisplayNum());
-      avatarCube.setDisplayNum(newDisplayNum);
-      sendDataCubeNumUpdate(avatarCube);
+    Block block = avatar.getHeldItem();
+    if (block != null) {
+      int newDisplayNum = calculateNewDisplayNum(block.getDisplayNum());
+      block.setDisplayNum(newDisplayNum);
+      sendDataCubeNumUpdate(block);
     } else {
       //if desired, handle error if the avatar is not holding a datacube
       //System.out.println("Avatar is not holding a datacube!");
@@ -47,12 +49,12 @@ public abstract class SetDataCubeCommands extends BasicCommands {
   }
 
   /**
-   * The formula for calculating the new display number of the dataCube held by the avatar. The
+   * The formula for calculating the new display number of the block held by the avatar. The
    * implementation and formula of the new display number is to be handled by subclasses.
    *
-   * @param avatarCubeNum The current number of the cube held by the avatar
-   * @return The new number to be set to the avatar cube
+   * @param avatarBlockNum The current number of the block held by the avatar
+   * @return The new number to be set to the avatar block
    */
-  public abstract int calculateNewDisplayNum(int avatarCubeNum);
+  public abstract int calculateNewDisplayNum(int avatarBlockNum);
 
 }
