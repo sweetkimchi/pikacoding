@@ -153,6 +153,8 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
+    int total = executionScore + bonusFromNumberOfCommands + bonusFromTimeTaken;
+    if (teamID != ModelController.SINGLE_PLAYER) firebaseService.declareEndOfGame(this.matchID, this.teamID, total);
     viewController.winLevel(executionScore, bonusFromNumberOfCommands, bonusFromTimeTaken);
   }
 
