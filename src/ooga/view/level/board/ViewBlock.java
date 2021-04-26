@@ -9,14 +9,14 @@ public class ViewBlock extends StackPane {
   private static final double PADDING_RATIO = 0.25;
   private static final double PICKEDUP_SHIFT = 0.5;
 
-  private int initialXCoordinate;
-  private int initialYCoordinate;
-  private double width;
-  private double height;
-  private double padding;
+  private final int initialXCoordinate;
+  private final int initialYCoordinate;
+  private final double width;
+  private final double height;
+  private final double padding;
   private Text blockText;
-  private SpriteLayer spriteLayer;
-  private String number;
+  private final SpriteLayer spriteLayer;
+  private final String number;
   private double currentX;
   private double currentY;
   private Rectangle block;
@@ -43,7 +43,7 @@ public class ViewBlock extends StackPane {
     if (isHeld) {
       shift = PICKEDUP_SHIFT * height;
     }
-    this.setTranslateY(y * height + padding -  shift);
+    this.setTranslateY(y * height + padding - shift);
     currentY = y;
   }
 
@@ -53,6 +53,7 @@ public class ViewBlock extends StackPane {
 
   /**
    * Purpose: update number on datacube based on what backend/controller passes.
+   *
    * @param num
    */
   public void updateCubeNumber(int num) {
@@ -70,15 +71,15 @@ public class ViewBlock extends StackPane {
     updateCubeNumber(Integer.parseInt(number));
   }
 
-  public void setHeldStatus(boolean status){
+  public void setHeldStatus(boolean status) {
     isHeld = status;
   }
-  
-  public int getInitialXCoordinate(){
+
+  public int getInitialXCoordinate() {
     return (int) currentX;
   }
 
-  public int getInitialYCoordinate(){
+  public int getInitialYCoordinate() {
     return (int) currentY;
   }
 

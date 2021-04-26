@@ -49,8 +49,8 @@ public class LevelView extends BorderPane implements ProgramListener {
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
   private Label description;
-  private ResourceBundle levelResources;
-  private GUIElementInterface GUIFactory;
+  private final ResourceBundle levelResources;
+  private final GUIElementInterface GUIFactory;
 
   private int startingApples;
   private int score;
@@ -61,7 +61,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     this.screenCreator = screenCreator;
     this.level = level;
     levelResources = ResourceBundle
-            .getBundle(ScreenCreator.RESOURCES + LEVEL_PROPERTIES);
+        .getBundle(ScreenCreator.RESOURCES + LEVEL_PROPERTIES);
     this.getStylesheets().add(this.screenCreator.getCurrentStyleSheet());
     menuBar = new MenuBar(e -> openPauseMenu());
     board = new Board();
@@ -91,10 +91,14 @@ public class LevelView extends BorderPane implements ProgramListener {
 
   protected void openPauseMenu() {
     VBox pauseMenu = makePauseMenu();
-    Button startMenuButton = GUIFactory.makeButton(levelResources, e -> screenCreator.loadStartMenu(), "startMenuButton", "default-button", "startMenuButton", NO_NUM);
+    Button startMenuButton = GUIFactory
+        .makeButton(levelResources, e -> screenCreator.loadStartMenu(), "startMenuButton",
+            "default-button", "startMenuButton", NO_NUM);
     pauseMenu.getChildren().add(startMenuButton);
 
-    Button levelSelectorButton = GUIFactory.makeButton(levelResources, e -> screenCreator.loadSingleLevelSelector(), "levelSelectorButton", "default-button", "levelSelectorButton", NO_NUM);
+    Button levelSelectorButton = GUIFactory
+        .makeButton(levelResources, e -> screenCreator.loadSingleLevelSelector(),
+            "levelSelectorButton", "default-button", "levelSelectorButton", NO_NUM);
     pauseMenu.getChildren().add(levelSelectorButton);
     animationController.pause();
 
@@ -106,7 +110,9 @@ public class LevelView extends BorderPane implements ProgramListener {
     VBox pauseMenu = new VBox();
     pauseMenu.getStyleClass().add("start-screen");
     pauseMenu.getChildren().add(new Label("Paused"));
-    Button resumeButton = GUIFactory.makeButton(levelResources, e -> restoreScreen(), "resumeButton", "default-button", "resumeButton", NO_NUM);
+    Button resumeButton = GUIFactory
+        .makeButton(levelResources, e -> restoreScreen(), "resumeButton", "default-button",
+            "resumeButton", NO_NUM);
     pauseMenu.getChildren().add(resumeButton);
     return pauseMenu;
   }
@@ -273,7 +279,8 @@ public class LevelView extends BorderPane implements ProgramListener {
     Platform.runLater(() -> {
       clearScreen();
       this.setCenter(
-          new BothTeamsFinishedScreen(currentScore, otherScore, e -> screenCreator.loadStartMenu()));
+          new BothTeamsFinishedScreen(currentScore, otherScore,
+              e -> screenCreator.loadStartMenu()));
     });
 
   }

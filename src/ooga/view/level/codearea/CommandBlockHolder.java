@@ -1,6 +1,5 @@
 package ooga.view.level.codearea;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,8 +90,7 @@ public class CommandBlockHolder extends GridPane {
       if (lineIndicators.getChildren().size() < MAX_INDICATORS) {
         Label indicator = new Label("" + id);
         lineIndicators.getChildren().add(indicator);
-      }
-      else {
+      } else {
         lineIndicators.getChildren().add(new Label("..."));
         break;
       }

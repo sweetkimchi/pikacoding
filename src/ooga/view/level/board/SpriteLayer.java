@@ -4,7 +4,6 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javafx.scene.layout.Pane;
 import ooga.model.grid.gridData.BlockData;
 import ooga.view.ScreenCreator;
@@ -37,7 +36,8 @@ public class SpriteLayer extends Pane {
     avatars = new HashMap<>();
     initialAvatarLocations = allAvatarLocations;
     initialAvatarLocations.forEach((id, location) -> {
-      ViewAvatar viewAvatar = new ViewAvatar(location.get(0), location.get(1), xSize, ySize, Integer.parseInt(id), this);
+      ViewAvatar viewAvatar = new ViewAvatar(location.get(0), location.get(1), xSize, ySize,
+          Integer.parseInt(id), this);
       avatars.put(Integer.parseInt(id), viewAvatar);
     });
   }
@@ -46,7 +46,8 @@ public class SpriteLayer extends Pane {
     blocks = new HashMap<>();
     initialBlockData = allBlockData;
     initialBlockData.forEach((id, blockData) -> {
-      ViewBlock viewBlock = new ViewBlock(blockData.getLocation().get(0), blockData.getLocation().get(1),
+      ViewBlock viewBlock = new ViewBlock(blockData.getLocation().get(0),
+          blockData.getLocation().get(1),
           xSize,
           ySize, this, "" + blockData.getBlockNumber());
       blocks.put(Integer.parseInt(id), viewBlock);
@@ -65,19 +66,21 @@ public class SpriteLayer extends Pane {
    */
   public void updateAvatarPosition(int id, int xCoord, int yCoord) {
     ViewAvatar viewAvatar = avatars.get(id);
-    animation.queuePositionUpdates(id, viewAvatar.getInitialXCoordinate(), viewAvatar.getInitialYCoordinate(), xCoord,yCoord);
+    animation.queuePositionUpdates(id, viewAvatar.getInitialXCoordinate(),
+        viewAvatar.getInitialYCoordinate(), xCoord, yCoord);
   }
 
   public void updateBlockPosition(int id, int xCoord, int yCoord) {
     ViewBlock viewBlock = blocks.get(id);
-    animation.queuePositionUpdates(id, viewBlock.getInitialXCoordinate(), viewBlock.getInitialYCoordinate(), xCoord,yCoord);
+    animation.queuePositionUpdates(id, viewBlock.getInitialXCoordinate(),
+        viewBlock.getInitialYCoordinate(), xCoord, yCoord);
   }
 
   public void updateBlock(int id, boolean isHeld) {
     blocks.get(id).setHeldStatus(isHeld);
-    if(isHeld){
+    if (isHeld) {
       blocks.get(id).setShiftHeight(1);
-    }else{
+    } else {
       blocks.get(id).setShiftHeight(0);
     }
   }
@@ -89,13 +92,13 @@ public class SpriteLayer extends Pane {
   public boolean updateAnimationForFrontEnd() {
     allElementInformation = animation.getAllElementInformation();
     boolean finished = true;
-    for(Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()){
-      if(!entry.getValue().isEmpty()){
+    for (Map.Entry<Integer, Deque<Double>> entry : allElementInformation.entrySet()) {
+      if (!entry.getValue().isEmpty()) {
         double nextX = entry.getValue().pop();
         double nextY = entry.getValue().pop();
-        if(avatars.containsKey(entry.getKey())){
+        if (avatars.containsKey(entry.getKey())) {
           avatars.get(entry.getKey()).moveAvatar(nextX, nextY);
-        }else if(blocks.containsKey(entry.getKey())){
+        } else if (blocks.containsKey(entry.getKey())) {
           blocks.get(entry.getKey()).moveBlock(nextX, nextY);
         }
         finished = false;
@@ -118,8 +121,8 @@ public class SpriteLayer extends Pane {
   }
 
   public void resetAvatarImages() {
-    if(allElementInformation != null){
-      for(Map.Entry<Integer, ViewAvatar> entry : avatars.entrySet()){
+    if (allElementInformation != null) {
+      for (Map.Entry<Integer, ViewAvatar> entry : avatars.entrySet()) {
         avatars.get(entry.getKey()).setAvatarImage("images/PikachuAvatar.gif");
       }
     }

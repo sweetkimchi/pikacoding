@@ -2,7 +2,6 @@ package ooga.view.level.codearea;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
 /**

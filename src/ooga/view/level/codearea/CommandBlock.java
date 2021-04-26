@@ -1,6 +1,7 @@
 package ooga.view.level.codearea;
 
 import java.util.Map;
+
 /**
  * Contains all of the information for the command of this block.
  *
@@ -9,8 +10,8 @@ import java.util.Map;
 public class CommandBlock {
 
   private int index;
-  private String type;
-  private Map<String, String> parameters;
+  private final String type;
+  private final Map<String, String> parameters;
 
   public CommandBlock(int index, String type, Map<String, String> parameters) {
     this.index = index;
@@ -40,11 +41,11 @@ public class CommandBlock {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof CommandBlock commandBlock)  {
+    if (obj instanceof CommandBlock commandBlock) {
       if (parameters == null) {
         return (this.index == commandBlock.index &&
             this.type.equals(commandBlock.type) &&
-            (null == (commandBlock.parameters))|| commandBlock.parameters.size() == 0);
+            (null == (commandBlock.parameters)) || commandBlock.parameters.size() == 0);
       }
       return (this.index == commandBlock.index &&
           this.type.equals(commandBlock.type) &&

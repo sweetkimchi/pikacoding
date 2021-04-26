@@ -2,7 +2,6 @@ package ooga.view.level.codearea;
 
 import java.util.List;
 import java.util.Map;
-import javafx.application.Platform;
 
 public class NestedBeginBlockHolder extends CommandBlockHolder {
 

@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
  */
 public class CommandBank extends VBox {
 
-  private Consumer<String> clickOptionAction;
+  private final Consumer<String> clickOptionAction;
 
   public CommandBank(Consumer<String> clickOptionAction) {
     this.setId("CommandBank");
@@ -24,7 +24,8 @@ public class CommandBank extends VBox {
     commands.forEach(command -> {
       CommandBlockOption option = new CommandBlockOption(command,
           e -> {
-        clickOptionAction.accept(command);});
+            clickOptionAction.accept(command);
+          });
       this.getChildren().add(option);
     });
   }
@@ -32,7 +33,8 @@ public class CommandBank extends VBox {
   public void addCommandsOtherPlayer(Set<String> commands) {
     commands.forEach(command -> {
       CommandBlockOption option = new CommandBlockOption(command,
-          e -> {});
+          e -> {
+          });
       option.getStyleClass().add("command-block-option-disabled");
       this.getChildren().add(option);
     });
