@@ -51,7 +51,6 @@ public class ModelController implements BackEndExternalAPI {
 
   /**
    * initializes the level
-   *
    * @param level integer indicating the level
    * @return BoardState object with level information
    */
@@ -203,9 +202,10 @@ public class ModelController implements BackEndExternalAPI {
     }
     else  {
       this.firebaseService = new FirebaseService();
+      PlayerInitialization playerInitialization = new PlayerInitialization(this.matchID, this.teamID);
+      this.playerID = playerInitialization.getPlayerID();
       concreteDatabaseListener = new ConcreteDatabaseListener(this, matchID, this.teamID);
       concreteDatabaseListener.checkLevelStarted();
-      this.concreteDatabaseListener = concreteDatabaseListener;
     }
   }
 

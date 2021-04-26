@@ -15,6 +15,7 @@ import java.util.concurrent.CountDownLatch;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.ModelController;
 import ooga.model.database.DatabaseListener;
+import ooga.model.exceptions.ExceptionHandler;
 import ooga.view.level.codearea.CommandBlock;
 
 public class ConcreteDatabaseListener implements DatabaseListener {
@@ -62,7 +63,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       });
     }
     catch (Exception e) {
-
+      throw new ExceptionHandler("error receiving code area changes");
     }
   }
 
@@ -89,7 +90,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       });
     }
     catch (Exception e) {
-
+      throw new ExceptionHandler("error checking if level has ended");
     }
   }
 
@@ -122,7 +123,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       });
     }
     catch (Exception e) {
-
+      throw new ExceptionHandler("error checking if level has ended");
     }
   }
 
@@ -158,7 +159,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
               teamAllHere();
             }
           } catch (IOException e) {
-            e.printStackTrace();
+            throw new ExceptionHandler("error checking if all people present");
           }
         }
         @Override
@@ -168,6 +169,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       });
     }
     catch (Exception e) {
+      throw new ExceptionHandler("error checking if all people present");
     }
   }
 
@@ -188,12 +190,11 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           try {
             List playerIDs =
                 new ObjectMapper().readValue(json[0], List.class);
-            //System.out.println(playerIDs);
             if (playerIDs.size() == 2)  {
               otherTeamAllHere();
             }
           } catch (IOException e) {
-            e.printStackTrace();
+            throw new ExceptionHandler("error checking if all people present");
           }
         }
         @Override
@@ -203,6 +204,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       });
     }
     catch (Exception e) {
+      throw new ExceptionHandler("error checking if all people present");
     }
   }
 
@@ -273,7 +275,6 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       return ret;
     }
     catch (Exception e) {
-      e.printStackTrace();
       return null;
     }
 

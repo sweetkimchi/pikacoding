@@ -9,6 +9,7 @@ import java.util.Map;
 import ooga.controller.ModelController;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.database.FirebaseService;
+import ooga.model.exceptions.ExceptionHandler;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.BlockData;
@@ -29,7 +30,6 @@ public class InitialConfigurationParser {
   private AvailableCommands availableCommands;
   private AvailableCommands availableCommandsOtherPlayer;
   private ElementInformationBundle elementInformationBundle;
-  private boolean errorOccurred = false;
   private String errorMessage = "";
   private GameGridData gameGridData;
   private FirebaseService firebaseService;
@@ -63,7 +63,7 @@ public class InitialConfigurationParser {
           blocksForOtherPlayer(levelInfo));
     }
     catch (Exception e) {
-      //handle later
+      throw new ExceptionHandler("error occured while parsing single player data files");
     }
   }
 
@@ -90,8 +90,7 @@ public class InitialConfigurationParser {
           blocksForOtherPlayer(levelInfo));
     }
     catch (Exception e) {
-      this.errorMessage = "Error parsing level file";
-      this.errorOccurred = true;
+      throw new ExceptionHandler("error occurred while parsing files from DB");
     }
   }
 
@@ -129,9 +128,7 @@ public class InitialConfigurationParser {
           (int) initial.get("level"),
           Integer.parseInt((String) initial.get("timeLimit")), playerID);
     } catch (Exception e) {
-      e.printStackTrace();
-      this.errorMessage = "Error parsing start state";
-      this.errorOccurred = true;
+      throw new ExceptionHandler("error parsing start state");
     }
 
   }
@@ -144,9 +141,7 @@ public class InitialConfigurationParser {
           (int) endState.get("idealLines"));
     }
     catch (Exception e) {
-      e.printStackTrace();
-      this.errorMessage = "Error parsing end state";
-      this.errorOccurred = true;
+      throw new ExceptionHandler("error parsing end state");
     }
 
   }
@@ -186,19 +181,6 @@ public class InitialConfigurationParser {
     return allBlockData;
   }
 
-//  private Map<String, String> parseImageLocations(String imageLocations) {
-//    try {
-//      String filePathToStartState = rootURLPathForLevel + imageLocations;
-//      HashMap result =
-//          new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
-//      return (HashMap<String, String>) result;
-//    }
-//    catch (Exception e) {
-//      this.errorMessage = "Error parsing image locations";
-//      this.errorOccurred = true;
-//      return null;
-//    }
-//  }
 
   private void parseCommands(Map<String, Object> commands, List<String> commandsForCurrentPlayer,
       List<String> comamndsForOtherPlayer)  {
@@ -222,9 +204,7 @@ public class InitialConfigurationParser {
       }
     }
     catch (Exception e) {
-      e.printStackTrace();
-      this.errorMessage = "Error parsing commands";
-      this.errorOccurred = true;
+      throw new ExceptionHandler("Parse Commands failed.");
     }
   }
 
@@ -244,9 +224,7 @@ public class InitialConfigurationParser {
       for (int i = 0; i < height; i++) {
         List<String> currentRow = mapOfGrid.get(i);
         if (currentRow.size() != width) {
-          errorOccurred = true;
-          errorMessage = "Error parsing grid dimensions";
-          return;
+          throw new ExceptionHandler("grid specifications not correct");
         }
         for (int j = 0; j < width; j++) {
           this.elementInformationBundle.setStructure(j, i, Structure.valueOf(currentRow.get(j)));
@@ -254,9 +232,7 @@ public class InitialConfigurationParser {
       }
       this.gameGridData = new GameGridData(this.elementInformationBundle, width, height);
     } catch (Exception e) {
-      e.printStackTrace();
-      this.errorMessage = "Error parsing grid";
-      this.errorOccurred = true;
+      throw new ExceptionHandler("Error parsing grid");
     }
   }
 
@@ -268,11 +244,6 @@ public class InitialConfigurationParser {
     }
     return mapOfGrid;
 
-  }
-
-
-  public boolean getErrorOccurred()  {
-    return this.errorOccurred;
   }
 
   public String getErrorMessage() {
