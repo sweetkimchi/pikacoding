@@ -1,13 +1,11 @@
 package ooga.model.commands;
 
-import java.util.*;
+import java.util.Map;
 import ooga.model.Direction;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
 import ooga.model.player.Block;
-import ooga.model.player.DataCube;
-import ooga.model.player.Element;
 
 /**
  * BasicCommands is a group of commands that perform elementary actions on an Avatar. It contains

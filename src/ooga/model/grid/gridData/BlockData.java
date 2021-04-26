@@ -6,6 +6,7 @@ import java.util.List;
 import ooga.model.player.Block;
 
 public class BlockData {
+
   private final List<Integer> location;
 
   private final int blockNumber;
@@ -14,7 +15,7 @@ public class BlockData {
 
   private int id;
 
-  public BlockData(List<Integer> location, int blockNumber, boolean pickedUp, int id)  {
+  public BlockData(List<Integer> location, int blockNumber, boolean pickedUp, int id) {
     this.location = location;
     this.blockNumber = blockNumber;
     this.pickedUp = pickedUp;
@@ -40,7 +41,9 @@ public class BlockData {
         this.blockNumber == blockData.blockNumber);
   }
 
-  public int getId()  { return this.id; }
+  public int getId() {
+    return this.id;
+  }
 
   public int getBlockNumber() {
     return blockNumber;

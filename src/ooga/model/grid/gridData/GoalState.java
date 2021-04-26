@@ -5,9 +5,11 @@ import java.util.Map;
 import ooga.model.grid.ElementInformationBundle;
 
 public class GoalState extends BoardState {
+
   private final int numOfCommands;
   private final int idealTime;
   private final int idealLines;
+
   public GoalState(
       Map<String, List<Integer>> allAvatarLocations,
       Map<String, BlockData> allBlockData, int numOfCommands,
@@ -20,21 +22,20 @@ public class GoalState extends BoardState {
   }
 
   public boolean checkGameEnded(ElementInformationBundle currentGrid) {
-    for (String id: super.getAllAvatarLocations().keySet()) {
+    for (String id : super.getAllAvatarLocations().keySet()) {
       int x = getAllAvatarLocations().get(id).get(0);
       int y = getAllAvatarLocations().get(id).get(1);
-      if (currentGrid.getTileData(x , y).getAvatarId() != Integer.parseInt(id)) {
+      if (currentGrid.getTileData(x, y).getAvatarId() != Integer.parseInt(id)) {
         return false;
       }
     }
     List<BlockData> currentBlockData = currentGrid.getBlockData();
-    for (BlockData block: currentBlockData) {
+    for (BlockData block : currentBlockData) {
       if (super.getAllBlockData().containsKey("" + block.getId())) {
         if (!super.getAllBlockData().get("" + block.getId()).equals(block)) {
           return false;
         }
-      }
-      else  {
+      } else {
         return false;
       }
     }
@@ -49,7 +50,7 @@ public class GoalState extends BoardState {
     return idealLines;
   }
 
-  public int getNumOfCommands(){
+  public int getNumOfCommands() {
     return this.numOfCommands;
   }
 }

@@ -26,9 +26,11 @@ import ooga.view.level.codearea.CommandBlock;
 public class FirebaseService {
 
   private final FirebaseDatabase db;
-  private static final String ROOT_URL_FOR_CONFIG_FILES = System.getProperty("user.dir") + "/data/gameProperties/";
+  private static final String ROOT_URL_FOR_CONFIG_FILES =
+      System.getProperty("user.dir") + "/data/gameProperties/";
+
   public FirebaseService() {
-    try{
+    try {
       FileInputStream serviceAccount =
           new FileInputStream("data/firebaseKey/key.json");
 
@@ -41,8 +43,7 @@ public class FirebaseService {
       }
 
       db = FirebaseDatabase.getInstance();
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       throw new ExceptionHandler("error connecting to firebase");
     }
 
@@ -52,33 +53,32 @@ public class FirebaseService {
   protected void setDatabaseContentsFromFile(String pathInDB, String pathToFile)  {
     Map<String, Object> jsonMap;
     try {
-       jsonMap = new Gson().fromJson(new FileReader(pathToFile)
-          , new TypeToken<HashMap<String, Object>>() {}.getType());
-    }
-    catch (Exception e) {
+      jsonMap = new Gson().fromJson(new FileReader(pathToFile)
+          , new TypeToken<HashMap<String, Object>>() {
+          }.getType());
+    } catch (Exception e) {
       throw new ExceptionHandler("error setting database contents");
     }
     setDatabaseContentsWithMap(jsonMap, pathInDB);
   }
 
-  private void setDatabaseContentsWithMap(Map<String, Object> jsonMap, String pathInDB)  {
+  private void setDatabaseContentsWithMap(Map<String, Object> jsonMap, String pathInDB) {
 
-    try{
+    try {
       CountDownLatch done = new CountDownLatch(1);
       //Database Error is de, database reference is dr
       //https://stackoverflow.com/questions/49723347/how-to-save-data-to-firebase-using-java-desktop
       FirebaseDatabase.getInstance().getReference(pathInDB).setValue(jsonMap,
           (de, dr) -> done.countDown());
       done.await();
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       throw new ExceptionHandler("error setting database contents");
     }
   }
 
   public String readDBContentsForLevelInit(int level) {
     DatabaseReference ref = FirebaseDatabase.getInstance()
-        .getReference("level_info/level"+level+"/");
+        .getReference("level_info/level" + level + "/");
     CountDownLatch done = new CountDownLatch(1);
     try {
       final String[] json = {""};
@@ -89,6 +89,7 @@ public class FirebaseService {
           json[0] = new Gson().toJson(object);
           done.countDown();
         }
+
         @Override
         public void onCancelled(DatabaseError databaseError) {
           // Code
@@ -96,8 +97,7 @@ public class FirebaseService {
       });
       done.await();
       return json[0];
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       throw new ExceptionHandler("error reading levels from database");
     }
 
@@ -116,17 +116,18 @@ public class FirebaseService {
    * updates the commandBlock across all
    */
   public void saveMatchInformation(int matchID, int teamID, List<CommandBlock> commandBlocks) {
-    String rootDBPath = "match_info/match"+matchID+"/team" + teamID  + "/codingArea/";
+    String rootDBPath = "match_info/match" + matchID + "/team" + teamID + "/codingArea/";
     Map<String, Object> jsonMapOfCodingArea = new HashMap<>();
-    for(CommandBlock commandBlock : commandBlocks){
-      jsonMapOfCodingArea.put(String.valueOf(commandBlock.getIndex()), createJSONForCommandBlock(commandBlock));
+    for (CommandBlock commandBlock : commandBlocks) {
+      jsonMapOfCodingArea
+          .put(String.valueOf(commandBlock.getIndex()), createJSONForCommandBlock(commandBlock));
     }
     setDatabaseContentsWithMap(jsonMapOfCodingArea, rootDBPath);
   }
 
-  public void declareEndOfGame(int matchID, int teamID, int score)  {
-    try{
-      String rootDBPath = "match_info/match"+matchID+"/team"+teamID+"/gameEnded/";
+  public void declareEndOfGame(int matchID, int teamID, int score) {
+    try {
+      String rootDBPath = "match_info/match" + matchID + "/team" + teamID + "/gameEnded/";
       CountDownLatch done = new CountDownLatch(1);
       Map<String, Object> gameEnded = new HashMap<>();
       gameEnded.put("gameEnded", true);
@@ -134,8 +135,7 @@ public class FirebaseService {
       DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference(rootDBPath);
       dataRef.setValue(gameEnded, (databaseError, databaseReference) -> done.countDown());
       done.await();
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       throw new ExceptionHandler("error declaring end of game");
     }
   }

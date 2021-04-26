@@ -22,7 +22,7 @@ public final class AvailableCommands {
 
   private void cleanCommandsMap(Map<String, List<Map<String, List<String>>>> prevMap,
       List<String> commandsAvailable) {
-    for (String command: prevMap.keySet())  {
+    for (String command : prevMap.keySet()) {
       if (commandsAvailable.contains(command)) {
         this.commandsMap.put(command, prevMap.get(command));
       }
@@ -40,7 +40,8 @@ public final class AvailableCommands {
   }
 
   public List<String> getParameterOptions(String command, String parameter) {
-    return Collections.unmodifiableList(commandsMap.get(command).get(parametersIndex.get(command).get(parameter)).get(parameter));
+    return Collections.unmodifiableList(
+        commandsMap.get(command).get(parametersIndex.get(command).get(parameter)).get(parameter));
   }
 
   private void initializeParametersIndex() {

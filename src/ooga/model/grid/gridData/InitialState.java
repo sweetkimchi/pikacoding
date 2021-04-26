@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public  class InitialState extends BoardState {
+public class InitialState extends BoardState {
 
 
   private final List<String> commandsAvailable;
@@ -26,7 +26,7 @@ public  class InitialState extends BoardState {
     this.numPeople = numPeople;
     this.level = level;
     this.timeLimit = timeLimit;
-    if (playerID == 0)  {
+    if (playerID == 0) {
       this.timeLimit = Integer.MAX_VALUE;
     }
 
