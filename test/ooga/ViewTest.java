@@ -7,12 +7,14 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.lang.reflect.Field;
 
 import javafx.application.Platform;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.view.GameTypeSelector;
 import ooga.view.LevelSelector;
+import ooga.view.MatchIdSelector;
 import ooga.view.ScreenCreator;
 import ooga.view.TeamSelector;
 import ooga.view.level.LevelView;
@@ -38,39 +40,43 @@ class ViewTest extends ApplicationTest {
   void testStartGame() {
     clickButton("start-button");
     Stage stage = (Stage) getPrivateField(screenCreator, "stage");
-    assertTrue(stage.getScene().getRoot() instanceof GameTypeSelector);
+    assertTrue(stage.getScene().getRoot() instanceof MatchIdSelector);
   }
 
   @Test
   void testLoadLevel() {
     clickButton("start-button");
+    enterMatchId();
     clickButton("single-player-button");
     clickButton("load-level-1");
     LevelView levelView = screenCreator.getLevelView();
     assertEquals(1, (int) getPrivateField(levelView, "level"));
   }
 
-//  @Test
-//  void testLoadMulti() {
-//    clickButton("start-button");
-//    clickButton("multiplayer-button");
-//    Stage stage = (Stage) getPrivateField(screenCreator, "stage");
-//    assertTrue(stage.getScene().getRoot() instanceof TeamSelector);
-//  }
+  @Test
+  void testLoadMulti() {
+    clickButton("start-button");
+    enterMatchId();
+    clickButton("multiplayer-button");
+    Stage stage = (Stage) getPrivateField(screenCreator, "stage");
+    assertTrue(stage.getScene().getRoot() instanceof TeamSelector);
+  }
 
   @Test
   void successfulSinglePlayerButtonCreation() {
     clickButton("start-button");
+    enterMatchId();
     assertTrue(lookup("#single-player-button").query() != null);
   }
 
-//  @Test
-//  void determineCorrectTeam() {
-//    clickButton("start-button");
-//    clickButton("multiplayer-button");
-//    clickButton("team1-button");
-//    assertTrue(screenCreator.getTeam() == 1);
-//  }
+  @Test
+  void determineCorrectTeam() {
+    clickButton("start-button");
+    enterMatchId();
+    clickButton("multiplayer-button");
+    clickButton("team1-button");
+    assertTrue(((int) getPrivateField(modelController, "teamID")) == 1);
+  }
 
   @Test
   void changeStyleSheet() {
@@ -93,6 +99,14 @@ class ViewTest extends ApplicationTest {
     clickOn(lookup("#" + button).queryButton());
     Platform.runLater(() -> lookup("#" + button).queryButton().fire());
     sleep(100);
+  }
+
+  private void enterMatchId() {
+    Stage stage = (Stage) getPrivateField(screenCreator, "stage");
+    MatchIdSelector matchIdSelector = (MatchIdSelector) stage.getScene().getRoot();
+    TextField textField = (TextField) getPrivateField(matchIdSelector, "matchInput");
+    textField.setText("9876");
+    clickButton("enter-button");
   }
 
 }
