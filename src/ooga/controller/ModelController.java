@@ -116,7 +116,6 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void updateBlock(int id, boolean b) {
     viewController.updateBlock(id, b);
-    System.out.println("Updating block " + id + " because now the blockheld is " + b);
   }
 
   @Override
@@ -167,7 +166,6 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void updateProgram(List<CommandBlock> program) {
     // TODO: notify database of program update
-    System.out.println(program);
     if (this.teamID != SINGLE_PLAYER) {
       this.concreteDatabaseListener.setLastCommandBlockForCurrentComputer(program);
       firebaseService.saveMatchInformation(matchID, teamID, program);
@@ -192,7 +190,6 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void receivedProgramUpdate(List<CommandBlock> program) {
-    System.out.println("recieved update" + program);
     if (program != null)  {
       viewController.receiveProgramUpdates(program);
     }
@@ -200,7 +197,6 @@ public class ModelController implements BackEndExternalAPI {
 
   @Override
   public void setTeamNumber(int teamNum) {
-    System.out.println("here" + teamNum);
     this.teamID = teamNum;
     if (teamNum == SINGLE_PLAYER) {
       PlayerInitialization playerInitialization = new PlayerInitialization(this.matchID, this.teamID);
@@ -226,13 +222,11 @@ public class ModelController implements BackEndExternalAPI {
   @Override
   public void setMatchId(int id) {
     this.matchID = id;
-    System.out.println("set match id");
   }
 
   @Override
   public void notifyCurrentTeamEnded(int score) {
     viewController.notifyCurrentTeamFinished(score);
-    System.out.println("level ended for current team");
   }
 
   @Override
