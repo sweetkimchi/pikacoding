@@ -117,7 +117,6 @@ public class SpriteLayer extends Pane {
     initialBlockData.forEach((id, blockData) -> blocks.get(Integer.parseInt(id)).reset());
   }
 
-  //TODO: refactor with css
   public void resetAvatarImages() {
     if(allElementInformation != null){
       for(Map.Entry<Integer, ViewAvatar> entry : avatars.entrySet()){
