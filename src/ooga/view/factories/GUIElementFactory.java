@@ -22,7 +22,7 @@ public class GUIElementFactory implements GUIElementInterface {
     Button button = new Button(readPropertiesFile(num, resourceBundle.getString(key)));
     button.getStyleClass().add(styleKey);
     button.setOnAction(buttonAction);
-    button.setId(IDS_RESOURCE.getString(idKey));
+    button.setId(readPropertiesFile(num, IDS_RESOURCE.getString(idKey)));
     return button;
   }
 

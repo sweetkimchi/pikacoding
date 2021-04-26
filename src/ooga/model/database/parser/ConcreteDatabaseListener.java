@@ -244,6 +244,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   private void checkBothTeamsHere() {
     if (this.otherTeamStarted && this.currentTeamStarted) {
       System.out.println("both teams are here lol");
+      modelController.startGameAfterBothTeamsPresent();
     }
   }
 
