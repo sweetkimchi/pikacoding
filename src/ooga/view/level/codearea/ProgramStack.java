@@ -118,29 +118,10 @@ public class ProgramStack extends VBox {
   }
 
   public void notifyProgramListeners() {
-    System.out.println("program update");
     programListeners.forEach(ProgramListener::onProgramUpdate);
   }
 
   public void receiveProgramUpdates(List<CommandBlock> program) {
-//    boolean noChange = true;
-//    for (int i = 0; i < program.size(); i++) {
-//      if (program.get(i) != getProgram().get(i)) {
-//        System.out.println(program.get(i).getType() + program.get(i).getParameters() + " " + getProgram().get(i).getParameters());
-//        noChange = false;
-//        break;
-//      }
-//    }
-//    if (noChange) {
-//      return;
-//    }
-    System.out.println(program.size() + " PROGOARM STIZE");
-//    List<CommandBlock> programCopy = new ArrayList<>();
-//    for (CommandBlock commandBlock : program) {
-//      programCopy.add(new CommandBlock(commandBlock.getIndex(), commandBlock.getType(),
-//          commandBlock.getParameters()));
-//    }
-
 //    System.out.println("program recieved " + program.size());
     Platform.runLater(() -> {
       programBlocks.clear();

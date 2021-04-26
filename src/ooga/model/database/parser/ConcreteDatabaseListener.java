@@ -120,9 +120,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   }
 
   private void levelEndedForBothTeams() {
-    System.out.println("level ended for both teams!!!!!!!");
     for (DatabaseReference ref: this.valueEventListeners.keySet())  {
-      System.out.println("removing listener");
       ref.removeEventListener(this.valueEventListeners.get(ref));
     }
     modelController.notifyBothTeamsEnded(this.scoreForCurrentTeam, this.scoreForOtherTeam);
@@ -185,7 +183,6 @@ public class ConcreteDatabaseListener implements DatabaseListener {
           try {
             List playerIDs =
                 new ObjectMapper().readValue(json[0], List.class);
-            System.out.println("player IDs" + playerIDs);
             if (playerIDs.size() == 2)  {
               teamAllHere();
             }
@@ -261,7 +258,6 @@ public class ConcreteDatabaseListener implements DatabaseListener {
 
   private void checkBothTeamsHere() {
     if (this.otherTeamStarted && this.currentTeamStarted) {
-      System.out.println("both teams are here lol");
       modelController.startGameAfterBothTeamsPresent();
     }
   }
@@ -272,7 +268,6 @@ public class ConcreteDatabaseListener implements DatabaseListener {
       List commands =
             new ObjectMapper().readValue(json, List.class);
 
-      //System.out.println("new PARSED COMMANDS" + commands);
       if (commands == null) {
         return new ArrayList<>();
       }
