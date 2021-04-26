@@ -33,7 +33,8 @@ class ViewTest extends ApplicationTest {
     viewController = (FrontEndExternalAPI)  getPrivateField(controller, "viewController");
     modelController = (BackEndExternalAPI)  getPrivateField(controller, "modelController");
     screenCreator = (ScreenCreator)  getPrivateField(viewController, "screenCreator");
-
+    screenCreator.setTeamNum(10);
+    screenCreator.setMatchId(12);
   }
 
   @Test

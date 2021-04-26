@@ -12,6 +12,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import ooga.view.factories.GUIElementFactory;
+import ooga.view.factories.GUIElementInterface;
 
 public class StartMenu extends BorderPane {
   private static final String CSS = (ScreenCreator.class.getPackageName() + ".resources.").replace(".", "/") + "css/";
@@ -19,21 +21,20 @@ public class StartMenu extends BorderPane {
   private static final String CSS_POSSIBILITIES = ScreenCreator.RESOURCES + "CSSPossibilities";
   private static final String LANGUAGE_POSSIBILITIES = ScreenCreator.RESOURCES + "LanguagePossibilities";
   private static final String START_MENU_STRINGS = ScreenCreator.RESOURCES + "StartMenu";
+  private static final int NO_NUM = 0;
   private ResourceBundle startMenuResources;
   private String language = "English";
+  private GUIElementInterface GUIFactory;
 
   public StartMenu(EventHandler<ActionEvent> startAction) {
     this.getStylesheets().add(CSS + styleSheet);
+    GUIFactory = new GUIElementFactory();
     startMenuResources = ResourceBundle.getBundle(START_MENU_STRINGS);
     VBox center = new VBox();
     center.getStyleClass().add("start-screen");
-    Label title = new Label(startMenuResources.getString("title"));
-    title.getStyleClass().add("title");
 
-    Button startButton = new Button(startMenuResources.getString("startButton"));
-    startButton.setOnAction(startAction);
-    startButton.setId(ScreenCreator.idsForTests.getString("startButton"));
-    startButton.getStyleClass().add("default-button");
+    Label title = GUIFactory.makeLabel(startMenuResources, "title", "title", NO_NUM);
+    Button startButton = GUIFactory.makeButton(startMenuResources, startAction, "startButton", "default-button", "startButton", NO_NUM);
     center.getChildren().addAll(title, startButton);
 
     ComboBox<String> chooseStyleSheet = makeComboBox(CSS_POSSIBILITIES, "css");
@@ -66,7 +67,6 @@ public class StartMenu extends BorderPane {
     catch (Exception e) {
       new Alert(Alert.AlertType.ERROR);
     }
-
   }
 
   // TODO: write code to support changing languages
@@ -85,5 +85,4 @@ public class StartMenu extends BorderPane {
   }
 
   public String getLanguage() { return language; }
-
 }

@@ -139,4 +139,10 @@ public interface FrontEndExternalAPI {
   void setTeamNum(int teamNum);
 
   void setMatchId(int id);
+
+  void notifyBothTeamsPresent();
+
+  void notifyCurrentTeamFinished();
+
+  void notifyBothTeamsFinished();
 }
