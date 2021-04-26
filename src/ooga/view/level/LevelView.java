@@ -3,6 +3,7 @@ package ooga.view.level;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -256,14 +257,20 @@ public class LevelView extends BorderPane implements ProgramListener {
   }
 
   public void notifyCurrentTeamFinished(int score) {
-    clearScreen();
-    this.setCenter(new TeamFinishedScreen(score));
+    Platform.runLater(() -> {
+      clearScreen();
+      this.setCenter(new TeamFinishedScreen(score));
+    });
+
   }
 
   public void notifyBothTeamsFinished(int currentScore, int otherScore) {
-    clearScreen();
-    this.setCenter(
-        new BothTeamsFinishedScreen(currentScore, otherScore, e -> screenCreator.loadStartMenu(),
-            e -> screenCreator.loadMultiLevelSelector()));
+    Platform.runLater(() -> {
+      clearScreen();
+      this.setCenter(
+          new BothTeamsFinishedScreen(currentScore, otherScore, e -> screenCreator.loadStartMenu(),
+              e -> screenCreator.loadMultiLevelSelector()));
+    });
+
   }
 }
