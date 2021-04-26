@@ -134,7 +134,7 @@ public class ProgramStack extends VBox {
 //    if (noChange) {
 //      return;
 //    }
-    System.out.println(program.size() + " " + getProgram().size());
+    System.out.println(program.get(0).getParameters() + " " + getProgram().get(0).getParameters());
 //    List<CommandBlock> programCopy = new ArrayList<>();
 //    for (CommandBlock commandBlock : program) {
 //      programCopy.add(new CommandBlock(commandBlock.getIndex(), commandBlock.getType(),
