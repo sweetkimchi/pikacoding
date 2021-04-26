@@ -3,6 +3,13 @@ package ooga.model.commands;
 import java.util.Map;
 import ooga.model.grid.ElementInformationBundle;
 
+/**
+ * Add is a type of Mathematical Command that takes the sum of the display number of two datacubes,
+ * one held by the Avatar and the other on the tile that the Avatar is standing on, and sets this
+ * value to the datacube held by the Avatar.
+ *
+ * @author Harrison Huang
+ */
 public class Add extends MathematicalCommands {
 
   /**
