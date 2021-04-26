@@ -1,8 +1,6 @@
 package ooga.view.level.codearea;
 
 import java.util.Map;
-import javafx.scene.web.HTMLEditorSkin.Command;
-
 /**
  * Contains all of the information for the command of this block.
  *

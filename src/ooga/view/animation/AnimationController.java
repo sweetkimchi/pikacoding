@@ -14,7 +14,7 @@ import ooga.view.level.codearea.CodeArea;
 /**
  * @author Ji Yun Hyo
  */
-public class AnimationController {
+public class AnimationController implements AnimationAPI{
 
   private Timeline timeline;
   private boolean codeIsRunning;
@@ -65,10 +65,16 @@ public class AnimationController {
     }));
   }
 
+  /**
+   * Pauses the animation
+   */
   public void pause() {
     isPaused = true;
   }
 
+  /**
+   * plays or resumes the animation
+   */
   public void play() {
 //    timeline.play();
     isPaused = false;
@@ -81,6 +87,9 @@ public class AnimationController {
     }
   }
 
+  /**
+   * resets the animation
+   */
   public void reset() {
     codeIsRunning = false;
     board.reset();
@@ -90,6 +99,9 @@ public class AnimationController {
     levelView.resetScore();
   }
 
+  /**
+   * animates one iteration of a round
+   */
   public void step() {
     isPaused = false;
     if (!codeIsRunning) {
@@ -108,6 +120,9 @@ public class AnimationController {
     }
   }
 
+  /**
+   * declares end of animation for the coding block
+   */
   public void declareEndOfRun() {
     codeIsRunning = false;
     isPaused = true;
@@ -128,6 +143,9 @@ public class AnimationController {
     queueFinished = board.updateAnimationForFrontEnd();
   }
 
+  /**
+   * stops animation
+   */
   public void stopAnimation() {
     isPaused = true;
     timeline.stop();

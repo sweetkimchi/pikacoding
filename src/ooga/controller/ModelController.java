@@ -13,7 +13,7 @@ import ooga.view.level.codearea.CommandBlock;
 import com.google.common.base.Stopwatch;
 
 /**
- *
+ * @author Ji Yun Hyo
  */
 public class ModelController implements BackEndExternalAPI {
 
@@ -33,8 +33,6 @@ public class ModelController implements BackEndExternalAPI {
    * Default constructor
    */
   public ModelController() {
-    //TODO: Change teamID and playerID to things front end creates
-    matchID = 420;
     //firebaseService = new FirebaseService();
 
   }
@@ -52,7 +50,6 @@ public class ModelController implements BackEndExternalAPI {
   /**
    * initializes the level
    * @param level integer indicating the level
-   * @return BoardState object with level information
    */
   @Override
   public void initializeLevel(int level) {
@@ -134,7 +131,7 @@ public class ModelController implements BackEndExternalAPI {
   /**
    * updates the score and sends it to the frontend
    *
-   * @param score
+   * @param score score of the player
    */
   @Override
   public void setScore(int score) {
@@ -144,7 +141,7 @@ public class ModelController implements BackEndExternalAPI {
   /**
    * updates the line numbers for the avatars
    *
-   * @param lineUpdates
+   * @param lineUpdates line updates
    */
   @Override
   public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
@@ -217,4 +214,6 @@ public class ModelController implements BackEndExternalAPI {
     //viewController.loadMultiLevel();
   }
 
+  @Override
+  public void setMatchId(int id) { this.matchID = id; }
 }

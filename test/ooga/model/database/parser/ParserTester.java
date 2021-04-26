@@ -26,7 +26,6 @@ public class ParserTester {
     InitialConfigurationParser tester = new InitialConfigurationParser(1, null, 0);
     GoalState goalState = tester.getGoalState();
     InitialState initialState = tester.getInitialState();
-    System.out.println(tester.getErrorMessage());
     assertEquals(1, initialState.getLevel());
     assertEquals(3, initialState.getNumPeople());
     assertEquals(Arrays.asList("step", "pickUp", "drop"), initialState.getCommandsAvailable());
@@ -85,9 +84,9 @@ public class ParserTester {
     DataCube four = new DataCube(4, 1, 4, 4);
     DataCube five = new DataCube(5, 4, 4, 7);
     DataCube six = new DataCube(6, 6, 4, 7);
-    four.pickUp(7);
-    five.pickUp(8);
-    six.pickUp(9);
+    four.pickUp();
+    five.pickUp();
+    six.pickUp();
 
     grid.addBlock(four);
     grid.addBlock(five);

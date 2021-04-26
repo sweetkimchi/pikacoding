@@ -18,6 +18,7 @@ import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.GameGridData;
 import ooga.model.grid.gridData.InitialState;
 import ooga.view.ScreenCreator;
+import ooga.view.animation.AnimationAPI;
 import ooga.view.animation.AnimationController;
 import ooga.view.level.board.Board;
 import ooga.view.level.codearea.CodeArea;
@@ -40,11 +41,12 @@ public class LevelView extends BorderPane implements ProgramListener {
   private final MenuBar menuBar;
   private Label scoreDisplay;
   private final Board board;
-  private final AnimationController animationController;
+  private final AnimationAPI animationController;
   private GridPane rightPane;
   private final CodeArea codeArea;
   private final ControlPanel controlPanel;
   private Label description;
+  private ResourceBundle levelResources;
 
   private int startingApples;
   private int score;
@@ -94,7 +96,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     pauseMenu.getChildren().add(startMenuButton);
 
     Button levelSelectorButton = new Button("Level Selector");
-    levelSelectorButton.setOnAction(e -> screenCreator.loadLevelSelector());
+    levelSelectorButton.setOnAction(e -> screenCreator.loadSingleLevelSelector());
     pauseMenu.getChildren().add(levelSelectorButton);
     animationController.pause();
 
@@ -110,7 +112,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     return screenCreator;
   }
 
-  protected AnimationController getAnimationController() {
+  protected AnimationAPI getAnimationController() {
     return animationController;
   }
 
@@ -119,7 +121,7 @@ public class LevelView extends BorderPane implements ProgramListener {
   }
 
   protected void initializeViewElements() {
-    ResourceBundle levelResources = ResourceBundle
+    levelResources = ResourceBundle
         .getBundle(ScreenCreator.RESOURCES + LEVEL_PROPERTIES);
     menuBar.setMinHeight(Double.parseDouble(levelResources.getString("MenuBarHeight")));
     createRight(levelResources);
@@ -188,7 +190,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     }
     clearScreen();
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
-        e -> viewController.initializeSingleLevel(level + 1), level == Controller.NUM_LEVELS));
+        e -> viewController.initializeSingleLevel(level + 1), level == Integer.parseInt(levelResources.getString("maxLevel"))));
   }
 
   public void setScore(int score) {

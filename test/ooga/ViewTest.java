@@ -50,13 +50,13 @@ class ViewTest extends ApplicationTest {
     assertEquals(1, (int) getPrivateField(levelView, "level"));
   }
 
-  @Test
-  void testLoadMulti() {
-    clickButton("start-button");
-    clickButton("multiplayer-button");
-    Stage stage = (Stage) getPrivateField(screenCreator, "stage");
-    assertTrue(stage.getScene().getRoot() instanceof TeamSelector);
-  }
+//  @Test
+//  void testLoadMulti() {
+//    clickButton("start-button");
+//    clickButton("multiplayer-button");
+//    Stage stage = (Stage) getPrivateField(screenCreator, "stage");
+//    assertTrue(stage.getScene().getRoot() instanceof TeamSelector);
+//  }
 
   @Test
   void successfulSinglePlayerButtonCreation() {
@@ -91,8 +91,8 @@ class ViewTest extends ApplicationTest {
 
   private void clickButton(String button) {
     clickOn(lookup("#" + button).queryButton());
-//    Platform.runLater(() -> lookup("#" + button).queryButton().fire());
-//    sleep(100);
+    Platform.runLater(() -> lookup("#" + button).queryButton().fire());
+    sleep(100);
   }
 
 }

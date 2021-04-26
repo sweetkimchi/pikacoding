@@ -148,6 +148,11 @@ public class GridTest {
       public void startGameAfterBothTeamsPresent() {
 
       }
+
+      @Override
+      public void setMatchId(int id) {
+
+      }
     };
     elementInformationBundle.setModelController(modelController);
     avatar = new Avatar(10, 5, 5);
@@ -225,7 +230,7 @@ public class GridTest {
 
   @Test
   public void avatarCantPickUp() {
-    avatar.setXCoord(avatar.getXCoord() + 1);
+    avatar.setXY(avatar.getXCoord() + 1, avatar.getYCoord());
     Map<String, String> parameters = new HashMap<>();
     parameters.put("direction", "self");
     PickUp pickUp = new PickUp(elementInformationBundle, parameters);
