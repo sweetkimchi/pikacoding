@@ -49,27 +49,7 @@ public class FirebaseService {
   }
 
 
-  //TODO: Remap with property files instead of hard coded values
-
-  public void saveGameLevel(int level) {
-    DatabaseReference ref = db.getReference("data");
-    DatabaseReference levelsRef = ref.child("startState/level"+level);
-    String rootURLPathForLevel = ROOT_URL_FOR_CONFIG_FILES + "level" + level + "/";
-    String filePathToLevelInfoFile = rootURLPathForLevel + "level" + level + ".json";
-    String filePathToStartState = rootURLPathForLevel + "startState.json";
-    String filePathToEndState = rootURLPathForLevel + "endState.json";
-    String filePathToCommands = rootURLPathForLevel + "commands.json";
-    String filePathToGridState = rootURLPathForLevel + "grid.json";
-    String rootDBPath = "level_info/level"+level+"/";
-    setDatabaseContentsFromFile(rootDBPath+"levelInfo", filePathToLevelInfoFile);
-    setDatabaseContentsFromFile(rootDBPath+"startState", filePathToStartState);
-    setDatabaseContentsFromFile(rootDBPath+"endState", filePathToEndState);
-    setDatabaseContentsFromFile(rootDBPath+"commands", filePathToCommands);
-    setDatabaseContentsFromFile(rootDBPath+"grid", filePathToGridState);
-  }
-
-
-  private void setDatabaseContentsFromFile(String pathInDB, String pathToFile)  {
+  protected void setDatabaseContentsFromFile(String pathInDB, String pathToFile)  {
     Map<String, Object> jsonMap;
     try {
        jsonMap = new Gson().fromJson(new FileReader(pathToFile)
