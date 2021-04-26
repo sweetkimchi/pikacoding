@@ -15,11 +15,25 @@ public class Nearest extends AICommands{
 
   private int X = 0;
   private int Y = 1;
+
+  /**
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
+   *
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
+   */
   public Nearest(ElementInformationBundle elementInformationBundle,
       Map<String, String> parameters) {
     super(elementInformationBundle, parameters);
   }
 
+  /**
+   * The execution behavior of the command on an Avatar given by an ID. The specific implementation
+   * is to be overridden by the subclasses.
+   *
+   * @param ID The ID of the avatar to be commanded
+   */
   @Override
   public void execute(int ID) {
     Avatar avatar = (Avatar) getElementInformationBundle().getAvatarById(ID);
@@ -68,11 +82,9 @@ public class Nearest extends AICommands{
   private void moveAvatar(Avatar avatar, Tile prevTile, Tile nextTile, int newX, int newY) {
     nextTile.add(avatar);
     prevTile.removeAvatar();
-    avatar.setXCoord(newX);
-    avatar.setYCoord(newY);
+    avatar.setXY(newX, newY);
     if (avatar.hasBlock()) {
-      avatar.getHeldItem().setXCoord(newX);
-      avatar.getHeldItem().setYCoord(newY);
+      avatar.getHeldItem().setXY(newX, newY);
       sendBlockPositionUpdate(avatar.getHeldItem());
     }
   }

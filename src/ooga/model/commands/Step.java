@@ -7,20 +7,30 @@ import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
 
 /**
+ * Step is a type of Basic Command that directs the given avatar to move to the tile by the given
+ * direction, if possible.
+ *
  * @author Ji Yun Hyo
+ * @author Harrison Huang
  */
 public class Step extends BasicCommands {
 
-
   /**
-   * Default constructor
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
+   *
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
    */
   public Step(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
     super(elementInformationBundle, parameters);
   }
 
   /**
-   * Executes the command on an Avatar.
+   * The execution behavior of the command on an Avatar given by an ID. The specific implementation
+   * is to be overridden by the subclasses.
+   *
+   * @param ID The ID of the avatar to be commanded
    */
   @Override
   public void execute(int ID) {
@@ -35,16 +45,14 @@ public class Step extends BasicCommands {
     if (nextTile.canAddAvatar()) {
       nextTile.add(avatar);
       prevTile.removeAvatar();
-      avatar.setXCoord(newX);
-      avatar.setYCoord(newY);
+      avatar.setXY(newX, newY);
       if (avatar.hasBlock()) {
-        avatar.getHeldItem().setXCoord(newX);
-        avatar.getHeldItem().setYCoord(newY);
+        avatar.getHeldItem().setXY(newX, newY);
         sendBlockPositionUpdate(avatar.getHeldItem());
       }
     } else {
-      //TODO: throw error to handler?
-      System.out.println("The avatar cannot step here!");
+      //if desired, handle error for when the avatar tries to step in a disallowed tile
+      //System.out.println("The avatar cannot step here!");
     }
 
     sendAvatarPositionUpdate(avatar);

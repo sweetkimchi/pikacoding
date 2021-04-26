@@ -8,11 +8,16 @@ import ooga.model.grid.ElementInformationBundle;
  */
 public abstract class ControlFlowCommands extends Commands {
 
-    /**
-     * Default constructor
-     */
-    public ControlFlowCommands(ElementInformationBundle elementInformationBundle, Map<String, String> parameters) {
-        super(elementInformationBundle, parameters);
-    }
+  /**
+   * Base constructor of a command. Takes in an ElementInformationBundle and parameters custom to
+   * the type of command.
+   *
+   * @param elementInformationBundle The ElementInformationBundle of the game
+   * @param parameters               A Map of parameters to the command
+   */
+  public ControlFlowCommands(ElementInformationBundle elementInformationBundle,
+      Map<String, String> parameters) {
+    super(elementInformationBundle, parameters);
+  }
 
 }
