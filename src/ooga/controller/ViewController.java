@@ -61,8 +61,21 @@ public class ViewController implements FrontEndExternalAPI {
    * @param level Level number of the initialized level
    */
   @Override
-  public void initializeLevel(int level) {
-    screenCreator.initializeLevelView(level);
+  public void initializeMultiLevel(int level) {
+    screenCreator.initializeMultiLevelView(level);
+    levelView = screenCreator.getLevelView();
+    modelController.initializeLevel(level);
+  }
+
+  /**
+   * Loads the level view in the front-end and calls the model to initialize and pass the level info
+   * to the view.
+   *
+   * @param level Level number of the initialized level
+   */
+  @Override
+  public void initializeSingleLevel(int level) {
+    screenCreator.initilaizeSingleLevelView(level);
     levelView = screenCreator.getLevelView();
     modelController.initializeLevel(level);
   }
