@@ -12,7 +12,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
 import ooga.model.grid.gridData.GameGridData;
@@ -183,14 +182,10 @@ public class LevelView extends BorderPane implements ProgramListener {
   }
 
   public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
-    try {
-      Thread.sleep(2000);
-    } catch (Exception ignored) {
-
-    }
     clearScreen();
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
-        e -> viewController.initializeSingleLevel(level + 1), level == Integer.parseInt(levelResources.getString("maxLevel"))));
+        e -> viewController.initializeSingleLevel(level + 1),
+        level == Integer.parseInt(levelResources.getString("maxLevel"))));
   }
 
   public void setScore(int score) {
@@ -258,5 +253,17 @@ public class LevelView extends BorderPane implements ProgramListener {
   public void resetAnimation() {
     board.resetAnimation();
     animationController.declareEndOfRun();
+  }
+
+  public void notifyCurrentTeamFinished(int score) {
+    clearScreen();
+    this.setCenter(new TeamFinishedScreen(score));
+  }
+
+  public void notifyBothTeamsFinished(int currentScore, int otherScore) {
+    clearScreen();
+    this.setCenter(
+        new BothTeamsFinishedScreen(currentScore, otherScore, e -> screenCreator.loadStartMenu(),
+            e -> screenCreator.loadMultiLevelSelector()));
   }
 }
