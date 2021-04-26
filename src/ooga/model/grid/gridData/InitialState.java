@@ -3,17 +3,16 @@ package ooga.model.grid.gridData;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import ooga.model.commands.Commands;
 
 
 public  class InitialState extends BoardState {
 
 
-  private List<String> commandsAvailable;
-  private Map<String, String> imageLocations;
-  private String description;
-  private int numPeople;
-  private int level;
+  private final List<String> commandsAvailable;
+  private final Map<String, String> imageLocations;
+  private final String description;
+  private final int numPeople;
+  private final int level;
   private int timeLimit;
 
   public InitialState(Map<String, List<Integer>> allAvatarLocations,
