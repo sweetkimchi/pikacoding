@@ -7,7 +7,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
-import com.google.protobuf.Value;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +61,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         }
         @Override
         public void onCancelled(DatabaseError databaseError) {
-          System.out.println("The read failed: " + databaseError.getCode());
+
         }
       });
       this.valueEventListeners.put(ref, listener);
@@ -91,7 +90,7 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         }
         @Override
         public void onCancelled(DatabaseError databaseError) {
-          System.out.println("The read failed: " + databaseError.getCode());
+
         }
       });
       this.valueEventListeners.put(ref, listener);
@@ -122,7 +121,6 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   }
 
   private void levelEndedForBothTeams() {
-
     System.out.println("level ended for both teams!!!!!!!");
     for (DatabaseReference ref: this.valueEventListeners.keySet())  {
       ref.removeEventListener(this.valueEventListeners.get(ref));
@@ -150,7 +148,6 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         }
         @Override
         public void onCancelled(DatabaseError databaseError) {
-          System.out.println("The read failed: " + databaseError.getCode());
         }
       });
       this.valueEventListeners.put(ref, listener);
@@ -198,7 +195,6 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         }
         @Override
         public void onCancelled(DatabaseError databaseError) {
-          System.out.println("The read failed: " + databaseError.getCode());
         }
       });
       this.valueEventListeners.put(ref, listener);
@@ -233,7 +229,6 @@ public class ConcreteDatabaseListener implements DatabaseListener {
         }
         @Override
         public void onCancelled(DatabaseError databaseError) {
-          System.out.println("The read failed: " + databaseError.getCode());
         }
       });
       this.valueEventListeners.put(ref, listener);
