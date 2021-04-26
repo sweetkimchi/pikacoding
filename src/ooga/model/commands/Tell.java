@@ -37,10 +37,10 @@ public class Tell extends ConditionalCommands {
     int idToCheck = Integer.parseInt(getParameters().get("id"));
     if (ID == idToCheck) {
       avatar.setProgramCounter(avatar.getProgramCounter() + 1);
-    }
-    else {
+    } else {
       // TODO: find next line after end tell and set PC to that
-      avatar.setProgramCounter(getElementInformationBundle().getMapOfCommandLines().get(avatar.getProgramCounter()));
+      avatar.setProgramCounter(
+          getElementInformationBundle().getMapOfCommandLines().get(avatar.getProgramCounter()));
     }
   }
 }

@@ -4,7 +4,6 @@ import java.util.Map;
 import ooga.model.Direction;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
-import ooga.model.grid.Tile;
 import ooga.model.grid.gridData.TileData;
 import ooga.model.player.Avatar;
 

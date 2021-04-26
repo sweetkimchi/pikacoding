@@ -1,7 +1,6 @@
 package ooga.model.grid;
 
 import ooga.model.player.Avatar;
-import ooga.model.player.Element;
 import ooga.model.player.Block;
 
 /**
