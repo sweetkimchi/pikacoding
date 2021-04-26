@@ -78,6 +78,7 @@ public class ViewController implements FrontEndExternalAPI {
     screenCreator.initilaizeSingleLevelView(level);
     levelView = screenCreator.getLevelView();
     modelController.initializeLevel(level);
+    levelView.resetAnimation();
   }
 
   /**
