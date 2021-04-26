@@ -30,7 +30,6 @@ public class InitialConfigurationParser {
   private AvailableCommands availableCommands;
   private AvailableCommands availableCommandsOtherPlayer;
   private ElementInformationBundle elementInformationBundle;
-  private boolean errorOccurred = false;
   private String errorMessage = "";
   private GameGridData gameGridData;
   private FirebaseService firebaseService;
@@ -91,7 +90,7 @@ public class InitialConfigurationParser {
           blocksForOtherPlayer(levelInfo));
     }
     catch (Exception e) {
-      throw new ExceptionHandler("error occured while parsing files from DB");
+      throw new ExceptionHandler("error occurred while parsing files from DB");
     }
   }
 
@@ -225,9 +224,7 @@ public class InitialConfigurationParser {
       for (int i = 0; i < height; i++) {
         List<String> currentRow = mapOfGrid.get(i);
         if (currentRow.size() != width) {
-          errorOccurred = true;
-          errorMessage = "Error parsing grid dimensions";
-          return;
+          throw new ExceptionHandler("grid specifications not correct");
         }
         for (int j = 0; j < width; j++) {
           this.elementInformationBundle.setStructure(j, i, Structure.valueOf(currentRow.get(j)));
@@ -247,11 +244,6 @@ public class InitialConfigurationParser {
     }
     return mapOfGrid;
 
-  }
-
-
-  public boolean getErrorOccurred()  {
-    return this.errorOccurred;
   }
 
   public String getErrorMessage() {
