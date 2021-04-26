@@ -1,7 +1,6 @@
 package ooga.view.level.codearea;
 
 import java.util.Map;
-
 /**
  * Contains all of the information for the command of this block.
  *

@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import ooga.model.player.Block;
-import ooga.model.player.DataCube;
 
 public class BlockData {
-  private List<Integer> location;
+  private final List<Integer> location;
 
-  private int blockNumber;
+  private final int blockNumber;
 
-  private boolean pickedUp;
+  private final boolean pickedUp;
 
   private int id;
 
@@ -32,12 +31,9 @@ public class BlockData {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof BlockData)) {
+    if (!(obj instanceof BlockData blockData)) {
       return false;
     }
-    BlockData blockData = (BlockData) obj;
-    System.out.println("GOAL STATE BLOCK loc" + this.getLocation() + " pickedUP" + this.pickedUp + "block num" + this.blockNumber);
-    System.out.println("CURRENT STATE BLOCK loc" + blockData.getLocation() + " pickedUP" + blockData.pickedUp + "block num" + blockData.blockNumber);
 
     return (this.location.equals(blockData.location) &&
         this.pickedUp == blockData.pickedUp &&
