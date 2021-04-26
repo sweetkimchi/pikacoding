@@ -62,14 +62,7 @@ public class MultiplayerLevelView extends LevelView {
 
   @Override
   protected void openPauseMenu() {
-    VBox pauseMenu = new VBox();
-    pauseMenu.getStyleClass().add("start-screen");
-    pauseMenu.getChildren().add(new Label("Paused"));
-    Button resumeButton = new Button("Resume");
-    resumeButton.setOnAction(e -> {
-      restoreScreen();
-    });
-    pauseMenu.getChildren().add(resumeButton);
+    VBox pauseMenu = makePauseMenu();
     clearScreen();
     this.setCenter(pauseMenu);
   }

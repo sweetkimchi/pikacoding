@@ -20,6 +20,8 @@ import ooga.model.grid.gridData.InitialState;
 import ooga.view.ScreenCreator;
 import ooga.view.animation.AnimationAPI;
 import ooga.view.animation.AnimationController;
+import ooga.view.factories.GUIElementFactory;
+import ooga.view.factories.GUIElementInterface;
 import ooga.view.level.board.Board;
 import ooga.view.level.codearea.CodeArea;
 import ooga.view.level.codearea.CommandBlock;
@@ -34,6 +36,7 @@ import ooga.view.level.codearea.ProgramListener;
 public class LevelView extends BorderPane implements ProgramListener {
 
   public static final String LEVEL_PROPERTIES = "Level";
+  private static final int NO_NUM = 0;
 
   private final int level;
   private final FrontEndExternalAPI viewController;
@@ -47,14 +50,18 @@ public class LevelView extends BorderPane implements ProgramListener {
   private final ControlPanel controlPanel;
   private Label description;
   private ResourceBundle levelResources;
+  private GUIElementInterface GUIFactory;
 
   private int startingApples;
   private int score;
 
   public LevelView(int level, FrontEndExternalAPI viewController, ScreenCreator screenCreator) {
+    GUIFactory = new GUIElementFactory();
     this.viewController = viewController;
     this.screenCreator = screenCreator;
     this.level = level;
+    levelResources = ResourceBundle
+            .getBundle(ScreenCreator.RESOURCES + LEVEL_PROPERTIES);
     this.getStylesheets().add(this.screenCreator.getCurrentStyleSheet());
     menuBar = new MenuBar(e -> openPauseMenu());
     board = new Board();
@@ -83,25 +90,25 @@ public class LevelView extends BorderPane implements ProgramListener {
   }
 
   protected void openPauseMenu() {
-    VBox pauseMenu = new VBox();
-    pauseMenu.getStyleClass().add("start-screen");
-    pauseMenu.getChildren().add(new Label("Paused"));
-    Button resumeButton = new Button("Resume");
-    resumeButton.setOnAction(e -> {
-      restoreScreen();
-    });
-    pauseMenu.getChildren().add(resumeButton);
-    Button startMenuButton = new Button("Home");
-    startMenuButton.setOnAction(e -> screenCreator.loadStartMenu());
+    VBox pauseMenu = makePauseMenu();
+    Button startMenuButton = GUIFactory.makeButton(levelResources, e -> screenCreator.loadStartMenu(), "startMenuButton", "default-button", "startMenuButton", NO_NUM);
     pauseMenu.getChildren().add(startMenuButton);
 
-    Button levelSelectorButton = new Button("Level Selector");
-    levelSelectorButton.setOnAction(e -> screenCreator.loadSingleLevelSelector());
+    Button levelSelectorButton = GUIFactory.makeButton(levelResources, e -> screenCreator.loadSingleLevelSelector(), "levelSelector", "default-button", "levelSelectorButton", NO_NUM);
     pauseMenu.getChildren().add(levelSelectorButton);
     animationController.pause();
 
     clearScreen();
     this.setCenter(pauseMenu);
+  }
+
+  protected VBox makePauseMenu() {
+    VBox pauseMenu = new VBox();
+    pauseMenu.getStyleClass().add("start-screen");
+    pauseMenu.getChildren().add(new Label("Paused"));
+    Button resumeButton = GUIFactory.makeButton(levelResources, e -> restoreScreen(), "resumeButton", "default-button", "resumeButton", NO_NUM);
+    pauseMenu.getChildren().add(resumeButton);
+    return pauseMenu;
   }
 
   protected CodeArea getCodeArea() {
@@ -121,8 +128,6 @@ public class LevelView extends BorderPane implements ProgramListener {
   }
 
   protected void initializeViewElements() {
-    levelResources = ResourceBundle
-        .getBundle(ScreenCreator.RESOURCES + LEVEL_PROPERTIES);
     menuBar.setMinHeight(Double.parseDouble(levelResources.getString("MenuBarHeight")));
     createRight(levelResources);
     rightPane.setMinWidth(Double.parseDouble(levelResources.getString("CodeAreaWidth")));
@@ -134,7 +139,7 @@ public class LevelView extends BorderPane implements ProgramListener {
     controlPanel.setButtonAction("Button3_Pause", e -> animationController.pause());
     controlPanel.setButtonAction("Button4_Step", e -> animationController.step());
     this.setTop(menuBar);
-    scoreDisplay = new Label("Apples Left for Pikachu: ");
+    scoreDisplay = GUIFactory.makeLabel(levelResources, "scoreDisplay", "default-string", NO_NUM);
 
     board.getChildren().add(scoreDisplay);
     StackPane.setAlignment(scoreDisplay, Pos.TOP_LEFT);
