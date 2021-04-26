@@ -12,11 +12,21 @@ import javax.lang.model.util.Elements;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.Add;
+import ooga.model.commands.Decrement;
 import ooga.model.commands.Drop;
+import ooga.model.commands.Endif;
+import ooga.model.commands.If;
+import ooga.model.commands.Increment;
+import ooga.model.commands.Jump;
+import ooga.model.commands.Multiply;
+import ooga.model.commands.Nearest;
 import ooga.model.commands.PickUp;
+import ooga.model.commands.SetZero;
 import ooga.model.commands.Step;
 import ooga.model.commands.Subtract;
+import ooga.model.commands.Tell;
 import ooga.model.commands.Throw;
+import ooga.model.commands.ThrowOver;
 import ooga.model.grid.ElementInformationBundle;
 import ooga.model.grid.Structure;
 import ooga.model.grid.gridData.BoardState;
@@ -281,6 +291,162 @@ public class GridTest {
     throwCommand.execute(10);
     assertEquals(2, dataCube.getXCoord());
     assertEquals(8, dataCube.getYCoord());
+  }
+
+  @Test
+  public void testNearest(){
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("target", "datacube");
+    Nearest nearest = new Nearest(elementInformationBundle, parameters);
+    nearest.execute(10);
+    assertEquals(5, avatar.getXCoord());
+  }
+
+  @Test
+  public void testMultiply(){
+    DataCube dataCube1 = new DataCube(15, 5, 6, 13);
+    elementInformationBundle.addBlock(dataCube1);
+    avatarPickUpDataCubeSameTile();
+
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "down");
+    Step step = new Step(elementInformationBundle, parameters);
+    step.execute(10);
+
+    Multiply add = new Multiply(elementInformationBundle, new HashMap<>());
+    add.execute(10);
+
+    assertEquals(247, dataCube.getDisplayNum());
+  }
+
+  @Test
+  public void testDecrement(){
+    DataCube dataCube1 = new DataCube(15, 5, 6, 13);
+    elementInformationBundle.addBlock(dataCube1);
+    avatarPickUpDataCubeSameTile();
+
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "down");
+    Step step = new Step(elementInformationBundle, parameters);
+    step.execute(10);
+
+    Decrement add = new Decrement(elementInformationBundle, new HashMap<>());
+    add.execute(10);
+
+    assertEquals(18, dataCube.getDisplayNum());
+  }
+
+  @Test
+  public void testJump(){
+    int initialPC = avatar.getProgramCounter();
+    DataCube dataCube1 = new DataCube(15, 5, 6, 13);
+    elementInformationBundle.addBlock(dataCube1);
+    avatarPickUpDataCubeSameTile();
+
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("destination", "4");
+
+    Jump jump = new Jump(elementInformationBundle, parameters);
+    jump.execute(10);
+
+    int finalPC = avatar.getProgramCounter();
+
+    assertEquals(finalPC, 4);
+
+  }
+
+  @Test
+  public void testIncrement(){
+    DataCube dataCube1 = new DataCube(15, 5, 6, 13);
+    elementInformationBundle.addBlock(dataCube1);
+    avatarPickUpDataCubeSameTile();
+
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "down");
+    Step step = new Step(elementInformationBundle, parameters);
+    step.execute(10);
+
+    Increment add = new Increment(elementInformationBundle, new HashMap<>());
+    add.execute(10);
+
+    assertEquals(20, dataCube.getDisplayNum());
+  }
+
+  @Test
+  public void testSetZero(){
+    DataCube dataCube1 = new DataCube(15, 5, 6, 13);
+    elementInformationBundle.addBlock(dataCube1);
+    avatarPickUpDataCubeSameTile();
+
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "down");
+    Step step = new Step(elementInformationBundle, parameters);
+    step.execute(10);
+
+    SetZero add = new SetZero(elementInformationBundle, new HashMap<>());
+    add.execute(10);
+
+    assertEquals(0, dataCube.getDisplayNum());
+  }
+
+  @Test
+  public void testIf(){
+    assertTrue(elementInformationBundle.getTileData(5, 5).hasAvatar());
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "right");
+    Step step = new Step(elementInformationBundle, parameters);
+    step.execute(10);
+
+    If ifCommand = new If(elementInformationBundle, parameters);
+    parameters.put("comparator", "equals");
+    parameters.put("target", "wall");
+    ifCommand.execute(10);
+
+    assertTrue(elementInformationBundle.getTileData(6, 5).hasAvatar());
+    assertFalse(elementInformationBundle.getTileData(5, 5).hasAvatar());
+    assertEquals(6, avatar.getXCoord());
+    assertEquals(5, avatar.getYCoord());
+  }
+
+  @Test
+  public void testThrowOver(){
+    avatarPickUpDataCubeSameTile();
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "right");
+    ThrowOver throwCommand = new ThrowOver(elementInformationBundle, parameters);
+    throwCommand.execute(10);
+    assertEquals(7, dataCube.getXCoord());
+    assertEquals(5, dataCube.getYCoord());
+  }
+
+  @Test
+  public void testTell(){
+    assertTrue(elementInformationBundle.getTileData(5, 5).hasAvatar());
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "right");
+    Step step = new Step(elementInformationBundle, parameters);
+    step.execute(10);
+
+    Tell tell = new Tell(elementInformationBundle, parameters);
+    parameters.put("id", "10");
+    tell.execute(10);
+
+    assertEquals(3, avatar.getProgramCounter());
+  }
+
+  @Test
+  public void testEndif(){
+    assertTrue(elementInformationBundle.getTileData(5, 5).hasAvatar());
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("direction", "right");
+    Step step = new Step(elementInformationBundle, parameters);
+    step.execute(10);
+
+    Endif endif = new Endif(elementInformationBundle, parameters);
+    parameters.put("id", "10");
+    endif.execute(10);
+
+    assertEquals(3, avatar.getProgramCounter());
   }
 
 }

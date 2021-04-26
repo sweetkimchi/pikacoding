@@ -1,7 +1,5 @@
 package ooga.view;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -9,17 +7,22 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ooga.controller.Controller;
 
+import java.text.MessageFormat;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 
 public class TeamSelector extends BorderPane {
+  private static final String TEAM_SELECTOR_STRINGS = ScreenCreator.RESOURCES + "TeamSelector";
 
   private int teamNumber;
+  private ResourceBundle teamSelectorResources;
   private Consumer<Integer> levelAction;
 
   public TeamSelector(Consumer<Integer> lAction) {
     levelAction = lAction;
+    teamSelectorResources = ResourceBundle.getBundle(TEAM_SELECTOR_STRINGS);
     createTeamChoices();
   }
 
@@ -27,10 +30,12 @@ public class TeamSelector extends BorderPane {
     HBox teamButtons = new HBox();
     teamButtons.getStyleClass().add("type-screen");
 
-    Button team1 = new Button("Team 1");
+    Button team1 = new Button(teamSelectorResources.getString("team1"));
+    team1.setId(ScreenCreator.idsForTests.getString("team1"));
     team1.getStyleClass().add("default-button");
     team1.setOnAction(e -> determineTeam(1));
-    Button team2 = new Button("Team 2");
+    Button team2 = new Button(teamSelectorResources.getString("team2"));
+    team2.setId(ScreenCreator.idsForTests.getString("team2"));
     team2.getStyleClass().add("default-button");
     team2.setOnAction(e -> determineTeam(2));
     teamButtons.getChildren().addAll(team1, team2);
@@ -38,7 +43,7 @@ public class TeamSelector extends BorderPane {
     VBox vBox = new VBox();
     vBox.getStyleClass().add("instruction-box");
 
-    Label instructions = new Label("Choose a team");
+    Label instructions = new Label(teamSelectorResources.getString("instructions"));
     instructions.getStyleClass().add("title");
 
     vBox.getChildren().addAll(instructions, teamButtons);
@@ -53,9 +58,9 @@ public class TeamSelector extends BorderPane {
 
   private void createTeamScreen() {
     VBox tBox = new VBox();
-    Label teamMessage = new Label("Welcome to team " + teamNumber + "!");
+    Label teamMessage = new Label(applyResourceFormatting(teamNumber, teamSelectorResources.getString("teamMessage")));
     teamMessage.getStyleClass().add("team-message");
-    Label waitingMessage = new Label("Waiting for teammate/opponents...");
+    Label waitingMessage = new Label(teamSelectorResources.getString("waitingMessage"));
     tBox.getChildren().addAll(teamMessage, waitingMessage);
     tBox.getStyleClass().add("instruction-box");
 
@@ -73,5 +78,14 @@ public class TeamSelector extends BorderPane {
 
   public int getTeamNumber() {
     return teamNumber;
+  }
+
+  //TODO: I use this a lot so refactor in some factory or inheritance hiearchy
+  private String applyResourceFormatting(int num, String key) {
+    Object[] var = new Object[1];
+    MessageFormat formatter = new MessageFormat("");
+    var[0] = num;
+    formatter.applyPattern(key);
+    return formatter.format(var);
   }
 }

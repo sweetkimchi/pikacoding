@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import ooga.controller.BackEndExternalAPI;
 import ooga.controller.Controller;
 import ooga.controller.FrontEndExternalAPI;
+import ooga.view.level.LoseScreen;
 import ooga.view.level.board.ViewAvatar;
 import ooga.view.level.LevelView;
 import ooga.view.level.board.SpriteLayer;
@@ -32,7 +33,7 @@ class LevelViewTest extends ApplicationTest {
     Controller controller = new Controller(stage);
     viewController = (FrontEndExternalAPI)  getPrivateField(controller, "viewController");
     modelController = (BackEndExternalAPI)  getPrivateField(controller, "modelController");
-    viewController.initializeLevel(1);
+    viewController.initializeSingleLevel(1);
     levelView = (LevelView)  getPrivateField(viewController, "levelView");
     avatars = (Map<Integer, ViewAvatar>) getPrivateField(lookup("#sprite-layer").queryAs(SpriteLayer.class), "avatars");
     programStack = lookup("#program-stack").queryAs(ProgramStack.class);
@@ -63,6 +64,25 @@ class LevelViewTest extends ApplicationTest {
   }
 
   @Test
+  void testLoseScreen() {
+    for(int i: new int[20]) {
+      clickButton("step-option-button");
+    }
+    clickButton("Button2_Play-button");
+    sleep(24000);
+    assertTrue(lookup("#try-again-button").query() != null);
+  }
+
+//  @Test
+//  void testWinScreen() {
+//    clickButton("step-option-button");
+//    clickButton("pickUp-option-button");
+//    clickButton("Button2_Play-button");
+//    sleep(1000);
+//    assertTrue(lookup("#home").query() != null);
+//  }
+
+  @Test
   void testPauseButton() {
     clickButton("pause-button");
     assertTrue(levelView.getBottom() == null);
@@ -81,8 +101,8 @@ class LevelViewTest extends ApplicationTest {
 
   private void clickButton(String button) {
     clickOn(lookup("#" + button).queryButton());
-    Platform.runLater(() -> lookup("#" + button).queryButton().fire());
-    sleep(100);
+    //Platform.runLater(() -> lookup("#" + button).queryButton().fire());
+    //sleep(100);
   }
 
 }

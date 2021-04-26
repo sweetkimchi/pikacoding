@@ -1,14 +1,14 @@
 {
   "level":3,
   "numPeople":1,
-  "blocks":["step", "pickUp", "drop", "jump", "if", "add"],
-  "blocks-p1":["step", "if", "jump"],
-  "blocks-p2":["pickUp", "drop", "add"],
+  "blocks":["step", "pickUp", "drop", "if", "jump", "throw"],
+  "blocks-p1":["step", "if", "throw"],
+  "blocks-p2":["pickUp", "drop", "jump"],
   "startState":"startState.json",
   "endState":"endState.json",
   "images":"images.json",
-  "description":"Using the Add command, write the first 10 Fibonacci numbers on the datacubes.",
-  "idealNumOfCommands":"500",
-  "timeLimit":"300",
+  "description":"Using the Throw command, put all datacubes on the righthand wall.",
+  "idealNumOfCommands":"100",
+  "timeLimit":"200",
   "grid": "grid.json"
 }

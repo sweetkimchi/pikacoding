@@ -18,6 +18,7 @@ public class LoseScreen extends VBox {
     loseMessage.getStyleClass().add("title");
     this.getChildren().add(loseMessage);
     Button tryAgainButton = new Button(loseMessages.getString("loseButton"));
+    tryAgainButton.setId(ScreenCreator.idsForTests.getString("tryAgain"));
     tryAgainButton.setOnAction(tryAgainAction);
     this.getChildren().add(tryAgainButton);
   }

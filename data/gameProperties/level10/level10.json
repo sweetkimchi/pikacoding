@@ -1,14 +1,14 @@
 {
   "level":10,
-  "numPeople":1,
-  "blocks":["step", "pickUp", "drop", "if", "jump", "nearest"],
-  "blocks-p1":["step", "if", "jump"],
-  "blocks-p2":["pickUp", "drop", "throw", "throwOver"],
+  "numPeople":8,
+  "blocks":["step", "pickUp", "drop", "if", "jump"],
+  "blocks-p1":["step", "if"],
+  "blocks-p2":["pickUp", "drop", "jump"],
   "startState":"startState.json",
   "endState":"endState.json",
   "images":"images.json",
-  "description":"Using Nearest, Jump, and If, make the pikachu travel to the closest block and pick it up.",
-  "idealNumOfCommands":"250",
-  "timeLimit":"350",
+  "description":"Place the datacubes in reverse order in the same place between the two holes.",
+  "idealNumOfCommands":"600",
+  "timeLimit":"600",
   "grid": "grid.json"
 }

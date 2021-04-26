@@ -30,12 +30,20 @@ public interface FrontEndExternalAPI {
   void loadStartMenu();
 
   /**
-   * Loads the level view in the front-end and calls the model to initialize and pass the level info
+   * Loads the multiplayer level view in the front-end and calls the model to initialize and pass the level info
    * to the view.
    *
    * @param level Level number of the initialized level
    */
-  void initializeLevel(int level);
+  void initializeMultiLevel(int level);
+
+  /**
+   * Loads the single palyerlevel view in the front-end and calls the model to initialize and pass the level info
+   * to the view.
+   *
+   * @param level Level number of the initialized level
+   */
+  void initializeSingleLevel(int level);
 
   /**
    * Sets the view board to contain a new level. Instantiates all the elements of the grid,
