@@ -2,9 +2,8 @@ package ooga.model.commands;
 
 import java.util.Map;
 import ooga.model.grid.ElementInformationBundle;
-import ooga.model.grid.Tile;
 import ooga.model.player.Avatar;
-import ooga.model.player.DataCube;
+import ooga.model.player.Block;
 
 /**
  * Mathematical Commands are a subclass of Basic Commands that set a value to the datacube held by
@@ -37,15 +36,15 @@ public abstract class MathematicalCommands extends BasicCommands {
   @Override
   public void execute(int ID) {
     Avatar avatar = getAvatar(ID);
-    Tile currTile = getCurrTile(ID);
-    if (currTile.getBlock() instanceof DataCube tileCube && avatar
-        .getHeldItem() instanceof DataCube avatarCube) {
-      int newDisplayNum = calculateNewDisplayNum(avatarCube.getDisplayNum(),
-          tileCube.getDisplayNum());
-      avatarCube.setDisplayNum(newDisplayNum);
-      System.out.println("Newly added NUMBER: " + newDisplayNum);
+    Block tileBlock = getCurrTile(ID).getBlock();
+    Block avatarBlock = avatar.getHeldItem();
+    if (avatarBlock != null && tileBlock != null) {
+      int newDisplayNum = calculateNewDisplayNum(avatarBlock.getDisplayNum(),
+          tileBlock.getDisplayNum());
+      avatarBlock.setDisplayNum(newDisplayNum);
+      //System.out.println("Newly added NUMBER: " + newDisplayNum);
 
-      sendDataCubeNumUpdate(avatarCube);
+      sendDataCubeNumUpdate(avatarBlock);
     } else {
       //if desired, handle error if the datacubes are not present and cannot complete operation
       //System.out.println("Cannot compute blocks!");
