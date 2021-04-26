@@ -24,7 +24,7 @@ public class ModelController implements BackEndExternalAPI {
   private FirebaseService firebaseService;
   private ConcreteDatabaseListener concreteDatabaseListener;
   private int level;
-  private int matchID;
+  private final int matchID;
   private int teamID;
   private int playerID;
   private Stopwatch stopwatch;
@@ -52,7 +52,6 @@ public class ModelController implements BackEndExternalAPI {
   /**
    * initializes the level
    * @param level integer indicating the level
-   * @return BoardState object with level information
    */
   @Override
   public void initializeLevel(int level) {
@@ -131,7 +130,7 @@ public class ModelController implements BackEndExternalAPI {
   /**
    * updates the score and sends it to the frontend
    *
-   * @param score
+   * @param score score of the player
    */
   @Override
   public void setScore(int score) {
@@ -141,7 +140,7 @@ public class ModelController implements BackEndExternalAPI {
   /**
    * updates the line numbers for the avatars
    *
-   * @param lineUpdates
+   * @param lineUpdates line updates
    */
   @Override
   public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
