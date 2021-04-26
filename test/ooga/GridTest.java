@@ -153,6 +153,16 @@ public class GridTest {
       public void setMatchId(int id) {
 
       }
+
+      @Override
+      public void notifyCurrentTeamEnded() {
+
+      }
+
+      @Override
+      public void notifyBothTeamsEnded() {
+
+      }
     };
     elementInformationBundle.setModelController(modelController);
     avatar = new Avatar(10, 5, 5);

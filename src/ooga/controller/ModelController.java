@@ -72,6 +72,8 @@ public class ModelController implements BackEndExternalAPI {
 
     if (this.teamID != SINGLE_PLAYER) {
       concreteDatabaseListener.codeAreaChanged();
+      concreteDatabaseListener.checkLevelEndedForCurrentTeam();
+      concreteDatabaseListener.checkLevelEndedForBothTeams();
       viewController.setAvailableCommandsOtherPlayer(initialConfigurationParser.getAvailableCommandsOtherPlayer());
     }
   }
@@ -220,5 +222,16 @@ public class ModelController implements BackEndExternalAPI {
     this.matchID = id;
     System.out.println("set match id");
   }
+
+  @Override
+  public void notifyCurrentTeamEnded() {
+    System.out.println("level ended for current team");
+  }
+
+  @Override
+  public void notifyBothTeamsEnded() {
+
+  }
+
 
 }
