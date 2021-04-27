@@ -58,10 +58,15 @@ class LevelViewTest extends ApplicationTest {
   void testAvatarMovement() {
     ImageView avatarImage = (ImageView) getPrivateField(avatars.get(7), "avatar");
     double initialY = avatarImage.getY();
+    System.out.println("testAvatarMovemet");
     clickButton("step-option-button");
     clickButton("Button4_Step-button");
-    sleep(2000);
-    assertTrue(initialY > avatarImage.getY());
+    Slider slider = lookup("#slider").query();
+    slider.setValue(100.0);
+    sleep(1000);
+    System.out.println(initialY);
+    System.out.println(avatarImage.getY());
+    assertTrue(avatarImage.getY() < initialY);
   }
 
   @Test
