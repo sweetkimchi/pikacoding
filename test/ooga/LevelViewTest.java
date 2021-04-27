@@ -56,7 +56,7 @@ class LevelViewTest extends ApplicationTest {
 
   @Test
   void testAvatarMovement() {
-    ImageView avatarImage = (ImageView) getPrivateField(avatars.get(7), "avatar");
+    ImageView avatarImage = lookup("#avatar").query();
     double initialY = avatarImage.getY();
     System.out.println("testAvatarMovemet");
     clickButton("step-option-button");
