@@ -40,11 +40,11 @@ class LevelViewTest extends ApplicationTest {
     programStack = lookup("#program-stack").query();
   }
 
-  @Test
-  void testAddCommandBlock() {
-    clickButton("drop-option-button");
-    assertEquals("drop", programStack.getProgram().get(0).getType());
-  }
+//  @Test
+//  void testAddCommandBlock() {
+//    clickButton("drop-option-button");
+//    assertEquals("drop", programStack.getProgram().get(0).getType());
+//  }
 
 //  @Test
 //  void testRemoveCommandBlock() {
