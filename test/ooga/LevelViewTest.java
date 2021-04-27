@@ -58,15 +58,12 @@ class LevelViewTest extends ApplicationTest {
   void testAvatarMovement() {
     ImageView avatarImage = lookup("#avatar").query();
     double initialY = avatarImage.getY();
-    System.out.println("testAvatarMovemet");
     clickButton("step-option-button");
     clickButton("Button4_Step-button");
     Slider slider = lookup("#slider").query();
     slider.setValue(100.0);
     sleep(5000);
-    double finalY = avatarImage.getY();
-    System.out.println(initialY);
-    System.out.println(finalY);
+    double finalY = lookup("#avatar").query().getLayoutY();
     assertTrue(finalY < initialY);
   }
 
