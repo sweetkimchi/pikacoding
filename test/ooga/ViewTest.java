@@ -55,7 +55,7 @@ class ViewTest extends ApplicationTest {
   void testStartGame() {
     clickButton("start-button");
     Stage stage = (Stage) getPrivateField(screenCreator, "stage");
-    assert(!(stage.getScene().getRoot() instanceof MatchIdSelector));
+    assert((stage.getScene().getRoot() instanceof MatchIdSelector));
   }
 
 //  @Test

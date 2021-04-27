@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.lang.reflect.Field;
 import java.util.Map;
 import javafx.application.Platform;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import ooga.controller.BackEndExternalAPI;
@@ -36,7 +37,7 @@ class LevelViewTest extends ApplicationTest {
     viewController.initializeSingleLevel(1);
     levelView = (LevelView)  getPrivateField(viewController, "levelView");
     avatars = (Map<Integer, ViewAvatar>) getPrivateField(lookup("#sprite-layer").queryAs(SpriteLayer.class), "avatars");
-    programStack = lookup("#program-stack").queryAs(ProgramStack.class);
+    programStack = lookup("#program-stack").query();
   }
 
   @Test
@@ -63,15 +64,17 @@ class LevelViewTest extends ApplicationTest {
     assertTrue(initialY > avatarImage.getY());
   }
 
-//  @Test
-//  void testLoseScreen() {
-//    for(int i: new int[20]) {
-//      clickButton("step-option-button");
-//    }
-//    clickButton("Button2_Play-button");
-//    sleep(24000);
-//    assertTrue(lookup("#try-again-button").query() != null);
-//  }
+  @Test
+  void testLoseScreen() {
+    for(int i: new int[20]) {
+      clickButton("step-option-button");
+    }
+    clickButton("Button2_Play-button");
+    Slider slider = lookup("#slider").query();
+    slider.setValue(100.0);
+    sleep(6000);
+    assertTrue(lookup("#try-again-button").query() != null);
+  }
 
 //  @Test
 //  void testWinScreen() {
