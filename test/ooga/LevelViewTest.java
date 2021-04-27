@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.lang.reflect.Field;
 import java.util.Map;
 import javafx.application.Platform;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import ooga.controller.BackEndExternalAPI;
@@ -36,14 +37,14 @@ class LevelViewTest extends ApplicationTest {
     viewController.initializeSingleLevel(1);
     levelView = (LevelView)  getPrivateField(viewController, "levelView");
     avatars = (Map<Integer, ViewAvatar>) getPrivateField(lookup("#sprite-layer").queryAs(SpriteLayer.class), "avatars");
-    programStack = lookup("#program-stack").queryAs(ProgramStack.class);
+    programStack = lookup("#program-stack").query();
   }
 
-  @Test
-  void testAddCommandBlock() {
-    clickButton("drop-option-button");
-    assertEquals("drop", programStack.getProgram().get(0).getType());
-  }
+//  @Test
+//  void testAddCommandBlock() {
+//    clickButton("drop-option-button");
+//    assertEquals("drop", programStack.getProgram().get(0).getType());
+//  }
 
 //  @Test
 //  void testRemoveCommandBlock() {
@@ -55,23 +56,28 @@ class LevelViewTest extends ApplicationTest {
 
   @Test
   void testAvatarMovement() {
-    ImageView avatarImage = (ImageView) getPrivateField(avatars.get(7), "avatar");
+    ImageView avatarImage = lookup("#avatar").query();
     double initialY = avatarImage.getY();
     clickButton("step-option-button");
     clickButton("Button4_Step-button");
-    sleep(2000);
-    assertTrue(initialY > avatarImage.getY());
+    Slider slider = lookup("#slider").query();
+    slider.setValue(100.0);
+    sleep(5000);
+    double finalY = lookup("#avatar").query().getLayoutY();
+    assertTrue(finalY < initialY);
   }
 
-//  @Test
-//  void testLoseScreen() {
-//    for(int i: new int[20]) {
-//      clickButton("step-option-button");
-//    }
-//    clickButton("Button2_Play-button");
-//    sleep(24000);
-//    assertTrue(lookup("#try-again-button").query() != null);
-//  }
+  @Test
+  void testLoseScreen() {
+    for(int i: new int[20]) {
+      clickButton("step-option-button");
+    }
+    clickButton("Button2_Play-button");
+    Slider slider = lookup("#slider").query();
+    slider.setValue(100.0);
+    sleep(6000);
+    assertTrue(lookup("#try-again-button").query() != null);
+  }
 
 //  @Test
 //  void testWinScreen() {
@@ -85,7 +91,7 @@ class LevelViewTest extends ApplicationTest {
   @Test
   void testPauseButton() {
     clickButton("pause-button");
-    assertTrue(levelView.getBottom() == null);
+    assertTrue(lookup("#home-button-start").query() != null);
   }
 
   private Object getPrivateField(Object object, String field) {
@@ -101,8 +107,8 @@ class LevelViewTest extends ApplicationTest {
 
   private void clickButton(String button) {
     clickOn(lookup("#" + button).queryButton());
-    Platform.runLater(() -> lookup("#" + button).queryButton().fire());
-    sleep(100);
+//    Platform.runLater(() -> lookup("#" + button).queryButton().fire());
+//    sleep(100);
   }
 
 }

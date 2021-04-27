@@ -55,27 +55,26 @@ class ViewTest extends ApplicationTest {
   void testStartGame() {
     clickButton("start-button");
     Stage stage = (Stage) getPrivateField(screenCreator, "stage");
-    assert(!(stage.getScene().getRoot() instanceof MatchIdSelector));
+    assert((stage.getScene().getRoot() instanceof MatchIdSelector));
   }
 
-//  @Test
-//  void testLoadLevel() {
-//    clickButton("start-button");
-//    enterMatchId();
-//    clickButton("single-player-button");
-//    clickButton("load-level-1");
-//    LevelView levelView = screenCreator.getLevelView();
-//    assertEquals(1, (int) getPrivateField(levelView, "level"));
-//  }
-//
-//  @Test
-//  void testLoadMulti() {
-//    clickButton("start-button");
-//    enterMatchId();
-//    clickButton("multiplayer-button");
-//    Stage stage = (Stage) getPrivateField(screenCreator, "stage");
-//    assertTrue(stage.getScene().getRoot() instanceof TeamSelector);
-//  }
+  @Test
+  void testLoadLevel() {
+    clickButton("start-button");
+    enterMatchId();
+    clickButton("single-player-button");
+    clickButton("load-level-1");
+    assertTrue(lookup("#pause-button").query() != null);
+  }
+
+  @Test
+  void testLoadMulti() {
+    clickButton("start-button");
+    enterMatchId();
+    clickButton("multiplayer-button");
+    sleep(1000);
+    assertTrue(lookup("#team1-button").query() != null);
+  }
 
 //  @Test
 //  void successfulSinglePlayerButtonCreation() {

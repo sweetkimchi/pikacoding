@@ -59,7 +59,6 @@ public class ViewAvatar extends StackPane {
     boolean base = nextX == currentX && nextY == currentY;
     boolean fdbk = nextX == currentX && nextY != currentY;
 
-    // TODO: refactor
     if (right) {
       animationChanges("right", x, y);
     } else if (left) {
@@ -102,6 +101,7 @@ public class ViewAvatar extends StackPane {
 
   private void makeAvatar() {
     avatar = new ImageView(new Image(animationImages.getString("baseImage")));
+    avatar.setId(ScreenCreator.idsForTests.getString("avatar"));
     avatar.setFitWidth(width);
     avatar.setFitHeight(height);
     avatarId = new Text(String.valueOf(idNum));
