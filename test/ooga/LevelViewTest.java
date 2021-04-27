@@ -85,7 +85,7 @@ class LevelViewTest extends ApplicationTest {
   @Test
   void testPauseButton() {
     clickButton("pause-button");
-    assertTrue(levelView.getBottom() == null);
+    assertTrue(lookup("#home-button-start").query() != null);
   }
 
   private Object getPrivateField(Object object, String field) {
