@@ -63,7 +63,7 @@ class LevelViewTest extends ApplicationTest {
     clickButton("Button4_Step-button");
     Slider slider = lookup("#slider").query();
     slider.setValue(100.0);
-    //sleep(1000);
+    sleep(5000);
     double finalY = avatarImage.getY();
     System.out.println(initialY);
     System.out.println(finalY);
