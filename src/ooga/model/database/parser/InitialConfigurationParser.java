@@ -19,6 +19,14 @@ import ooga.model.grid.gridData.InitialState;
 import ooga.model.player.Avatar;
 import ooga.model.player.DataCube;
 
+/**
+ * @author billyluqiu
+ * Parses initial level configuration at the start of each level.
+ * Assumes that data will be well formatted
+ * Depends on GameData objects to store Data, and for multiplayer, working firebaseService
+ * Call the constructor to parse a file and getterrs to get each attribute of the level
+ *
+ */
 public class InitialConfigurationParser {
 
   private final int level;
@@ -35,6 +43,15 @@ public class InitialConfigurationParser {
   private final FirebaseService firebaseService;
   private final int playerID;
 
+  /**
+   * Constructor that takes in a level and parses requisite data files
+   * for multiplayer (ID = 1/2) firebaseService must be nonNull,
+   * for singleplaeyr (ID = 0), firebaseService must be null
+   * @param level level of game to parse
+   * @param firebaseService instance of firebase service
+   * @param playerID ID of player
+   * Throws new exception handler if error raised in parsing the level
+   */
   public InitialConfigurationParser(int level, FirebaseService firebaseService, int playerID) {
     this.playerID = playerID;
     this.level = level;
@@ -46,7 +63,7 @@ public class InitialConfigurationParser {
       this.parseLevelInfoFromDataFiles();
     }
   }
-
+  // parses files from data folder for single player
   private void parseLevelInfoFromDataFiles() {
 
     try {
@@ -70,7 +87,7 @@ public class InitialConfigurationParser {
     String filePathToStartState = rootURLPathForLevel + filePath;
     return new ObjectMapper().readValue(new FileReader(filePathToStartState), HashMap.class);
   }
-
+  // parses level info from firebase for multiplayer (ensure all players have the same game data)
   private void parseLevelInfoFromDB() {
     try {
 
@@ -89,7 +106,6 @@ public class InitialConfigurationParser {
       throw new ExceptionHandler("error occurred while parsing files from DB");
     }
   }
-
 
   private List<String> blocksForCurrentPlayer(Map<String, Object> levelInfo) {
     return switch (this.playerID) {
@@ -122,7 +138,6 @@ public class InitialConfigurationParser {
     } catch (Exception e) {
       throw new ExceptionHandler("error parsing start state");
     }
-
   }
 
   private void parseEndState(int numOfCommands, Map endState) {
@@ -135,7 +150,6 @@ public class InitialConfigurationParser {
     } catch (Exception e) {
       throw new ExceptionHandler("error parsing end state");
     }
-
   }
 
   private Map<String, List<Integer>> parseAvatarLocations(Map<String, Object> peopleLocations,
@@ -149,8 +163,7 @@ public class InitialConfigurationParser {
       mapOfPeople.put(s, avatarLocation);
       if (addToGameGrid) {
         this.elementInformationBundle
-            .addAvatar(new Avatar(Integer.parseInt(s), avatarLocation.get(0),
-                avatarLocation.get(1)));
+            .addAvatar(new Avatar(Integer.parseInt(s), avatarLocation.get(0), avatarLocation.get(1)));
       }
     }
     return mapOfPeople;
@@ -158,7 +171,6 @@ public class InitialConfigurationParser {
 
   private Map<String, BlockData> parseBlockData(Map<String, Object> blocks, boolean addToGameGrid) {
     Map<String, BlockData> allBlockData = new HashMap<>();
-
     for (String s : blocks.keySet()) {
       Map<String, Object> currentBlock = (Map<String, Object>) blocks.get(s);
       List<Integer> blockLoc = (List<Integer>) currentBlock.get("loc");
@@ -170,11 +182,9 @@ public class InitialConfigurationParser {
         this.elementInformationBundle.addBlock(new DataCube(Integer.parseInt(s), blockLoc.get(0),
             blockLoc.get(1), (int) currentBlock.get("num")));
       }
-
     }
     return allBlockData;
   }
-
 
   private void parseCommands(Map<String, Object> commands, List<String> commandsForCurrentPlayer,
       List<String> comamndsForOtherPlayer) {
@@ -235,33 +245,59 @@ public class InitialConfigurationParser {
       mapOfGrid.add(currentGrid.get("" + i));
     }
     return mapOfGrid;
-
   }
 
+  /**
+   * Returns elementInformationBundle after construtor is run
+   * @return instance of elementInformationBundle
+   */
   public ElementInformationBundle getGameGrid() {
     return this.elementInformationBundle;
   }
 
+  /**
+   * Returns goal state after constructor is run
+   * @return instance of goalState
+   */
   public GoalState getGoalState() {
     return this.goalState;
   }
 
+  /**
+   * Returns initial state after constructor is run
+   * @return instance of initial state
+   */
   public InitialState getInitialState() {
     return this.initialState;
   }
 
+  /**
+   * Returns string of the description of the level after constructor of level
+   * @return string of description
+   */
   public String getDescription() {
     return this.description;
   }
 
+  /**
+   * Get avaiable commands after constructor is run
+   * @return avaiblecommands instance
+   */
   public AvailableCommands getAvailableCommands() {
     return this.availableCommands;
   }
-
+  /**
+   * Get avaiable commands after constructor is run for multiplayer
+   * @return avaiblecommands instance that gives other player data
+   */
   public AvailableCommands getAvailableCommandsOtherPlayer() {
     return this.availableCommandsOtherPlayer;
   }
 
+  /**
+   * Get game grid data after constructor is run
+   * @return gameGridData instance
+   */
   public GameGridData getGameGridData() {
     return this.gameGridData;
   }

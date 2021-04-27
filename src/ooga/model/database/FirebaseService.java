@@ -46,7 +46,6 @@ public class FirebaseService {
     } catch (Exception e) {
       throw new ExceptionHandler("error connecting to firebase");
     }
-
   }
 
 
@@ -63,7 +62,6 @@ public class FirebaseService {
   }
 
   private void setDatabaseContentsWithMap(Map<String, Object> jsonMap, String pathInDB) {
-
     try {
       CountDownLatch done = new CountDownLatch(1);
       //Database Error is de, database reference is dr
@@ -89,7 +87,6 @@ public class FirebaseService {
           json[0] = new Gson().toJson(object);
           done.countDown();
         }
-
         @Override
         public void onCancelled(DatabaseError databaseError) {
           // Code
@@ -100,7 +97,6 @@ public class FirebaseService {
     } catch (Exception e) {
       throw new ExceptionHandler("error reading levels from database");
     }
-
   }
 
 
