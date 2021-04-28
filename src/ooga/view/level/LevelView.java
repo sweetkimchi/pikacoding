@@ -81,7 +81,7 @@ public class LevelView extends BorderPane implements ProgramListener {
 
   /**
    * Lets the code area know what commands are available
-   * @param availableCommands
+   * @param availableCommands Available commands
    */
   public void setAvailableCommands(AvailableCommands availableCommands) {
     codeArea.setAvailableCommands(availableCommands);

@@ -14,12 +14,20 @@ public class CommandBank extends VBox {
 
   private final Consumer<String> clickOptionAction;
 
+  /**
+   * Main constructor
+   * @param clickOptionAction Action for when the user clicks on an option
+   */
   public CommandBank(Consumer<String> clickOptionAction) {
     this.setId("CommandBank");
     this.setSpacing(6);
     this.clickOptionAction = clickOptionAction;
   }
 
+  /**
+   * Adds commands to the bank
+   * @param commands Commands to be added
+   */
   public void addCommands(Set<String> commands) {
     commands.forEach(command -> {
       CommandBlockOption option = new CommandBlockOption(command,
@@ -30,6 +38,10 @@ public class CommandBank extends VBox {
     });
   }
 
+  /**
+   * Adds teammate's commands to the bank
+   * @param commands Commands to be added
+   */
   public void addCommandsOtherPlayer(Set<String> commands) {
     commands.forEach(command -> {
       CommandBlockOption option = new CommandBlockOption(command,
