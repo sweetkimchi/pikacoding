@@ -10,6 +10,9 @@ import ooga.view.ScreenCreator;
 import ooga.view.factories.GUIElementFactory;
 import ooga.view.factories.GUIElementInterface;
 
+/**
+ * Screen that is displayed when a player wins a single player level
+ */
 public class WinScreen extends VBox {
 
   public static final String SCREEN_MESSAGES = "ScreenStrings";
@@ -18,6 +21,13 @@ public class WinScreen extends VBox {
   private final ResourceBundle winMessages;
   private final GUIElementInterface GUIFactory;
 
+  /**
+   * Main constructor
+   * @param score Score that the player achieved
+   * @param homeAction Action that takes the player to the home screen
+   * @param nextLevelAction Action that starts the next level
+   * @param isLastLevel If the level was the last level (i.e. there is no next level)
+   */
   public WinScreen(int score, EventHandler<ActionEvent> homeAction,
       EventHandler<ActionEvent> nextLevelAction, boolean isLastLevel) {
     GUIFactory = new GUIElementFactory();

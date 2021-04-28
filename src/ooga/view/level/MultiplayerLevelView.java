@@ -9,19 +9,40 @@ import ooga.controller.FrontEndExternalAPI;
 import ooga.model.commands.AvailableCommands;
 import ooga.view.ScreenCreator;
 
+/**
+ * Level view for a multiplayer game
+ *
+ * @author David Li
+ */
 public class MultiplayerLevelView extends LevelView {
 
   private Label timerDisplay;
 
+  /**
+   * Main constructor
+   * @param level Level number
+   * @param viewController View controller
+   * @param screenCreator Screen creator
+   */
   public MultiplayerLevelView(int level, FrontEndExternalAPI viewController,
       ScreenCreator screenCreator) {
     super(level, viewController, screenCreator);
   }
 
+  /**
+   * Sets the teammate's available commands
+   * @param availableCommands Available commands
+   */
   public void setAvailableCommandsOtherPlayer(AvailableCommands availableCommands) {
     getCodeArea().setAvailableCommandsOtherPlayer(availableCommands);
   }
 
+  /**
+   * Displays the win screen for a multiplayer game
+   * @param executionScore Score from number of lines executed
+   * @param bonusFromNumberOfCommands Bonus from number of commands used
+   * @param bonusFromTimeTaken Bonus from amount of time used
+   */
   @Override
   public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
     try {
@@ -41,6 +62,10 @@ public class MultiplayerLevelView extends LevelView {
     this.setCenter(multiplayerWinScreen);
   }
 
+  /**
+   * Changes the displayed time
+   * @param timeLeft Amount of time left
+   */
   @Override
   public void updateTime(int timeLeft) {
     String minutes = "" + timeLeft / 60;

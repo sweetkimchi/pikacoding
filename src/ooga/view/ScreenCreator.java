@@ -52,7 +52,7 @@ public class ScreenCreator {
   }
 
   /**
-   * Creates a new LevelView and loads it into the stage
+   * Creates a new MultiplayerLevelView and loads it into the stage
    * @param level Level number
    */
   public void initializeMultiLevelView(int level) {
@@ -110,7 +110,7 @@ public class ScreenCreator {
   public void setTeamReady() { teamSelector.enableStart(); }
 
   /**
-   * Opens up the level selector
+   * Opens up the level selector for single player
    */
   public void loadSingleLevelSelector() {
     setTeamNum(0);
@@ -120,6 +120,9 @@ public class ScreenCreator {
     stage.setScene(scene);
   }
 
+  /**
+   * Opens up the level selector for multiplayer
+   */
   public void loadMultiLevelSelector() {
     LevelSelector levelSelector = new LevelSelector(viewController::initializeMultiLevel);
     levelSelector.getStylesheets().add(startMenu.getStyleSheet());

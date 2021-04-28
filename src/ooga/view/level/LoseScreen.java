@@ -9,8 +9,17 @@ import ooga.view.ScreenCreator;
 
 import java.util.ResourceBundle;
 
+/**
+ * Screen that is displayed when the player loses a level
+ *
+ * @author David Li
+ */
 public class LoseScreen extends VBox {
 
+  /**
+   * Main constructor
+   * @param tryAgainAction Action for trying the level again
+   */
   public LoseScreen(EventHandler<ActionEvent> tryAgainAction) {
     ResourceBundle loseMessages = ResourceBundle
         .getBundle(ScreenCreator.RESOURCES + WinScreen.SCREEN_MESSAGES);
