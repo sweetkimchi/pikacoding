@@ -33,6 +33,7 @@ import ooga.view.level.codearea.ProgramListener;
  *
  * @author David Li
  * @author Ji Yun Hyo
+ * @author Kathleen Chen
  */
 public class LevelView extends BorderPane implements ProgramListener {
 
