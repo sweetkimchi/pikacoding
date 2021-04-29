@@ -43,6 +43,7 @@ public class ControlPanel extends GridPane {
 
   private void makeSlider() {
     slider = new Slider(10, 100,25);
+    slider.setId(ScreenCreator.idsForTests.getString("slider"));
     this.add(slider, col, 0);
   }
 
