@@ -11,6 +11,7 @@ import ooga.view.level.codearea.CommandBlock;
  *
  * @author Ji Yun Hyo Specifically, responsible for receiving unparsed commands and passing them to
  * the model to be parsed and ran.
+ * @author billyluqiu responsible for database updates.
  */
 public interface BackEndExternalAPI {
 
@@ -84,15 +85,35 @@ public interface BackEndExternalAPI {
   void receivedProgramUpdate(List<CommandBlock> program);
 
   /**
-   * gets the team number selected by the player from the view
+   * sets the team number selected by the player from the view
    */
   void setTeamNumber(int teamNum);
 
+  /**
+   * Method that is called when all four players are present. Two players on each team.
+   */
   void startGameAfterBothTeamsPresent();
 
+  /**
+   * Set match ID for the current game.
+   * Assumed to be non negative, and match ID doesn't have a corresponding match in firebase
+   * @param id id of match
+   */
   void setMatchId(int id);
 
+  /**
+   * Method that is called when the team the player is currently playing on has won.
+   * Either they have won, or their teammate has won.
+   *
+   * @param score of the winning player
+   */
   void notifyCurrentTeamEnded(int score);
 
+  /**
+   * Method that is called when both teams in the current game have succesfully finished the level.
+   *
+   * @param team1_score score of the current player's team
+   * @param team2_score score of the opposing team
+   */
   void notifyBothTeamsEnded(int team1_score, int team2_score);
 }

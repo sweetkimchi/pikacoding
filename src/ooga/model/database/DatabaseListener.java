@@ -7,6 +7,10 @@ package ooga.model.database;
  * Listeners are needed to update game state for multiplayer especially with regards to code update
  * and making sure scores are synced between players and teams, and a valid winner is able to be declared.
  *
+ * All listeners are attached at the start of a level, and detached from Firebase upon level completion by
+ * both teams in a multiplayer setting.
+ *
+ *
  */
 public interface DatabaseListener {
 
