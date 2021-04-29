@@ -11,6 +11,9 @@ import ooga.model.player.Block;
 import ooga.model.player.Player;
 
 /**
+ * This interface contains getter methods that the Commands subclasses can call in order to access
+ * any information about the model. Instead of passing everything at once, the getter methods
+ * return only the specific set of requested information.
  * @author Ji Yun Hyo
  */
 public interface InformationBundle {
