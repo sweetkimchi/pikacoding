@@ -1,0 +1,14 @@
+{
+  "level":11,
+  "numPeople":2,
+  "blocks":["step", "pickUp", "drop", "if", "jump", "throw", "throwOver","add","subtract","increment","decrement","multiply","setZero","nearest"],
+  "blocks-p1":["step", "if", "jump"],
+  "blocks-p2":["pickUp", "drop", "throw", "throwOver"],
+  "startState":"startState.json",
+  "endState":"endState.json",
+  "images":"images.json",
+  "description":"Using Throws and conditionals, put all datacubes on the upper wall by throwing them through their respective channels.",
+  "idealNumOfCommands":"250",
+  "timeLimit":"350",
+  "grid": "grid.json"
+}
