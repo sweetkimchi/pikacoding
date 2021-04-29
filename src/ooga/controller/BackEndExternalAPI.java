@@ -23,7 +23,7 @@ public interface BackEndExternalAPI {
   void setViewController(FrontEndExternalAPI viewController);
 
   /**
-   * initializes the level
+   * Initializes the level
    *
    * @param level integer indicating the level
    * @return BoardState object with level information
@@ -43,12 +43,38 @@ public interface BackEndExternalAPI {
    */
   void runNextCommand();
 
+  /**
+   * Updates a specific avatar's position to new a new location on the grid
+   *
+   * @param id ID of the avatar
+   * @param xCoord new x coordinate
+   * @param yCoord new y coordinate
+   */
   void updateAvatarPosition(int id, int xCoord, int yCoord);
 
+  /**
+   * Updates a specific block's position to new a new location on the grid
+   *
+   * @param id ID of the block
+   * @param xCoord new x coordinate
+   * @param yCoord new y coordinate
+   */
   void updateBlockPosition(int id, int xCoord, int yCoord);
 
+  /**
+   * Update the status of the block
+   * True = block is being held by an avatar
+   * False = block is not being held by an avatar
+   * @param id ID of the block
+   * @param b boolean indicating whether the block is being held or not
+   */
   void updateBlock(int id, boolean b);
 
+  /**
+   * Sets the number on the block to a new number
+   * @param id ID of the block
+   * @param newDisplayNum new number to be displayed on the block
+   */
   void setBlockNumber(int id, int newDisplayNum);
 
   /**
@@ -57,19 +83,27 @@ public interface BackEndExternalAPI {
   void declareEndOfRun();
 
   /**
-   * updates the line numbers for the avatars
+   * Updates the line numbers for the avatars
    *
    * @param lineUpdates
    */
   void setLineIndicators(Map<Integer, Integer> lineUpdates);
 
   /**
-   * updates the score and sends it to the frontend
+   * Updates the score and sends it to the frontend
    *
    * @param score
    */
   void setScore(int score);
 
+  /**
+   * Wins the level for the player. This method is the method that is called when the
+   * goal state is met. It returns 3 sets of scores calculated according to the
+   * criteria
+   * @param executionScore score corresponding to how many
+   * @param bonusFromNumberOfCommands
+   * @param bonusFromTimeTaken
+   */
   void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken);
 
   void loseLevel();

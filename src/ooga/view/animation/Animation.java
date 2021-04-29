@@ -14,17 +14,31 @@ public class Animation {
   private Deque<String> typeToBeUpdated;
   private Map<Integer, Deque<Double>> allElementInformation;
 
+  /**
+   *
+   */
   public Animation(){
     commandsToBeExecuted = new ArrayDeque<>();
     allElementInformation = new HashMap<>();
     typeToBeUpdated = new ArrayDeque<>();
   }
 
+  /**
+   *
+   * @return
+   */
   public Map<Integer, Deque<Double>> getAllElementInformation(){
     return allElementInformation;
   }
 
-
+  /**
+   *
+   * @param id ID of the element
+   * @param initialX initial x position of the element
+   * @param initialY initial y position of the element
+   * @param xCoord
+   * @param yCoord
+   */
   public void queuePositionUpdates(int id, int initialX, int initialY, int xCoord, int yCoord) {
     double INCREMENT_FACTOR = 30;
     double xIncrement = (xCoord - initialX)/ INCREMENT_FACTOR;
@@ -38,6 +52,9 @@ public class Animation {
     allElementInformation.put(id, position);
   }
 
+  /**
+   *
+   */
   public void reset() {
     allElementInformation.clear();
     typeToBeUpdated.clear();

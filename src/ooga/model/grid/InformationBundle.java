@@ -16,7 +16,7 @@ import ooga.model.player.Player;
 public interface InformationBundle {
 
   /**
-   * Purpose: returns the list of avatars so that CommandExecutor can execute each of the commands
+   * Returns the list of avatars so that CommandExecutor can execute each of the commands
    * on each of the avatars Assumptions: list of Avatars is properly constructed in the initial
    * parser for the level
    *
@@ -25,7 +25,7 @@ public interface InformationBundle {
   List<Player> getAvatarList();
 
   /**
-   * Purpose: passes in the model controller which handles the communication between frontend and
+   * Passes in the model controller which handles the communication between frontend and
    * backend Assumption: modelController is not null
    *
    * @param modelController an implementation of BackEndExternalAPI
@@ -33,7 +33,7 @@ public interface InformationBundle {
   void setModelController(BackEndExternalAPI modelController);
 
   /**
-   * Purpose: returns the model controller instance so that eah class can notify the frontend of any
+   * Returns the model controller instance so that eah class can notify the frontend of any
    * updates Assumption: modelController is not null Exceptions: sometimes the modelController may
    * be null if any of its commands are called before the level view is initialized
    *
@@ -42,7 +42,7 @@ public interface InformationBundle {
   BackEndExternalAPI getModelController();
 
   /**
-   * Purpose: returns the list of blockdata Assumption: block data is appropriately constructed in
+   * Returns the list of blockdata Assumption: block data is appropriately constructed in
    * InitialParser Exception: null exception if there are no blocks
    *
    * @return list of blocks
@@ -67,7 +67,7 @@ public interface InformationBundle {
   Structure getStructure(int x, int y);
 
   /**
-   * Purpose: sets the structure at a specific location (e.g. wall, floor, etc) Assumption: x and y
+   * Sets the structure at a specific location (e.g. wall, floor, etc) Assumption: x and y
    * are valid locations within the grid
    *
    * @param x         x coordinate on the grid
@@ -77,14 +77,14 @@ public interface InformationBundle {
   void setStructure(int x, int y, Structure structure);
 
   /**
-   * Purpose: adds avatar to the location during initializtion of the level
+   * Adds avatar to the location during initializtion of the level
    *
    * @param avatar Avatar to be added to the tile
    */
   void addAvatar(Avatar avatar);
 
   /**
-   * Purpose: adds a block at the designated location during initialization of the level
+   * Adds a block at the designated location during initialization of the level
    *
    * @param block block to be added to the location
    */
@@ -116,7 +116,7 @@ public interface InformationBundle {
   TileData getTileData(int x, int y);
 
   /**
-   * Purpose: keeps track of if/endif pair so that commands can jump to the designated program
+   * Keeps track of if/endif pair so that commands can jump to the designated program
    * counter Assumption: if/endif exists
    *
    * @param endCommandLines list of endCommands
@@ -133,14 +133,14 @@ public interface InformationBundle {
   Tile getTile(int x, int y);
 
   /**
-   * Purpose: keep track of all commands associated with each of the command lines
+   * Keep track of all commands associated with each of the command lines
    *
    * @param mapOfCommandLines map containing line number and the command at the line
    */
   void setMapOfCommandLines(Map<Integer, Integer> mapOfCommandLines);
 
   /**
-   * Purpose: returns the map of command lines so that CommandExecutor can execute commands
+   * Returns the map of command lines so that CommandExecutor can execute commands
    *
    * @return map of commandlines
    */
