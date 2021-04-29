@@ -139,7 +139,7 @@ public interface BackEndExternalAPI {
   void updateTime(int timeLeft);
 
   /**
-   * Relays update program information to the backend
+   * Relays update program information
    * @param program list of commnd blocks
    */
   void receivedProgramUpdate(List<CommandBlock> program);
