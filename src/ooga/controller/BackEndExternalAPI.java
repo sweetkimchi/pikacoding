@@ -99,23 +99,49 @@ public interface BackEndExternalAPI {
   /**
    * Wins the level for the player. This method is the method that is called when the
    * goal state is met. It returns 3 sets of scores calculated according to the
-   * criteria
-   * @param executionScore score corresponding to how many
-   * @param bonusFromNumberOfCommands
-   * @param bonusFromTimeTaken
+   * game criteria: achieve less lines of commands, less number of execution of those commands,
+   * and less time taken to win the level
+   * @param executionScore score corresponding to how many lines were run
+   * @param bonusFromNumberOfCommands score corresponding to how many number of commands were used
+   * @param bonusFromTimeTaken score corresponding to how much time was kaen
    */
   void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken);
 
+  /**
+   * Informs the frontend the player has lost the game. This method gets called whenever
+   * the model determines that the game has been lost.
+   */
   void loseLevel();
 
+  /**
+   * Updates the program (model) in the backend by providing it with a new set of
+   * CommandBlock objects to parse and execute
+   * @param program list of CommandBlock ojbects containing information about each command block
+   */
   void updateProgram(List<CommandBlock> program);
 
+  /**
+   * Checks whether there is time left or not in the game. This method is called by the frontend
+   * during the animation to see if they should proceed
+   */
   void checkTimeLeftOrNot();
 
+  /**
+   * This method is called when the game has timed out.
+   */
   void timedOut();
 
+  /**
+   * Updates the time left. This method is part of the animation for show how much time
+   * the player has left on the GUI
+   * @param timeLeft seconds representing the amount of time the player has left
+   */
   void updateTime(int timeLeft);
 
+  /**
+   * Relays update program information to the backend
+   * @param program list of commnd blocks
+   */
   void receivedProgramUpdate(List<CommandBlock> program);
 
   /**
