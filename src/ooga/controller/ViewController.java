@@ -145,21 +145,43 @@ public class ViewController implements FrontEndExternalAPI {
     modelController.runNextCommand();
   }
 
+  /**
+   * Update the position of a single avatar
+   * @param id Id of the avatar
+   * @param xCoord New x-coordinate
+   * @param yCoord New y-coordinate
+   */
   @Override
   public void updateAvatarPosition(int id, int xCoord, int yCoord) {
     levelView.updateAvatarPosition(id, xCoord, yCoord);
   }
 
+  /**
+   * Update the position of a single block
+   * @param id Id of the block
+   * @param xCoord New x-coordinate
+   * @param yCoord New y-coordinate
+   */
   @Override
   public void updateBlockPosition(int id, int xCoord, int yCoord) {
     levelView.updateBlockPosition(id, xCoord, yCoord);
   }
 
+  /**
+   * Updates the held state of a block
+   * @param id Id of the block
+   * @param b Whether the block is held or not
+   */
   @Override
   public void updateBlock(int id, boolean b) {
     levelView.updateBlock(id, b);
   }
 
+  /**
+   * Sets the number displayed on a block
+   * @param id Id of the block
+   * @param newDisplayNum New number to be displayed
+   */
   @Override
   public void setBlockNumber(int id, int newDisplayNum) {
     levelView.setBlockNumber(id, newDisplayNum);
@@ -190,7 +212,10 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Notifies the view that the player has won
+   * Clears the screen and displays the win screen
+   * @param executionScore Score from number of lines executed
+   * @param bonusFromNumberOfCommands Bonus from number of commands used
+   * @param bonusFromTimeTaken Bonus from amount of time used
    */
   @Override
   public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
@@ -205,11 +230,19 @@ public class ViewController implements FrontEndExternalAPI {
     levelView.loseLevel();
   }
 
+  /**
+   * Sends local updates of the program to the database
+   * @param program The updated program
+   */
   @Override
   public void sendProgramUpdates(List<CommandBlock> program) {
     modelController.updateProgram(program);
   }
 
+  /**
+   * Updates the local program to sync with the database program
+   * @param program New program stack
+   */
   @Override
   public void receiveProgramUpdates(List<CommandBlock> program) {
     levelView.receiveProgramUpdates(program);
@@ -225,27 +258,51 @@ public class ViewController implements FrontEndExternalAPI {
     levelView.timedOut();
   }
 
+  /**
+   * Updates the front-end with the amount of time left
+   * @param timeLeft Amount of time left
+   */
   @Override
   public void updateTime(int timeLeft) {
     levelView.updateTime(timeLeft);
   }
 
+  /**
+   * Sets the team number of the player
+   * @param teamNum The team number
+   */
   @Override
   public void setTeamNum(int teamNum) { modelController.setTeamNumber(teamNum); }
 
+  /**
+   * Sets the match id
+   * @param id The match id
+   */
   @Override
   public void setMatchId(int id) { modelController.setMatchId(id); }
 
+  /**
+   * Notifies the view that both teams are present and the game is ready to start
+   */
   @Override
   public void notifyBothTeamsPresent() {
     screenCreator.setTeamReady();
   }
 
+  /**
+   * Notifies the front-end that the current team has beaten the level
+   * @param score Score that the team achieved
+   */
   @Override
   public void notifyCurrentTeamFinished(int score) {
     levelView.notifyCurrentTeamFinished(score);
   }
 
+  /**
+   * Notifies the front-end that both teams have beaten the level
+   * @param currentScore Score that the current team achieved
+   * @param otherScore Score that the other team achieved
+   */
   @Override
   public void notifyBothTeamsFinished(int currentScore, int otherScore) {
     levelView.notifyBothTeamsFinished(currentScore, otherScore);
