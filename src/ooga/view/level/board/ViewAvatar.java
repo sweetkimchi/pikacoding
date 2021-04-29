@@ -9,6 +9,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import ooga.view.ScreenCreator;
 
+/**
+ * Creates each avatar that is displayed on the board.
+ * Contains the methods to move/update created avatar.
+ *
+ * @author Kathleen Chen
+ * @author David Li
+ */
 public class ViewAvatar extends StackPane {
 
   private static final String AVATAR_PROPERTIES = "ViewAvatar";
@@ -30,6 +37,15 @@ public class ViewAvatar extends StackPane {
   private final ResourceBundle avatarFinalValues;
   private HashMap<String, Integer> variables;
 
+  /**
+   * Main constructor.
+   * @param x x coordinate int value
+   * @param y y coordinate int value
+   * @param w width double value
+   * @param h height double value
+   * @param id int value of id
+   * @param root SpriteLayer which the avatar will be displayed on
+   */
   public ViewAvatar(int x, int y, double w, double h, int id, SpriteLayer root) {
     avatarFinalValues = ResourceBundle.getBundle(ScreenCreator.RESOURCES + AVATAR_PROPERTIES);
     initialXCoordinate = x;
@@ -46,6 +62,12 @@ public class ViewAvatar extends StackPane {
     makeAvatar();
   }
 
+  /**
+   * Moves the avatar based on the x and y distances.
+   * Contains information on which image should be displayed based on the direction the avatar is moving.
+   * @param x double distance that the avatar will move in the x direction
+   * @param y double distance that the avatar will move in the y direction
+   */
   public void moveAvatar(double x, double y) {
     double currentX = avatar.getX();
     double currentY = avatar.getY();
@@ -73,6 +95,9 @@ public class ViewAvatar extends StackPane {
     }
   }
 
+  /**
+   * Resets the avatar to its original position.
+   */
   public void reset() {
     avatar.setX(initialXCoordinate * width);
     avatar.setY(initialYCoordinate * height);
@@ -80,14 +105,26 @@ public class ViewAvatar extends StackPane {
     avatarId.setY(initialYCoordinate * height + yPadding);
   }
 
+  /**
+   * Returns the initial x coordinate of the avatar.
+   * @return int value of the initial x coordinate
+   */
   public int getInitialXCoordinate() {
     return (int) (avatar.getX() / width);
   }
 
+  /**
+   * Returns the initial y coordinate of the avatar.
+   * @return int value of the initial y coordinate
+   */
   public int getInitialYCoordinate() {
     return (int) (avatar.getY() / height);
   }
 
+  /**
+   * Sets the image of the avatar.
+   * @param image String name of the image
+   */
   public void setAvatarImage(String image) {
     avatar.setImage(new Image(image));
   }

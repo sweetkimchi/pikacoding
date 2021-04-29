@@ -5,16 +5,32 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.control.ComboBox;
 
+/**
+ * Command block holder for the jump command
+ *
+ * @author David Li
+ */
 public class JumpCommandBlockHolder extends CommandBlockHolder {
 
   private ComboBox<String> lineSelector;
 
+  /**
+   * Main constructor
+   * @param index Index of the command
+   * @param type The command type
+   * @param parameterOptions A list of the parameters and their corresponding options
+   * @param programStack The program stack
+   */
   public JumpCommandBlockHolder(int index, String type,
       List<Map<String, List<String>>> parameterOptions,
       ProgramStack programStack) {
     super(index, type, parameterOptions, programStack);
   }
 
+  /**
+   * Changes the parameter dropdown based on new index
+   * @param index New index
+   */
   @Override
   public void setIndex(int index) {
     super.setIndex(index);

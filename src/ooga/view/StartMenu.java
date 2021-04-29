@@ -15,6 +15,13 @@ import javafx.scene.layout.VBox;
 import ooga.view.factories.GUIElementFactory;
 import ooga.view.factories.GUIElementInterface;
 
+/**
+ * Screen that displays starting the game as well as language options and style options.
+ *
+ * @author Kathleen Chen
+ * @author David Li
+ */
+
 public class StartMenu extends BorderPane {
   private static final String CSS = (ScreenCreator.class.getPackageName() + ".resources.").replace(".", "/") + "css/";
   private String styleSheet = "default.css";
@@ -26,6 +33,10 @@ public class StartMenu extends BorderPane {
   private String language = "English";
   private GUIElementInterface GUIFactory;
 
+  /**
+   * Main constructor.
+   * @param startAction EventHandler that corresponds to the setOnAction for the start button
+   */
   public StartMenu(EventHandler<ActionEvent> startAction) {
     this.getStylesheets().add(CSS + styleSheet);
     GUIFactory = new GUIElementFactory();
@@ -80,9 +91,17 @@ public class StartMenu extends BorderPane {
     this.getStylesheets().add(CSS + styleSheet);
   }
 
+  /**
+   * Returns the active StyleSheet.
+   * @return String current StyleSheet
+   */
   public String getStyleSheet() {
     return CSS + styleSheet;
   }
 
+  /**
+   * If languages where implemented, this would return the current language.
+   * @return String language
+   */
   public String getLanguage() { return language; }
 }

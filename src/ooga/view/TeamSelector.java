@@ -14,6 +14,11 @@ import ooga.view.factories.GUIElementInterface;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
+/**
+ * Screen that allows the user to select which team they are on.
+ *
+ * @author Kathleen Chen
+ */
 
 public class TeamSelector extends BorderPane {
   private static final String TEAM_SELECTOR_STRINGS = ScreenCreator.RESOURCES + "TeamSelector";
@@ -28,6 +33,11 @@ public class TeamSelector extends BorderPane {
   private Label waitingMessage;
   private Button start;
 
+  /**
+   * Main constructor.
+   * @param loadAction EventHandler load level action
+   * @param sc ScreenCreator
+   */
   public TeamSelector(EventHandler<ActionEvent> loadAction, ScreenCreator sc) {
     GUIFactory = new GUIElementFactory();
     screenCreator = sc;
@@ -84,6 +94,9 @@ public class TeamSelector extends BorderPane {
     this.setCenter(tBox);
   }
 
+  /**
+   * Enables the start button when all 4 players are available.
+   */
   public void enableStart() {
     start.setDisable(false);
   }

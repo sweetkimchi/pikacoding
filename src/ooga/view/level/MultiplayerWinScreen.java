@@ -9,6 +9,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import ooga.view.ScreenCreator;
 
+/**
+ * Win screen for a multiplayer game
+ *
+ * @author David Li
+ */
 public class MultiplayerWinScreen extends VBox {
 
   public static final String SCREEN_MESSAGES = "ScreenStrings";
@@ -16,6 +21,12 @@ public class MultiplayerWinScreen extends VBox {
   private ResourceBundle winMessages;
   private Label scoreMessage;
 
+  /**
+   * Main constructor
+   * @param homeAction Action that takes the player back to the home screen
+   * @param goBackAction Action that lets the player improve their score in the level
+   * @param finishedAction Action that indicates that the player is done with the level
+   */
   public MultiplayerWinScreen(EventHandler<ActionEvent> homeAction,
       EventHandler<ActionEvent> goBackAction, EventHandler<ActionEvent> finishedAction) {
     winMessages = ResourceBundle.getBundle(ScreenCreator.RESOURCES + SCREEN_MESSAGES);
@@ -40,6 +51,12 @@ public class MultiplayerWinScreen extends VBox {
     this.getChildren().add(homeButton);
   }
 
+  /**
+   * Sets each of the scores that the player achieved
+   * @param executionScore Score from number of lines executed
+   * @param bonusFromNumberOfCommands Bonus from number of commands used
+   * @param bonusFromTimeTaken Bonus from amount of time used
+   */
   public void setScores(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
     scoreMessage.setText(
         getScore(executionScore, "executionScore") + "\n" + getScore(bonusFromNumberOfCommands,

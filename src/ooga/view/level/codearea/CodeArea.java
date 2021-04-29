@@ -22,6 +22,9 @@ public class CodeArea extends GridPane {
   private final CommandBank commandBank;
   private final ProgramStack programStack;
 
+  /**
+   * Main constructor
+   */
   public CodeArea() {
     commandBank = new CommandBank(this::addCommandBlock);
     programStack = new ProgramStack();
@@ -40,6 +43,10 @@ public class CodeArea extends GridPane {
     this.setHgap(8);
   }
 
+  /**
+   * Sets which line each avatar is running
+   * @param lineNumbers Map from avatar ids to line numbers
+   */
   public void setLineIndicators(Map<Integer, Integer> lineNumbers) {
     programStack.setLineIndicators(lineNumbers);
   }
@@ -48,20 +55,37 @@ public class CodeArea extends GridPane {
     return programStack.getProgram();
   }
 
+  /**
+   * Adds the available commands to the command bank and sets the available commands for the program
+   * @param availableCommands Available commands
+   */
   public void setAvailableCommands(AvailableCommands availableCommands) {
     commandBank.addCommands(availableCommands.getCommandNames());
     programStack.setAvailableCommands(availableCommands);
   }
 
+  /**
+   * Adds the commands as the teammate's commands to the command bank and sets the other player's
+   * commands in the program
+   * @param availableCommands Available commands for the other player
+   */
   public void setAvailableCommandsOtherPlayer(AvailableCommands availableCommands) {
     commandBank.addCommandsOtherPlayer(availableCommands.getCommandNames());
     programStack.setAvailableCommandsOtherPlayer(availableCommands);
   }
 
+  /**
+   * Adds a program listener
+   * @param programListener Program listener
+   */
   public void addProgramListener(ProgramListener programListener) {
     programStack.addProgramListener(programListener);
   }
 
+  /**
+   * Updates the local program to sync with the database program
+   * @param program New program stack
+   */
   public void receiveProgramUpdates(List<CommandBlock> program) {
     programStack.receiveProgramUpdates(program);
   }

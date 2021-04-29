@@ -12,6 +12,11 @@ import ooga.view.factories.GUIElementInterface;
 
 import java.util.ResourceBundle;
 
+/**
+ * Pane that gives user the option to choose which game to play.
+ *
+ * @author Kathleen Chen
+ */
 public class GameTypeSelector extends BorderPane {
 
   private static final String GAME_TYPE_STRINGS = ScreenCreator.RESOURCES + "GameTypeSelector";
@@ -19,6 +24,11 @@ public class GameTypeSelector extends BorderPane {
 
   private GUIElementInterface GUIFactory;
 
+  /**
+   * Main constructor.
+   * @param singleAction EventHandler action for if user chooses single player
+   * @param multiAction EventHandler action for if user chooses multiplayer
+   */
   public GameTypeSelector(EventHandler<ActionEvent> singleAction, EventHandler<ActionEvent> multiAction) {
     GUIFactory = new GUIElementFactory();
     ResourceBundle gameTypeResources = ResourceBundle.getBundle(GAME_TYPE_STRINGS);
