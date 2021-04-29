@@ -50,10 +50,18 @@ public abstract class Commands implements CommandInterface {
     return parsedDirection;
   }
 
+  /**
+   * Retrives the information bundle containing information about blocks and avatars
+   * @return ElementInformation object that has get methods to information about the elements
+   */
   public ElementInformationBundle getElementInformationBundle() {
     return elementInformationBundle;
   }
 
+  /**
+   * Returns the parameters sent by the user as part of the command
+   * @return parameter associated with a command
+   */
   public Map<String, String> getParameters() {
     return parameters;
   }

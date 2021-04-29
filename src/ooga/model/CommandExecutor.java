@@ -17,6 +17,9 @@ import ooga.model.player.Player;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
+ * This class takes in the list of CommandBlock objects from the frontend, parses the commands,
+ * and executes the commands. This class is the main class ModelController interacts with
+ * in order to communicate with the backend.
  * @author Ji Yun Hyo
  */
 public class CommandExecutor implements Executor {
@@ -40,7 +43,9 @@ public class CommandExecutor implements Executor {
   private Stopwatch stopwatch;
 
   /**
-   * Default constructor
+   * This constructor takes in all the information from the frontend and re-organizes everything
+   * so that the logic of the commands can be easily executed as well as implemented
+   * @author Ji Yun Hyo
    */
   public CommandExecutor(List<CommandBlock> commandBlocks, BackEndExternalAPI modelController,
       InitialState initialState,
@@ -107,6 +112,9 @@ public class CommandExecutor implements Executor {
     }
   }
 
+  /**
+   * Runs next commands passed to the backend
+   */
   public void runNextCommand() {
     boolean allCommandsFinishedExecuting = true;
     Map<Integer, Integer> lineUpdates = new HashMap<>();
@@ -155,6 +163,9 @@ public class CommandExecutor implements Executor {
     return scores;
   }
 
+  /**
+   * Checks whether the game has timed out for not
+   */
   public void checkTimeLeftOrNot() {
     timeLeft = (int) (timeLimit - stopwatch.elapsed(TimeUnit.SECONDS));
     if (timeLeft <= 0) {
