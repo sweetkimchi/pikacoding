@@ -14,8 +14,13 @@ import ooga.view.level.codearea.CommandBlock;
 import com.google.common.base.Stopwatch;
 
 /**
- * @author Ji Yun Hyo
- * @author billyluqiu
+ * Facilitates interaction between view and model. These methods are called by the model classes.
+ * The ModelController may do simple calculations or organization of data before sending it to
+ * the frontend
+ *
+ * @author Ji Yun Hyo Specifically, responsible for receiving unparsed commands and passing them to
+ * the model to be parsed and ran.
+ * @author billyluqiu responsible for database updates.
  */
 public class ModelController implements BackEndExternalAPI {
 

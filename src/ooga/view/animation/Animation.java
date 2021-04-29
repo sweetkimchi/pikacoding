@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * This class takes the information and processes it to little chunks so that each of the chunk
+ * can be assigned a specific animation state. Although there are other ways of doing this, the
+ * current implementation was chosen to allow maximum flexibility in terms of how much the animation
+ * can be customized.
  * @author Ji Yun Hyo
  */
 public class Animation {
@@ -15,7 +19,7 @@ public class Animation {
   private Map<Integer, Deque<Double>> allElementInformation;
 
   /**
-   *
+   * Initializes the animation queues
    */
   public Animation(){
     commandsToBeExecuted = new ArrayDeque<>();
@@ -24,8 +28,9 @@ public class Animation {
   }
 
   /**
-   *
-   * @return
+   * Returns all element position and state information. This method is called by the SpriteLayer
+   * to access the animation data contained in this class
+   * @return map of all element update information
    */
   public Map<Integer, Deque<Double>> getAllElementInformation(){
     return allElementInformation;
@@ -36,8 +41,8 @@ public class Animation {
    * @param id ID of the element
    * @param initialX initial x position of the element
    * @param initialY initial y position of the element
-   * @param xCoord
-   * @param yCoord
+   * @param xCoord new x position of the element
+   * @param yCoord new y position of the element
    */
   public void queuePositionUpdates(int id, int initialX, int initialY, int xCoord, int yCoord) {
     double INCREMENT_FACTOR = 30;
@@ -53,7 +58,7 @@ public class Animation {
   }
 
   /**
-   *
+   * Resets the animation by clearing all the queues
    */
   public void reset() {
     allElementInformation.clear();

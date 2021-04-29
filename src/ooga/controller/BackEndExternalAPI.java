@@ -7,7 +7,9 @@ import java.util.Map;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
- * Facilitates interaction between view and model.
+ * Facilitates interaction between view and model. These methods are called by the model classes.
+ * The ModelController may do simple calculations or organization of data before sending it to
+ * the frontend
  *
  * @author Ji Yun Hyo Specifically, responsible for receiving unparsed commands and passing them to
  * the model to be parsed and ran.

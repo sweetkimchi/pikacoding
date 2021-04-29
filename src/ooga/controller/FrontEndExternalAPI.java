@@ -8,10 +8,11 @@ import ooga.model.grid.gridData.InitialState;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
- * Facilitates interaction between model and view.
- * <p>
- * Specifically, responsible for receiving game state updates from the model and passing them to the
- * view.
+ * Facilitates interaction between view and model. These methods are called by the view classes.
+ *
+ * @author Ji Yun Hyo Specifically, responsible for receiving unparsed commands and passing them to
+ * the model to be parsed and ran.
+ * @author billyluqiu responsible for database updates.
  */
 public interface FrontEndExternalAPI {
 
