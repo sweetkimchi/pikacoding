@@ -204,7 +204,7 @@ public class ModelController implements BackEndExternalAPI {
   /**
    * Updates the program (model) in the backend by providing it with a new set of
    * CommandBlock objects to parse and execute
-   * @param program list of CommandBlock ojbects containing information about each command block
+   * @param program list of CommandBlock objects containing information about each command block
    */
   @Override
   public void updateProgram(List<CommandBlock> program) {
@@ -244,7 +244,7 @@ public class ModelController implements BackEndExternalAPI {
 
   /**
    * Relays update program information
-   * @param program list of commnd blocks
+   * @param program list of command blocks
    */
   @Override
   public void receivedProgramUpdate(List<CommandBlock> program) {

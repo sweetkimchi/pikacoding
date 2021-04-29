@@ -159,13 +159,13 @@ public interface FrontEndExternalAPI {
   /**
    * Updates the program (model) in the backend by providing it with a new set of
    * CommandBlock objects to parse and execute
-   * @param program list of CommandBlock ojbects containing information about each command block
+   * @param program list of CommandBlock objects containing information about each command block
    */
   void sendProgramUpdates(List<CommandBlock> program);
 
   /**
    * Relays update program information
-   * @param program list of commnd blocks
+   * @param program list of command blocks
    */
   void receiveProgramUpdates(List<CommandBlock> program);
 
@@ -213,10 +213,10 @@ public interface FrontEndExternalAPI {
   void notifyCurrentTeamFinished(int score);
 
   /**
-   * Method that is called when both teams in the current game have succesfully finished the level.
+   * Method that is called when both teams in the current game have successfully finished the level.
    *
-   * @param team1_score score of the current player's team
-   * @param team2_score score of the opposing team
+   * @param team1Score score of the current player's team
+   * @param team2Score score of the opposing team
    */
   void notifyBothTeamsFinished(int team1Score, int team2Score);
 }

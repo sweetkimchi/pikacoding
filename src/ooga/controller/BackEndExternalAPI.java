@@ -26,7 +26,6 @@ public interface BackEndExternalAPI {
    * Initializes the level
    *
    * @param level integer indicating the level
-   * @return BoardState object with level information
    */
   void initializeLevel(int level);
 
@@ -116,7 +115,7 @@ public interface BackEndExternalAPI {
   /**
    * Updates the program (model) in the backend by providing it with a new set of
    * CommandBlock objects to parse and execute
-   * @param program list of CommandBlock ojbects containing information about each command block
+   * @param program list of CommandBlock objects containing information about each command block
    */
   void updateProgram(List<CommandBlock> program);
 
@@ -140,7 +139,7 @@ public interface BackEndExternalAPI {
 
   /**
    * Relays update program information
-   * @param program list of commnd blocks
+   * @param program list of command blocks
    */
   void receivedProgramUpdate(List<CommandBlock> program);
 
@@ -170,7 +169,7 @@ public interface BackEndExternalAPI {
   void notifyCurrentTeamEnded(int score);
 
   /**
-   * Method that is called when both teams in the current game have succesfully finished the level.
+   * Method that is called when both teams in the current game have successfully finished the level.
    *
    * @param team1_score score of the current player's team
    * @param team2_score score of the opposing team
