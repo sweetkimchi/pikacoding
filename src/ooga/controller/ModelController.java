@@ -15,6 +15,7 @@ import com.google.common.base.Stopwatch;
 
 /**
  * @author Ji Yun Hyo
+ * @author billyluqiu
  */
 public class ModelController implements BackEndExternalAPI {
 
@@ -195,8 +196,15 @@ public class ModelController implements BackEndExternalAPI {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   * implementation also sets the player number and creates listeners as they are necessary items
+   * when a team is selected.
+   * @param teamNum team Num of the current team player has selected (MUST be 1 or 2)
+   */
   @Override
   public void setTeamNumber(int teamNum) {
+    //logic to see if it's single player or not
     this.teamID = teamNum;
     if (teamNum == SINGLE_PLAYER) {
       PlayerInitialization playerInitialization = new PlayerInitialization(this.matchID, this.teamID);
@@ -214,21 +222,37 @@ public class ModelController implements BackEndExternalAPI {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void startGameAfterBothTeamsPresent() {
     viewController.notifyBothTeamsPresent();
   }
 
+  /**
+   * {@inheritDoc}
+   * @param id id of match
+   */
   @Override
   public void setMatchId(int id) {
     this.matchID = id;
   }
 
+  /**
+   * {@inheritDoc}
+   * @param score of the winning player
+   */
   @Override
   public void notifyCurrentTeamEnded(int score) {
     viewController.notifyCurrentTeamFinished(score);
   }
 
+  /**
+   * {@inheritDoc}
+   * @param team1_score score of the current player's team
+   * @param team2_score score of the opposing team
+   */
   @Override
   public void notifyBothTeamsEnded(int team1_score, int team2_score) {
     matchID++;

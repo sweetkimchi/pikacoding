@@ -22,6 +22,14 @@ import ooga.view.level.codearea.CommandBlock;
 /**
  * @author Billy Luqiu
  * @author Ji Yun Hyo
+ * Purpose: Creates a wrapper class that creates an access point to the database and
+ * allows for writes to the database, along with single-time reads.
+ * Assumes private key for firebase database is stored in data/firebaseKey/key.json, and a working
+ * internet connection.
+ * Assumes firebase dependencies put in pom.xml correctly.
+ * Assumes match ID is not used in firebase at start of the program for the game (there is no match with
+ * the same match ID already in the database)
+ * Call setDBContents to set DB contents after creating instance
  */
 public class FirebaseService {
 
@@ -29,11 +37,14 @@ public class FirebaseService {
   private static final String ROOT_URL_FOR_CONFIG_FILES =
       System.getProperty("user.dir") + "/data/gameProperties/";
 
+  /**
+   * Construtor that generates an instance of the firebaseService and establishes
+   * a connection with Google Firebase servers.
+   * Throws exceptionHandler is no internet found or connection unsuccessful
+   */
   public FirebaseService() {
     try {
-      FileInputStream serviceAccount =
-          new FileInputStream("data/firebaseKey/key.json");
-
+      FileInputStream serviceAccount = new FileInputStream("data/firebaseKey/key.json");
       FirebaseOptions options = new FirebaseOptions.Builder()
           .setCredentials(GoogleCredentials.fromStream(serviceAccount))
           .setDatabaseUrl("https://team-three-ooga-default-rtdb.firebaseio.com")
@@ -41,15 +52,20 @@ public class FirebaseService {
       if (FirebaseApp.getApps().isEmpty()) {
         FirebaseApp.initializeApp(options);
       }
-
       db = FirebaseDatabase.getInstance();
     } catch (Exception e) {
       throw new ExceptionHandler("error connecting to firebase");
     }
-
   }
 
-
+  /**
+   * Sets database content at a specific endpoint to the file given.
+   * Assumptions same as above.
+   * @param pathInDB database endpoint in which to save the payload
+   * @param pathToFile JSON file to save to DB
+   * Throws exceptionHandler if save unsuccesful
+   *
+   */
   protected void setDatabaseContentsFromFile(String pathInDB, String pathToFile)  {
     Map<String, Object> jsonMap;
     try {
@@ -63,7 +79,6 @@ public class FirebaseService {
   }
 
   private void setDatabaseContentsWithMap(Map<String, Object> jsonMap, String pathInDB) {
-
     try {
       CountDownLatch done = new CountDownLatch(1);
       //Database Error is de, database reference is dr
@@ -76,6 +91,12 @@ public class FirebaseService {
     }
   }
 
+  /**
+   * Reads in the DB contents for a specified level.
+   * Throws exception handler if unsuccessful.
+   * @param level level fo file to read
+   * @return data given (null if no level found at the endpoint or endpoint is NULL)
+   */
   public String readDBContentsForLevelInit(int level) {
     DatabaseReference ref = FirebaseDatabase.getInstance()
         .getReference("level_info/level" + level + "/");
@@ -89,7 +110,6 @@ public class FirebaseService {
           json[0] = new Gson().toJson(object);
           done.countDown();
         }
-
         @Override
         public void onCancelled(DatabaseError databaseError) {
           // Code
@@ -100,7 +120,6 @@ public class FirebaseService {
     } catch (Exception e) {
       throw new ExceptionHandler("error reading levels from database");
     }
-
   }
 
 
@@ -113,7 +132,11 @@ public class FirebaseService {
   }
 
   /**
-   * updates the commandBlock across all
+   * updates the commandBlock across the database.
+   * Assumes list is well formatted and nonnull
+   * @param matchID ID of match to save
+   * @param teamID ID of team to save
+   * @param commandBlocks list of command blocks to save
    */
   public void saveMatchInformation(int matchID, int teamID, List<CommandBlock> commandBlocks) {
     String rootDBPath = "match_info/match" + matchID + "/team" + teamID + "/codingArea/";
@@ -125,6 +148,12 @@ public class FirebaseService {
     setDatabaseContentsWithMap(jsonMapOfCodingArea, rootDBPath);
   }
 
+  /**
+   * Method to save end of game status to the database
+   * @param matchID ID of match
+   * @param teamID ID of team (1 or 2)
+   * @param score score of the game that has just ended
+   */
   public void declareEndOfGame(int matchID, int teamID, int score) {
     try {
       String rootDBPath = "match_info/match" + matchID + "/team" + teamID + "/gameEnded/";

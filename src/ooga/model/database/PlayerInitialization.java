@@ -15,12 +15,28 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import ooga.model.exceptions.ExceptionHandler;
 
+/**
+ * @author billyluqiu
+ * Level that initailizes a player in Firebase and lets Database know player exists for the game.
+ * Assumes nothing regarding player, but teamID must be 1 or 2
+ * Assumes instantiated firebase instance, and depends on firebase modules in pom.xml
+ *
+ */
 public class PlayerInitialization {
 
   private final String rootDBPath;
   private int playerID;
   private boolean errorOccured = false;
 
+  /**
+   * Constructor that creates instance
+   * Assumes matchID is correct and int value
+   * Throws exceptionhandler if player unable to be added to a game,
+   * because too many people have joined or other database issues.
+   * @param matchID ID of match
+   * @param teamID team Number (1 or 2).
+   *
+   */
   public PlayerInitialization(int matchID, int teamID) {
     rootDBPath = "match_info/match" + matchID + "/team" + teamID + "/";
     if (teamID == 0) {
@@ -48,10 +64,9 @@ public class PlayerInitialization {
           }
           done.countDown();
         }
-
         @Override
         public void onCancelled(DatabaseError databaseError) {
-          // Code
+          // Code (no exceptions thrown as exceptions handled in catch statement)
         }
       });
       done.await();
@@ -96,10 +111,18 @@ public class PlayerInitialization {
     }
   }
 
+  /**
+   * Determine if error occured while generating player ID
+   * @return true if error occured
+   */
   public boolean getErrorOccurred() {
     return this.errorOccured;
   }
 
+  /**
+   * Returns playerID (1 or 2)
+   * @return int of player ID for current player
+   */
   public int getPlayerID() {
     return this.playerID;
   }

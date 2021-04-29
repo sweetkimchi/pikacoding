@@ -18,6 +18,19 @@ import ooga.model.database.DatabaseListener;
 import ooga.model.exceptions.ExceptionHandler;
 import ooga.view.level.codearea.CommandBlock;
 
+
+/**
+ * @author billyluqiu
+ * Purporse: This class implements the databaseListener interface to
+ * attach listeners for database changes.
+ * Assumptions: Assumes firebase instance has been instantiated, and there is a working internet connection.
+ * Assumes that two teams exist in the game, and for levelEnded and codeArea the the teams are 2 people and are playing
+ * the game
+ * Additionally, assumes database schema is formatted with endpoints specified in the file paths.
+ * Example usage: Call codeAreaChange() to attach a listener to see if the code area changes
+ * Only created for multiplayer.
+ *
+ */
 public class ConcreteDatabaseListener implements DatabaseListener {
 
   private final BackEndExternalAPI modelController;
@@ -32,6 +45,12 @@ public class ConcreteDatabaseListener implements DatabaseListener {
   private final Map<DatabaseReference, ValueEventListener> valueEventListeners = new HashMap<>();
   private List<CommandBlock> lastCommandBlockForCurrentComputer;
 
+  /**
+   * Class constructor to set instance variables for database listener
+   * @param modelController instance of modelController to call model
+   * @param matchID ID of the match
+   * @param teamID int for team ID (1 or 2)
+   */
   public ConcreteDatabaseListener(ModelController modelController, int matchID, int teamID) {
     this.modelController = modelController;
     this.matchID = matchID;
@@ -39,12 +58,19 @@ public class ConcreteDatabaseListener implements DatabaseListener {
     lastCommandBlockForCurrentComputer = new ArrayList<>();
   }
 
-
+  /**
+   * Set last command block that is sent up to the DB, assumes well formatted list
+   * @param lastCommandBlockForCurrentComputer list of Command Blocks that reflects current code area
+   *
+   */
   public void setLastCommandBlockForCurrentComputer(
       List<CommandBlock> lastCommandBlockForCurrentComputer) {
     this.lastCommandBlockForCurrentComputer = lastCommandBlockForCurrentComputer;
   }
 
+  /**
+   * Creates listener that sees if the code area changes in Firebase, assumptions in class comment
+   */
   @Override
   public void codeAreaChanged() {
 
@@ -73,6 +99,9 @@ public class ConcreteDatabaseListener implements DatabaseListener {
     }
   }
 
+  /**
+   * Creates listener that sees if other player on same team finished level, assumptions in class comment
+   */
   @Override
   public void checkLevelEndedForCurrentTeam() {
     String rootDBPath = "match_info/match" + matchID + "/team" + teamID + "/gameEnded/";
@@ -127,6 +156,9 @@ public class ConcreteDatabaseListener implements DatabaseListener {
     modelController.notifyBothTeamsEnded(this.scoreForCurrentTeam, this.scoreForOtherTeam);
   }
 
+  /**
+   * Attaches listener that is triggered when both teams have finished the leve, assumptions same as above
+   */
   @Override
   public void checkLevelEndedForBothTeams() {
     int otherTeamID = getOtherTeamID();
@@ -165,6 +197,9 @@ public class ConcreteDatabaseListener implements DatabaseListener {
     }
   }
 
+  /**
+   * Attaches listeers that listen to see if all four players are here
+   */
   @Override
   public void checkLevelStarted() {
     this.checkOtherTeamAllPresent();
