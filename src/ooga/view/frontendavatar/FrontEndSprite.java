@@ -4,6 +4,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
+ * This abstract class defines all the behaviors that any concrete sprite can display. Coders
+ * can code up any type of sprite based on these requirements.
  * @author Ji Yun Hyo
  */
 public abstract class FrontEndSprite {
