@@ -13,6 +13,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import ooga.view.ScreenCreator;
 
+/**
+ * Creates pane that contains all the necessary buttons to control the game.
+ * Includes play, pause, step, and reset buttons.
+ * @author Kathleen Chen
+ * @author David Li
+ * @author Ji Yun Hyo
+ */
+
 public class ControlPanel extends GridPane {
   private static final String CONTROL_PANEL_PROPERTIES = "ControlPanel";
   private Map<String, Button> buttons;
@@ -21,6 +29,9 @@ public class ControlPanel extends GridPane {
   private int col = 0;
   private Slider slider;
 
+  /**
+   * Main constructor.
+   */
   public ControlPanel() {
     this.getStyleClass().add("control-panel");
     controlPanelResources = ResourceBundle.getBundle(ScreenCreator.RESOURCES + CONTROL_PANEL_PROPERTIES);
@@ -33,10 +44,19 @@ public class ControlPanel extends GridPane {
     makeSlider();
   }
 
+  /**
+   * Returns the speed of the slider that controls animations.
+   * @return doulbe slider speed
+   */
   public double getSliderSpeed() {
     return slider.getValue();
   }
 
+  /**
+   * Set's a particular button's action based on the EventHandler.
+   * @param buttonName String of the name of the button
+   * @param eventHandler EventHandler that is the button's setOnAction action
+   */
   public void setButtonAction(String buttonName, EventHandler<ActionEvent> eventHandler) {
     buttons.get(buttonName).setOnAction(eventHandler);
   }

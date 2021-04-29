@@ -28,10 +28,12 @@ import ooga.view.level.codearea.CommandBlock;
 import ooga.view.level.codearea.ProgramListener;
 
 /**
- * Main view class for levels. Contains all the main level view elements (board, code area, etc.)
+ * Main view class for single-player levels. Contains all the main level view
+ * elements (board, code area, etc.)
  *
  * @author David Li
  * @author Ji Yun Hyo
+ * @author Kathleen Chen
  */
 public class LevelView extends BorderPane implements ProgramListener {
 
@@ -55,6 +57,12 @@ public class LevelView extends BorderPane implements ProgramListener {
   private int startingApples;
   private int score;
 
+  /**
+   * Main constructor
+   * @param level Level number
+   * @param viewController The view controller for the application
+   * @param screenCreator The screen creator for the application
+   */
   public LevelView(int level, FrontEndExternalAPI viewController, ScreenCreator screenCreator) {
     GUIFactory = new GUIElementFactory();
     this.viewController = viewController;
@@ -72,19 +80,35 @@ public class LevelView extends BorderPane implements ProgramListener {
         controlPanel);
   }
 
+  /**
+   * Lets the code area know what commands are available
+   * @param availableCommands Available commands
+   */
   public void setAvailableCommands(AvailableCommands availableCommands) {
     codeArea.setAvailableCommands(availableCommands);
   }
 
+  /**
+   * Sets up the board with initial board data
+   * @param gameGridData Data for grid tiles
+   * @param initialState Data for avatars and blocks
+   */
   public void initializeBoard(GameGridData gameGridData, InitialState initialState) {
     board.initializeBoard(gameGridData, initialState);
   }
 
+  /**
+   * Notifies the view controller when the program is updated locally
+   */
   @Override
   public void onProgramUpdate() {
     viewController.sendProgramUpdates(codeArea.getProgram());
   }
 
+  /**
+   * Updates the local program to sync with the database program
+   * @param program New program stack
+   */
   public void receiveProgramUpdates(List<CommandBlock> program) {
     codeArea.receiveProgramUpdates(program);
   }
@@ -173,26 +197,56 @@ public class LevelView extends BorderPane implements ProgramListener {
     rightPane.setPadding(new Insets(8, 8, 8, 8));
   }
 
+  /**
+   * Update the position of a single avatar
+   * @param id Id of the avatar
+   * @param xCoord New x-coordinate
+   * @param yCoord New y-coordinate
+   */
   public void updateAvatarPosition(int id, int xCoord, int yCoord) {
     board.updateAvatarPosition(id, xCoord, yCoord);
   }
 
+  /**
+   * Declares end of animation for the coding block
+   */
   public void declareEndOfRun() {
     animationController.declareEndOfRun();
   }
 
+  /**
+   * Sets which line each avatar is running
+   * @param lineUpdates Map from avatar ids to line numbers
+   */
   public void setLineIndicators(Map<Integer, Integer> lineUpdates) {
     codeArea.setLineIndicators(lineUpdates);
   }
 
+  /**
+   * Update the position of a single block
+   * @param id Id of the block
+   * @param xCoord New x-coordinate
+   * @param yCoord New y-coordinate
+   */
   public void updateBlockPosition(int id, int xCoord, int yCoord) {
     board.updateBlockPosition(id, xCoord, yCoord);
   }
 
+  /**
+   * Updates the held state of a block
+   * @param id Id of the block
+   * @param isHeld Whether the block is held or not
+   */
   public void updateBlock(int id, boolean isHeld) {
     board.updateBlock(id, isHeld);
   }
 
+  /**
+   * Clears the screen and displays the win screen
+   * @param executionScore Score from number of lines executed
+   * @param bonusFromNumberOfCommands Bonus from number of commands used
+   * @param bonusFromTimeTaken Bonus from amount of time used
+   */
   public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
     clearScreen();
     this.setCenter(new WinScreen(score, e -> screenCreator.loadStartMenu(),
@@ -200,25 +254,45 @@ public class LevelView extends BorderPane implements ProgramListener {
         level == Integer.parseInt(levelResources.getString("maxLevel"))));
   }
 
+  /**
+   * Sets the player score
+   * @param score New score
+   */
   public void setScore(int score) {
     scoreDisplay.setText("Apples Left for Pikachu: " + score);
     this.score = score;
   }
 
+  /**
+   * Sets the number displayed on a block
+   * @param id Id of the block
+   * @param newDisplayNum New number to be displayed
+   */
   public void setBlockNumber(int id, int newDisplayNum) {
     board.setBlockNumber(id, newDisplayNum);
   }
 
+  /**
+   * Sets the level description
+   * @param description Level description
+   */
   public void setDescription(String description) {
     this.description.setText(description);
     this.description.setWrapText(true);
   }
 
+  /**
+   * Sets the number of apples the player has by default
+   * @param apples Number of apples
+   */
   public void setStartingApples(int apples) {
     startingApples = apples;
     setScore(startingApples);
   }
 
+  /**
+   * Clears the screen and displays the lose screen
+   */
   public void loseLevel() {
     animationController.reset();
     clearScreen();
@@ -227,12 +301,20 @@ public class LevelView extends BorderPane implements ProgramListener {
     }));
   }
 
+  /**
+   * Sets the score to its default value
+   */
   public void resetScore() {
     setScore(startingApples);
   }
 
   /**
-   * TODO: add logic for time out This method gets called when the team has run out of time
+   * Called when the team has run out of time
+   * (Not yet implemented)
+   */
+
+  /**
+   * Notifies the view that the player has run out of time
    */
   public void timedOut() {
     System.out.println("TIMED OUT!! STOPPING ANIMATION!");
@@ -242,8 +324,8 @@ public class LevelView extends BorderPane implements ProgramListener {
   /**
    * Animation calls a method in ViewController which in turn checks with the backend and returns
    * time left
-   *
-   * @param timeLeft
+   * @param timeLeft Amount of time left
+   * (Not yet implemented)
    */
   public void updateTime(int timeLeft) {
   }
@@ -262,11 +344,18 @@ public class LevelView extends BorderPane implements ProgramListener {
     this.setBottom(controlPanel);
   }
 
+  /**
+   * Resets the animation and board positions
+   */
   public void resetAnimation() {
     board.resetAnimation();
     animationController.declareEndOfRun();
   }
 
+  /**
+   * Displays a screen letting the player know that the team has finished
+   * @param score Score the team achieved
+   */
   public void notifyCurrentTeamFinished(int score) {
     Platform.runLater(() -> {
       clearScreen();
@@ -275,6 +364,11 @@ public class LevelView extends BorderPane implements ProgramListener {
 
   }
 
+  /**
+   * Displays a screen letting the player know that both teams have finished
+   * @param currentScore Score the current team achieved
+   * @param otherScore Score the other team achieved
+   */
   public void notifyBothTeamsFinished(int currentScore, int otherScore) {
     Platform.runLater(() -> {
       clearScreen();

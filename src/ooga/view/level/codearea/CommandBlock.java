@@ -13,6 +13,12 @@ public class CommandBlock {
   private final String type;
   private final Map<String, String> parameters;
 
+  /**
+   * Main constructor
+   * @param index Index of the command
+   * @param type The command type
+   * @param parameters Map from parameter name to parameter option
+   */
   public CommandBlock(int index, String type, Map<String, String> parameters) {
     this.index = index;
     this.type = type;

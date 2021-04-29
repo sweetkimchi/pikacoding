@@ -9,12 +9,21 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import ooga.view.ScreenCreator;
 
+/**
+ * Screen displayed when a team has finished the level
+ *
+ * @author David Li
+ */
 public class TeamFinishedScreen extends VBox {
 
   public static final String SCREEN_MESSAGES = "ScreenStrings";
 
   private ResourceBundle winMessages;
 
+  /**
+   * Main constructor
+   * @param score Score that the team achieved
+   */
   public TeamFinishedScreen(int score) {
     winMessages = ResourceBundle.getBundle(ScreenCreator.RESOURCES + SCREEN_MESSAGES);
     this.getStyleClass().add("start-screen");

@@ -9,12 +9,23 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import ooga.view.ScreenCreator;
 
+/**
+ * Screen that is displayed when both teams have finished
+ *
+ * @author David Li
+ */
 public class BothTeamsFinishedScreen extends VBox {
 
   public static final String SCREEN_MESSAGES = "ScreenStrings";
 
   private ResourceBundle winMessages;
 
+  /**
+   * Main constructor
+   * @param currentScore Score of the player's team
+   * @param otherScore Score of the other team
+   * @param homeAction Action for going back to the home screen
+   */
   public BothTeamsFinishedScreen(int currentScore, int otherScore,
       EventHandler<ActionEvent> homeAction) {
     winMessages = ResourceBundle.getBundle(ScreenCreator.RESOURCES + SCREEN_MESSAGES);

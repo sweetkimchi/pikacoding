@@ -23,6 +23,9 @@ public class ProgramStack extends VBox {
 
   private int newIndex = 0;
 
+  /**
+   * Main constructor
+   */
   public ProgramStack() {
     this.setId("program-stack");
     this.setSpacing(5);
@@ -30,14 +33,26 @@ public class ProgramStack extends VBox {
     programListeners = new ArrayList<>();
   }
 
+  /**
+   * Sets the available commands for the program
+   * @param availableCommands Available commands
+   */
   public void setAvailableCommands(AvailableCommands availableCommands) {
     this.availableCommands = availableCommands;
   }
 
+  /**
+   * Sets the available commands of the other player for the program
+   * @param availableCommands Available commands
+   */
   public void setAvailableCommandsOtherPlayer(AvailableCommands availableCommands) {
     this.availableCommandsOtherPlayer = availableCommands;
   }
 
+  /**
+   * Adds a command block to the program stack
+   * @param command Type of command
+   */
   public void addCommandBlock(String command) {
 //    System.out.println(command + " 1");
     System.out.println(command + " " + availableCommands.getCommandNames());
@@ -73,6 +88,10 @@ public class ProgramStack extends VBox {
     return program;
   }
 
+  /**
+   * Removes a command block from the progarm stack
+   * @param index Index of command to be removed
+   */
   public void removeCommandBlock(int index) {
     programBlocks.remove(index - 1);
     this.getChildren().remove(index - 1);
@@ -81,6 +100,11 @@ public class ProgramStack extends VBox {
     }
   }
 
+  /**
+   * Called when the player clicks the move button, prepares for a new location to be selected for
+   * the command block to be moved to
+   * @param commandBlockHolder Command block to be moved
+   */
   public void startMove(CommandBlockHolder commandBlockHolder) {
     newIndex = commandBlockHolder.getCommandBlock().getIndex();
     commandBlockHolder.getStyleClass().add("command-block-selected");
@@ -103,6 +127,10 @@ public class ProgramStack extends VBox {
     });
   }
 
+  /**
+   * Sets which line each avatar is running
+   * @param lineNumbers Map from avatar ids to line numbers
+   */
   public void setLineIndicators(Map<Integer, Integer> lineNumbers) {
     List<List<Integer>> indicators = new ArrayList<>();
     programBlocks.forEach(commandBlockHolder -> indicators.add(new ArrayList<>()));
@@ -112,14 +140,25 @@ public class ProgramStack extends VBox {
     }
   }
 
+  /**
+   * Adds a program listener
+   * @param programListener Program listener
+   */
   public void addProgramListener(ProgramListener programListener) {
     programListeners.add(programListener);
   }
 
+  /**
+   * Notifies each of the program listeners that the program has updated
+   */
   public void notifyProgramListeners() {
     programListeners.forEach(ProgramListener::onProgramUpdate);
   }
 
+  /**
+   * Updates the local program to sync with the database program
+   * @param program New program stack
+   */
   public void receiveProgramUpdates(List<CommandBlock> program) {
 //    System.out.println("program recieved " + program.size());
     Platform.runLater(() -> {

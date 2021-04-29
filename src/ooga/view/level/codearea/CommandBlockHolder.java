@@ -46,6 +46,13 @@ public class CommandBlockHolder extends GridPane {
   private int columns;
   private boolean isOtherPlayer = false;
 
+  /**
+   * Main constructor
+   * @param index Index of the command
+   * @param type The command type
+   * @param parameterOptions A list of the parameters and their corresponding options
+   * @param programStack The program stack
+   */
   public CommandBlockHolder(int index, String type,
       List<Map<String, List<String>>> parameterOptions, ProgramStack programStack) {
     this.getStyleClass().add("command-block-holder");
@@ -74,6 +81,10 @@ public class CommandBlockHolder extends GridPane {
     return commandBlock;
   }
 
+  /**
+   * Sets the index of the command block
+   * @param index New index
+   */
   public void setIndex(int index) {
     this.index = index;
     commandBlock.setIndex(index);
@@ -84,6 +95,10 @@ public class CommandBlockHolder extends GridPane {
     indexLabel.setText(prefix + index);
   }
 
+  /**
+   * Adds each of the ids to the line indicator box
+   * @param ids Ids to be added
+   */
   public void setLineIndicators(List<Integer> ids) {
     lineIndicators.getChildren().clear();
     for (int id : ids) {
@@ -97,6 +112,10 @@ public class CommandBlockHolder extends GridPane {
     }
   }
 
+  /**
+   * Disables (or enables) each of the buttons in the holder
+   * @param disabled Whether to disable or enable the buttons
+   */
   public void setButtonsDisabled(boolean disabled) {
     if (isOtherPlayer) {
       disabled = true;
@@ -107,6 +126,11 @@ public class CommandBlockHolder extends GridPane {
     dropdowns.forEach((name, dropdown) -> dropdown.setDisable(finalDisabled));
   }
 
+  /**
+   * Manually selects a parameter
+   * @param parameter Parameter name
+   * @param option Parameter option
+   */
   public void selectParameter(String parameter, String option) {
 //    System.out.println(parameter + " " + commandBlock.getType());
 //    System.out.println(dropdowns.keySet());
@@ -114,6 +138,9 @@ public class CommandBlockHolder extends GridPane {
     commandBlock.setParameter(parameter, option);
   }
 
+  /**
+   * Marks this command block holder as the other player's command
+   */
   public void setOtherPlayer() {
     isOtherPlayer = true;
     setButtonsDisabled(true);
