@@ -3,7 +3,9 @@ package ooga.controller;
 import javafx.stage.Stage;
 
 /**
- *
+ * This class is the class Main.java uses to set up the controllers for initiating the software.
+ * viewController starts the GUI and modelController starts the backend model.
+ * @author Ji Yun Hyo
  */
 public class Controller {
 
@@ -11,7 +13,7 @@ public class Controller {
   BackEndExternalAPI modelController;
 
   /**
-   * Default constructor
+   * Default constructor that sets up the controller
    */
   public Controller(Stage stage) {
     modelController = new ModelController();

@@ -34,7 +34,7 @@ public class ElementInformationBundle implements InformationBundle {
   }
 
   /**
-   * Purpose: returns the list of avatars so that CommandExecutor can execute each of the commands
+   * Returns the list of avatars so that CommandExecutor can execute each of the commands
    * on each of the avatars Assumptions: list of Avatars is properly constructed in the initial
    * parser for the level
    *
@@ -45,7 +45,7 @@ public class ElementInformationBundle implements InformationBundle {
   }
 
   /**
-   * Purpose: passes in the model controller which handles the communication between frontend and
+   * Passes in the model controller which handles the communication between frontend and
    * backend
    *
    * @param modelController an implementation of BackEndExternalAPI
@@ -55,7 +55,7 @@ public class ElementInformationBundle implements InformationBundle {
   }
 
   /**
-   * Purpose: returns the model controller instance so that eah class can notify the frontend of any
+   * Returns the model controller instance so that eah class can notify the frontend of any
    * updates Assumption: modelController is not null
    *
    * @return modelController object
@@ -65,7 +65,7 @@ public class ElementInformationBundle implements InformationBundle {
   }
 
   /**
-   * Purpose: returns the list of blockdata Assumption: block data is appropriately constructed in
+   * Returns the list of blockdata Assumption: block data is appropriately constructed in
    * InitialParser Exception: null exception if there are no blocks
    *
    * @return list of blocks
@@ -105,7 +105,7 @@ public class ElementInformationBundle implements InformationBundle {
   }
 
   /**
-   * Purpose: sets the structure at a specific location (e.g. wall, floor, etc) Assumption: x and y
+   * Sets the structure at a specific location (e.g. wall, floor, etc) Assumption: x and y
    * are valid locations within the grid
    *
    * @param x         x coordinate on the grid
@@ -117,7 +117,7 @@ public class ElementInformationBundle implements InformationBundle {
   }
 
   /**
-   * Purpose: adds avatar to the location during initializtion of the level
+   * Adds avatar to the location during initializtion of the level
    *
    * @param avatar Avatar to be added to the tile
    */
@@ -129,7 +129,7 @@ public class ElementInformationBundle implements InformationBundle {
   }
 
   /**
-   * Purpose: adds a block at the designated location during initialization of the level
+   * Adds a block at the designated location during initialization of the level
    *
    * @param block block to be added to the location
    */
@@ -196,7 +196,7 @@ public class ElementInformationBundle implements InformationBundle {
   }
 
   /**
-   * Purpose: keeps track of if/endif pair so that commands can jump to the designated program
+   * Keeps track of if/endif pair so that commands can jump to the designated program
    * counter Assumption: if/endif exists
    *
    * @param endCommandLines list of endCommands
@@ -206,7 +206,7 @@ public class ElementInformationBundle implements InformationBundle {
   }
 
   /**
-   * Purpose: keep track of all commands associated with each of the command lines
+   * Keep track of all commands associated with each of the command lines
    *
    * @param mapOfCommandLines map containing line number and the command at the line
    */
@@ -215,7 +215,7 @@ public class ElementInformationBundle implements InformationBundle {
   }
 
   /**
-   * Purpose: returns the map of command lines so that CommandExecutor can execute commands
+   * Returns the map of command lines so that CommandExecutor can execute commands
    *
    * @return map of commandlines
    */

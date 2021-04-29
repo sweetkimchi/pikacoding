@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * This class takes the information and processes it to little chunks so that each of the chunk
+ * can be assigned a specific animation state. Although there are other ways of doing this, the
+ * current implementation was chosen to allow maximum flexibility in terms of how much the animation
+ * can be customized.
  * @author Ji Yun Hyo
  */
 public class Animation {
@@ -14,17 +18,32 @@ public class Animation {
   private Deque<String> typeToBeUpdated;
   private Map<Integer, Deque<Double>> allElementInformation;
 
+  /**
+   * Initializes the animation queues
+   */
   public Animation(){
     commandsToBeExecuted = new ArrayDeque<>();
     allElementInformation = new HashMap<>();
     typeToBeUpdated = new ArrayDeque<>();
   }
 
+  /**
+   * Returns all element position and state information. This method is called by the SpriteLayer
+   * to access the animation data contained in this class
+   * @return map of all element update information
+   */
   public Map<Integer, Deque<Double>> getAllElementInformation(){
     return allElementInformation;
   }
 
-
+  /**
+   *
+   * @param id ID of the element
+   * @param initialX initial x position of the element
+   * @param initialY initial y position of the element
+   * @param xCoord new x position of the element
+   * @param yCoord new y position of the element
+   */
   public void queuePositionUpdates(int id, int initialX, int initialY, int xCoord, int yCoord) {
     double INCREMENT_FACTOR = 30;
     double xIncrement = (xCoord - initialX)/ INCREMENT_FACTOR;
@@ -38,6 +57,9 @@ public class Animation {
     allElementInformation.put(id, position);
   }
 
+  /**
+   * Resets the animation by clearing all the queues
+   */
   public void reset() {
     allElementInformation.clear();
     typeToBeUpdated.clear();
