@@ -125,6 +125,9 @@ public interface FrontEndExternalAPI {
    */
   void setBlockNumber(int id, int newDisplayNum);
 
+  /**
+   * Declares end of animation for the coding block
+   */
   void declareEndOfRun();
 
   /**
@@ -165,8 +168,14 @@ public interface FrontEndExternalAPI {
    */
   void receiveProgramUpdates(List<CommandBlock> program);
 
+  /**
+   * Asks the back-end if there is time remaining left or not
+   */
   void checkTimeLeftOrNot();
 
+  /**
+   * Notifies the view that the player has run out of time
+   */
   void timedOut();
 
   /**

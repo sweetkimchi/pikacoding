@@ -187,6 +187,9 @@ public class ViewController implements FrontEndExternalAPI {
     levelView.setBlockNumber(id, newDisplayNum);
   }
 
+  /**
+   * Declares end of animation for the coding block
+   */
   @Override
   public void declareEndOfRun() {
     levelView.declareEndOfRun();
@@ -248,11 +251,17 @@ public class ViewController implements FrontEndExternalAPI {
     levelView.receiveProgramUpdates(program);
   }
 
+  /**
+   * Asks the back-end if there is time remaining left or not
+   */
   @Override
   public void checkTimeLeftOrNot() {
     modelController.checkTimeLeftOrNot();
   }
 
+  /**
+   * Notifies the view that the player has run out of time
+   */
   @Override
   public void timedOut() {
     levelView.timedOut();

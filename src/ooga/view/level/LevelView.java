@@ -208,7 +208,7 @@ public class LevelView extends BorderPane implements ProgramListener {
   }
 
   /**
-   * TODO: Jiyun help
+   * Declares end of animation for the coding block
    */
   public void declareEndOfRun() {
     animationController.declareEndOfRun();
@@ -313,6 +313,9 @@ public class LevelView extends BorderPane implements ProgramListener {
    * (Not yet implemented)
    */
 
+  /**
+   * Notifies the view that the player has run out of time
+   */
   public void timedOut() {
     System.out.println("TIMED OUT!! STOPPING ANIMATION!");
     animationController.stopAnimation();
