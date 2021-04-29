@@ -25,6 +25,12 @@ public class SpriteLayer extends Pane {
   private final Animation animation;
   private Map<Integer, Deque<Double>> allElementInformation;
 
+  /**
+   * Sets the layer that is going to be used to display all the elements of the game. This was to
+   * make sure the separation between the tiles and the elements.
+   * @param width width of the sprite layer
+   * @param height height of the sprite layer
+   */
   public SpriteLayer(double width, double height) {
     this.setId(ScreenCreator.idsForTests.getString("spriteLayer"));
     this.setMinSize(width, height);
@@ -32,6 +38,10 @@ public class SpriteLayer extends Pane {
     animation = new Animation();
   }
 
+  /**
+   * Initialize all the avatar locations on the grid according to the parsed information received
+   * @param allAvatarLocations display an avatar at each of  the locations
+   */
   public void initializeAvatars(Map<String, List<Integer>> allAvatarLocations) {
     avatars = new HashMap<>();
     initialAvatarLocations = allAvatarLocations;
