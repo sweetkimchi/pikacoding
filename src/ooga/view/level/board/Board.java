@@ -12,7 +12,8 @@ import ooga.model.grid.gridData.InitialState;
 import ooga.view.ScreenCreator;
 
 /**
- * Creates the board that the SpriteLayer and Grid are displayed on.
+ * Area of the level view that displays the board.
+ * Board includes both the SpriteLayer and the grid.
  *
  * @author Kathleen Chen
  * @author David Li
