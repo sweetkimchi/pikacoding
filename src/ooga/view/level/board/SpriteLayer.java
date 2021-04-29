@@ -10,6 +10,9 @@ import ooga.view.ScreenCreator;
 import ooga.view.animation.Animation;
 
 /**
+ * SpriteLayer class is responsible for displaying the avatars and the blocks. This layer is
+ * separate from the board grid because we wanted the elements to be displayed separately from the grid
+ * to allow for maximally customizable.
  * @author Ji Yun Hyo
  */
 public class SpriteLayer extends Pane {
@@ -52,6 +55,10 @@ public class SpriteLayer extends Pane {
     });
   }
 
+  /**
+   * Initializes all the blocks according to the template
+   * @param allBlockData data of blocks read in from the template
+   */
   public void initializeBlocks(Map<String, BlockData> allBlockData) {
     blocks = new HashMap<>();
     initialBlockData = allBlockData;
@@ -64,15 +71,21 @@ public class SpriteLayer extends Pane {
     });
   }
 
+  /**
+   * Sets the size of the grip
+   * @param xSize size in x
+   * @param ySize size in y
+   */
   public void setSizes(double xSize, double ySize) {
     this.xSize = xSize;
     this.ySize = ySize;
   }
 
   /**
-   * @param id
-   * @param xCoord
-   * @param yCoord
+   * Updates the avatar position
+   * @param id ID of the avatar being updated
+   * @param xCoord new x coordinate
+   * @param yCoord new y coordinate
    */
   public void updateAvatarPosition(int id, int xCoord, int yCoord) {
     ViewAvatar viewAvatar = avatars.get(id);
@@ -80,12 +93,23 @@ public class SpriteLayer extends Pane {
         viewAvatar.getInitialYCoordinate(), xCoord, yCoord);
   }
 
+  /**
+   * Updates the block position
+   * @param id ID of the block
+   * @param xCoord new x coordinate
+   * @param yCoord new y coordinate
+   */
   public void updateBlockPosition(int id, int xCoord, int yCoord) {
     ViewBlock viewBlock = blocks.get(id);
     animation.queuePositionUpdates(id, viewBlock.getInitialXCoordinate(),
         viewBlock.getInitialYCoordinate(), xCoord, yCoord);
   }
 
+  /**
+   * Update the animation of the block for picked up and not picked up states
+   * @param id ID of the block
+   * @param isHeld boolean indicating whether the block is held
+   */
   public void updateBlock(int id, boolean isHeld) {
     blocks.get(id).setHeldStatus(isHeld);
     if (isHeld) {
@@ -95,10 +119,19 @@ public class SpriteLayer extends Pane {
     }
   }
 
+  /**
+   * Set the number on the block.
+   * @param id ID of the block
+   * @param newDisplayNum the number to be displayed
+   */
   public void setBlockNumber(int id, int newDisplayNum) {
     blocks.get(id).updateCubeNumber(newDisplayNum);
   }
 
+  /**
+   * Update the animation and tell the view to display the updated animation
+   * @return boolean to indicate whether the updating animation has finished
+   */
   public boolean updateAnimationForFrontEnd() {
     allElementInformation = animation.getAllElementInformation();
     boolean finished = true;
@@ -117,19 +150,31 @@ public class SpriteLayer extends Pane {
     return finished;
   }
 
+  /**
+   * Resets the ques in animation to start over
+   */
   public void resetAnimationQueue() {
     animation.reset();
     allElementInformation = new HashMap<>();
   }
 
+  /**
+   * Resets the animation of avatars when the grid starts over
+   */
   public void resetAvatarLocations() {
     initialAvatarLocations.forEach((id, location) -> avatars.get(Integer.parseInt(id)).reset());
   }
 
+  /**
+   * Resets the animation of blocks when the grid starts over
+   */
   public void resetBlockData() {
     initialBlockData.forEach((id, blockData) -> blocks.get(Integer.parseInt(id)).reset());
   }
 
+  /**
+   * Resets the animation of avatar images when the grid starts over
+   */
   public void resetAvatarImages() {
     if (allElementInformation != null) {
       for (Map.Entry<Integer, ViewAvatar> entry : avatars.entrySet()) {
