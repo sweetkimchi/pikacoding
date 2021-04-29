@@ -13,9 +13,19 @@ import ooga.view.factories.GUIElementFactory;
 import ooga.view.factories.GUIElementInterface;
 import ooga.view.level.WinScreen;
 
+/**
+ * Pane that allows user to select which level to play.
+ *
+ * @author David Li
+ * @author Kathleen Chen
+ */
 public class LevelSelector extends BorderPane {
   private GUIElementInterface GUIFactory;
 
+  /**
+   * Main constructor.
+   * @param loadLevelAction Consumer that is the action for when a level is clicked
+   */
   public LevelSelector(Consumer<Integer> loadLevelAction) {
     GUIFactory = new GUIElementFactory();
     VBox levels = new VBox();

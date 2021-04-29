@@ -13,6 +13,7 @@ import ooga.view.level.MultiplayerLevelView;
  * Responsible for setting up the JavaFX stage and creating the primary views.
  *
  * @author David Li
+ * @author Kathleen Chen
  */
 public class ScreenCreator {
 
@@ -43,16 +44,24 @@ public class ScreenCreator {
     initializeStage();
   }
 
+  /**
+   * Returns the level view.
+   * @return LevelView that is currently active
+   */
   public LevelView getLevelView() {
     return levelView;
   }
 
+  /**
+   * Returns the current StyleSheet and allows the different panes and nodes to know which StyleSheet is active
+   * @return current StyleSheet
+   */
   public String getCurrentStyleSheet() {
     return startMenu.getStyleSheet();
   }
 
   /**
-   * Creates a new MultiplayerLevelView and loads it into the stage
+   * Creates a new MultiplayerLevelView and loads it into the stage.
    * @param level Level number
    */
   public void initializeMultiLevelView(int level) {
@@ -62,7 +71,7 @@ public class ScreenCreator {
   }
 
   /**
-   * Creates a new LevelView and loads it into the stage
+   * Creates a new LevelView and loads it into the stage.
    * @param level Level number
    */
   public void initializeSingleLevelView(int level) {
@@ -72,7 +81,7 @@ public class ScreenCreator {
   }
 
   /**
-   * Opens up the start menu
+   * Opens up the start menu.
    */
   public void loadStartMenu() {
     startMenu = new StartMenu(e -> loadMatchIdSelector());
@@ -80,6 +89,9 @@ public class ScreenCreator {
     stage.setScene(scene);
   }
 
+  /**
+   * Opens the match id selector.
+   */
   public void loadMatchIdSelector() {
     MatchIdSelector matchIdSelector = new MatchIdSelector(this);
     matchIdSelector.getStylesheets().add(startMenu.getStyleSheet());
@@ -87,8 +99,15 @@ public class ScreenCreator {
     stage.setScene(scene);
   }
 
+  /**
+   * Sets the match id.
+   * @param id int match id
+   */
   public void setMatchId(int id) { viewController.setMatchId(id); }
 
+  /**
+   * Load the game type selector.
+   */
   public void loadGameTypeSelector() {
     GameTypeSelector gameTypeSelector = new GameTypeSelector(e -> loadSingleLevelSelector(), e -> loadTeamSelector());
     gameTypeSelector.getStylesheets().add(startMenu.getStyleSheet());
@@ -96,6 +115,9 @@ public class ScreenCreator {
     stage.setScene(scene);
   }
 
+  /**
+   * Load the team selector.
+   */
   public void loadTeamSelector() {
     teamSelector = new TeamSelector(e -> loadMultiLevelSelector(),this);
     teamSelector.getStylesheets().add(startMenu.getStyleSheet());
@@ -103,14 +125,21 @@ public class ScreenCreator {
     stage.setScene(scene);
   }
 
+  /**
+   * Sets the team number that the user chooses.
+   * @param team int team number
+   */
   public void setTeamNum(int team) {
     viewController.setTeamNum(team);
   }
 
+  /**
+   * Enables the start button if all 4 palyers are present.
+   */
   public void setTeamReady() { teamSelector.enableStart(); }
 
   /**
-   * Opens up the level selector for single player
+   * Opens up the level selector for single player.
    */
   public void loadSingleLevelSelector() {
     setTeamNum(0);
@@ -121,7 +150,7 @@ public class ScreenCreator {
   }
 
   /**
-   * Opens up the level selector for multiplayer
+   * Opens up the level selector for multiplayer.
    */
   public void loadMultiLevelSelector() {
     LevelSelector levelSelector = new LevelSelector(viewController::initializeMultiLevel);

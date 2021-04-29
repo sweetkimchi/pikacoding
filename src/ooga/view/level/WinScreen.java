@@ -12,6 +12,8 @@ import ooga.view.factories.GUIElementInterface;
 
 /**
  * Screen that is displayed when a player wins a single player level
+ * @author David Li
+ * @author Kathleen Chen
  */
 public class WinScreen extends VBox {
 

@@ -11,6 +11,12 @@ import ooga.view.factories.GUIElementInterface;
 
 import java.util.ResourceBundle;
 
+/**
+ * Pane that allows the user to select whcih match id they want to play.
+ * This is important for multiplayer.
+ *
+ * @author Kathleen Chen
+ */
 public class MatchIdSelector extends BorderPane {
   private static final String RESOURCES_FILE = ScreenCreator.RESOURCES + "MatchIdSelector";
 
@@ -18,6 +24,11 @@ public class MatchIdSelector extends BorderPane {
   private ResourceBundle resourceBundle;
   private TextField matchInput;
   private GUIElementInterface GUIFactory;
+
+  /**
+   * Main constructor.
+   * @param sc ScreenCreator which contains important information on passing of match id entered
+   */
   public MatchIdSelector(ScreenCreator sc) {
     screenCreator = sc;
     GUIFactory = new GUIElementFactory();
@@ -36,6 +47,11 @@ public class MatchIdSelector extends BorderPane {
     this.setCenter(matchBox);
   }
 
+  /**
+   * Action that happens when the player enters a match id.
+   * Sends the match id through the view and model controllers so that the firebase knows which match is active.
+   * Try/catch to check if the id entered is actually a number.
+   */
   public void enter() {
     try {
       int matchId = Integer.parseInt(matchInput.getText());

@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
  * Screen that is displayed when the player loses a level
  *
  * @author David Li
+ * @author Kathleen Chen
  */
 public class LoseScreen extends VBox {
 
