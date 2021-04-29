@@ -14,7 +14,13 @@ import ooga.view.level.codearea.CommandBlock;
 import com.google.common.base.Stopwatch;
 
 /**
- * @author Ji Yun Hyo
+ * Facilitates interaction between view and model. These methods are called by the model classes.
+ * The ModelController may do simple calculations or organization of data before sending it to
+ * the frontend
+ *
+ * @author Ji Yun Hyo Specifically, responsible for receiving unparsed commands and passing them to
+ * the model to be parsed and ran.
+ * @author billyluqiu responsible for database updates.
  */
 public class ModelController implements BackEndExternalAPI {
 
@@ -64,7 +70,6 @@ public class ModelController implements BackEndExternalAPI {
     viewController.setDescription(initialConfigurationParser.getDescription());
     viewController.setAvailableCommands(initialConfigurationParser.getAvailableCommands());
     viewController.setStartingApples(initialConfigurationParser.getGoalState().getNumOfCommands());
-    //TODO: delete after debugging. Initializing level for testing purposes
 
     commandExecutor = new CommandExecutor(new ArrayList<>(), this,
         initialConfigurationParser.getInitialState(),
@@ -87,7 +92,6 @@ public class ModelController implements BackEndExternalAPI {
    */
   @Override
   public void parseCommands(List<CommandBlock> commandBlocks) {
-    //TODO: delete after debugging. Initializing level for testing purposes
     initialConfigurationParser = new InitialConfigurationParser(this.level, this.firebaseService, this.playerID);
 
     commandExecutor = new CommandExecutor(commandBlocks, this,
@@ -103,21 +107,47 @@ public class ModelController implements BackEndExternalAPI {
     commandExecutor.runNextCommand();
   }
 
+  /**
+   * Updates a specific avatar's position to new a new location on the grid
+   *
+   * @param id ID of the avatar
+   * @param xCoord new x coordinate
+   * @param yCoord new y coordinate
+   */
   @Override
   public void updateAvatarPosition(int id, int xCoord, int yCoord) {
     viewController.updateAvatarPosition(id, xCoord, yCoord);
   }
 
+  /**
+   * Updates a specific block's position to new a new location on the grid
+   *
+   * @param id ID of the block
+   * @param xCoord new x coordinate
+   * @param yCoord new y coordinate
+   */
   @Override
   public void updateBlockPosition(int id, int xCoord, int yCoord) {
     viewController.updateBlockPosition(id, xCoord, yCoord);
   }
 
+  /**
+   * Update the status of the block
+   * True = block is being held by an avatar
+   * False = block is not being held by an avatar
+   * @param id ID of the block
+   * @param b boolean indicating whether the block is being held or not
+   */
   @Override
   public void updateBlock(int id, boolean b) {
     viewController.updateBlock(id, b);
   }
 
+  /**
+   * Sets the number on the block to a new number
+   * @param id ID of the block
+   * @param newDisplayNum new number to be displayed on the block
+   */
   @Override
   public void setBlockNumber(int id, int newDisplayNum) {
     viewController.setBlockNumber(id, newDisplayNum);
@@ -151,6 +181,15 @@ public class ModelController implements BackEndExternalAPI {
     viewController.setLineIndicators(lineUpdates);
   }
 
+  /**
+   * Wins the level for the player. This method is the method that is called when the
+   * goal state is met. It returns 3 sets of scores calculated according to the
+   * game criteria: achieve less lines of commands, less number of execution of those commands,
+   * and less time taken to win the level
+   * @param executionScore score corresponding to how many lines were run
+   * @param bonusFromNumberOfCommands score corresponding to how many number of commands were used
+   * @param bonusFromTimeTaken score corresponding to how much time was kaen
+   */
   @Override
   public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
     int total = executionScore + bonusFromNumberOfCommands + bonusFromTimeTaken;
@@ -158,36 +197,60 @@ public class ModelController implements BackEndExternalAPI {
     viewController.winLevel(executionScore, bonusFromNumberOfCommands, bonusFromTimeTaken);
   }
 
+  /**
+   * Informs the frontend the player has lost the game. This method gets called whenever
+   * the model determines that the game has been lost.
+   */
   @Override
   public void loseLevel() {
     viewController.loseLevel();
   }
 
+  /**
+   * Updates the program (model) in the backend by providing it with a new set of
+   * CommandBlock objects to parse and execute
+   * @param program list of CommandBlock objects containing information about each command block
+   */
   @Override
   public void updateProgram(List<CommandBlock> program) {
-    // TODO: notify database of program update
     if (this.teamID != SINGLE_PLAYER) {
       this.concreteDatabaseListener.setLastCommandBlockForCurrentComputer(program);
       firebaseService.saveMatchInformation(matchID, teamID, program);
     }
   }
 
+  /**
+   * Checks whether there is time left or not in the game. This method is called by the frontend
+   * during the animation to see if they should proceed
+   */
   @Override
   public void checkTimeLeftOrNot() {
     commandExecutor.checkTimeLeftOrNot();
 
   }
 
+  /**
+   * This method is called when the game has timed out.
+   */
   @Override
   public void timedOut() {
     viewController.timedOut();
   }
 
+  /**
+   * Updates the time left. This method is part of the animation for show how much time
+   * the player has left on the GUI
+   * @param timeLeft seconds representing the amount of time the player has left
+   */
   @Override
   public void updateTime(int timeLeft) {
     viewController.updateTime(timeLeft);
   }
 
+  /**
+   * Relays update program information
+   * @param program list of command blocks
+   */
   @Override
   public void receivedProgramUpdate(List<CommandBlock> program) {
     if (program != null)  {
@@ -195,8 +258,15 @@ public class ModelController implements BackEndExternalAPI {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   * implementation also sets the player number and creates listeners as they are necessary items
+   * when a team is selected.
+   * @param teamNum team Num of the current team player has selected (MUST be 1 or 2)
+   */
   @Override
   public void setTeamNumber(int teamNum) {
+    //logic to see if it's single player or not
     this.teamID = teamNum;
     if (teamNum == SINGLE_PLAYER) {
       PlayerInitialization playerInitialization = new PlayerInitialization(this.matchID, this.teamID);
@@ -214,21 +284,37 @@ public class ModelController implements BackEndExternalAPI {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void startGameAfterBothTeamsPresent() {
     viewController.notifyBothTeamsPresent();
   }
 
+  /**
+   * {@inheritDoc}
+   * @param id id of match
+   */
   @Override
   public void setMatchId(int id) {
     this.matchID = id;
   }
 
+  /**
+   * {@inheritDoc}
+   * @param score of the winning player
+   */
   @Override
   public void notifyCurrentTeamEnded(int score) {
     viewController.notifyCurrentTeamFinished(score);
   }
 
+  /**
+   * {@inheritDoc}
+   * @param team1_score score of the current player's team
+   * @param team2_score score of the opposing team
+   */
   @Override
   public void notifyBothTeamsEnded(int team1_score, int team2_score) {
     matchID++;

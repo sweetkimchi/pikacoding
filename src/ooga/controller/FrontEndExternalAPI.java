@@ -8,12 +8,11 @@ import ooga.model.grid.gridData.InitialState;
 import ooga.view.level.codearea.CommandBlock;
 
 /**
- * Facilitates interaction between model and view.
- * <p>
- * Specifically, responsible for receiving game state updates from the model and passing them to the
- * view.
+ * Facilitates interaction between view and model. These methods are called by the view classes.
  *
- * @author David Li
+ * @author Ji Yun Hyo Specifically, responsible for receiving unparsed commands and passing them to
+ * the model to be parsed and ran.
+ * @author billyluqiu responsible for database updates.
  */
 public interface FrontEndExternalAPI {
 
@@ -96,37 +95,41 @@ public interface FrontEndExternalAPI {
   void runNextCommand();
 
   /**
-   * Update the position of a single avatar
-   * @param id Id of the avatar
-   * @param xCoord New x-coordinate
-   * @param yCoord New y-coordinate
+   * Updates a specific avatar's position to new a new location on the grid
+   *
+   * @param id ID of the avatar
+   * @param xCoord new x coordinate
+   * @param yCoord new y coordinate
    */
   void updateAvatarPosition(int id, int xCoord, int yCoord);
 
   /**
-   * Update the position of a single block
-   * @param id Id of the block
-   * @param xCoord New x-coordinate
-   * @param yCoord New y-coordinate
+   * Updates a specific block's position to new a new location on the grid
+   *
+   * @param id ID of the block
+   * @param xCoord new x coordinate
+   * @param yCoord new y coordinate
    */
   void updateBlockPosition(int id, int xCoord, int yCoord);
 
   /**
-   * Updates the held state of a block
-   * @param id Id of the block
-   * @param b Whether the block is held or not
+   * Update the status of the block
+   * True = block is being held by an avatar
+   * False = block is not being held by an avatar
+   * @param id ID of the block
+   * @param b boolean indicating whether the block is being held or not
    */
   void updateBlock(int id, boolean b);
 
   /**
-   * Sets the number displayed on a block
-   * @param id Id of the block
-   * @param newDisplayNum New number to be displayed
+   * Sets the number on the block to a new number
+   * @param id ID of the block
+   * @param newDisplayNum new number to be displayed on the block
    */
   void setBlockNumber(int id, int newDisplayNum);
 
   /**
-   * Declares end of animation for the coding block
+   * All commands have reached the end and no more to be executed
    */
   void declareEndOfRun();
 
@@ -144,73 +147,77 @@ public interface FrontEndExternalAPI {
   void setScore(int score);
 
   /**
-   * Clears the screen and displays the win screen
-   * @param executionScore Score from number of lines executed
-   * @param bonusFromNumberOfCommands Bonus from number of commands used
-   * @param bonusFromTimeTaken Bonus from amount of time used
+   * Notifies the view that the player has won
    */
   void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken);
 
   /**
-   * Notifies the view that the player has lost
+   * Informs the frontend the player has lost the game. This method gets called whenever
+   * the model determines that the game has been lost.
    */
   void loseLevel();
 
   /**
-   * Sends local updates of the program to the database
-   * @param program The updated program
+   * Updates the program (model) in the backend by providing it with a new set of
+   * CommandBlock objects to parse and execute
+   * @param program list of CommandBlock objects containing information about each command block
    */
   void sendProgramUpdates(List<CommandBlock> program);
 
   /**
-   * Updates the local program to sync with the database program
-   * @param program New program stack
+   * Relays update program information
+   * @param program list of command blocks
    */
   void receiveProgramUpdates(List<CommandBlock> program);
 
   /**
-   * Asks the back-end if there is time remaining left or not
+   * Checks whether there is time left or not in the game. This method is called by the frontend
+   * during the animation to see if they should proceed
    */
   void checkTimeLeftOrNot();
 
   /**
-   * Notifies the view that the player has run out of time
+   * This method is called when the game has timed out.
    */
   void timedOut();
 
   /**
-   * Updates the front-end with the amount of time left
-   * @param timeLeft Amount of time left
+   * Updates the time left. This method is part of the animation for show how much time
+   * the player has left on the GUI
+   * @param timeLeft seconds representing the amount of time the player has left
    */
   void updateTime(int timeLeft);
 
   /**
-   * Sets the team number of the player
-   * @param teamNum The team number
+   * sets the team number selected by the player from the view
    */
   void setTeamNum(int teamNum);
 
   /**
-   * Sets the match id
-   * @param id The match id
+   * Set match ID for the current game.
+   * Assumed to be non negative, and match ID doesn't have a corresponding match in firebase
+   * @param id id of match
    */
   void setMatchId(int id);
 
   /**
-   * Notifies the view that both teams are present and the game is ready to start
+   * Method that is called when all four players are present. Two players on each team.
    */
   void notifyBothTeamsPresent();
 
   /**
-   * Notifies the front-end that the current team has beaten the level
-   * @param score Score that the team achieved
+   * Method that is called when the team the player is currently playing on has won.
+   * Either they have won, or their teammate has won.
+   *
+   * @param score of the winning player
    */
   void notifyCurrentTeamFinished(int score);
 
   /**
-   * Notifies the front-end that both teams have beaten the level
-   * @param team1Score Score that the current team achieved
-   * @param team2Score Score that the other team achieved
+   * Method that is called when both teams in the current game have successfully finished the level.
+   *
+   * @param team1Score score of the current player's team
+   * @param team2Score score of the opposing team
    */
   void notifyBothTeamsFinished(int team1Score, int team2Score);
 }

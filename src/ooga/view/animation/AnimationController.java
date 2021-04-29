@@ -12,6 +12,9 @@ import ooga.view.level.LevelView;
 import ooga.view.level.codearea.CodeArea;
 
 /**
+ * A frontend internal API that gets executed when the user interacts with the animation buttons.
+ * Methods in this class are called in LevelView so that LevelView can update the state of the animation
+ * according to what AnimationController is telling it.
  * @author Ji Yun Hyo
  */
 public class AnimationController implements AnimationAPI{

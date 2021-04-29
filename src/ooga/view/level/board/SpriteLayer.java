@@ -10,12 +10,10 @@ import ooga.view.ScreenCreator;
 import ooga.view.animation.Animation;
 
 /**
- * Creates the layer that holds all the information concerning the avatar and block.
- * Overlays the board and is the same size of the board.
- *
+ * SpriteLayer class is responsible for displaying the avatars and the blocks. This layer is
+ * separate from the board grid because we wanted the elements to be displayed separately from the grid
+ * to allow for maximally customizable.
  * @author Ji Yun Hyo
- * @author Kathleen Chen
- * @author David Li
  */
 public class SpriteLayer extends Pane {
 
@@ -31,9 +29,10 @@ public class SpriteLayer extends Pane {
   private Map<Integer, Deque<Double>> allElementInformation;
 
   /**
-   * Main constructor.
-   * @param width width of the Board and the SpriteLayer
-   * @param height height of the Board and the SpriteLayer
+   * Sets the layer that is going to be used to display all the elements of the game. This was to
+   * make sure the separation between the tiles and the elements.
+   * @param width width of the sprite layer
+   * @param height height of the sprite layer
    */
   public SpriteLayer(double width, double height) {
     this.setId(ScreenCreator.idsForTests.getString("spriteLayer"));
@@ -43,9 +42,8 @@ public class SpriteLayer extends Pane {
   }
 
   /**
-   * Initializes each avatar (ViewAvatar) on the SpriteLayer based on its location, size, and ID.
-   * @param allAvatarLocations map containing information concerning each avatar's
-   *                           location, size, and id information
+   * Initialize all the avatar locations on the grid according to the parsed information received
+   * @param allAvatarLocations display an avatar at each of  the locations
    */
   public void initializeAvatars(Map<String, List<Integer>> allAvatarLocations) {
     avatars = new HashMap<>();
@@ -58,9 +56,8 @@ public class SpriteLayer extends Pane {
   }
 
   /**
-   * Initializes each block (ViewBlock) on the SpriteLayer based on its location, size, id, and number.
-   * @param allBlockData map that contains information concerning each block's
-   *                     location, size, id, and number on block
+   * Initializes all the blocks according to the template
+   * @param allBlockData data of blocks read in from the template
    */
   public void initializeBlocks(Map<String, BlockData> allBlockData) {
     blocks = new HashMap<>();
@@ -75,9 +72,9 @@ public class SpriteLayer extends Pane {
   }
 
   /**
-   * Sets the size of the x and y size of the objects on the SpriteLayer.
-   * @param xSize x size that avatars and blocks are set to
-   * @param ySize y size that avatars and blocks are set to
+   * Sets the size of the grip
+   * @param xSize size in x
+   * @param ySize size in y
    */
   public void setSizes(double xSize, double ySize) {
     this.xSize = xSize;
@@ -85,10 +82,10 @@ public class SpriteLayer extends Pane {
   }
 
   /**
-   * Update the position of an avatar with a specific id based on the new x and y coordinates.
-   * @param id int that represents the id of the specific avatar that needs to be updated
-   * @param xCoord int x coordinate of the new position
-   * @param yCoord int y coordinate of the new position
+   * Updates the avatar position
+   * @param id ID of the avatar being updated
+   * @param xCoord new x coordinate
+   * @param yCoord new y coordinate
    */
   public void updateAvatarPosition(int id, int xCoord, int yCoord) {
     ViewAvatar viewAvatar = avatars.get(id);
@@ -97,10 +94,10 @@ public class SpriteLayer extends Pane {
   }
 
   /**
-   * Update the position of a particular block based on its id and new xy coordinates.
-   * @param id int that represents the id of the specific block that needs to be updated
-   * @param xCoord int x coordinate of the new position
-   * @param yCoord int y coordinate of the new poison
+   * Updates the block position
+   * @param id ID of the block
+   * @param xCoord new x coordinate
+   * @param yCoord new y coordinate
    */
   public void updateBlockPosition(int id, int xCoord, int yCoord) {
     ViewBlock viewBlock = blocks.get(id);
@@ -109,9 +106,9 @@ public class SpriteLayer extends Pane {
   }
 
   /**
-   * Updates if the block is being held or not.
-   * @param id int that represents the id of the block
-   * @param isHeld boolean that represents if the block is being held by the avatar or not
+   * Update the animation of the block for picked up and not picked up states
+   * @param id ID of the block
+   * @param isHeld boolean indicating whether the block is held
    */
   public void updateBlock(int id, boolean isHeld) {
     blocks.get(id).setHeldStatus(isHeld);
@@ -123,17 +120,17 @@ public class SpriteLayer extends Pane {
   }
 
   /**
-   * Changes the number on a specific block.
-   * @param id int that represents the id of the block
-   * @param newDisplayNum int that represents the new number to be displayed on the block
+   * Set the number on the block.
+   * @param id ID of the block
+   * @param newDisplayNum the number to be displayed
    */
   public void setBlockNumber(int id, int newDisplayNum) {
     blocks.get(id).updateCubeNumber(newDisplayNum);
   }
 
   /**
-   * Returns a boolean of whether or not the front end animation is finished or not.
-   * @return boolean finished that represents if the front end animation is finished or not
+   * Update the animation and tell the view to display the updated animation
+   * @return boolean to indicate whether the updating animation has finished
    */
   public boolean updateAnimationForFrontEnd() {
     allElementInformation = animation.getAllElementInformation();
@@ -154,7 +151,7 @@ public class SpriteLayer extends Pane {
   }
 
   /**
-   * Resets the animation queue.
+   * Resets the ques in animation to start over
    */
   public void resetAnimationQueue() {
     animation.reset();
@@ -162,21 +159,21 @@ public class SpriteLayer extends Pane {
   }
 
   /**
-   * Resets the avatar locations and returns them to their original positions.
+   * Resets the animation of avatars when the grid starts over
    */
   public void resetAvatarLocations() {
     initialAvatarLocations.forEach((id, location) -> avatars.get(Integer.parseInt(id)).reset());
   }
 
   /**
-   * Resets the data of the block (position and number on the block).
+   * Resets the animation of blocks when the grid starts over
    */
   public void resetBlockData() {
     initialBlockData.forEach((id, blockData) -> blocks.get(Integer.parseInt(id)).reset());
   }
 
   /**
-   * Resets the avatar image to the original image.
+   * Resets the animation of avatar images when the grid starts over
    */
   public void resetAvatarImages() {
     if (allElementInformation != null) {

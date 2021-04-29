@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * @author billyluqiu
+ */
 public final class AvailableCommands {
 
   private final Map<String, List<Map<String, List<String>>>> commandsMap;

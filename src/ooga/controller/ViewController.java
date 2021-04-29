@@ -146,10 +146,11 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Update the position of a single avatar
-   * @param id Id of the avatar
-   * @param xCoord New x-coordinate
-   * @param yCoord New y-coordinate
+   * Updates a specific avatar's position to new a new location on the grid
+   *
+   * @param id ID of the avatar
+   * @param xCoord new x coordinate
+   * @param yCoord new y coordinate
    */
   @Override
   public void updateAvatarPosition(int id, int xCoord, int yCoord) {
@@ -157,10 +158,11 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Update the position of a single block
-   * @param id Id of the block
-   * @param xCoord New x-coordinate
-   * @param yCoord New y-coordinate
+   * Updates a specific block's position to new a new location on the grid
+   *
+   * @param id ID of the block
+   * @param xCoord new x coordinate
+   * @param yCoord new y coordinate
    */
   @Override
   public void updateBlockPosition(int id, int xCoord, int yCoord) {
@@ -168,9 +170,11 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Updates the held state of a block
-   * @param id Id of the block
-   * @param b Whether the block is held or not
+   * Update the status of the block
+   * True = block is being held by an avatar
+   * False = block is not being held by an avatar
+   * @param id ID of the block
+   * @param b boolean indicating whether the block is being held or not
    */
   @Override
   public void updateBlock(int id, boolean b) {
@@ -178,9 +182,9 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Sets the number displayed on a block
-   * @param id Id of the block
-   * @param newDisplayNum New number to be displayed
+   * Sets the number on the block to a new number
+   * @param id ID of the block
+   * @param newDisplayNum new number to be displayed on the block
    */
   @Override
   public void setBlockNumber(int id, int newDisplayNum) {
@@ -188,7 +192,7 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Declares end of animation for the coding block
+   * All commands have reached the end and no more to be executed
    */
   @Override
   public void declareEndOfRun() {
@@ -215,10 +219,7 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Clears the screen and displays the win screen
-   * @param executionScore Score from number of lines executed
-   * @param bonusFromNumberOfCommands Bonus from number of commands used
-   * @param bonusFromTimeTaken Bonus from amount of time used
+   * Notifies the view that the player has won
    */
   @Override
   public void winLevel(int executionScore, int bonusFromNumberOfCommands, int bonusFromTimeTaken) {
@@ -234,8 +235,9 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Sends local updates of the program to the database
-   * @param program The updated program
+   * Updates the program (model) in the backend by providing it with a new set of
+   * CommandBlock objects to parse and execute
+   * @param program list of CommandBlock objects containing information about each command block
    */
   @Override
   public void sendProgramUpdates(List<CommandBlock> program) {
@@ -243,8 +245,8 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Updates the local program to sync with the database program
-   * @param program New program stack
+   * Relays update program information
+   * @param program list of command blocks
    */
   @Override
   public void receiveProgramUpdates(List<CommandBlock> program) {
@@ -252,7 +254,8 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Asks the back-end if there is time remaining left or not
+   * Checks whether there is time left or not in the game. This method is called by the frontend
+   * during the animation to see if they should proceed
    */
   @Override
   public void checkTimeLeftOrNot() {
@@ -260,7 +263,7 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Notifies the view that the player has run out of time
+   * This method is called when the game has timed out.
    */
   @Override
   public void timedOut() {
@@ -268,8 +271,9 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Updates the front-end with the amount of time left
-   * @param timeLeft Amount of time left
+   * Updates the time left. This method is part of the animation for show how much time
+   * the player has left on the GUI
+   * @param timeLeft seconds representing the amount of time the player has left
    */
   @Override
   public void updateTime(int timeLeft) {
@@ -277,21 +281,21 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Sets the team number of the player
-   * @param teamNum The team number
+   * sets the team number selected by the player from the view
    */
   @Override
   public void setTeamNum(int teamNum) { modelController.setTeamNumber(teamNum); }
 
   /**
-   * Sets the match id
-   * @param id The match id
+   * Set match ID for the current game.
+   * Assumed to be non negative, and match ID doesn't have a corresponding match in firebase
+   * @param id id of match
    */
   @Override
   public void setMatchId(int id) { modelController.setMatchId(id); }
 
   /**
-   * Notifies the view that both teams are present and the game is ready to start
+   * Method that is called when all four players are present. Two players on each team.
    */
   @Override
   public void notifyBothTeamsPresent() {
@@ -299,8 +303,10 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Notifies the front-end that the current team has beaten the level
-   * @param score Score that the team achieved
+   * Method that is called when the team the player is currently playing on has won.
+   * Either they have won, or their teammate has won.
+   *
+   * @param score of the winning player
    */
   @Override
   public void notifyCurrentTeamFinished(int score) {
@@ -308,9 +314,10 @@ public class ViewController implements FrontEndExternalAPI {
   }
 
   /**
-   * Notifies the front-end that both teams have beaten the level
-   * @param currentScore Score that the current team achieved
-   * @param otherScore Score that the other team achieved
+   * Method that is called when both teams in the current game have successfully finished the level.
+   *
+   * @param currentScore score of the current player's team
+   * @param otherScore score of the opposing team
    */
   @Override
   public void notifyBothTeamsFinished(int currentScore, int otherScore) {
