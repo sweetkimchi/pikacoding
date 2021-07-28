@@ -11,7 +11,7 @@ Billy Luqiu (wyl6)
 Kathleen Chen (kc387)
 
 # Demo Video
-https://drive.google.com/file/d/1koKzFA_89CcI30tTbMcCr64TsRvEv-JE/view?usp=sharing
+https://drive.google.com/file/d/14pG5U72Pi7gvV8VBdKh32MgdVoV0fsXR/view?usp=sharing
 
 ### Timeline
 
